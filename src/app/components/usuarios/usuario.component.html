@@ -1,0 +1,59 @@
+<h3>Usuario <small>nombre...</small> </h3>
+<button [routerLink]="['usuarios']"
+          class="btn btn-outline-primary">
+          Regresar
+</button>
+<hr>
+
+<div class="row animated fadeIn fast">
+  <div class="col-md-12">
+    <form (ngSubmit)="guardar()" #forma="ngForm">
+      <div class="form-group">
+        <label>Nombre</label>
+        <input  [(ngModel)]="usuario.nombreUsuario"
+            type="text" name="nombreUsuario"
+            class="form-control"
+            placeholder="Nombre del Usuario"
+            required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input  [(ngModel)]="usuario.correo"
+            type="text" name="correo"
+            class="form-control"
+            placeholder="Email de usuario"
+            required>
+      </div>
+      <div class="form-group">
+        <label>Apodo</label>
+        <input  [(ngModel)]="usuario.apodo"
+            type="text" name="apodo"
+            class="form-control"
+            placeholder="Email de usuario"
+            required>
+      </div>
+      <div class="form-group">
+        <label>Contraseña</label>
+        <input  [(ngModel)]="usuario.password"
+            type="text" name="password"
+            class="form-control"
+            placeholder="Contraseña de usuario"
+            required>
+      </div>
+      <div class="form-group">
+        <label>Confirmar contraseña</label>
+        <input  [(ngModel)]="usuario.password_confirmation"
+            type="text" name="password_confirmation"
+            class="form-control"
+            placeholder="Confirmar contraseña"
+            required>
+      </div>
+      <div class="form-group">
+        <button [disabled]="!forma.valid"
+          type="submit" class="btn btn-outline-primary">
+          Guardar cambios
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
