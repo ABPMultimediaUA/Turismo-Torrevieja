@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-slidemenu',
-  templateUrl: './slidemenu.component.html',
-  styleUrls: ['./slidemenu.component.css']
+  templateUrl: './slidemenu.component.html'
 })
 export class SlidemenuComponent implements OnInit {
 
