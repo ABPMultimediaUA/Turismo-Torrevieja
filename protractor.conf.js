@@ -19,6 +19,7 @@ exports.config = {
     defaultTimeoutInterval: 30000,
     print: function() {}
   },
+  //scasa
   onPrepare() {
     require('ts-node').register({
       project: 'e2e/tsconfig.e2e.json'
