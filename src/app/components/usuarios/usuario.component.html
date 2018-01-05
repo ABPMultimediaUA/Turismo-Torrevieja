@@ -5,7 +5,28 @@
 </button>
 <hr>
 
+<div class="container" *ngIf="errorUsuario === true">
+    <div class="jumbotron">
+        <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
+        <h1 class="text-center">¡Ups! <p> </p>
+          <p><small class="text-center"> Ha habido un error creando un usuario.</small></p></h1>
+          <p class="text-center text-danger" *ngFor="let mensaje of errorMensaje">
+                {{mensaje}}
+        </p>
+    </div>
+</div>
+
+<div class="container" *ngIf="rgstrUsuario === true">
+    <div class="jumbotron">
+        <div class="text-center"><i class="fa fa-5x fa-smile-o" style="color:#28a745;"></i></div>
+        <h1 class="text-center">¡Usuario creado! <p> </p>
+          <p><small class="text-center text-success"> Se ha enviado un email de confirmación a {{usuario.correo}}.</small></p></h1>
+
+    </div>
+</div>
 <div class="row animated fadeIn fast">
+
+
   <div class="col-md-12">
     <form (ngSubmit)="guardar()" #forma="ngForm">
       <div class="form-group">
@@ -35,7 +56,7 @@
       <div class="form-group">
         <label>Contraseña</label>
         <input  [(ngModel)]="usuario.password"
-            type="text" name="password"
+            type="password" name="password"
             class="form-control"
             placeholder="Contraseña de usuario"
             required>
@@ -43,7 +64,7 @@
       <div class="form-group">
         <label>Confirmar contraseña</label>
         <input  [(ngModel)]="usuario.password_confirmation"
-            type="text" name="password_confirmation"
+            type="password" name="password_confirmation"
             class="form-control"
             placeholder="Confirmar contraseña"
             required>

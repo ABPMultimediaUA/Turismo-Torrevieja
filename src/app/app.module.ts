@@ -20,6 +20,7 @@ import { LoginComponent } from './components/login/login.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { UsuarioComponent } from './components/usuarios/usuario.component';
+import { ContactComponent } from './components/contact/contact.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { UsuarioComponent } from './components/usuarios/usuario.component';
     LoginComponent,
     FooterComponent,
     UsuariosComponent,
-    UsuarioComponent
+    UsuarioComponent,
+    ContactComponent
 
   ],
   imports: [

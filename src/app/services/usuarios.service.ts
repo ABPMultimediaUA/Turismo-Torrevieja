@@ -27,7 +27,7 @@ export class UsuariosService {
     return this.http.post(  this.heroesURL, body, { headers } )
       .map( res=>{
         console.log(res.json());
-      //  return res.json();
+      (res: Response) => res.json();
       })
   }
 

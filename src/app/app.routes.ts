@@ -6,12 +6,13 @@ import { AboutComponent } from "./components/about/about.component";
 import { LoginComponent } from "./components/login/login.component";
 import { UsuariosComponent } from "./components/usuarios/usuarios.component";
 import { UsuarioComponent } from "./components/usuarios/usuario.component";
-
+import { ContactComponent } from "./components/contact/contact.component";
 
 const app_routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'contact', component: ContactComponent },
   { path: 'usuarios', component: UsuariosComponent },
   { path: 'heroes', component: HeroesComponent },
   { path: 'heroe/:id', component: HeroeComponent },
