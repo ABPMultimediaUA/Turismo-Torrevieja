@@ -1,0 +1,56 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="es" ng-app="appGVENT">
+  <head>
+    <meta charset="utf-8">
+    <title>GVENT</title>
+    <script type="text/javascript" src="angularjs/angular.min.js"></script>
+    <script type="text/javascript" src="script.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <script src="../funciones.js"></script>
+      <link href="style.css" rel="stylesheet" title="Estilo principal">
+
+  </head>
+  <body>
+
+
+
+
+
+
+    <section class="flex-container">
+      <h2>Contacto</h2>
+      <div ng-controller="contactoCtrl">
+        <form novalidate class="simple-form">
+          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+        <input type="email" placeholder="E-mail" ng-model="user.email" /><br />
+        <input type="text" placeholder="Nombre" ng-model="user.name" /><br />
+        <textarea name="name" rows="8" cols="49" placeholder="Escribe tu mensaje"></textarea> <br>
+
+
+
+          <input type="submit" ng-click="update(user)" value="Enviar" /><br>
+
+
+        </form>
+
+        <pre>user = {{user | json}}</pre>
+        <pre>master = {{master | json}}</pre>
+      </div>
+
+
+
+
+    </section>
+
+
+
+
+
+  </body>
+</html>
