@@ -7,5 +7,6 @@ export interface Usuario
     password_confirmation:string;
     apodo:string;
     key$?:string;
+    id:string;
 
 }

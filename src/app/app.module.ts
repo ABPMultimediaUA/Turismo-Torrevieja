@@ -21,6 +21,9 @@ import { FooterComponent } from './components/shared/footer/footer.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { UsuarioComponent } from './components/usuarios/usuario.component';
 import { SlidemenuComponent } from './components/shared/slidemenu/slidemenu.component';
+import { ModificarComponent } from './components/usuarios/modificar.component';
+import { DetalleComponent } from './components/usuarios/detalle.component';
+import { KeysPipe } from './pipes/keys.pipe';
 
 @NgModule({
   declarations: [
@@ -34,7 +37,10 @@ import { SlidemenuComponent } from './components/shared/slidemenu/slidemenu.comp
     FooterComponent,
     UsuariosComponent,
     UsuarioComponent,
-    SlidemenuComponent
+    SlidemenuComponent,
+    ModificarComponent,
+    DetalleComponent,
+    KeysPipe
 
   ],
   imports: [
