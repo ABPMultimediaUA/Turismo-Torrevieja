@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';//ramoon
 
 
-
+import {NavbarComponent} from "../shared/navbar/navbar.component";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
@@ -23,22 +23,24 @@ export class LoginComponent implements OnInit {
     loading = false;
     returnUrl: string;
 
+
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService,
-        private token:TokenService) { }
+        private token:TokenService,
+        private navbar:NavbarComponent) { }
 
     ngOnInit() {
         // reset login status
         this.authenticationService.logout();
-
+        this.navbar.logueado=false;
+        console.log("logueado en el login: "+this.navbar.logueado);
         // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        //this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
     login() {
-
         this.loading = true;
         console.log("antes de this.authen");
         this.authenticationService.login(this.model)
@@ -52,6 +54,7 @@ export class LoginComponent implements OnInit {
                     console.log("token resultado= "+resultado.access_token);
                     localStorage.setItem("accesToken", resultado.access_token );
                     console.log("token localStorage= "+localStorage.accesToken);
+
                     //console.log(resultado);
                     /*
                     localStorage.setItem('token', data.access_toke);
@@ -64,7 +67,11 @@ export class LoginComponent implements OnInit {
 
                   console.log("Entrar data1");
                   localStorage.setItem("loggedIn", "true");
+
                   console.log(localStorage.loggedIn);
+                  this.navbar.logueado=true;
+                  console.log("navbar.logueado: "+this.navbar.logueado);
+
                   //codigo isrem
                   // localStorage.setItem('currentUser', JSON.stringify({ token: token, name: name }));
                   this.router.navigate(['home']);
@@ -79,8 +86,8 @@ export class LoginComponent implements OnInit {
                     this.loading = false;
                 });
     }
-    logout() {
-        // remove user from local storage to log user out
-        localStorage.removeItem('currentUser');
-    }
+    // logout() {
+    //     // remove user from local storage to log user out
+    //     localStorage.removeItem('currentUser');
+    // }
 }

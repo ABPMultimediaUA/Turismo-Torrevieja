@@ -24,38 +24,48 @@ import { AlertService, AuthenticationService } from '../../../services/index';
 })
 export class NavbarComponent implements OnInit {
 
-
+    logueado= false;
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService,
-        private alertService: AlertService) { }
+        private alertService: AlertService
+        ) { }
 
   ngOnInit() {
+
+
+
+  }
+  logoin(){
+
+    console.log("logueado cuando voy al login: "+this.logueado)
+    this.router.navigate(['login']);
   }
 
 
-
   logout(){
-    console.log(localStorage.loggedIn);
-    localStorage.loggedIn=false;
-    console.log(localStorage.loggedIn);
+    // console.log(localStorage.loggedIn);
+    // localStorage.loggedIn=false;
+    // console.log(localStorage.loggedIn);
 
     delete localStorage.accesToken;
     //localStorage.removeItem(accessToken);
-
+    this.logueado=false;
+    console.log("logueado: "+this.logueado);
 
     this.router.navigate(['home']);
   }
 
-  public logeado(): boolean{
 
-    if (localStorage.loggedIn==true){
-      return true;
-    }else{
-      return false;
+  // logeado(){
+  //   if (localStorage.loggedIn==true){
+  //     this.logueado=true;
+  //   }else{
+  //     this.logueado=false;
+  //
+  //   }
+  // }
 
-    }
-  }
 }
