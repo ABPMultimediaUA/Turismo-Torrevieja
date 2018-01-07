@@ -6,7 +6,10 @@ import { AboutComponent } from "./components/about/about.component";
 import { LoginComponent } from "./components/login/login.component";
 import { UsuariosComponent } from "./components/usuarios/usuarios.component";
 import { UsuarioComponent } from "./components/usuarios/usuario.component";
+import { NuevoUsuarioComponent } from "./components/usuarios/nuevo-usuario.component";
 import { ContactComponent } from "./components/contact/contact.component";
+
+
 
 const app_routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -14,8 +17,8 @@ const app_routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'usuarios', component: UsuariosComponent },
-  { path: 'heroes', component: HeroesComponent },
-  { path: 'heroe/:id', component: HeroeComponent },
+  { path: 'usuariosReloaded', component: UsuariosComponent },
+  { path: 'nuevo-usuario', component: NuevoUsuarioComponent },
   { path: 'usuario/:id', component: UsuarioComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];

@@ -45,7 +45,7 @@ export class NavbarComponent implements OnInit {
 
     document.getElementById("logout").style.display="inline";
     document.getElementById("login").style.display="none";
-  
+
   }
 
 
@@ -54,8 +54,10 @@ export class NavbarComponent implements OnInit {
     console.log(localStorage.loggedIn);
     localStorage.loggedIn=false;
     console.log(localStorage.loggedIn);
+      console.log(document.getElementById("verUsuarios").style);
     this.home.logout();
     delete localStorage.accesToken;
+      this.router.navigate(['home']);
     //localStorage.removeItem(accessToken);
 
     //console.log("logueado: "+this.logueado);
@@ -63,7 +65,7 @@ export class NavbarComponent implements OnInit {
     document.getElementById("logout").style.display="none";
     document.getElementById("login").style.display="inline";
 
-    this.router.navigate(['home']);
+
   }
 
 

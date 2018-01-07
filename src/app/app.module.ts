@@ -31,6 +31,9 @@ import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { UsuarioComponent } from './components/usuarios/usuario.component';
 import { ContactComponent } from './components/contact/contact.component';
 
+import {IdsPipe} from './components/pipes/ids.pipe';
+import { NuevoUsuarioComponent } from './components/usuarios/nuevo-usuario.component';
+
 
 @NgModule({
   declarations: [
@@ -44,7 +47,9 @@ import { ContactComponent } from './components/contact/contact.component';
     FooterComponent,
     UsuariosComponent,
     UsuarioComponent,
-    ContactComponent
+    ContactComponent,
+    IdsPipe,
+    NuevoUsuarioComponent
 
   ],
   imports: [

@@ -1,15 +1,30 @@
-<h3>Usuario <small>nombre...</small> </h3>
-<button [routerLink]="['usuarios']"
-          class="btn btn-outline-primary">
-          Regresar
-</button>
-<hr>
 
+<h3>Usuario <small>{{usuario.nombre}}</small></h3>
+<button
+  [routerLink]="['usuarios']"
+  class="btn btn-outline-primary">
+  Regresar
+</button>
+<!-- <button (click)="agregarNuevo(forma)"
+type="button" class="btn btn-outline-success">
+  Nuevo heroe
+</button>
+<hr> -->
 <div class="container" *ngIf="errorUsuario === true">
     <div class="jumbotron">
         <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
         <h1 class="text-center">¡Ups! <p> </p>
           <p><small class="text-center"> Ha habido un error creando un usuario.</small></p></h1>
+          <p class="text-center text-danger" *ngFor="let mensaje of errorMensaje">
+                {{mensaje}}
+        </p>
+    </div>
+</div>
+<div class="container" *ngIf="errorUsuarioActualizar === true">
+    <div class="jumbotron">
+        <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
+        <h1 class="text-center">¡Ups! <p> </p>
+          <p><small class="text-center"> Ha habido un error actualizando un usuario.</small></p></h1>
           <p class="text-center text-danger" *ngFor="let mensaje of errorMensaje">
                 {{mensaje}}
         </p>
@@ -24,57 +39,83 @@
 
     </div>
 </div>
+
+
+
+
+
 <div class="row animated fadeIn fast">
-
-
   <div class="col-md-12">
+
     <form (ngSubmit)="guardar()" #forma="ngForm">
       <div class="form-group">
         <label>Nombre</label>
-        <input  [(ngModel)]="usuario.nombreUsuario"
-            type="text" name="nombreUsuario"
-            class="form-control"
-            placeholder="Nombre del Usuario"
-            required>
-      </div>
-      <div class="form-group">
-        <label>Email</label>
-        <input  [(ngModel)]="usuario.correo"
-            type="text" name="correo"
-            class="form-control"
-            placeholder="Email de usuario"
-            required>
+        <input [(ngModel)]="usuario.nombreUsuario"
+          name="nombreUsuario"
+          class="form-control"
+          placeholder="Nombre del Usuario"
+          required
+          type="text">
       </div>
       <div class="form-group">
         <label>Apodo</label>
-        <input  [(ngModel)]="usuario.apodo"
-            type="text" name="apodo"
-            class="form-control"
-            placeholder="Email de usuario"
-            required>
+        <input [(ngModel)]="usuario.apodo"
+          name="apodo"
+          class="form-control"
+          placeholder="Apodo del Usuario"
+          required
+          type="text">
+      </div>
+      <div class="form-group">
+        <label>Correo</label>
+        <input [(ngModel)]="usuario.correo"
+          name="correo"
+          class="form-control"
+          placeholder="Correo del Usuario"
+          required
+          type="text">
       </div>
       <div class="form-group">
         <label>Contraseña</label>
-        <input  [(ngModel)]="usuario.password"
-            type="password" name="password"
-            class="form-control"
-            placeholder="Contraseña de usuario"
-            required>
+        <input
+          name="password"
+          class="form-control"
+          placeholder="Contraseña del Usuario"
+          required
+          type="text">
       </div>
       <div class="form-group">
-        <label>Confirmar contraseña</label>
-        <input  [(ngModel)]="usuario.password_confirmation"
-            type="password" name="password_confirmation"
-            class="form-control"
-            placeholder="Confirmar contraseña"
-            required>
+        <label>Confirmacion de Contraseña</label>
+        <input
+          name="password_confirmation"
+          class="form-control"
+          placeholder="Confirmacion Contraseña del Usuario"
+          required
+          type="text">
       </div>
+
+      <div class="form-group">
+              <label>Rol</label>
+              <select [(ngModel)]="usuario.rol"
+                name="rol"
+              class="form-control"
+              >
+                <option value="1">Administrador</option>
+                <option value="2">trabajador</option>
+                <option value="4">Otros</option>
+
+              </select>
+            </div>
       <div class="form-group">
         <button [disabled]="!forma.valid"
-          type="submit" class="btn btn-outline-primary">
+           type="submit" class="btn btn-outline-primary">
           Guardar cambios
         </button>
+
       </div>
+
     </form>
+
+
   </div>
 </div>
