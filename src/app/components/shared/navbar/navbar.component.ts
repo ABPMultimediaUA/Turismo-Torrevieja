@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import {LoginComponent} from '../../login/login.component';
 
 
-
+import {HomeComponent} from "../../home/home.component";
 import { Router, ActivatedRoute } from '@angular/router';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';//ramoon
 
@@ -24,13 +24,14 @@ import { AlertService, AuthenticationService } from '../../../services/index';
 })
 export class NavbarComponent implements OnInit {
 
-    logueado= false;
+
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService,
-        private alertService: AlertService
+        private alertService: AlertService,
+        private home:HomeComponent
         ) { }
 
   ngOnInit() {
@@ -38,34 +39,34 @@ export class NavbarComponent implements OnInit {
 
 
   }
-  logoin(){
 
-    console.log("logueado cuando voy al login: "+this.logueado)
-    this.router.navigate(['login']);
+  loguear()
+  {
+
+    document.getElementById("logout").style.display="inline";
+    document.getElementById("login").style.display="none";
+  
   }
 
 
-  logout(){
-    // console.log(localStorage.loggedIn);
-    // localStorage.loggedIn=false;
-    // console.log(localStorage.loggedIn);
 
+  logout(){
+    console.log(localStorage.loggedIn);
+    localStorage.loggedIn=false;
+    console.log(localStorage.loggedIn);
+    this.home.logout();
     delete localStorage.accesToken;
     //localStorage.removeItem(accessToken);
-    this.logueado=false;
-    console.log("logueado: "+this.logueado);
+
+    //console.log("logueado: "+this.logueado);
+
+    document.getElementById("logout").style.display="none";
+    document.getElementById("login").style.display="inline";
 
     this.router.navigate(['home']);
   }
 
 
-  // logeado(){
-  //   if (localStorage.loggedIn==true){
-  //     this.logueado=true;
-  //   }else{
-  //     this.logueado=false;
-  //
-  //   }
-  // }
+
 
 }

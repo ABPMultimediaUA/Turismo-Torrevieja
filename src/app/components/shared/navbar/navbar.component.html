@@ -21,13 +21,14 @@
         type="submit"
         >Chatbot</button>
     <button
-        *ngIf="!logueado"
+        id="login"
+        style="display:inline"
         class="btn btn-outline-success my-2 my-sm-0"
         type="submit"
-        (click)="logoin()"
-        >Iniciar sesión</button>
+        [routerLink]="['login']">Iniciar sesión</button>
     <button
-        *ngIf="logueado"
+        id="logout"
+        style="display:none"
         (click)="logout()"
         class="btn btn-outline-primary my-2 my-sm-0"
         type="submit"

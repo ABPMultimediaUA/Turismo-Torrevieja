@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';//ramoon
 
-
+import {HomeComponent} from "../home/home.component";
 import {NavbarComponent} from "../shared/navbar/navbar.component";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
     model: any = {};
     loading = false;
     returnUrl: string;
+    loginError = false;
 
 
     constructor(
@@ -29,18 +30,20 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private authenticationService: AuthenticationService,
         private token:TokenService,
-        private navbar:NavbarComponent) { }
+        private navbar:NavbarComponent,
+        private home:HomeComponent
+      ) { }
 
     ngOnInit() {
         // reset login status
         this.authenticationService.logout();
-        this.navbar.logueado=false;
-        console.log("logueado en el login: "+this.navbar.logueado);
+
         // get return url from route parameters or default to '/'
-        //this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
     login() {
+
         this.loading = true;
         console.log("antes de this.authen");
         this.authenticationService.login(this.model)
@@ -51,9 +54,11 @@ export class LoginComponent implements OnInit {
                   data => {
                     let resultado: any = {};
                     resultado=data;
-                    console.log("token resultado= "+resultado.access_token);
+                    this.home.loguear();
+                    console.log(document.getElementById("verUsuarios").style);
+                    //console.log("token resultado= "+resultado.access_token);
                     localStorage.setItem("accesToken", resultado.access_token );
-                    console.log("token localStorage= "+localStorage.accesToken);
+                    //console.log("token localStorage= "+localStorage.accesToken);
 
                     //console.log(resultado);
                     /*
@@ -65,29 +70,31 @@ export class LoginComponent implements OnInit {
                 );
 
 
-                  console.log("Entrar data1");
+                  //console.log("Entrar data1");
                   localStorage.setItem("loggedIn", "true");
+                  this.navbar.loguear();
 
-                  console.log(localStorage.loggedIn);
-                  this.navbar.logueado=true;
-                  console.log("navbar.logueado: "+this.navbar.logueado);
+                  console.log("despues de set logueado");
+                  //console.log(localStorage.loggedIn);
+                  //this.navbar.loguea();
+                  //console.log("navbar.logueado: "+this.navbar.logueado);
 
                   //codigo isrem
                   // localStorage.setItem('currentUser', JSON.stringify({ token: token, name: name }));
+
                   this.router.navigate(['home']);
-                  console.log("Entrar data2");
+
 
                     //this.router.navigate([this.returnUrl]);
                 },
                 error => {
-                  console.log("Entrar error");
-                  console.log(error);
+                  this.loginError = true;
                     // this.alertService.error("Usuario o contraseña Incorrectos");
                     this.loading = false;
                 });
     }
-    // logout() {
-    //     // remove user from local storage to log user out
-    //     localStorage.removeItem('currentUser');
-    // }
+    logout() {
+        // remove user from local storage to log user out
+        localStorage.removeItem('currentUser');
+    }
 }

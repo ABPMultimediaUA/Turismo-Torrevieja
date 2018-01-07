@@ -18,6 +18,7 @@ import { AlertService, AuthenticationService, TokenService } from './services/in
 
 
 
+
 import { AppComponent } from './app.component';
 import { HeroesComponent } from './components/heroes/heroes.component';
 import { HeroeComponent } from './components/heroes/heroe.component';
@@ -29,6 +30,7 @@ import { FooterComponent } from './components/shared/footer/footer.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { UsuarioComponent } from './components/usuarios/usuario.component';
 import { ContactComponent } from './components/contact/contact.component';
+
 
 @NgModule({
   declarations: [
@@ -57,7 +59,9 @@ import { ContactComponent } from './components/contact/contact.component';
     UsuariosService,
     AlertService,
     AuthenticationService,
-    TokenService
+    TokenService,
+    NavbarComponent,
+    HomeComponent
 
   ],
   bootstrap: [AppComponent]
