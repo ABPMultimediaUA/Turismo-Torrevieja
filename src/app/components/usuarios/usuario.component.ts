@@ -12,6 +12,7 @@ export class UsuarioComponent implements OnInit {
 errorUsuario = false;
 rgstrUsuario = false;
 errorUsuarioActualizar = false;
+TituloNuevo = "";
 errorMensaje:string[]=[];
 private usuario:Usuario={
   identificador:"",
@@ -38,17 +39,21 @@ constructor( private _usuariosService: UsuariosService,
           this.route.params.subscribe(parametros=>{
                 console.log(parametros);
                 this.id = parametros['id']
-                if(this.id !== "nuevo"){
 
-                  this._usuariosService.getUsuario(this.id)
-                      .subscribe( usuario => {usuario.data.password="",   this.usuario = usuario.data, console.log(usuario)})
-                }
 
-                // if(this.id == "nuevo"){
-                //   //insertando
-                // }else{
-                // //actualizando
-                // }
+                if(this.id == "nuevo"){
+                  //insertando
+                  this.TituloNuevo="Nuevo ";
+                  console.log("nuevo usuario");
+
+
+                }else{
+                //actualizando
+
+                this._usuariosService.getUsuario(this.id)
+                    .subscribe( usuario => {usuario.data.password="",   this.usuario = usuario.data, console.log(usuario)})
+                    console.log("pone password vacio");
+              }
           });
   }
 
@@ -62,7 +67,8 @@ constructor( private _usuariosService: UsuariosService,
   {
         console.log("ewfefe"+this.id);
         if(this.id == "nuevo"){
-          console.log("hola");
+          console.log("voy a guardar nuevo usuario(abajo):");
+            console.log(this.usuario);
             this._usuariosService.nuevoUsuario( this.usuario )
               .subscribe( data=>{
                 //this.router.navigate(['/heroe',data.name])
@@ -150,7 +156,9 @@ constructor( private _usuariosService: UsuariosService,
           //     },
           //     error=>console.error(error));
         }else{
+
         //actualizando
+        console.log("voy a actualizar usuario");
         this._usuariosService.actualizarUsuario(this.usuario, this.id)
             .subscribe(data=>{
               console.log("data que queremos actualizar"+data);

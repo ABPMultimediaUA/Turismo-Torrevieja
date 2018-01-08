@@ -12,10 +12,10 @@ export class UsuariosService {
   Secound_accessToken:string=localStorage.accesToken;
   constructor( private http:Http ) { }
 
-  nuevoUsuario( heroe:Usuario )
+  nuevoUsuario( usuario:Usuario )
   {
 
-    let body = JSON.stringify( heroe );//Cambiar todos los valos de heroe a string
+    let body = JSON.stringify( usuario );//Cambiar todos los valos de heroe a string
     let headers = new Headers ({
 
       'Content-Type':'application/json',
@@ -24,7 +24,7 @@ export class UsuariosService {
 
       //'X-XSRF-TOKEN':this.First_accessToken+this.Secound_accessToken
     });
-
+    console.log("body. usuario que quiero postear: "+body);
     return this.http.post(  this.usuariosURL, body, { headers } )
       .map( res=>{
         console.log(localStorage.accesToken);
