@@ -12,7 +12,7 @@ export class UsuarioComponent implements OnInit {
 errorUsuario = false;
 rgstrUsuario = false;
 errorUsuarioActualizar = false;
-TituloNuevo = "";
+//TituloNuevo = "";
 errorMensaje:string[]=[];
 private usuario:Usuario={
   identificador:"",
@@ -40,20 +40,20 @@ constructor( private _usuariosService: UsuariosService,
                 console.log(parametros);
                 this.id = parametros['id']
 
-
-                if(this.id == "nuevo"){
-                  //insertando
-                  this.TituloNuevo="Nuevo ";
-                  console.log("nuevo usuario");
-
-
-                }else{
+                //
+                // if(this.id == "nuevo"){
+                //   //insertando
+                //   this.TituloNuevo="Nuevo ";
+                //   console.log("nuevo usuario");
+                //
+                //
+                // }else{
                 //actualizando
 
                 this._usuariosService.getUsuario(this.id)
                     .subscribe( usuario => {usuario.data.password="",   this.usuario = usuario.data, console.log(usuario)})
                     console.log("pone password vacio");
-              }
+              // }
           });
   }
 
