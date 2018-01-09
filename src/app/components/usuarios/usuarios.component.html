@@ -16,10 +16,16 @@
       <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
         <ul class="nav nav-pills flex-column">
           <li class="nav-item">
-            <a class="nav-link active" href="#">Overview <span class="sr-only">(current)</span></a>
+            <a
+            role="button"
+            [routerLink]="['/usuarios']"
+            class="nav-link" >Usuarios</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">Reports</a>
+            <a
+            role="button"
+            [routerLink]="['/nuevo-usuario']"
+            class="nav-link" >Nuevo Usuario</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="#">Analytics</a>
@@ -61,26 +67,52 @@
         <h1>Usuarios</h1>
         <div class="table-responsive">
           <table class="table table-striped">
-            <thead>
+            <thead class="thead-dark">
               <tr>
-                <th>#</th>
-                <th>Header</th>
-                <th>Header</th>
-                <th>Header</th>
-                <th>Header</th>
+                <th scope="col">#</th>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Apodo</th>
+                <th scope="col">Correo</th>
+                <th scope="col">Verificado</th>
+                <th scope="col">rol</th>
+                <th class="text-right">Opciones</th>
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>1,001</td>
-                <td>Lorem</td>
-                <td>ipsum</td>
-                <td>dolor</td>
-                <td>sit</td>
+               <!-- el pipe keys es para pasar un objeto a un array -->
+              <tr *ngFor="let usuario of  usuariosActuales  ; let i = index">
+                <td>{{ i + 1 }}</td>
+                <td>{{ usuario.identificador }}</td>
+                <td>{{ usuario.nombreUsuario }}</td>
+                <td>{{ usuario.apodo }}</td>
+                <td>{{ usuario.correo }}</td>
+                <td *ngIf="!usuario.esVerificado ==0">Si</td>
+                <td *ngIf="usuario.esVerificado ==0">No</td>
+                <td *ngIf="usuario.rol ==1">Administrador</td>
+                <td *ngIf="usuario.rol ==2">Trabajador</td>
+                <td *ngIf="usuario.rol !=1 && usuario.rol !=2">Otros roles</td>
+
+                <td class="text-right w120">
+                  <button  [routerLink]="['/usuario', usuario.identificador]"
+                  type="button" class="btn btn-outline-success">
+                    Editar
+                  </button>
+                  <button  (click)="borrarUsuario(usuario.identificador)"
+                  type="button" class="btn btn-outline-danger">
+                    Eliminar
+                  </button>
+                </td>
               </tr>
 
             </tbody>
+
           </table>
+          <!-- si no hay usuarios muestra esto -->
+          <div *ngIf="(usuarios).length === 0 && !loading"
+          class="alert alert-info" role="alert">
+              <strong>No hay </strong> usuarios que mostrar
+          </div>
         </div>
       </main>
     </div>
@@ -88,66 +120,9 @@
 </div>
 <!-- aqui acaba el container fluid -->
 
-<div class="row animated fadeIn fast">
+
   <div class="col-md-12">
-    <div class="table-responsive">
-      <table class="table table-striped">
-        <thead class="thead-dark">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Id</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apodo</th>
-            <th scope="col">Correo</th>
-            <th scope="col">Verificado</th>
-            <th scope="col">rol</th>
-            <th class="text-right">Opciones</th>
-            <!-- identificador:number;
-            nombreUsuario:string;
-            apodo:string;
-            correo:string;
-            password:string;
-            password_confirmation:string;
-            esVerificado:number;
-            //key$?:string; identificador es la key
-            rol:number; -->
-          </tr>
-        </thead>
-        <tbody>
-           <!-- el pipe keys es para pasar un objeto a un array -->
-          <tr *ngFor="let usuario of  usuariosActuales  ; let i = index">
-            <td>{{ i + 1 }}</td>
-            <td>{{ usuario.identificador }}</td>
-            <td>{{ usuario.nombreUsuario }}</td>
-            <td>{{ usuario.apodo }}</td>
-            <td>{{ usuario.correo }}</td>
-            <td *ngIf="!usuario.esVerificado ==0">Si</td>
-            <td *ngIf="usuario.esVerificado ==0">No</td>
-            <td *ngIf="usuario.rol ==1">Administrador</td>
-            <td *ngIf="usuario.rol ==2">Trabajador</td>
-            <td *ngIf="usuario.rol !=1 && usuario.rol !=2">Otros roles</td>
 
-            <td class="text-right w120">
-              <button  [routerLink]="['/usuario', usuario.identificador]"
-              type="button" class="btn btn-outline-success">
-                Editar
-              </button>
-              <button  (click)="borrarUsuario(usuario.identificador)"
-              type="button" class="btn btn-outline-danger">
-                Eliminar
-              </button>
-            </td>
-          </tr>
-
-        </tbody>
-
-      </table>
-      <!-- si no hay usuarios muestra esto -->
-      <div *ngIf="(usuarios).length === 0 && !loading"
-      class="alert alert-info" role="alert">
-          <strong>No hay </strong> usuarios que mostrar
-      </div>
-    </div>
     <br>
 
     <nav aria-label="Page navigation example">
@@ -171,13 +146,3 @@
       </ul>
     </nav>
   </div>
-
-
-
-
-
-
-
-
-
-</div>

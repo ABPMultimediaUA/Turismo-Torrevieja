@@ -46,7 +46,7 @@ export class UsuariosComponent implements OnInit {
             console.log(this.usuarios);
             console.log("usuarios[3]:");
             console.log(this.usuarios[3]);
-            this.totalPaginas = Math.ceil(this.usuarios.length/15);
+            this.totalPaginas = Math.ceil(this.usuarios.length/10);
             console.log("this.totalPaginas:");
             console.log(this.totalPaginas);
             this.loading=false;
@@ -63,8 +63,8 @@ export class UsuariosComponent implements OnInit {
               this.cantidadPagina.push(i);
             }
 
-            if(this.usuarios.length>14){
-              for(let i=0;i<=14;i++)
+            if(this.usuarios.length>9){
+              for(let i=0;i<=9;i++)
               {
                 this.usuariosActuales.push(this.usuarios[i]);
               }
@@ -99,8 +99,8 @@ export class UsuariosComponent implements OnInit {
     this.currentPage=pagina;
     console.log("pagina que pido:");
     console.log(pagina);
-    let x = 15 * (pagina-1);
-    let y = x + 14;
+    let x = 10 * (pagina-1);
+    let y = x + 9;
     this.usuariosActuales=[];
 
     if(pagina==this.totalPaginas){
