@@ -33,6 +33,7 @@ export class UsuariosComponent implements OnInit {
         this._usuariosService.getUsuarios()
           .subscribe( data =>{
             console.log(data);//la data del getHeroes
+
             this.usuarios= data.data;
             this.loading=false;
             // this.k=this.usuarios[0].identificador;
@@ -54,26 +55,34 @@ export class UsuariosComponent implements OnInit {
   ngOnInit() {
   }
 
-  ngOnChange(){
-    this._usuariosService.getUsuarios();
+  // ngOnChange(){
+  //   this._usuariosService.getUsuarios();
+  //
+  //   this.refresh();
+  // }
 
-    this.refresh();
-  }
-
-  refresh(){
-  this.router.navigate(['usuariosReloaded']);
-  }
+  // refresh(){
+  // this.router.navigate(['usuarios']);
+  // }
   borrarUsuario(id:string){
       this._usuariosService.borrarUsuario(id)
           .subscribe(respuesta=>{
             if(respuesta){
+              console.log("caracola");
               console.log(respuesta);
+              console.log( "borrausuario y ahora va a pedir todos los usuarios de nuevo" );
+            this._usuariosService.getUsuarios();
+            console.log( "aqui los ha pedido ya todos de nuevo y voy a hacer el router navigate a usuarios" );
+            location.reload(true);
+            this.router.navigate(['usuarios']);
+            // this.refresh();
             }else{
               //todo bien
               delete this.usuarios[id];
-
-            this._usuariosService.getUsuarios();
-            this.refresh();
+            //   console.log( "borrausuario y ahora va a pedir todos los usuarios de nuevo" );
+            // this._usuariosService.getUsuarios();
+            // console.log( "aqui los ha pedido ya todos de nuevo" );
+            // this.refresh();
 
 
             }

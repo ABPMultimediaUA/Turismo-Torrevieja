@@ -15,7 +15,6 @@
 <div class="row animated fadeIn fast">
   <div class="col-md-12">
     <div class="table-responsive">
-      <div class="table-responsive">
       <table class="table table-striped">
         <thead class="thead-dark">
           <tr>
@@ -40,7 +39,7 @@
         </thead>
         <tbody>
            <!-- el pipe keys es para pasar un objeto a un array -->
-          <tr *ngFor="let usuario of usuarios; let i = index">
+          <tr *ngFor="let usuario of usuarios  ; let i = index">
             <td>{{ i + 1 }}</td>
             <td>{{ usuario.identificador }}</td>
             <td>{{ usuario.nombreUsuario }}</td>

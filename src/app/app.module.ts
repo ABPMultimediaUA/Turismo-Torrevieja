@@ -32,6 +32,7 @@ import { UsuarioComponent } from './components/usuarios/usuario.component';
 import { ContactComponent } from './components/contact/contact.component';
 
 import {IdsPipe} from './components/pipes/ids.pipe';
+import { KeysPipe } from './components/pipes/keys.pipe';
 import { NuevoUsuarioComponent } from './components/usuarios/nuevo-usuario.component';
 
 
@@ -49,6 +50,7 @@ import { NuevoUsuarioComponent } from './components/usuarios/nuevo-usuario.compo
     UsuarioComponent,
     ContactComponent,
     IdsPipe,
+    KeysPipe,
     NuevoUsuarioComponent
 
   ],
