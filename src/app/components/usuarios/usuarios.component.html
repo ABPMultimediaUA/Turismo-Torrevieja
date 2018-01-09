@@ -1,4 +1,4 @@
-<h1>Usuarios</h1>
+<!-- <h1>Usuarios</h1>
 <hr>
 
 <div class="row">
@@ -10,7 +10,83 @@
     </button>
   </div>
 </div>
-<br>
+<br> -->
+<div class="container-fluid">
+  <div class="row">
+      <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
+        <ul class="nav nav-pills flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="#">Overview <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Reports</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Analytics</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Export</a>
+          </li>
+        </ul>
+
+        <ul class="nav nav-pills flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Nav item</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Nav item again</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">One more nav</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Another nav item</a>
+          </li>
+        </ul>
+
+        <ul class="nav nav-pills flex-column">
+          <li class="nav-item">
+            <a class="nav-link" href="#">Nav item again</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">One more nav</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Another nav item</a>
+          </li>
+        </ul>
+      </nav>
+
+      <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+        <h1>Usuarios</h1>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Header</th>
+                <th>Header</th>
+                <th>Header</th>
+                <th>Header</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1,001</td>
+                <td>Lorem</td>
+                <td>ipsum</td>
+                <td>dolor</td>
+                <td>sit</td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </main>
+    </div>
+
+</div>
+<!-- aqui acaba el container fluid -->
 
 <div class="row animated fadeIn fast">
   <div class="col-md-12">
@@ -39,7 +115,7 @@
         </thead>
         <tbody>
            <!-- el pipe keys es para pasar un objeto a un array -->
-          <tr *ngFor="let usuario of usuarios  ; let i = index">
+          <tr *ngFor="let usuario of  usuariosActuales  ; let i = index">
             <td>{{ i + 1 }}</td>
             <td>{{ usuario.identificador }}</td>
             <td>{{ usuario.nombreUsuario }}</td>
@@ -64,11 +140,44 @@
           </tr>
 
         </tbody>
+
       </table>
+      <!-- si no hay usuarios muestra esto -->
       <div *ngIf="(usuarios).length === 0 && !loading"
       class="alert alert-info" role="alert">
           <strong>No hay </strong> usuarios que mostrar
       </div>
     </div>
+    <br>
+
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li *ngIf="currentPage > 1 " class="page-item" >
+          <a class="page-link" (click)="nuevaPagina(currentPage-1)" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+            <span class="sr-only">Previous</span>
+          </a>
+        </li>
+        <li class="page-item" *ngFor="let i of cantidadPagina" >
+          <a class="page-link" (click)="nuevaPagina(i+1)" >{{ i+1 }}</a>
+        </li>
+
+        <li *ngIf="currentPage!=totalPaginas" class="page-item" routerLinkActive="active">
+          <a class="page-link" (click)="nuevaPagina(currentPage+1)" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+            <span class="sr-only">Next</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
   </div>
+
+
+
+
+
+
+
+
+
 </div>

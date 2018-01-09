@@ -76,11 +76,29 @@ export class UsuariosService {
     return this.http.get(url, { headers })
       .map( res=>res.json());
   }
+  // getUsuariosantiguo
+  // getUsuarios(pagina:string){
+  //   let headers = new Headers ({
+  //
+  //     'Content-Type':'application/json',
+  //     'Access-Control-Allow-Origin':'https://gvent.ovh/Prueba2_1/public',
+  //     'Authorization': this.First_accessToken+this.Secound_accessToken,
+  //
+  //     //'X-XSRF-TOKEN':this.First_accessToken+this.Secound_accessToken
+  //   });
+  //   console.log("pagina que paso a getusuarios:");
+  //   console.log(pagina);
+  //   let url = `${this.usuarioURL}/?page=${pagina}`;
+  //   console.log("url a la que pido:");
+  //   console.log(url);
+  //   console.log(this.http.get("https://gvent.ovh/Prueba2_1/public/user?page=3", { headers })
+  //     .subscribe( res=>res.json()) );
+  //   return this.http.get("https://gvent.ovh/Prueba2_1/public/user?page=3", { headers })
+  //     .map( res=>res.json()); //aqui llamo a esa url y transformo el json
+  // }
 
 
-
-
-  getUsuarios(){
+  getUsuarios(pagina:string){
     let headers = new Headers ({
 
       'Content-Type':'application/json',
@@ -89,9 +107,18 @@ export class UsuariosService {
 
       //'X-XSRF-TOKEN':this.First_accessToken+this.Secound_accessToken
     });
-    return this.http.get(this.usuariosURL, { headers })
+    console.log("pagina que paso a getusuarios:");
+    console.log(pagina);
+    let url = `${this.usuarioURL}/?page=${pagina}`;
+    console.log("url a la que pido:");
+    console.log(url);
+    console.log(this.http.get("https://gvent.ovh/Prueba2_1/public/user?page=3", { headers })
+      .subscribe( res=>res.json()) );
+    return this.http.get("https://gvent.ovh/Prueba2_1/public/user?page=3", { headers })
       .map( res=>res.json()); //aqui llamo a esa url y transformo el json
   }
+
+// "https://gvent.ovh/Prueba2_1/public/user?page=2"
 
   borrarUsuario( id:string){
     let headers = new Headers ({

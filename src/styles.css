@@ -2,7 +2,10 @@
   margin-top: 40px;
   margin-bottom: 150px;
 }
-
+.small-margin-laterals{
+  margin-left:2px;
+  margin-right:2px;
+}
 .puntero{
   cursor: pointer;
 }

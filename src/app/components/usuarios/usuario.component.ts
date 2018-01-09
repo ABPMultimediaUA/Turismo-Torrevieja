@@ -48,7 +48,7 @@ constructor( private _usuariosService: UsuariosService,
                 //
                 //
                 // }else{
-                //actualizando
+                // actualizando
 
                 this._usuariosService.getUsuario(this.id)
                     .subscribe( usuario => {usuario.data.password="",   this.usuario = usuario.data, console.log(usuario)})

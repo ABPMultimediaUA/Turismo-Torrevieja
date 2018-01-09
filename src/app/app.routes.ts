@@ -17,7 +17,7 @@ const app_routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'usuarios', component: UsuariosComponent },
-  { path: 'usuariosReloaded', component: UsuariosComponent },
+  //{ path: 'usuariosReloaded', component: UsuariosComponent },
   { path: 'nuevo-usuario', component: NuevoUsuarioComponent },
   { path: 'usuario/:id', component: UsuarioComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
