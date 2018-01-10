@@ -15,21 +15,24 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['contact']">Contacto</a>
       </li>
+      <li *ngIf="logueadoService.estaLogueado" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['usuarios']">Usuarios</a>
+      </li>
 
     </ul>
-    <button class="btn btn-info my-2 my-sm-0 small-margin-laterals"
+    <button onclick="window.location.href='https://gvent.ovh/chatbot/'" class="btn btn-info my-2 my-sm-0 small-margin-laterals"
         type="submit"
         >Chatbot</button>
 
     <button
 
-
+      *ngIf="!logueadoService.estaLogueado"
       class="btn btn-primary my-2 my-sm-0 small-margin-laterals"
         type="submit"
         [routerLink]="['login']">Iniciar sesión</button>
     <button
 
-
+        *ngIf="logueadoService.estaLogueado"
         (click)="logout()"
         class="btn btn-danger my-2 my-sm-0 small-margin-laterals"
         type="submit"
@@ -37,3 +40,4 @@
 
   </div>
 </nav>
+<!-- caca -->

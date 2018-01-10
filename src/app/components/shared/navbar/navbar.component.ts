@@ -12,7 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 // import { AuthenticationService } from '../../services/authentication.service';
 // import {AlertService } from '../../services/alert.service';
-import { AlertService, AuthenticationService } from '../../../services/index';
+import { AlertService, AuthenticationService, LogueadoService} from '../../../services/index';
 // import { AlertComponent } from '../../../_directives/index';
 // import { AuthGuard } from '../../../_guards/index';
 
@@ -31,7 +31,8 @@ export class NavbarComponent implements OnInit {
         private router: Router,
         private authenticationService: AuthenticationService,
         private alertService: AlertService,
-        private home:HomeComponent
+        private home:HomeComponent,
+        public  logueadoService: LogueadoService
         ) { }
 
   ngOnInit() {
@@ -51,13 +52,17 @@ export class NavbarComponent implements OnInit {
 
 
   logout(){
+    this.logueadoService.logouteando();
+
+
+
     console.log(localStorage.loggedIn);
     localStorage.loggedIn=false;
     console.log(localStorage.loggedIn);
       // console.log(document.getElementById("verUsuarios").style);
     this.home.logout();
     delete localStorage.accesToken;
-      this.router.navigate(['home']);
+      this.router.navigate(['/home']);
     //localStorage.removeItem(accessToken);
 
     //console.log("logueado: "+this.logueado);

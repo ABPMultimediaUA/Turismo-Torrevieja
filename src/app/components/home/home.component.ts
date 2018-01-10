@@ -40,7 +40,7 @@ export class HomeComponent implements OnInit {
 
   logout()
   {
-    document.getElementById("verUsuarios").style.display="none";
+    // document.getElementById("verUsuarios").style.display="none";
   }
 
 

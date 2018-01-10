@@ -9,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 // import { AuthenticationService } from '../../services/authentication.service';
 // import {AlertService } from '../../services/alert.service';
-import { AuthenticationService, TokenService } from '../../services/index';
+import { AuthenticationService, TokenService, LogueadoService} from '../../services/index';
 // import { AlertComponent } from '../../_directives/index';
 // import { AuthGuard } from '../../_guards/index';
 
@@ -31,7 +31,8 @@ export class LoginComponent implements OnInit {
         private authenticationService: AuthenticationService,
         private token:TokenService,
         private navbar:NavbarComponent,
-        private home:HomeComponent
+        private home:HomeComponent,
+        private logueadoService: LogueadoService
       ) { }
 
     ngOnInit() {
@@ -54,7 +55,10 @@ export class LoginComponent implements OnInit {
                   data => {
                     let resultado: any = {};
                     resultado=data;
+
+
                     this.home.loguear();
+                    this.logueadoService.logueando();
                     //console.log(document.getElementById("verUsuarios").style);
                     //console.log("token resultado= "+resultado.access_token);
                     localStorage.setItem("accesToken", resultado.access_token );

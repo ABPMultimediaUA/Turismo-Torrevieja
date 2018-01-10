@@ -13,7 +13,7 @@ import { HeroesService }  from "./services/heroes.service";
 import { UsuariosService }  from "./services/usuarios.service";
 // import { AlertComponent } from './_directives/index';
 // import { AuthGuard } from './_guards/index';
-import { AlertService, AuthenticationService, TokenService } from './services/index';
+import { AlertService, AuthenticationService, TokenService, LogueadoService } from './services/index';
 
 
 
@@ -66,7 +66,8 @@ import { SidenavbarComponent } from './components/shared/sidenavbar/sidenavbar.c
     AuthenticationService,
     TokenService,
     NavbarComponent,
-    HomeComponent
+    HomeComponent,
+    LogueadoService
 
   ],
   bootstrap: [AppComponent]
