@@ -1,6 +1,4 @@
 import { RouterModule, Routes } from '@angular/router';
-import { HeroesComponent } from "./components/heroes/heroes.component";
-import { HeroeComponent } from "./components/heroes/heroe.component";
 import { HomeComponent } from "./components/home/home.component";
 import { AboutComponent } from "./components/about/about.component";
 import { LoginComponent } from "./components/login/login.component";

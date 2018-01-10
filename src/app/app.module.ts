@@ -20,8 +20,6 @@ import { AlertService, AuthenticationService, TokenService } from './services/in
 
 
 import { AppComponent } from './app.component';
-import { HeroesComponent } from './components/heroes/heroes.component';
-import { HeroeComponent } from './components/heroes/heroe.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
@@ -39,8 +37,6 @@ import { NuevoUsuarioComponent } from './components/usuarios/nuevo-usuario.compo
 @NgModule({
   declarations: [
     AppComponent,
-    HeroesComponent,
-    HeroeComponent,
     NavbarComponent,
     HomeComponent,
     AboutComponent,
