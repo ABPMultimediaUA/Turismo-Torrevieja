@@ -14,7 +14,7 @@ rgstrUsuario = false;
 errorUsuarioActualizar = false;
 //TituloNuevo = "";
 errorMensaje:string[]=[];
-private usuario:Usuario={
+public usuario:Usuario={
   identificador:"",
   nombreUsuario:"",
   apodo:"",

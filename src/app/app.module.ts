@@ -32,6 +32,7 @@ import { ContactComponent } from './components/contact/contact.component';
 import {IdsPipe} from './components/pipes/ids.pipe';
 import { KeysPipe } from './components/pipes/keys.pipe';
 import { NuevoUsuarioComponent } from './components/usuarios/nuevo-usuario.component';
+import { SidenavbarComponent } from './components/shared/sidenavbar/sidenavbar.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { NuevoUsuarioComponent } from './components/usuarios/nuevo-usuario.compo
     ContactComponent,
     IdsPipe,
     KeysPipe,
-    NuevoUsuarioComponent
+    NuevoUsuarioComponent,
+    SidenavbarComponent
 
   ],
   imports: [

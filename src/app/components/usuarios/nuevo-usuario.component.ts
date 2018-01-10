@@ -13,7 +13,7 @@ errorUsuario = false;
 rgstrUsuario = false;
 errorUsuarioActualizar = false;
 errorMensaje:string[]=[];
-private usuario:Usuario={
+public usuario:Usuario={
   identificador:"",
   nombreUsuario:"",
   apodo:"",
