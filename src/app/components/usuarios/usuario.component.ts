@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Usuario }  from "../../interfaces/usuario.interface";
-import { UsuariosService } from "../../services/usuarios.service";
-
+import { AlertService, AuthenticationService, UsuariosService, LogueadoService } from '../../services/index';
 @Component({
   selector: 'app-usuario',
   templateUrl: './usuario.component.html'
@@ -34,8 +33,11 @@ id:string;
 
 constructor( private _usuariosService: UsuariosService,
                 private router:Router,
-                private route:ActivatedRoute//esto es para pasar como parametro
+                private route:ActivatedRoute,//esto es para pasar como parametro
+                public  logueadoService: LogueadoService
               ) {
+              this.logueadoService.comprobarLogueado();
+
           this.route.params.subscribe(parametros=>{
                 console.log(parametros);
                 this.id = parametros['id']

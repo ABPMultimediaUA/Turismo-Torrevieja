@@ -28,10 +28,22 @@ logouteando(){
   this.estaLogueado=false;
   console.log(" log de this.estaLogueado en logouteando():");
   console.log(this.estaLogueado);
-  //con local storage
-  //console.log(localStorage.getItem('accesToken') != null);
+ //con local storage
+ //console.log(localStorage.getItem('accesToken') != null);
 }
 
+comprobarLogueado(){
+  console.log("hay loggedIn?:");
+  console.log(localStorage.getItem('loggedIn') != null);
+  if(localStorage.getItem('loggedIn') != null){
+      this.estaLogueado=true;
+  }else{
+    this.estaLogueado=false;
+  }
+
+
+  return this.estaLogueado;
+}
 
 
 }

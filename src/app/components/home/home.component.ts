@@ -32,16 +32,9 @@ export class HomeComponent implements OnInit {
   ngOnInit() {
   }
 
-  loguear()
-  {
-    // console.log(document.getElementById("verUsuarios").style);
-    // document.getElementById("verUsuarios").style.display="inline";
-  }
 
-  logout()
-  {
-    // document.getElementById("verUsuarios").style.display="none";
-  }
+
+  
 
 
 }

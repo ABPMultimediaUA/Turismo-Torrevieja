@@ -56,12 +56,13 @@ export class LoginComponent implements OnInit {
                     let resultado: any = {};
                     resultado=data;
 
-
-                    this.home.loguear();
-                    this.logueadoService.logueando();
+            console.log("entra aqui");
+              localStorage.setItem("accesToken", resultado.access_token );
+                  this.logueadoService.logueando();
+            location.reload(true);
                     //console.log(document.getElementById("verUsuarios").style);
                     //console.log("token resultado= "+resultado.access_token);
-                    localStorage.setItem("accesToken", resultado.access_token );
+
                     //console.log("token localStorage= "+localStorage.accesToken);
 
                     //console.log(resultado);
@@ -76,6 +77,7 @@ export class LoginComponent implements OnInit {
 
                   //console.log("Entrar data1");
                   localStorage.setItem("loggedIn", "true");
+                //  localStorage.setItem("accesToken", resultado.access_token );
                   this.navbar.loguear();
 
                   console.log("despues de set logueado");
@@ -83,10 +85,19 @@ export class LoginComponent implements OnInit {
                   //this.navbar.loguea();
                   //console.log("navbar.logueado: "+this.navbar.logueado);
 
-                  //codigo isrem
-                  // localStorage.setItem('currentUser', JSON.stringify({ token: token, name: name }));
 
-                  this.router.navigate(['usuarios']);
+                  // if(this.logueadoService.estaLogueado==true){
+                    this.router.navigate(['usuarios']);
+                    this.logueadoService.logueando();
+                  //  location.reload(true);
+
+                    console.log("estaLogueado:");
+                    console.log(this.logueadoService.estaLogueado);
+
+                  // }else{
+                  //   this.router.navigate(['home']);
+                  // }
+
 
 
                     //this.router.navigate([this.returnUrl]);

@@ -12,7 +12,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 // import { AuthenticationService } from '../../services/authentication.service';
 // import {AlertService } from '../../services/alert.service';
-import { AlertService, AuthenticationService, UsuariosService } from '../../services/index';
+import { AlertService, AuthenticationService, UsuariosService, LogueadoService } from '../../services/index';
 // import { AlertComponent } from '../../../_directives/index';
 // import { AuthGuard } from '../../../_guards/index';
 
@@ -35,8 +35,13 @@ export class UsuariosComponent implements OnInit {
   // k:number;
   constructor(private _usuariosService:UsuariosService,
               private router:Router,
-              private route:ActivatedRoute
+              private route:ActivatedRoute,
+              public  logueadoService: LogueadoService
             ) {
+              this.logueadoService.comprobarLogueado();
+
+              console.log("estaLogueado:");
+              console.log(this.logueadoService.estaLogueado);
         this._usuariosService.getUsuarios("1")
           .subscribe( data =>{
             console.log(data);//la data del getHeroes

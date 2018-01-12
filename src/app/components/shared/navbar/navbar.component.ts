@@ -33,7 +33,9 @@ export class NavbarComponent implements OnInit {
         private alertService: AlertService,
         private home:HomeComponent,
         public  logueadoService: LogueadoService
-        ) { }
+        ) {
+          this.logueadoService.comprobarLogueado();
+         }
 
   ngOnInit() {
 
@@ -59,8 +61,11 @@ export class NavbarComponent implements OnInit {
     console.log(localStorage.loggedIn);
     localStorage.loggedIn=false;
     console.log(localStorage.loggedIn);
+    delete localStorage.loggedIn;
+    console.log("loggedin despues del delete:")
+    console.log(localStorage.loggedIn);
       // console.log(document.getElementById("verUsuarios").style);
-    this.home.logout();
+
     delete localStorage.accesToken;
       this.router.navigate(['/home']);
     //localStorage.removeItem(accessToken);

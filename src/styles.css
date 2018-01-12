@@ -8,12 +8,16 @@
 /* .elemento-navbar{
 color: ;
 } */
-
+.nomargin{
+  margin-bottom:  0rem !important;
+}
 .elemento-navbar:hover {
     background-color: #042649;
     color:#D9D9D9;
 }
-
+.fondo-gris{
+  background: rgba(100, 100, 100, 0.6);
+}
 .bg-a8a8a8{
   background-color: #a8a8a8;
 }
