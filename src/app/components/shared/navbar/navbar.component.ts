@@ -67,6 +67,17 @@ export class NavbarComponent implements OnInit {
       // console.log(document.getElementById("verUsuarios").style);
 
     delete localStorage.accesToken;
+
+    //Borrar cookie
+    var cookies = document.cookie.split(";");
+
+    for (var i = 0; i < cookies.length; i++) {
+        var cookie = cookies[i];
+        var eqPos = cookie.indexOf("=");
+        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+    //Terminar de borrar cookie
       this.router.navigate(['/home']);
     //localStorage.removeItem(accessToken);
 
