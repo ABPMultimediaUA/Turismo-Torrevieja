@@ -1,31 +1,30 @@
-<div>
-  {{parametro}}
-</div>
+<br><br><br><br><br><br><br><br><br><br>
   <!-- mensaje normal -->
-<div class="alert alert-primary" role="alert">
-  <h4 class="alert-heading">Well done!</h4>
-  <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+<div *ngIf="tipo_mensaje=='bien'"class="alert alert-primary" role="alert">
+  <h4 class="alert-heading">Bien</h4>
+  <p>{{mensaje}}</p>
   <hr>
-  <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+  <p class="mb-0"> <a href="https://gvent.ovh/contact">Si tiene alguna duda, podría contactarnos pinchando aquí</a> </p>
 </div>
  <!-- mensaje exito -->
-<div class="alert alert-success" role="alert">
-  <h4 class="alert-heading">Well done!</h4>
-  <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+<div *ngIf="tipo_mensaje=='genial'"class="alert alert-success" role="alert">
+  <h4 class="alert-heading">¡Genial!</h4>
+  <p>{{mensaje}}</p>
   <hr>
-  <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+  <p class="mb-0"> <a href="https://gvent.ovh/contact">Si tiene alguna duda, podría contactarnos pinchando aquí</a> </p>
 </div>
   <!-- mensaje error -->
-<div class="alert alert-danger" role="alert">
-  <h4 class="alert-heading">Well done!</h4>
-  <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+<div *ngIf="tipo_mensaje=='error'"class="alert alert-danger" role="alert">
+  <h4 class="alert-heading">Error</h4>
+  <p>{{mensaje}}</p>
   <hr>
-  <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+  <p class="mb-0"> <a href="https://gvent.ovh/contact">Si tiene alguna duda, podría contactarnos pinchando aquí</a> </p>
 </div>
   <!-- mensaje aviso -->
-<div class="alert alert-warning" role="alert">
-  <h4 class="alert-heading">Well done!</h4>
-  <p>Aww yeah, you successfully read this important alert message. This example text is going to run a bit longer so that you can see how spacing within an alert works with this kind of content.</p>
+<div *ngIf="tipo_mensaje=='aviso'"class="alert alert-warning" role="alert">
+  <h4 class="alert-heading">Aviso</h4>
+  <p>{{mensaje}}</p>
   <hr>
-  <p class="mb-0">Whenever you need to, be sure to use margin utilities to keep things nice and tidy.</p>
+  <p class="mb-0"> <a href="https://gvent.ovh/contact">Si tiene alguna duda, podría contactarnos pinchando aquí</a> </p>
 </div>
+<br><br><br><br><br><br><br><br><br><br>

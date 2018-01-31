@@ -20,6 +20,8 @@ import { AuthenticationService, TokenService, LogueadoService} from '../../servi
 })
 export class MensajesComponent implements OnInit {
 parametro:string = "mensaje de prueba";
+tipo_mensaje:string;
+mensaje:string;
   constructor(
       private route: ActivatedRoute,
       private router: Router,
@@ -29,12 +31,28 @@ parametro:string = "mensaje de prueba";
       private home:HomeComponent,
       private logueadoService: LogueadoService
     ) {
+      console.log("entra en mensajes");
       this.logueadoService.comprobarLogueado();
+      this.route.params.subscribe(parametros=>{
+            console.log(parametros);
+            this.parametro = parametros['parame'];
+            //mostrar mensajes
+
+            if(this.parametro=="verificado"){
+              this.tipo_mensaje="genial";
+              this.mensaje= "¡Enhorabuena! Ya estas registrado en Gvent. Inicia sesion para acceder a la aplicación";
+            }
+            if(this.parametro=="noEncontrado"){
+              this.tipo_mensaje="error";
+              this.mensaje= "404. Lo que buscabas no existe o no lo hemos encontrado.";
+            }
+
+
+            });
      }
 
   ngOnInit() {
   }
-  recogerParame(parame){
-    this.parametro=parame;
-  }
+
+
 }

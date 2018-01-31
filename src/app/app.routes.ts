@@ -15,7 +15,7 @@ const app_routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'usuarios', component: UsuariosComponent },
-  { path: 'mensajes', component: MensajesComponent },
+  { path: 'mensajes/:parame', component: MensajesComponent },
   //{ path: 'usuariosReloaded', component: UsuariosComponent },
   { path: 'nuevo-usuario', component: NuevoUsuarioComponent },
   { path: 'usuario/:id', component: UsuarioComponent },
