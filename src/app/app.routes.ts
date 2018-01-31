@@ -6,7 +6,7 @@ import { UsuariosComponent } from "./components/usuarios/usuarios.component";
 import { UsuarioComponent } from "./components/usuarios/usuario.component";
 import { NuevoUsuarioComponent } from "./components/usuarios/nuevo-usuario.component";
 import { ContactComponent } from "./components/contact/contact.component";
-
+import { MensajesComponent } from "./components/mensajes/mensajes.component";
 
 
 const app_routes: Routes = [
@@ -15,6 +15,7 @@ const app_routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'usuarios', component: UsuariosComponent },
+  { path: 'mensajes', component: MensajesComponent },
   //{ path: 'usuariosReloaded', component: UsuariosComponent },
   { path: 'nuevo-usuario', component: NuevoUsuarioComponent },
   { path: 'usuario/:id', component: UsuarioComponent },

@@ -33,6 +33,8 @@ import {IdsPipe} from './components/pipes/ids.pipe';
 import { KeysPipe } from './components/pipes/keys.pipe';
 import { NuevoUsuarioComponent } from './components/usuarios/nuevo-usuario.component';
 import { SidenavbarComponent } from './components/shared/sidenavbar/sidenavbar.component';
+import { MensajeComponent } from './components/shared/mensaje/mensaje.component';
+import { MensajesComponent } from './components/mensajes/mensajes.component';
 
 
 @NgModule({
@@ -49,7 +51,10 @@ import { SidenavbarComponent } from './components/shared/sidenavbar/sidenavbar.c
     IdsPipe,
     KeysPipe,
     NuevoUsuarioComponent,
-    SidenavbarComponent
+    SidenavbarComponent,
+    MensajeComponent,
+    MensajesComponent
+
 
   ],
   imports: [
