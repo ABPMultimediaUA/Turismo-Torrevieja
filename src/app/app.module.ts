@@ -35,6 +35,7 @@ import { NuevoUsuarioComponent } from './components/usuarios/nuevo-usuario.compo
 import { SidenavbarComponent } from './components/shared/sidenavbar/sidenavbar.component';
 import { MensajeComponent } from './components/shared/mensaje/mensaje.component';
 import { MensajesComponent } from './components/mensajes/mensajes.component';
+import { CarteraComponent } from './components/cartera/cartera.component';
 
 
 @NgModule({
@@ -53,7 +54,8 @@ import { MensajesComponent } from './components/mensajes/mensajes.component';
     NuevoUsuarioComponent,
     SidenavbarComponent,
     MensajeComponent,
-    MensajesComponent
+    MensajesComponent,
+    CarteraComponent
 
 
   ],

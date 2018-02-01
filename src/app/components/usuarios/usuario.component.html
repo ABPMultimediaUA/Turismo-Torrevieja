@@ -19,8 +19,11 @@
         </ul>
         <br>
         <ul class="nav nav-pills flex-column">
-          <li class="nav-item">
-            <a class="nav-link elemento-navbar d9d9d9 " href="#">Eventos</a>
+          <li class="nav-item " routerLinkActive="active">
+            <a
+            role="button"
+            [routerLink]="['/cartera']"
+            class="nav-link elemento-navbar d9d9d9 " >Cartera de eventos</a>
           </li>
           <li class="nav-item">
             <a class="nav-link elemento-navbar d9d9d9 " href="#">Nuevo evento</a>
