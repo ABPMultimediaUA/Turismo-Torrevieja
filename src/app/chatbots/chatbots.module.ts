@@ -1,15 +1,31 @@
+
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HeaderComponent } from './header/header.component';
-import { FooterComponent } from './footer/footer.component';
+
+import { ChatbotsComponent } from './chatbots.component'
 import { BodyComponent } from './body/body.component';
-import { ChatMartaComponent } from './chat-marta/chat-marta.component';
 import { ChatCarlosComponent } from './chat-carlos/chat-carlos.component';
+import { FooterComponent } from './footer/footer.component';
+
+import { HttpModule } from '@angular/http';
+
+import { ChatbotsRoutingModule } from './chatbots-routing.module';
 
 @NgModule({
+
   imports: [
-    CommonModule
+    CommonModule,
+    ChatbotsRoutingModule
   ],
-  declarations: [HeaderComponent, FooterComponent, BodyComponent, ChatMartaComponent, ChatCarlosComponent]
+  declarations: [
+    ChatbotsComponent,
+    FooterComponent,
+    BodyComponent,
+    ChatCarlosComponent
+  ],
+  providers: [
+
+  ]
 })
+
 export class ChatbotsModule { }
