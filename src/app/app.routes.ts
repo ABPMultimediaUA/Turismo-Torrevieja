@@ -17,9 +17,9 @@ import { ChatbotsComponent } from './chatbots/chatbots.component';
 const app_routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },
-  { path: 'chatbots', loadChildren: 'app/chatbots/chatbots.module#ChatbotsModule' },
   { path: 'login', component: LoginComponent },
   { path: 'contact', component: ContactComponent },
+  { path: 'chatbots', loadChildren: 'app/chatbots/chatbots.module#ChatbotsModule' },
   { path: 'usuarios', component: UsuariosComponent },
   { path: 'cartera', component: CarteraComponent },
   { path: 'mensajes/:parame', component: MensajesComponent },
