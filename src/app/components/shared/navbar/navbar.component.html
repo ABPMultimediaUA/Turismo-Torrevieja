@@ -1,24 +1,34 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-dark bg-blue ">
   <a class="navbar-brand" [routerLink]="['home']">GVENT</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active" routerLinkActive="active">
+  <div class="collapse navbar-collapse d9d9d9 "id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto d9d9d9">
+      <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['home']">Inicio <span class="sr-only">(current)</span></a>
       </li>
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['about']">Acerca de GVENT</a>
       </li>
       <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['chatbots']" target="_blank">Chatbots de ayuda</a>
+        <a class="nav-link" [routerLink]="['chatbots']">Chatbots de ayuda</a>
       </li>
     </ul>
-    <button class="btn btn-outline-success my-2 my-sm-0"
+    <button
+
+      *ngIf="!logueadoService.estaLogueado"
+      class="btn btn-primary my-2 my-sm-0 small-margin-laterals"
         type="submit"
         [routerLink]="['login']">Iniciar sesión</button>
+    <button
+
+        *ngIf="logueadoService.estaLogueado"
+        (click)="logout()"
+        class="btn btn-danger my-2 my-sm-0 small-margin-laterals"
+        type="submit"
+        >Logout</button>
 
   </div>
 </nav>
