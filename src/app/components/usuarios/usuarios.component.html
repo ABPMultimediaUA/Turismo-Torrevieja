@@ -76,14 +76,14 @@
                 <td *ngIf="usuario.rol ==2">Trabajador</td>
                 <td *ngIf="usuario.rol !=1 && usuario.rol !=2">Otros roles</td>
 
-                <td class="text-right w120">
+                <td class="text-center w20">
                   <button  [routerLink]="['/usuario', usuario.identificador]"
                   type="button" class="btn btn-outline-success">
-                    Editar
+                    <span class="icon-pencil"></span>
                   </button>
                   <button  (click)="borrarUsuario(usuario.identificador)"
                   type="button" class="btn btn-outline-danger">
-                    Eliminar
+                    <span class="icon-trash"></span>
                   </button>
                 </td>
               </tr>

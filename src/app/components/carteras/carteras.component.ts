@@ -31,7 +31,7 @@ export class CarterasComponent implements OnInit {
   totalPaginas:number;
   currentPage:number = 1;
   // k:number;
-  constructor(private _usuariosService:CarterasService,
+  constructor(private _carterasService:CarterasService,
               private router:Router,
               private route:ActivatedRoute,
               public  logueadoService: LogueadoService
@@ -40,14 +40,14 @@ export class CarterasComponent implements OnInit {
 
               console.log("estaLogueado:");
               console.log(this.logueadoService.estaLogueado);
-        this._usuariosService.getCarteras("1")
+        this._carterasService.getCarteras("1")
           .subscribe( data =>{
             console.log(data);//la data del getHeroes
 
             this.carteras= data.data;
-            console.log("array de usuarios:");
+            console.log("array de carteras:");
             console.log(this.carteras);
-            console.log("usuarios[3]:");
+            console.log("carteras[3]:");
             console.log(this.carteras[3]);
             this.totalPaginas = Math.ceil(this.carteras.length/10);
             console.log("this.totalPaginas:");
@@ -146,14 +146,14 @@ export class CarterasComponent implements OnInit {
   // this.router.navigate(['usuarios']);
   // }
   borrarCartera(id:string){
-      this._usuariosService.borrarCartera(id)
+      this._carterasService.borrarCartera(id)
           .subscribe(respuesta=>{
             if(respuesta){
               console.log("caracola");
               console.log(respuesta);
-              console.log( "borracartera y ahora va a pedir todos los usuarios de nuevo" );
-            this._usuariosService.getCarteras("1");
-            console.log( "aqui los ha pedido ya todos de nuevo y voy a hacer el router navigate a usuarios" );
+              console.log( "borracartera y ahora va a pedir todos los carteras de nuevo" );
+            this._carterasService.getCarteras("1");
+            console.log( "aqui los ha pedido ya todos de nuevo y voy a hacer el router navigate a carteras" );
             location.reload(true);
             this.router.navigate(['carteras']);
             // this.refresh();
