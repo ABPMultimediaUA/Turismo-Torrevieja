@@ -1,0 +1,196 @@
+
+<div class="nomargin jumbotron  text-center bg-blue">
+  <img src="../assets/logo.png" alt="" style="width:400px; height:auto;">
+  <!-- <h1>GVENT</h1> -->
+  <br><br>
+  <h2>Herramienta online de gestión y difusión de eventos</h2>
+<p class="text-home">
+  GVENT es una herramienta online que permite gestionar y administrar
+  eventos de forma sencilla y cómoda. Además, permite realizar la
+   publicación y difusión de los eventos creados con un solo click.</p>
+
+  <!-- <p><a class="btn btn-primary btn-lg"
+      role="button"
+      [routerLink]="['../heroes']">
+      Ver heroes</a></p> -->
+
+      <div id="verUsuarios"  style="display:none"><a class="btn btn-primary btn-lg"
+          role="button"
+          [routerLink]="['../usuarios']">
+          Ver usuarios</a></div>
+</div>
+
+
+<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+
+<!--
+####################################################
+C A R O U S E L
+####################################################
+-->
+<div id="carousel" class="carousel slide carousel-fade" data-ride="carousel" data-interval="6000">
+  <ol class="carousel-indicators">
+      <li data-target="#carousel" data-slide-to="0" class="active"></li>
+      <li data-target="#carousel" data-slide-to="1"></li>
+      <li data-target="#carousel" data-slide-to="2"></li>
+  </ol>
+  <div class="carousel-inner" role="listbox">
+      <div class="carousel-item active">
+               <picture>
+                <source srcset="../assets/img1.jpg" media="(min-width: 1400px)">
+                <source srcset="../assets/img1.jpg" media="(min-width: 769px)">
+                 <source srcset="../assets/img1.jpg" media="(min-width: 577px)">
+                <img srcset="../assets/img1.jpg" alt="responsive image" class="d-block img-fluid">
+              </picture>
+
+              <div class="carousel-caption">
+                  <div class="fondo-gris">
+                      <h2>Gestión de eventos</h2>
+                      <p>GVENT es una herramienta online para organizar y gestionar eventos de forma profesional. <br>
+                      Además puedes publicar los eventos en tus redes sociales de forma automática.</p>
+                      <a class="btn btn-sm btn-secondary"
+                          role="button"
+                          [routerLink]="['../about']">Acerca de GVENT</a>
+
+                  </div>
+              </div>
+
+      </div>
+      <!-- /.carousel-item -->
+      <div class="carousel-item">
+
+               <picture>
+                <source srcset="../assets/img2.jpg" media="(min-width: 1400px)">
+                <source srcset="../assets/img2.jpg" media="(min-width: 769px)">
+                 <source srcset="../assets/img2.jpg" media="(min-width: 577px)">
+                <img srcset="../assets/img2.jpg" alt="responsive image" class="d-block img-fluid">
+              </picture>
+
+              <div class="carousel-caption justify-content-center align-items-center">
+                  <div class="fondo-gris">
+                      <h2>Inicia sesión</h2>
+                      <p>Si ya tienes una cuenta de GVENT accede a tu espacio de trabajo.</p>
+                      <a class="btn btn-sm btn-secondary"
+                          role="button"
+                          [routerLink]="['../login']">Iniciar sesión</a>
+                  </div>
+              </div>
+
+      </div>
+      <!-- /.carousel-item -->
+      <div class="carousel-item">
+
+               <picture>
+                <source srcset="../assets/img3.jpg" media="(min-width: 1400px)">
+                <source srcset="../assets/img3.jpg" media="(min-width: 769px)">
+                 <source srcset="../assets/img3.jpg" media="(min-width: 577px)">
+                <img srcset="../assets/img3.jpg" alt="responsive image" class="d-block img-fluid">
+              </picture>
+
+              <div class="carousel-caption justify-content-center align-items-center">
+                  <div class="fondo-gris">
+                      <h2>Contrata GVENT</h2>
+                      <p>Para contratar GVENT contacta con nosotros. <br>
+                        Te asesoraremos de forma personalizada según tus necesidades.</p>
+                        <a class="btn btn-sm btn-secondary"
+                            role="button"
+                            [routerLink]="['../about']">Contactar</a>
+                  </div>
+              </div>
+
+      </div>
+      <!-- /.carousel-item -->
+  </div>
+  <!-- /.carousel-inner -->
+  <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+  </a>
+  <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+  </a>
+</div>
+<!-- /.carousel -->
+
+
+<br><br><br>
+<!-- Plans -->
+<section id="plans">
+    <div class="container">
+      <h2 class="text-center">Tarifas</h2> <br>
+        <div class="row">
+
+            <!-- item -->
+            <div class="col-md-4 text-center">
+
+                <div class="panel panel-danger panel-pricing">
+                    <div class="panel-heading">
+                        <i class="fa fa-desktop"></i>
+                        <h3>Plan 1</h3>
+                    </div>
+                    <div class="panel-body text-center">
+                        <p><strong>$100 / Month</strong></p>
+                    </div>
+                    <ul class="list-group text-center">
+                        <li class="list-group-item"><i class="fa fa-check"></i> Personal use</li>
+                        <li class="list-group-item"><i class="fa fa-check"></i> Unlimited projects</li>
+                        <li class="list-group-item"><i class="fa fa-check"></i> 27/7 support</li>
+                    </ul>
+                    <div class="panel-footer">
+                        <a class="btn btn-lg btn-block btn-danger" href="#">BUY NOW!</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /item -->
+
+            <!-- item -->
+            <div class="col-md-4 text-center">
+                <div class="panel panel-warning panel-pricing">
+                    <div class="panel-heading">
+                        <i class="fa fa-desktop"></i>
+                        <h3>Plan 2</h3>
+                    </div>
+                    <div class="panel-body text-center">
+                        <p><strong>$200 / Month</strong></p>
+                    </div>
+                    <ul class="list-group text-center">
+                        <li class="list-group-item"><i class="fa fa-check"></i> Personal use</li>
+                        <li class="list-group-item"><i class="fa fa-check"></i> Unlimited projects</li>
+                        <li class="list-group-item"><i class="fa fa-check"></i> 27/7 support</li>
+                    </ul>
+                    <div class="panel-footer">
+                        <a class="btn btn-lg btn-block btn-warning" href="#">BUY NOW!</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /item -->
+
+            <!-- item -->
+            <div class="col-md-4 text-center">
+                <div class="panel panel-success panel-pricing">
+                    <div class="panel-heading">
+                        <i class="fa fa-desktop"></i>
+                        <h3>Plan 3</h3>
+                    </div>
+                    <div class="panel-body text-center">
+                        <p><strong>$300 / Month</strong></p>
+                    </div>
+                    <ul class="list-group text-center">
+                        <li class="list-group-item"><i class="fa fa-check"></i> Personal use</li>
+                        <li class="list-group-item"><i class="fa fa-check"></i> Unlimited projects</li>
+                        <li class="list-group-item"><i class="fa fa-check"></i> 27/7 support</li>
+                    </ul>
+                    <div class="panel-footer">
+                        <a class="btn btn-lg btn-block btn-success" href="#">BUY NOW!</a>
+                    </div>
+                </div>
+            </div>
+            <!-- /item -->
+
+        </div>
+    </div>
+</section>
+<br><br>
+<!-- /Plans -->

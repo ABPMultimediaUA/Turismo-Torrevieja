@@ -1,0 +1,90 @@
+
+/* BOTON */
+button{
+  border-radius: 1px !important;
+  width: 6em !important;
+}
+.btn{
+  border-radius: 1px!important;
+  margin-bottom: 1em;
+  border: none !important;
+}
+
+.text-home{
+  padding-left: 10em;
+  padding-right: 10em;
+  text-align: justify;
+}
+@media screen and (max-width: 1200px) {
+    .text-home{
+        padding-right: 1em !important;
+        padding-left: 1em !important;
+    }
+}
+
+.main-container{
+  margin-top: 4em;
+  margin-bottom: 4em;
+}
+.d9d9d9{
+  color: #D9D9D9;
+}
+/* .elemento-navbar{
+color: ;
+} */
+.nomargin{
+  margin-bottom:  0em !important;
+}
+.elemento-navbar:hover {
+    background-color: #042649;
+    color:#D9D9D9;
+}
+.fondo-gris{
+  background: rgba(100, 100, 100, 0.6);
+}
+.bg-a8a8a8{
+  background-color: #a8a8a8;
+}
+.bg-blue{
+  background-color: #05386B;
+}
+.small-margin-laterals{
+  margin-left:0.2em !important;
+  margin-right:0.2em !important;
+}
+.puntero{
+  cursor: pointer;
+}
+
+.w120{
+  width: 120px;
+}
+
+/* Animaciones */
+.animated {
+  -webkit-animation-duration: 1s;
+  animation-duration: 1s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+.fast {
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+  -webkit-animation-fill-mode: both;
+  animation-fill-mode: both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.fadeIn {
+  animation-name: fadeIn;
+}
