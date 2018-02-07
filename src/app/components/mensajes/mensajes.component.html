@@ -1,0 +1,30 @@
+<br><br><br><br><br><br><br><br><br><br>
+  <!-- mensaje normal -->
+<div *ngIf="tipo_mensaje=='bien'"class="alert alert-primary" role="alert">
+  <h4 class="alert-heading">Bien</h4>
+  <p>{{mensaje}}</p>
+  <hr>
+  <p class="mb-0"> <a href="https://gvent.ovh/contact">Si tiene alguna duda, podría contactarnos pinchando aquí</a> </p>
+</div>
+ <!-- mensaje exito -->
+<div *ngIf="tipo_mensaje=='genial'"class="alert alert-success" role="alert">
+  <h4 class="alert-heading">¡Genial!</h4>
+  <p>{{mensaje}}</p>
+  <hr>
+  <p class="mb-0"> <a href="https://gvent.ovh/contact">Si tiene alguna duda, podría contactarnos pinchando aquí</a> </p>
+</div>
+  <!-- mensaje error -->
+<div *ngIf="tipo_mensaje=='error'"class="alert alert-danger" role="alert">
+  <h4 class="alert-heading">Error</h4>
+  <p>{{mensaje}}</p>
+  <hr>
+  <p class="mb-0"> <a href="https://gvent.ovh/contact">Si tiene alguna duda, podría contactarnos pinchando aquí</a> </p>
+</div>
+  <!-- mensaje aviso -->
+<div *ngIf="tipo_mensaje=='aviso'"class="alert alert-warning" role="alert">
+  <h4 class="alert-heading">Aviso</h4>
+  <p>{{mensaje}}</p>
+  <hr>
+  <p class="mb-0"> <a href="https://gvent.ovh/contact">Si tiene alguna duda, podría contactarnos pinchando aquí</a> </p>
+</div>
+<br><br><br><br><br><br><br><br><br><br>
