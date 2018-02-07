@@ -11,6 +11,9 @@ import { ProveedorComponent } from "./components/proveedores/proveedor.component
 import { NuevoProveedorComponent } from "./components/proveedores/nuevo-proveedor.component";
 import { ProveedorEditarComponent } from "./components/proveedores/proveedor-editar.component";
 import { EspaciosComponent } from "./components/espacios/espacios.component";
+import { EspacioComponent } from "./components/espacios/espacio.component";
+import { NuevoEspacioComponent } from "./components/espacios/nuevo-espacio.component";
+import { EspacioEditarComponent } from "./components/espacios/espacio-editar.component";
 
 
 const app_routes: Routes = [
@@ -27,6 +30,9 @@ const app_routes: Routes = [
   { path: 'nuevo-proveedor', component: NuevoProveedorComponent },
   { path: 'proveedoredit/:id', component: ProveedorEditarComponent },
   { path: 'espacios', component: EspaciosComponent },
+  { path: 'espacio/:id', component: EspacioComponent },
+  { path: 'espacioEditar/:id', component: EspacioEditarComponent },
+  { path: 'nuevoEspacio', component: NuevoEspacioComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
 ];
 

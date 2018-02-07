@@ -42,6 +42,9 @@ import { ProveedorComponent } from "./components/proveedores/proveedor.component
 import { NuevoProveedorComponent } from './components/proveedores/nuevo-proveedor.component';
 import { ProveedorEditarComponent } from './components/proveedores//proveedor-editar.component';
 import { EspaciosComponent } from './components/espacios/espacios.component';
+import { EspacioComponent } from './components/espacios/espacio.component';
+import { NuevoEspacioComponent } from './components/espacios/nuevo-espacio.component';
+import { EspacioEditarComponent } from './components/espacios/espacio-editar.component';
 
 
 @NgModule({
@@ -63,7 +66,10 @@ import { EspaciosComponent } from './components/espacios/espacios.component';
     ProveedorComponent,
     NuevoProveedorComponent,
     ProveedorEditarComponent,
-    EspaciosComponent
+    EspaciosComponent,
+    EspacioComponent,
+    NuevoEspacioComponent,
+    EspacioEditarComponent
 
   ],
   imports: [
