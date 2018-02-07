@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import {LoginComponent} from '../login/login.component';
 
-import { Cartera }  from "../../interfaces/cartera.interface";
+
 import {HomeComponent} from "../home/home.component";
 import { Router, ActivatedRoute } from '@angular/router';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';//ramoon
@@ -12,26 +12,26 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 // import { AuthenticationService } from '../../services/authentication.service';
 // import {AlertService } from '../../services/alert.service';
-import { AlertService, AuthenticationService, CarterasService, LogueadoService } from '../../services/index';
+import { AlertService, AuthenticationService, UsuariosService, LogueadoService } from '../../services/index';
 // import { AlertComponent } from '../../../_directives/index';
 // import { AuthGuard } from '../../../_guards/index';
 
 @Component({
-  selector: 'app-carteras',
-  templateUrl: './carteras.component.html'
+  selector: 'app-cartera',
+  templateUrl: './cartera.component.html',
+  styleUrls: ['./cartera.component.css']
 })
-export class CarterasComponent implements OnInit {
-  carteras:any[] = [];
+export class CarteraComponent implements OnInit {
+  eventos:any[] = [];
   loading:boolean = true;
   //pagination
   paginacion:any = [];
   cantidadPagina:any[]=[];
 
-  carterasActuales:any[] = [];
+  eventosActuales:any[] = [];
   totalPaginas:number;
   currentPage:number = 1;
-  // k:number;
-  constructor(private _usuariosService:CarterasService,
+  constructor(private _usuariosService:UsuariosService,
               private router:Router,
               private route:ActivatedRoute,
               public  logueadoService: LogueadoService
@@ -40,16 +40,16 @@ export class CarterasComponent implements OnInit {
 
               console.log("estaLogueado:");
               console.log(this.logueadoService.estaLogueado);
-        this._usuariosService.getCarteras("1")
+        this._usuariosService.getUsuarios("1")
           .subscribe( data =>{
             console.log(data);//la data del getHeroes
 
-            this.carteras= data.data;
+            this.eventos= data.data;
             console.log("array de usuarios:");
-            console.log(this.carteras);
+            console.log(this.eventos);
             console.log("usuarios[3]:");
-            console.log(this.carteras[3]);
-            this.totalPaginas = Math.ceil(this.carteras.length/10);
+            console.log(this.eventos[3]);
+            this.totalPaginas = Math.ceil(this.eventos.length/10);
             console.log("this.totalPaginas:");
             console.log(this.totalPaginas);
             this.loading=false;
@@ -66,15 +66,15 @@ export class CarterasComponent implements OnInit {
               this.cantidadPagina.push(i);
             }
 
-            if(this.carteras.length>9){
+            if(this.eventos.length>9){
               for(let i=0;i<=9;i++)
               {
-                this.carterasActuales.push(this.carteras[i]);
+                this.eventosActuales.push(this.eventos[i]);
               }
             }else{
-              for(let i=0;i<=this.carteras.length;i++)
+              for(let i=0;i<=this.eventos.length;i++)
               {
-                this.carterasActuales.push(this.carteras[i]);
+                this.eventosActuales.push(this.eventos[i]);
               }
             }
 
@@ -104,17 +104,17 @@ export class CarterasComponent implements OnInit {
     console.log(pagina);
     let x = 10 * (pagina-1);
     let y = x + 9;
-    this.carterasActuales=[];
+    this.eventosActuales=[];
 
     if(pagina==this.totalPaginas){
-      for(let i=x;i<this.carteras.length;i++)
+      for(let i=x;i<this.eventos.length;i++)
       {
-        this.carterasActuales.push(this.carteras[i]);
+        this.eventosActuales.push(this.eventos[i]);
       }
     }else{
       for(let i=x;i<=y;i++)
       {
-        this.carterasActuales.push(this.carteras[i]);
+        this.eventosActuales.push(this.eventos[i]);
       }
     }
 
@@ -145,21 +145,21 @@ export class CarterasComponent implements OnInit {
   // refresh(){
   // this.router.navigate(['usuarios']);
   // }
-  borrarCartera(id:string){
-      this._usuariosService.borrarCartera(id)
+  borrarUsuario(id:string){
+      this._usuariosService.borrarUsuario(id)
           .subscribe(respuesta=>{
             if(respuesta){
               console.log("caracola");
               console.log(respuesta);
-              console.log( "borracartera y ahora va a pedir todos los usuarios de nuevo" );
-            this._usuariosService.getCarteras("1");
+              console.log( "borrausuario y ahora va a pedir todos los usuarios de nuevo" );
+            this._usuariosService.getUsuarios("1");
             console.log( "aqui los ha pedido ya todos de nuevo y voy a hacer el router navigate a usuarios" );
             location.reload(true);
-            this.router.navigate(['carteras']);
+            this.router.navigate(['usuarios']);
             // this.refresh();
             }else{
               //todo bien
-              delete this.carteras[id];
+              delete this.eventos[id];
             //   console.log( "borrausuario y ahora va a pedir todos los usuarios de nuevo" );
             // this._usuariosService.getUsuarios();
             // console.log( "aqui los ha pedido ya todos de nuevo" );
@@ -171,4 +171,4 @@ export class CarterasComponent implements OnInit {
           })
 
     }
-  }
+}
