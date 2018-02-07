@@ -50,8 +50,8 @@ constructor( private _usuariosService: CarterasService,
                 // }else{
                 // actualizando
 
-                this._usuariosService.getUsuario(this.id)
-                    .subscribe( usuario => {usuario.data.password="",   this.usuario = usuario.data, console.log(usuario)})
+                this._usuariosService.getCartera(this.id)
+                    .subscribe( usuario => {usuario.data.password="",   this.cartera = usuario.data, console.log(usuario)})
                     console.log("pone password vacio");
               // }
           });
@@ -67,14 +67,14 @@ constructor( private _usuariosService: CarterasService,
   {
         console.log("ewfefe"+this.id);
         if(this.id == "nuevo"){
-          console.log("voy a guardar nuevo usuario(abajo):");
-            console.log(this.usuario);
-            this._usuariosService.nuevoUsuario( this.usuario )
+          console.log("voy a guardar nueva cartera(abajo):");
+            console.log(this.cartera);
+            this._usuariosService.nuevaCartera( this.cartera )
               .subscribe( data=>{
                 //this.router.navigate(['/heroe',data.name])
                 console.log(data);
-                this.errorUsuario = false;
-                this.rgstrUsuario = true;
+                this.errorCartera = false;
+                this.rgstrCartera = true;
             //    this.ngForm.reset();
 
 
@@ -143,8 +143,8 @@ constructor( private _usuariosService: CarterasService,
                 }
                 */
 
-                this.errorUsuario = true;
-                this.rgstrUsuario = false;
+                this.errorCartera = true;
+                this.rgstrCartera = false;
               },);
 
 
@@ -159,10 +159,10 @@ constructor( private _usuariosService: CarterasService,
 
         //actualizando
         console.log("voy a actualizar usuario");
-        this._usuariosService.actualizarUsuario(this.usuario, this.id)
+        this._usuariosService.actualizarCartera(this.cartera, this.id)
             .subscribe(data=>{
               console.log("data que queremos actualizar"+data);
-              this.errorUsuarioActualizar = false;
+              this.errorCarteraActualizar = false;
                 this.router.navigate(['usuarios']);
             },
             error=> {
@@ -236,7 +236,7 @@ constructor( private _usuariosService: CarterasService,
               */
 
 
-              this.errorUsuarioActualizar =true;
+              this.errorCarteraActualizar =true;
             },);
 
 

@@ -8,7 +8,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { APP_ROUTING } from "./app.routes"
 
 // servicios
-import { HeroesService }  from "./services/heroes.service";
+
 
 import { UsuariosService }  from "./services/usuarios.service";
 import { CarterasService }  from "./services/carteras.service";
@@ -75,7 +75,6 @@ import { NuevaCarteraComponent } from './components/carteras/nueva-cartera.compo
     APP_ROUTING
   ],
   providers: [
-    HeroesService,
     UsuariosService,
     CarterasService,
     AlertService,
