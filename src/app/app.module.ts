@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { APP_ROUTING } from "./app.routes"
 
 import { UsuariosService }  from "./services/usuarios.service";
+import { RolesService }  from "./services/roles.service";
 // import { AlertComponent } from './_directives/index';
 // import { AuthGuard } from './_guards/index';
 import { AlertService, AuthenticationService, TokenService, LogueadoService } from './services/index';
@@ -32,6 +33,7 @@ import { SidenavbarComponent } from './components/shared/sidenavbar/sidenavbar.c
 import { MensajeComponent } from './components/shared/mensaje/mensaje.component';
 import { MensajesComponent } from './components/mensajes/mensajes.component';
 import { CarteraComponent } from './components/cartera/cartera.component';
+import { RolesComponent } from './components/roles/roles.component';
 
 
 
@@ -52,7 +54,8 @@ import { CarteraComponent } from './components/cartera/cartera.component';
     SidenavbarComponent,
     MensajeComponent,
     MensajesComponent,
-    CarteraComponent
+    CarteraComponent,
+    RolesComponent
   ],
   imports: [
     HttpClientModule,
@@ -63,6 +66,7 @@ import { CarteraComponent } from './components/cartera/cartera.component';
   ],
   providers: [
     UsuariosService,
+    RolesService,
     AlertService,
     AuthenticationService,
     TokenService,
