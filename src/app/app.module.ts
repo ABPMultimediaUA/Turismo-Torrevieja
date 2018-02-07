@@ -11,6 +11,7 @@ import { APP_ROUTING } from "./app.routes"
 import { HeroesService }  from "./services/heroes.service";
 
 import { UsuariosService }  from "./services/usuarios.service";
+import { CarterasService }  from "./services/carteras.service";
 // import { AlertComponent } from './_directives/index';
 // import { AuthGuard } from './_guards/index';
 import { AlertService, AuthenticationService, TokenService, LogueadoService } from './services/index';
@@ -25,18 +26,23 @@ import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { LoginComponent } from './components/login/login.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
+
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { UsuarioComponent } from './components/usuarios/usuario.component';
+import { NuevoUsuarioComponent } from './components/usuarios/nuevo-usuario.component';
+
 import { ContactComponent } from './components/contact/contact.component';
 
 import {IdsPipe} from './components/pipes/ids.pipe';
 import { KeysPipe } from './components/pipes/keys.pipe';
-import { NuevoUsuarioComponent } from './components/usuarios/nuevo-usuario.component';
+
 import { SidenavbarComponent } from './components/shared/sidenavbar/sidenavbar.component';
 import { MensajeComponent } from './components/shared/mensaje/mensaje.component';
 import { MensajesComponent } from './components/mensajes/mensajes.component';
-import { CarteraComponent } from './components/cartera/cartera.component';
 
+import { CarterasComponent } from './components/carteras/carteras.component';
+import { CarteraComponent } from './components/carteras/cartera.component';
+import { NuevaCarteraComponent } from './components/carteras/nueva-cartera.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +61,9 @@ import { CarteraComponent } from './components/cartera/cartera.component';
     SidenavbarComponent,
     MensajeComponent,
     MensajesComponent,
-    CarteraComponent
+    CarterasComponent,
+    CarteraComponent,
+    NuevaCarteraComponent
 
 
   ],
@@ -69,6 +77,7 @@ import { CarteraComponent } from './components/cartera/cartera.component';
   providers: [
     HeroesService,
     UsuariosService,
+    CarterasService,
     AlertService,
     AuthenticationService,
     TokenService,
