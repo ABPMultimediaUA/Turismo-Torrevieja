@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm }  from "@angular/forms";
-import { Router, ActivatedRoute } from "@angular/router";
-import { Roles }  from "../../interfaces/roles.interface";
+import {LoginComponent} from '../login/login.component';
+import {HomeComponent} from "../home/home.component";
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
+import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+
+import { HttpModule } from '@angular/http';
 import { AlertService, AuthenticationService, RolesService, LogueadoService } from '../../services/index';
 
 @Component({
@@ -11,22 +16,16 @@ import { AlertService, AuthenticationService, RolesService, LogueadoService } fr
 })
 export class RolesComponent implements OnInit {
 
-  errorRol = false;
-  rgstrRol = false;
-  errorRolActualizar = false;
+  roles:any[] = [];
+  loading:boolean = true;
+  //pagination
+  paginacion:any = [];
+  cantidadPagina:any[]=[];
 
-  nuevo:boolean = false;
-  id:string;
+  rolesActuales:any[] = [];
+  totalPaginas:number;
+  currentPage:number = 1;
 
-  errorMensaje:string[]=[];
-
-  public rol:Roles={
-    identificador:"",
-    nombreRol:"",
-    fechaCreacion:null,
-    fechaActualizacion:null,
-    fechaEliminacion:null,
-  };
 
   constructor(  private _rolesService: RolesService,
                 private router:Router,
@@ -35,113 +34,84 @@ export class RolesComponent implements OnInit {
                 )
   {
     this.logueadoService.comprobarLogueado();
+    console.log("estaLogueado:");
+    console.log(this.logueadoService.estaLogueado);
+    this._rolesService.getRoles("1")
+    .subscribe( data =>{
+      console.log(data);//la data del getHeroes
 
-    this.route.params.subscribe(parametros=>{
-      console.log(parametros);
-      this.id = parametros['id']
-      this._rolesService.getRol(this.id)
-          .subscribe( rol => {this.rol = rol.data, console.log(rol)})
-    });
+      this.roles= data.data;
+      console.log("array de roles:");
+      console.log(this.roles);
+      console.log("roles[3]:");
+      console.log(this.roles[3]);
+      this.totalPaginas = Math.ceil(this.roles.length/10);
+      console.log("this.totalPaginas:");
+      console.log(this.totalPaginas);
+      this.loading=false;
 
+      for(let i=0;i<this.totalPaginas;i++)
+      {
+        this.cantidadPagina.push(i);
+      }
+
+      if(this.roles.length>9){
+        for(let i=0;i<=9;i++)
+        {
+          this.rolesActuales.push(this.roles[i]);
+        }
+      }else{
+        for(let i=0;i<=this.roles.length;i++)
+        {
+          this.rolesActuales.push(this.roles[i]);
+        }
+      }
+    })
   }
 
   ngOnInit() {
   }
 
-  guardar()
-  {
-        console.log("ewfefe"+this.id);
-        if(this.id == "nuevo"){
-          console.log("voy a guardar nuevo usuario(abajo):");
-            console.log(this.rol);
-            this._rolesService.nuevoRol( this.rol )
-              .subscribe( data=>{
-                //this.router.navigate(['/heroe',data.name])
-                console.log(data);
-                this.errorRol = false;
-                this.rgstrRol = true;
-            //    this.ngForm.reset();
+  nuevaPagina(pagina:number){
+    this.currentPage=pagina;
+    console.log("pagina que pido:");
+    console.log(pagina);
+    let x = 10 * (pagina-1);
+    let y = x + 9;
+    this.rolesActuales=[];
 
+    if(pagina==this.totalPaginas){
+      for(let i=x;i<this.roles.length;i++)
+      {
+        this.rolesActuales.push(this.roles[i]);
+      }
+    }else{
+      for(let i=x;i<=y;i++)
+      {
+        this.rolesActuales.push(this.roles[i]);
+      }
+    }
+  }
 
-
-              },
-              error=> {
-                //this.router.navigate(['/heroe',data.name])
-                //console.log(error);
-                let mensaje=JSON.parse(error._body);//Cambiar mensaje devuelto a JSON
-                console.log(mensaje.error);
-
-                this.errorMensaje=[];
-
-                            if(mensaje.error=="No posee permisos para ejecutar esta acción")
-                            {
-                              this.errorMensaje.push("No posee permisos para ejecutar esta acción");
-                            }
-
-                            if(mensaje.error=="No estás verificado")
-                            {
-                              this.errorMensaje.push("No estás verificado");
-                            }
-                            
-                if (typeof(mensaje.error.nombreRol) != "undefined")
-                {
-                  for(let i=0;i<mensaje.error.nombreRol.length;i++)
-                  {
-                    this.errorMensaje.push(mensaje.error.nombreRol[i]);
-                  }
-                }
-
-                console.log(this.errorMensaje);
-
-                this.errorRol = true;
-                this.rgstrRol = false;
-              },);
-
+    borrarRol(id:string){
+      this._rolesService.borrarRoles(id)
+      .subscribe(respuesta=>{
+        if(respuesta){
+          console.log("caracola");
+          console.log(respuesta);
+          console.log( "borra rol y ahora va a pedir todos los roles de nuevo" );
+          this._rolesService.getRoles("1");
+          console.log( "aqui los ha pedido ya todos de nuevo y voy a hacer el router navigate a usuarios" );
+          location.reload(true);
+          this.router.navigate(['roles']);
+          // this.refresh();
         }else{
-
-        //actualizando
-        console.log("voy a actualizar usuario");
-        this._rolesService.actualizarRol(this.rol, this.id)
-            .subscribe(data=>{
-              console.log("data que queremos actualizar"+data);
-              this.errorRolActualizar = false;
-                this.router.navigate(['usuarios']);
-            },
-            error=> {
-              //this.router.navigate(['/heroe',data.name])
-              //console.log(error);
-              let mensaje=JSON.parse(error._body);//Cambiar mensaje devuelto a JSON
-              console.log(mensaje.error);
-
-              this.errorMensaje=[];
-
-                          if(mensaje.error=="No posee permisos para ejecutar esta acción")
-                          {
-                            this.errorMensaje.push("No posee permisos para ejecutar esta acción");
-                          }
-
-                          if(mensaje.error=="No estás verificado")
-                          {
-                            this.errorMensaje.push("No estás verificado");
-                          }
-
-
-              if (typeof(mensaje.error.nombreRol) != "undefined")
-              {
-                for(let i=0;i<mensaje.error.nombreRol.length;i++)
-                {
-                  this.errorMensaje.push(mensaje.error.nombreRol[i]);
-                }
-              }
-
-              console.log(this.errorMensaje);
-
-              this.errorRolActualizar =true;
-            },);
-
+        //todo bien
+          delete this.roles[id];
 
         }
 
-    }
+    })
 
+  }
 }

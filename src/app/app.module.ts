@@ -34,8 +34,8 @@ import { MensajeComponent } from './components/shared/mensaje/mensaje.component'
 import { MensajesComponent } from './components/mensajes/mensajes.component';
 import { CarteraComponent } from './components/cartera/cartera.component';
 import { RolesComponent } from './components/roles/roles.component';
-
-
+import { NuevoRolComponent } from './components/roles/nuevo-rol.component';
+import { RolComponent } from './components/roles/rol.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +55,9 @@ import { RolesComponent } from './components/roles/roles.component';
     MensajeComponent,
     MensajesComponent,
     CarteraComponent,
-    RolesComponent
+    RolesComponent,
+    RolComponent,
+    NuevoRolComponent
   ],
   imports: [
     HttpClientModule,

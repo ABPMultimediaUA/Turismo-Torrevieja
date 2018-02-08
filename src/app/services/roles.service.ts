@@ -81,7 +81,7 @@ export class RolesService {
 
       //'X-XSRF-TOKEN':this.First_accessToken+this.Secound_accessToken
     });
-    console.log("pagina que paso a getusuarios:");
+    console.log("pagina que paso a getRoles:");
     console.log(pagina);
     let url = `${this.rolURL}/?page=${pagina}`;
     console.log("url a la que pido:");

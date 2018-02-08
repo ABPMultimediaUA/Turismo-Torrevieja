@@ -1,0 +1,119 @@
+<div class="container-fluid">
+  <div class="row ">
+    <nav class=" col-sm-3 col-md-2 d-none d-sm-block d9d9d9 bg-blue">
+      <ul class="nav nav-pills flex-column  d9d9d9  ">
+        <li class="nav-item " routerLinkActive="active">
+          <a
+          role="button"
+          [routerLink]="['/usuarios']"
+          class="nav-link elemento-navbar d9d9d9 " >Usuarios</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a
+          role="button"
+          [routerLink]="['/nuevo-usuario']"
+          class="nav-link elemento-navbar d9d9d9 " >Nuevo Usuario</a>
+        </li>
+      </ul>
+      <br>
+      <ul class="nav nav-pills flex-column  d9d9d9  ">
+        <li class="nav-item " routerLinkActive="active">
+          <a
+          role="button"
+          [routerLink]="['/roles']"
+          class="nav-link elemento-navbar d9d9d9 " >Roles</a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a
+          role="button"
+          [routerLink]="['/nuevo-rol']"
+          class="nav-link elemento-navbar d9d9d9 " >Nuevo Rol</a>
+        </li>
+      </ul>
+      <br>
+      <ul class="nav nav-pills flex-column">
+        <li class="nav-item " routerLinkActive="active">
+          <a
+          role="button"
+          [routerLink]="['/cartera']"
+          class="nav-link elemento-navbar d9d9d9 " >Cartera de eventos</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link elemento-navbar d9d9d9 " href="#">Nuevo evento</a>
+        </li>
+      </ul>
+      <br>
+      <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+          <a class="nav-link elemento-navbar d9d9d9 " href="#">Gestiones</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link elemento-navbar d9d9d9 " href="#">Nueva gestion</a>
+        </li>
+      </ul>
+      <br>
+      <ul class="nav nav-pills flex-column">
+        <li class="nav-item">
+          <a class="nav-link elemento-navbar d9d9d9 " href="#">Opciones</a>
+        </li>
+      </ul>
+    </nav>
+
+      <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+
+        <h1>Rol <small>{{rol.nombreRol}}</small></h1>
+        <!-- mensajes -->
+        <div class="container" *ngIf="errorRol === true">
+            <div class="jumbotron">
+                <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
+                <h1 class="text-center">¡Ups! <p> </p>
+                  <p><small class="text-center"> Ha habido un error creando el rol.</small></p></h1>
+                  <p class="text-center text-danger" *ngFor="let mensaje of errorMensaje">
+                        {{mensaje}}
+                </p>
+            </div>
+        </div>
+        <div class="container" *ngIf="errorRolActualizar === true">
+            <div class="jumbotron">
+                <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
+                <h1 class="text-center">¡Ups! <p> </p>
+                  <p><small class="text-center"> Ha habido un error actualizando el rol.</small></p></h1>
+                  <p class="text-center text-danger" *ngFor="let mensaje of errorMensaje">
+                        {{mensaje}}
+                </p>
+            </div>
+        </div>
+
+        <div class="container" *ngIf="rgstrRol === true">
+            <div class="jumbotron">
+                <div class="text-center"><i class="fa fa-5x fa-smile-o" style="color:#28a745;"></i></div>
+                <h1 class="text-center">Rol creado!</h1>
+
+            </div>
+        </div>
+        <!-- fin mensajes -->
+
+        <form (ngSubmit)="guardar()" #forma="ngForm">
+          <div class="form-group">
+            <label>Nombre</label>
+            <input [(ngModel)]="rol.nombreRol"
+              name="nombreRol"
+              class="form-control"
+              placeholder="Nombre del Rol"
+              required
+              type="text">
+          </div>
+
+          <div class="form-group">
+            <button [disabled]="!forma.valid"
+               type="submit" class="btn btn-outline-primary">
+              Guardar cambios
+            </button>
+
+          </div>
+        </form>
+
+        <br>
+      </main>
+    </div>
+</div>

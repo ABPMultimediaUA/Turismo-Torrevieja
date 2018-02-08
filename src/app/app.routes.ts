@@ -10,7 +10,8 @@ import { ContactComponent } from "./components/contact/contact.component";
 import { MensajesComponent } from "./components/mensajes/mensajes.component";
 import { CarteraComponent } from "./components/cartera/cartera.component";
 import { RolesComponent } from './components/roles/roles.component';
-
+import { NuevoRolComponent } from "./components/roles/nuevo-rol.component";
+import { RolComponent } from "./components/roles/rol.component";
 import { ChatbotsComponent } from './chatbots/chatbots.component';
 
 
@@ -22,6 +23,8 @@ const app_routes: Routes = [
   { path: 'chatbots', loadChildren: 'app/chatbots/chatbots.module#ChatbotsModule' },
   { path: 'usuarios', component: UsuariosComponent },
   { path: 'roles', component: RolesComponent },
+  { path: 'nuevo-rol', component: NuevoRolComponent },
+  { path: 'rol/:id', component: RolComponent },
   { path: 'cartera', component: CarteraComponent },
   { path: 'mensajes/:parame', component: MensajesComponent },
   //{ path: 'usuariosReloaded', component: UsuariosComponent },
