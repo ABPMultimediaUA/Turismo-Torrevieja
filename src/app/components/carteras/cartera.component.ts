@@ -29,7 +29,7 @@ id:string;
 
 
 
-constructor( private _usuariosService: CarterasService,
+constructor( private _carterasService: CarterasService,
                 private router:Router,
                 private route:ActivatedRoute,//esto es para pasar como parametro
                 public  logueadoService: LogueadoService
@@ -50,8 +50,8 @@ constructor( private _usuariosService: CarterasService,
                 // }else{
                 // actualizando
 
-                this._usuariosService.getCartera(this.id)
-                    .subscribe( usuario => {usuario.data.password="",   this.cartera = usuario.data, console.log(usuario)})
+                this._carterasService.getCartera(this.id)
+                    .subscribe( cartera => {cartera.data.password="",   this.cartera = cartera.data, console.log(cartera)})
                     console.log("pone password vacio");
               // }
           });
@@ -69,7 +69,7 @@ constructor( private _usuariosService: CarterasService,
         if(this.id == "nuevo"){
           console.log("voy a guardar nueva cartera(abajo):");
             console.log(this.cartera);
-            this._usuariosService.nuevaCartera( this.cartera )
+            this._carterasService.nuevaCartera( this.cartera )
               .subscribe( data=>{
                 //this.router.navigate(['/heroe',data.name])
                 console.log(data);
@@ -102,11 +102,11 @@ constructor( private _usuariosService: CarterasService,
 
 
 
-                if (typeof(mensaje.error.nombreUsuario) != "undefined")
+                if (typeof(mensaje.error.nombreCartera) != "undefined")
                 {
-                  for(let i=0;i<mensaje.error.nombreUsuario.length;i++)
+                  for(let i=0;i<mensaje.error.nombreCartera.length;i++)
                   {
-                    this.errorMensaje.push(mensaje.error.nombreUsuario[i]);
+                    this.errorMensaje.push(mensaje.error.nombreCartera[i]);
                   }
                 }
                  if (typeof(mensaje.error.correo) != "undefined")
@@ -159,11 +159,11 @@ constructor( private _usuariosService: CarterasService,
 
         //actualizando
         console.log("voy a actualizar usuario");
-        this._usuariosService.actualizarCartera(this.cartera, this.id)
+        this._carterasService.actualizarCartera(this.cartera, this.id)
             .subscribe(data=>{
               console.log("data que queremos actualizar"+data);
               this.errorCarteraActualizar = false;
-                this.router.navigate(['usuarios']);
+                this.router.navigate(['carteras']);
             },
             error=> {
               //this.router.navigate(['/heroe',data.name])
@@ -187,11 +187,11 @@ constructor( private _usuariosService: CarterasService,
 
 
 
-              if (typeof(mensaje.error.nombreUsuario) != "undefined")
+              if (typeof(mensaje.error.nombreCartera) != "undefined")
               {
-                for(let i=0;i<mensaje.error.nombreUsuario.length;i++)
+                for(let i=0;i<mensaje.error.nombreCartera.length;i++)
                 {
-                  this.errorMensaje.push(mensaje.error.nombreUsuario[i]);
+                  this.errorMensaje.push(mensaje.error.nombreCartera[i]);
                 }
               }
                if (typeof(mensaje.error.correo) != "undefined")
