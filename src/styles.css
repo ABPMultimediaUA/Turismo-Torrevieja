@@ -8,6 +8,9 @@
 /* .elemento-navbar{
 color: ;
 } */
+.white{
+
+}
 .nomargin{
   margin-bottom:  0rem !important;
 }
@@ -22,6 +25,9 @@ color: ;
   background-color: #a8a8a8;
 }
 .bg-blue{
+  background-color: #05386B !important;
+}
+.bg-blue-no-imp{
   background-color: #05386B;
 }
 .small-margin-laterals{

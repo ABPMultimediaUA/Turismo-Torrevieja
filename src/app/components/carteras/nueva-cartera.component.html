@@ -1,54 +1,10 @@
 
-
 <div class="container-fluid">
-  <div class="row ">
-      <nav class=" col-sm-3 col-md-2 d-none d-sm-block d9d9d9 bg-blue">
-        <ul class="nav nav-pills flex-column  d9d9d9  ">
-          <li class="nav-item " routerLinkActive="active">
-            <a
-            role="button"
-            [routerLink]="['/usuarios']"
-            class="nav-link elemento-navbar d9d9d9 " >Usuarios</a>
-          </li>
-          <li class="nav-item" routerLinkActive="active">
-            <a
-            role="button"
-            [routerLink]="['/nuevo-usuario']"
-            class="nav-link elemento-navbar d9d9d9 " >Nuevo Usuario</a>
-          </li>
 
-        </ul>
-        <br>
-        <ul class="nav nav-pills flex-column">
-          <li class="nav-item " routerLinkActive="active">
-            <a
-            role="button"
-            [routerLink]="['/carteras']"
-            class="nav-link elemento-navbar d9d9d9 " >Carteras</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link elemento-navbar d9d9d9 " href="#">Nuevo evento</a>
-          </li>
-        </ul>
-        <br>
-        <ul class="nav nav-pills flex-column">
-          <li class="nav-item">
-            <a class="nav-link elemento-navbar d9d9d9 " href="#">Gestiones</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link elemento-navbar d9d9d9 " href="#">Nueva gestion</a>
-          </li>
-        </ul>
-        <br>
-        <ul class="nav nav-pills flex-column">
-          <li class="nav-item">
-            <a class="nav-link elemento-navbar d9d9d9 " href="#">Opciones</a>
-          </li>
-        </ul>
-      </nav>
 
-      <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-        <h1>Nuevo Usuario <small>{{usuario.nombreUsuario}}</small></h1>
+
+
+        <h1><span class="icon-folder-add"></span> Nueva Cartera <small>{{usuario.nombreUsuario}}</small></h1>
         <!-- mensajes -->
         <div class="container" *ngIf="errorUsuario === true">
             <div class="jumbotron">
@@ -153,8 +109,8 @@
 
 
 
-      </main>
-    </div>
+
+
 
 </div>
 

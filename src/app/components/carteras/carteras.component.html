@@ -1,56 +1,6 @@
 <div class="container-fluid">
   <div class="row ">
-      <nav class=" col-sm-3 col-md-2 d-none d-sm-block d9d9d9 bg-blue">
-        <ul class="nav nav-pills flex-column  d9d9d9  ">
-          <li class="nav-item " routerLinkActive="active">
-            <a
-            role="button"
-            [routerLink]="['/usuarios']"
-            class="nav-link elemento-navbar d9d9d9 " >Usuarios</a>
-          </li>
-          <li class="nav-item" routerLinkActive="active">
-            <a
-            role="button"
-            [routerLink]="['/nuevo-usuario']"
-            class="nav-link elemento-navbar d9d9d9 " >Nuevo Usuario</a>
-          </li>
-
-        </ul>
-        <br>
-        <ul class="nav nav-pills flex-column">
-          <li class="nav-item " routerLinkActive="active">
-            <a
-            role="button"
-            [routerLink]="['/carteras']"
-            class="nav-link elemento-navbar d9d9d9 " >Carteras</a>
-          </li>
-          <li class="nav-item" routerLinkActive="active">
-            <a
-            role="button"
-            [routerLink]="['/nueva-cartera']"
-            class="nav-link elemento-navbar d9d9d9 " >Nueva Cartera</a>
-          </li>
-        </ul>
-        <br>
-        <ul class="nav nav-pills flex-column">
-          <li class="nav-item">
-            <a class="nav-link elemento-navbar d9d9d9 " href="#">Gestiones</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link elemento-navbar d9d9d9 " href="#">Nueva gestion</a>
-          </li>
-        </ul>
-        <br>
-        <ul class="nav nav-pills flex-column">
-          <li class="nav-item">
-            <a class="nav-link elemento-navbar d9d9d9 " href="#">Opciones</a>
-          </li>
-        </ul>
-      </nav>
-
-
-      <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-        <h1>Carteras</h1>
+        <h1><span class="icon-archive"></span> Carteras</h1>
         <div class="table-responsive">
           <table class="table table-striped">
             <thead class="thead-dark">
@@ -76,7 +26,7 @@
                 <td>{{ cartera.fechaCreacion }}</td>
                 <td>{{ cartera.fechaActualizacion }}</td>
                 <td class="text-center w20">
-                  <button  [routerLink]="['/usuario', usuario.identificador]"
+                  <button  [routerLink]="['/cartera', cartera.identificador]"
                   type="button" class="btn btn-outline-success">
                     <span class="icon-pencil"></span>
                   </button>
@@ -96,33 +46,31 @@
           class="alert alert-info" role="alert">
               <strong>No hay </strong> carteras que mostrar
           </div>
+          <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+              <li *ngIf="currentPage > 1 " class="page-item" >
+                <a class="page-link" (click)="nuevaPagina(currentPage-1)" aria-label="Previous">
+                  <span aria-hidden="true">&laquo;</span>
+                  <span class="sr-only">Previous</span>
+                </a>
+              </li>
+              <li class="page-item" *ngFor="let i of cantidadPagina" >
+                <a class="page-link" (click)="nuevaPagina(i+1)" >{{ i+1 }}</a>
+              </li>
 
+              <li *ngIf="currentPage!=totalPaginas" class="page-item" routerLinkActive="active">
+                <a class="page-link" (click)="nuevaPagina(currentPage+1)" aria-label="Next">
+                  <span aria-hidden="true">&raquo;</span>
+                  <span class="sr-only">Next</span>
+                </a>
+              </li>
+            </ul>
+
+
+        </nav>
         </div>
         <br>
-        <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-center">
-            <li *ngIf="currentPage > 1 " class="page-item" >
-              <a class="page-link" (click)="nuevaPagina(currentPage-1)" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-            <li class="page-item" *ngFor="let i of cantidadPagina" >
-              <a class="page-link" (click)="nuevaPagina(i+1)" >{{ i+1 }}</a>
-            </li>
 
-            <li *ngIf="currentPage!=totalPaginas" class="page-item" routerLinkActive="active">
-              <a class="page-link" (click)="nuevaPagina(currentPage+1)" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-                <span class="sr-only">Next</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </main>
-
-
-    
     </div>
 
 </div>

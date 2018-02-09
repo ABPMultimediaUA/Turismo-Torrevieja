@@ -36,7 +36,7 @@ import { ContactComponent } from './components/contact/contact.component';
 import {IdsPipe} from './components/pipes/ids.pipe';
 import { KeysPipe } from './components/pipes/keys.pipe';
 
-import { SidenavbarComponent } from './components/shared/sidenavbar/sidenavbar.component';
+
 import { MensajeComponent } from './components/shared/mensaje/mensaje.component';
 import { MensajesComponent } from './components/mensajes/mensajes.component';
 
@@ -58,7 +58,6 @@ import { NuevaCarteraComponent } from './components/carteras/nueva-cartera.compo
     IdsPipe,
     KeysPipe,
     NuevoUsuarioComponent,
-    SidenavbarComponent,
     MensajeComponent,
     MensajesComponent,
     CarterasComponent,

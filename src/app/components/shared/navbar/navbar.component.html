@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-blue ">
   <a class="navbar-brand" [routerLink]="['home']">GVENT</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -15,11 +16,77 @@
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['contact']">Contacto</a>
       </li>
-      <li *ngIf="logueadoService.estaLogueado" class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['usuarios']">Usuarios</a>
-      </li>
+      <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
+        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         <span class="icon-user-outline"></span> Usuarios
+        </button>
+        <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
+          <a
+          role="button"
+          [routerLink]="['/usuarios']"
+          class="nav-link elemento-navbar d9d9d9" >
+          <span class="icon-users-outline"></span> Listado</a>
+          <a
+          role="button"
+          [routerLink]="['/nuevo-usuario']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-user-add-outline"></span> Nuevo Usuario</a>
 
+        </div>
+      </div>
+      <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
+        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         <span class="icon-folder"></span> Carteras
+        </button>
+        <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
+          <a
+          role="button"
+          [routerLink]="['/carteras']"
+          class="nav-link elemento-navbar d9d9d9" >
+          <span class="icon-archive"></span> Listado</a>
+          <a
+          role="button"
+          [routerLink]="['/nueva-cartera']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-folder-add"></span> Nueva Cartera</a>
+
+        </div>
+      </div>
     </ul>
+    <!-- <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
+      <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+       Usuarios
+      </button>
+      <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
+        <a
+        role="button"
+        [routerLink]="['/usuarios']"
+        class="nav-link elemento-navbar d9d9d9" >Listado</a>
+        <a
+        role="button"
+        [routerLink]="['/nuevo-usuario']"
+        class="nav-link elemento-navbar d9d9d9 " >Nuevo Usuario</a>
+
+      </div>
+    </div>
+    <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
+      <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+       Carteras
+      </button>
+      <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
+        <a
+        role="button"
+        [routerLink]="['/carteras']"
+        class="nav-link elemento-navbar d9d9d9" >Listado</a>
+        <a
+        role="button"
+        [routerLink]="['/nueva-cartera']"
+        class="nav-link elemento-navbar d9d9d9 " >Nueva Cartera</a>
+
+      </div>
+    </div> -->
+
+
     <button onclick="window.location.href='https://gvent.ovh/chatbot/'" class="btn btn-info my-2 my-sm-0 small-margin-laterals"
         type="submit"
         >Chatbot</button>
