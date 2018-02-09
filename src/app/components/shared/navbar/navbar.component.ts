@@ -23,7 +23,7 @@ import { AlertService, AuthenticationService, LogueadoService} from '../../../se
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent implements OnInit {
-
+destino: string;
 
 
     constructor(
@@ -53,7 +53,8 @@ export class NavbarComponent implements OnInit {
 
 
 
-  logout(){
+  logout(desti:string){
+    this.destino=desti;
     this.logueadoService.logouteando();
 
 
@@ -78,7 +79,12 @@ export class NavbarComponent implements OnInit {
         document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }
     //Terminar de borrar cookie
+    if(this.destino=="login"){
+    this.router.navigate(['/login']);
+    }else{
       this.router.navigate(['/home']);
+    }
+
     //localStorage.removeItem(accessToken);
 
     //console.log("logueado: "+this.logueado);

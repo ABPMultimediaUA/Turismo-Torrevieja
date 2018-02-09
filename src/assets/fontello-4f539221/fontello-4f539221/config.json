@@ -89,30 +89,6 @@
       "css": "mail",
       "code": 59402,
       "src": "typicons"
-    },
-    {
-      "uid": "a42f298da5c64e646a5d532724cd6e15",
-      "css": "home-outline",
-      "code": 59403,
-      "src": "typicons"
-    },
-    {
-      "uid": "51fb22f9ff9d7f60c95ef31e4c59502d",
-      "css": "comment",
-      "code": 62636,
-      "src": "mfglabs"
-    },
-    {
-      "uid": "0d20938846444af8deb1920dc85a29fb",
-      "css": "logout",
-      "code": 59404,
-      "src": "fontawesome"
-    },
-    {
-      "uid": "3a00327e61b997b58518bd43ed83c3df",
-      "css": "login",
-      "code": 59405,
-      "src": "fontawesome"
     }
   ]
 }

@@ -7,15 +7,49 @@
 
   <div class="collapse navbar-collapse d9d9d9 "id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto d9d9d9">
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['home']">Inicio <span class="sr-only">(current)</span></a>
+      <li *ngIf="!logueadoService.estaLogueado"class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['home']">
+          <span class="icon-home-outline"></span> Inicio <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['about']">Acerca de GVENT</a>
+      <li *ngIf="!logueadoService.estaLogueado"class="nav-item" routerLinkActive="active">
+        <a class="nav-link" href="https://gvent.ovh/chatbot/">
+          <span class="icon-home-outline"></span> Chatbots</a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['contact']">Contacto</a>
+      <li *ngIf="!logueadoService.estaLogueado" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['about']">
+          <span class="icon-info-circled"></span> Acerca de GVENT</a>
       </li>
+      <li *ngIf="!logueadoService.estaLogueado" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['contact']">
+          <span class="icon-mail"></span>Contacto</a>
+      </li>
+      <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
+        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Info
+        </button>
+        <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
+          <a
+          role="button"
+          [routerLink]="['/home']"
+          class="nav-link elemento-navbar d9d9d9" >
+          <span class="icon-home-outline"></span> Inicio</a>
+          <a
+          role="button"
+          href="https://gvent.ovh/chatbot/"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-info-circled"></span> Chatbots</a>
+          <a
+          role="button"
+          [routerLink]="['/about']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-info-circled"></span> Acerca de Gvent</a>
+          <a
+          role="button"
+          [routerLink]="['/contact']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-mail"></span> Contacto</a>
+        </div>
+      </div>
       <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
         <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          <span class="icon-user-outline"></span> Usuarios
@@ -49,61 +83,97 @@
           [routerLink]="['/nueva-cartera']"
           class="nav-link elemento-navbar d9d9d9 " >
           <span class="icon-folder-add"></span> Nueva Cartera</a>
-
         </div>
       </div>
+      <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
+        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         <span class="icon-"></span> Roles y Permisos
+        </button>
+        <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
+          <a
+          role="button"
+          [routerLink]="['/roles']"
+          class="nav-link elemento-navbar d9d9d9" >
+          <span class="icon-crown"></span> Roles</a>
+          <a
+          role="button"
+          [routerLink]="['/nuevo-rol']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-crown-plus"></span> Nuevo Rol</a>
+
+        <div class="dropdown-divider"></div>
+
+          <a
+          role="button"
+          [routerLink]="['/carteras']"
+          class="nav-link elemento-navbar d9d9d9" >
+          <span class="icon-archive"></span> Permisos</a>
+          <a
+          role="button"
+          [routerLink]="['/nueva-cartera']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-folder-add"></span> Nuevo Permiso</a>
+        </div>
+      </div>
+
     </ul>
-    <!-- <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
+    <div *ngIf="logueadoService.estaLogueado" class="dropdown ">
       <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-       Usuarios
+       <span class="icon-vcard"></span> UsuarioX
       </button>
       <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
         <a
         role="button"
-        [routerLink]="['/usuarios']"
-        class="nav-link elemento-navbar d9d9d9" >Listado</a>
+        [routerLink]="['/perfil']"
+        class="nav-link elemento-navbar d9d9d9" >
+        <span class="icon-users-outline"></span> Perfil</a>
         <a
         role="button"
-        [routerLink]="['/nuevo-usuario']"
-        class="nav-link elemento-navbar d9d9d9 " >Nuevo Usuario</a>
+        [routerLink]="['/login']"
+        (click)="logout(login)"
+        class="nav-link elemento-navbar d9d9d9 " >
+        <span class="icon-user-add-outline"></span> Cambiar de cuenta</a>
+        <a
+        role="button"
+        (click)="logout()"
+        [routerLink]="['/home']"
+        class="nav-link elemento-navbar d9d9d9 " >
+        <span class="icon-logout"></span> Cerrar Sesion</a>
+        <a
+        role="button"
+        [routerLink]="['/ajustes']"
+        class="nav-link elemento-navbar d9d9d9 " >
+        <span class="icon-user-add-outline"></span> Ajustes</a>
+        <a
+        role="button"
+        [routerLink]="['/contact']"
+        class="nav-link elemento-navbar d9d9d9 " >
+        <span class="icon-user-add-outline"></span> Ayuda</a>
+        <a
+        role="button"
+        [routerLink]="['/contact']"
+        class="nav-link elemento-navbar d9d9d9 " >
+        <span class="icon-comment"></span> Enviar Sugerencias</a>
 
       </div>
     </div>
-    <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
-      <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-       Carteras
-      </button>
-      <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
-        <a
-        role="button"
-        [routerLink]="['/carteras']"
-        class="nav-link elemento-navbar d9d9d9" >Listado</a>
-        <a
-        role="button"
-        [routerLink]="['/nueva-cartera']"
-        class="nav-link elemento-navbar d9d9d9 " >Nueva Cartera</a>
-
-      </div>
-    </div> -->
 
 
-    <button onclick="window.location.href='https://gvent.ovh/chatbot/'" class="btn btn-info my-2 my-sm-0 small-margin-laterals"
-        type="submit"
-        >Chatbot</button>
+
 
     <button
 
       *ngIf="!logueadoService.estaLogueado"
       class="btn btn-primary my-2 my-sm-0 small-margin-laterals"
         type="submit"
-        [routerLink]="['login']">Iniciar sesión</button>
+        [routerLink]="['login']"><span class="icon-login"></span> Iniciar sesión</button>
     <button
 
         *ngIf="logueadoService.estaLogueado"
         (click)="logout()"
         class="btn btn-danger my-2 my-sm-0 small-margin-laterals"
         type="submit"
-        >Logout</button>
+        ><span class="icon-logout"></span> Logout</button>
 
   </div>
 </nav>

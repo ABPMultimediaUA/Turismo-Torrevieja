@@ -112,5 +112,6 @@ export class LoginComponent implements OnInit {
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
+
     }
 }
