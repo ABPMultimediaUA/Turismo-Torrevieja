@@ -10,6 +10,7 @@ import { AlertService, AuthenticationService, CarterasService, LogueadoService }
 export class CarteraComponent implements OnInit {
 errorCartera = false;
 rgstrCartera = false;
+permisoEditar = false;
 errorCarteraActualizar = false;
 //TituloNuevo = "";
 errorMensaje:string[]=[];
@@ -249,6 +250,13 @@ constructor( private _carterasService: CarterasService,
         //     error=>console.error(error));
         }
 
+    }
+
+    puedeEditar(){
+      console.log("1.puedeEditar? =",this.permisoEditar);
+      this.permisoEditar = true;
+      console.log("2.puedeEditar? =",this.permisoEditar);
+      return this.permisoEditar;
     }
 
 }

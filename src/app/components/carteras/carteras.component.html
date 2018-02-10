@@ -9,7 +9,7 @@
 
 <br><br>
       <form class="form-inline" (ngSubmit)="cambiarNumCarterasPorPagina()" #forma="ngForm">
-        <div class="form-group">
+        <div class="form-group">&nbsp;
           <label>Cantidad por página: &nbsp;</label>
           <select [(ngModel)]="carterasPorPagina"
             name="carterasPorPagina"
@@ -37,13 +37,14 @@
              type="submit" class="btn btn-outline-primary">
             Actualizar
           </button>
-
         </div>
-
+      </form>&nbsp;
+      <br><hr>
+      <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
       </form>
-
       <br><br>
-
 
 
         <div class="table-responsive">
@@ -73,7 +74,7 @@
                 <td class="text-center w20">
                   <button  [routerLink]="['/cartera', cartera.identificador]"
                   type="button" class="btn btn-outline-success">
-                    <span class="icon-pencil"></span>
+                    <span class="icon-eye-outline"></span>
                   </button>
                   <button  (click)="borrarCartera(cartera.identificador)"
                   type="button" class="btn btn-outline-danger">
