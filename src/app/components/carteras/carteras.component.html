@@ -1,6 +1,52 @@
 <div class="container-fluid">
   <div class="row ">
-        <h1><span class="icon-archive-1"></span> Carteras</h1>
+        <h1>&nbsp;<span class="icon-archive-1"></span> Carteras&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+
+        <button
+          class="btn btn-secondary  d9d9d9 my-2 my-sm-2 small-margin-laterals"
+          type="submit"
+          [routerLink]="['/nueva-cartera']"><span class="icon-folder-add"></span> Nueva Cartera&nbsp;</button>&nbsp;
+
+<br><br>
+      <form class="form-inline" (ngSubmit)="cambiarNumCarterasPorPagina()" #forma="ngForm">
+        <div class="form-group">
+          <label>Cantidad por página: &nbsp;</label>
+          <select [(ngModel)]="carterasPorPagina"
+            name="carterasPorPagina"
+          class="form-control"
+          >
+            <option value="10">10</option>
+            <option value="20">20</option>
+            <option value="50">50</option>
+            <option value="100">100</option>
+            <option value="this.carteras.length">Todas</option>
+
+          </select>&nbsp;&nbsp;
+        </div>
+
+        <div class="form-group">
+          <label>Cantidad personalizada: &nbsp;</label>
+          <input [(ngModel)]="this.carterasPorPagina"
+            name="carterasPorPagina"
+            class="form-control"
+            placeholder="numero de carteras Por Pagina"
+            required
+            type="text">
+        </div>&nbsp;
+        <div class="form-group">
+          <button
+             type="submit" class="btn btn-outline-primary">
+            Actualizar
+          </button>
+
+        </div>
+
+      </form>
+
+      <br><br>
+
+
+
         <div class="table-responsive">
           <table class="table table-striped">
             <thead class="thead-dark">

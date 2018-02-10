@@ -26,7 +26,8 @@ export class CarterasComponent implements OnInit {
   //pagination
   paginacion:any = [];
   cantidadPagina:any[]=[];
-
+  carterasPorPagina:number=10;
+  ItemsPorPagina:string;
   carterasActuales:any[] = [];
   totalPaginas:number;
   currentPage:number = 1;
@@ -49,7 +50,12 @@ export class CarterasComponent implements OnInit {
             console.log(this.carteras);
             console.log("carteras[3]:");
             console.log(this.carteras[3]);
-            this.totalPaginas = Math.ceil(this.carteras.length/10);
+
+            this.ItemsPorPagina = localStorage.getItem("ItemsPorPagina");
+            console.log("cojo Items por pagina de localstorage:",this.ItemsPorPagina );
+            this.carterasPorPagina = parseInt(this.ItemsPorPagina);
+            console.log("paso itemspor pagina a number y lo meto en carteras por pagina:",this.carterasPorPagina);
+            this.totalPaginas = Math.ceil(this.carteras.length/this.carterasPorPagina);
             console.log("this.totalPaginas:");
             console.log(this.totalPaginas);
             this.loading=false;
@@ -66,8 +72,8 @@ export class CarterasComponent implements OnInit {
               this.cantidadPagina.push(i);
             }
 
-            if(this.carteras.length>9){
-              for(let i=0;i<=9;i++)
+            if(this.carteras.length>(this.carterasPorPagina-1)){
+              for(let i=0;i<=(this.carterasPorPagina-1);i++)
               {
                 this.carterasActuales.push(this.carteras[i]);
               }
@@ -98,12 +104,20 @@ export class CarterasComponent implements OnInit {
   }
   ngOnInit() {
   }
+  cambiarNumCarterasPorPagina(){
+    this.carterasPorPagina=this.carterasPorPagina;
+    console.log("nuevo numero de carteras por pagina: ", this.carterasPorPagina);
+    var n = this.carterasPorPagina.toString();
+    localStorage.setItem("ItemsPorPagina", n);
+
+     location.reload(true);
+  }
   nuevaPagina(pagina:number){
     this.currentPage=pagina;
     console.log("pagina que pido:");
     console.log(pagina);
-    let x = 10 * (pagina-1);
-    let y = x + 9;
+    let x = this.carterasPorPagina * (pagina-1);
+    let y = x + (this.carterasPorPagina-1);
     this.carterasActuales=[];
 
     if(pagina==this.totalPaginas){

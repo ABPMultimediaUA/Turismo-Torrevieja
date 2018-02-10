@@ -173,18 +173,6 @@
       "css": "town-hall",
       "code": 59452,
       "src": "maki"
-    },
-    {
-      "uid": "85ef733b1e280809e8443f5f0167b5c2",
-      "css": "doc",
-      "code": 59411,
-      "src": "typicons"
-    },
-    {
-      "uid": "bd517dbd6ccbc464f6d80efca97abb7d",
-      "css": "doc-add",
-      "code": 59412,
-      "src": "typicons"
     }
   ]
 }

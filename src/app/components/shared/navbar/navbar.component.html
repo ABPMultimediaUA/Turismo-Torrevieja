@@ -115,7 +115,23 @@
           <span class="icon-plus-circled"></span> Nuevo Permiso</a>
         </div>
       </div>
-
+      <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
+        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         <span class="icon-town-hall"></span> Espacios
+        </button>
+        <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
+          <a
+          role="button"
+          [routerLink]="['/espacios']"
+          class="nav-link elemento-navbar d9d9d9" >
+          <span class="icon-town-hall"></span> Listado</a>
+          <a
+          role="button"
+          [routerLink]="['/nuevo-espacio']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-plus-circled"></span> Nuevo Espacio</a>
+        </div>
+      </div>
     </ul>
     <div  *ngIf="logueadoService.estaLogueado" class="dropdown ">
       <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
