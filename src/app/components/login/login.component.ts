@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
             console.log("entra aqui");
               localStorage.setItem("accesToken", resultado.access_token );
                   this.logueadoService.logueando();
-            location.reload(true);
+                    //location.reload(true);
                     //console.log(document.getElementById("verUsuarios").style);
                     //console.log("token resultado= "+resultado.access_token);
 
