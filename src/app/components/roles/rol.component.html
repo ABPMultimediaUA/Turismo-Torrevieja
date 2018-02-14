@@ -63,36 +63,27 @@
       <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
 
         <h1>Rol <small>{{rol.nombreRol}}</small></h1>
-        <!-- mensajes -->
-        <div class="container" *ngIf="errorRol === true">
-            <div class="jumbotron">
-                <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
-                <h1 class="text-center">¡Ups! <p> </p>
-                  <p><small class="text-center"> Ha habido un error creando un rol.</small></p></h1>
-                  <p class="text-center text-danger" *ngFor="let mensaje of errorMensaje">
-                        {{mensaje}}
-                </p>
-            </div>
-        </div>
         <div class="container" *ngIf="errorRolActualizar === true">
             <div class="jumbotron">
                 <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
                 <h1 class="text-center">¡Ups! <p> </p>
-                  <p><small class="text-center"> Ha habido un error actualizando un rol.</small></p></h1>
+                  <p><small class="text-center"> Ha habido un error actualizando un rol o sus permisos.</small></p></h1>
                   <p class="text-center text-danger" *ngFor="let mensaje of errorMensaje">
                         {{mensaje}}
                 </p>
             </div>
         </div>
 
-        <div class="container" *ngIf="rgstrRol === true">
+        <div class="container" *ngIf="rolActualizado === true">
             <div class="jumbotron">
                 <div class="text-center"><i class="fa fa-5x fa-smile-o" style="color:#28a745;"></i></div>
-                <h1 class="text-center">Rol creado!</h1>
+                <h1 class="text-center">Rol actualizado!</h1>
 
             </div>
         </div>
-        <!-- fin mensajes -->
+
+        <!--> PERMISOS </!-->
+      <br>
 
         <form (ngSubmit)="guardar()" #forma="ngForm">
           <div class="form-group">
@@ -104,7 +95,70 @@
               required
               type="text">
           </div>
-
+          <br>
+          <div class="row">
+            <div class="col-sm-3"  *ngIf="true">
+              <input type="checkbox" (click)="checkboxCambiado(27)" id="27" name="expediente" value="ConsultarEx">Consultar expedientes<br>
+              <input type="checkbox" (click)="checkboxCambiado(25)" id="25" name="expediente" value="CrearEx">Crear expedientes<br>
+              <input type="checkbox" (click)="checkboxCambiado(26)" id="26" name="expediente" value="ActualizarEx">Actualizar expedientes<br>
+              <input type="checkbox" (click)="checkboxCambiado(28)" id="28" name="expediente" value="EliminarEx">Eliminar expedientes<br><br>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" (click)="checkboxCambiado(3)" id="3" name="evento" value="ConsultarEv">Consultar eventos<br>
+              <input type="checkbox" (click)="checkboxCambiado(1)" id="1" name="evento" value="CrearEv">Crear eventos<br>
+              <input type="checkbox" (click)="checkboxCambiado(2)" id="2" name="evento" value="ActualizarEv">Actualizar eventos<br>
+              <input type="checkbox" (click)="checkboxCambiado(4)" id="4" name="evento" value="EliminarEv">Eliminar eventos<br><br>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" (click)="checkboxCambiado(15)" id="15" name="actividad" value="ConsultarAc">Consultar actividades<br>
+              <input type="checkbox" (click)="checkboxCambiado(13)" id="13" name="actividad" value="CrearAc">Crear actividades<br>
+              <input type="checkbox" (click)="checkboxCambiado(14)" id="14" name="actividad" value="ActualizarAc">Actualizar actividades<br>
+              <input type="checkbox" (click)="checkboxCambiado(16)" id="16" name="actividad" value="EliminarAc">Eliminar actividades<br><br>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" (click)="checkboxCambiado(11)" id="11" name="tarea" value="ConsultarTa">Consultar tareas<br>
+              <input type="checkbox" (click)="checkboxCambiado(9)" id="9" name="tarea" value="CrearTa">Crear tareas<br>
+              <input type="checkbox" (click)="checkboxCambiado(10)" id="10" name="tarea" value="ActualizarTa">Actualizar tareas<br>
+              <input type="checkbox" (click)="checkboxCambiado(12)" id="12" name="tarea" value="EliminarTa">Eliminar tareas<br><br>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" (click)="checkboxCambiado(23)" id="23" name="cartera" value="ConsultarCa">Consultar carteras<br>
+              <input type="checkbox" (click)="checkboxCambiado(21)" id="21" name="cartera" value="CrearCa">Crear carteras<br>
+              <input type="checkbox" (click)="checkboxCambiado(22)" id="22" name="cartera" value="ActualizarCa">Actualizar carteras<br>
+              <input type="checkbox" (click)="checkboxCambiado(24)" id="24" name="cartera" value="EliminarCa">Eliminar carteras<br><br>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" (click)="checkboxCambiado(7)" id="7" name="espacio" value="ConsultarEs">Consultar espacios<br>
+              <input type="checkbox" (click)="checkboxCambiado(5)" id="5" name="espacio" value="CrearEs">Crear espacios<br>
+              <input type="checkbox" (click)="checkboxCambiado(6)" id="6" name="espacio" value="ActualizarEs">Actualizar espacios<br>
+              <input type="checkbox" (click)="checkboxCambiado(8)" id="8" name="espacio" value="EliminarEs">Eliminar espacios<br><br>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" (click)="checkboxCambiado(31)" id="31" name="proveedor" value="ConsultarPr">Consultar proveedores<br>
+              <input type="checkbox" (click)="checkboxCambiado(29)" id="29" name="proveedor" value="CrearPr">Crear proveedores<br>
+              <input type="checkbox" (click)="checkboxCambiado(30)" id="30" name="proveedor" value="ActualizarPr">Actualizar proveedores<br>
+              <input type="checkbox" (click)="checkboxCambiado(32)" id="32" name="proveedor" value="EliminarPr">Eliminar proveedores<br><br>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" (click)="checkboxCambiado(19)" id="19" name="contrato" value="ConsultarCo">Consultar contratos<br>
+              <input type="checkbox" (click)="checkboxCambiado(17)" id="17" name="contrato" value="CrearCo">Crear contratos<br>
+              <input type="checkbox" (click)="checkboxCambiado(18)" id="18" name="contrato" value="ActualizarCo">Actualizar contratos<br>
+              <input type="checkbox" (click)="checkboxCambiado(20)" id="20" name="contrato" value="EliminarCo">Eliminar contratos<br><br>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" (click)="checkboxCambiado(55)" id="55" name="usuario" value="ConsultarU">Consultar usuarios<br>
+              <input type="checkbox" (click)="checkboxCambiado(54)" id="54" name="usuario" value="CrearU">Crear usuarios<br>
+              <input type="checkbox" (click)="checkboxCambiado(56)" id="56" name="usuario" value="ActualizarU">Actualizar usuarios<br>
+              <input type="checkbox" (click)="checkboxCambiado()" id="" name="usuario" value="EliminarU">Eliminar usuarios<br><br>
+            </div>
+            <div class="col-sm-3">
+              <input type="checkbox" (click)="checkboxCambiado(35)" id="35" name="rol" value="ConsultarRol">Consultar roles<br>
+              <input type="checkbox" (click)="checkboxCambiado(33)" id="33" name="rol" value="CrearRol">Crear roles<br>
+              <input type="checkbox" (click)="checkboxCambiado(34)" id="34" name="rol" value="ActualizarRol">Actualizar roles<br>
+              <input type="checkbox" (click)="checkboxCambiado(36)" id="36" name="rol" value="EliminarRol">Eliminar roles<br><br>
+            </div>
+          </div>
+          <br>
           <div class="form-group">
             <button [disabled]="!forma.valid"
                type="submit" class="btn btn-outline-primary">
