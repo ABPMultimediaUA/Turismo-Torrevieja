@@ -59,11 +59,14 @@ export class RolesComponent implements OnInit {
         for(let i=0;i<=9;i++)
         {
           this.rolesActuales.push(this.roles[i]);
+
         }
       }else{
-        for(let i=0;i<=this.roles.length;i++)
+        for(let i=0;i<this.roles.length;i++)
         {
+
           this.rolesActuales.push(this.roles[i]);
+
         }
       }
     })
