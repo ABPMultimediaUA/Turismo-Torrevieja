@@ -12,7 +12,8 @@
           <span class="icon-home-outline"></span> Inicio <span class="sr-only">(current)</span></a>
       </li>
       <li *ngIf="!logueadoService.estaLogueado"class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['chatbots']">
+        <!-- <a class="nav-link" [routerLink]="['chatbots']"> -->
+        <a class="nav-link" href="https://gvent.ovh/chatbot/">
           <span class="icon-id-badge"></span> Chatbots</a>
       </li>
       <li *ngIf="!logueadoService.estaLogueado" class="nav-item" routerLinkActive="active">
@@ -34,7 +35,7 @@
           [routerLink]="['/home']"
           class="nav-link elemento-navbar d9d9d9" >
           <span class="icon-home-outline"></span> Inicio</a>
-        
+
           <a
           role="button"
           [routerLink]="['/about']"
