@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule }  from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }  from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -63,6 +63,7 @@ import { RolComponent } from './components/roles/rol.component';
     HttpClientModule,
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     APP_ROUTING
   ],

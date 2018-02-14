@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {LoginComponent} from '../login/login.component';
-import {HomeComponent} from "../home/home.component";
+import { LoginComponent } from '../login/login.component';
+import { HomeComponent } from "../home/home.component";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -34,20 +34,20 @@ export class RolesComponent implements OnInit {
                 )
   {
     this.logueadoService.comprobarLogueado();
-    console.log("estaLogueado:");
-    console.log(this.logueadoService.estaLogueado);
+    //console.log("estaLogueado:");
+    //console.log(this.logueadoService.estaLogueado);
     this._rolesService.getRoles("1")
     .subscribe( data =>{
-      console.log(data);//la data del getHeroes
+      //console.log(data);//la data del getHeroes
 
       this.roles= data.data;
-      console.log("array de roles:");
-      console.log(this.roles);
-      console.log("roles[3]:");
-      console.log(this.roles[3]);
+      //console.log("array de roles:");
+      // console.log(this.roles);
+      // console.log("roles[3]:");
+      // console.log(this.roles[3]);
       this.totalPaginas = Math.ceil(this.roles.length/10);
-      console.log("this.totalPaginas:");
-      console.log(this.totalPaginas);
+      // console.log("this.totalPaginas:");
+      // console.log(this.totalPaginas);
       this.loading=false;
 
       for(let i=0;i<this.totalPaginas;i++)
@@ -61,7 +61,7 @@ export class RolesComponent implements OnInit {
           this.rolesActuales.push(this.roles[i]);
         }
       }else{
-        for(let i=0;i<=this.roles.length;i++)
+        for(let i=0;i<this.roles.length;i++)
         {
           this.rolesActuales.push(this.roles[i]);
         }
