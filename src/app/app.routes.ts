@@ -25,17 +25,17 @@ const app_routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'login', component: LoginComponent },
   { path: 'contact', component: ContactComponent },
-<<<<<<< HEAD
+
   { path: 'chatbots', loadChildren: 'app/chatbots/chatbots.module#ChatbotsModule' },
-=======
+
   //rutas usuarios
->>>>>>> ramon
+
   { path: 'usuarios', component: UsuariosComponent },
   { path: 'nuevo-usuario', component: NuevoUsuarioComponent },
   { path: 'usuario/:id', component: UsuarioComponent },
-<<<<<<< HEAD
-  { path: '**', pathMatch: 'full', redirectTo: 'home' },
-=======
+
+
+
   //rutas carteras
   { path: 'carteras', component: CarterasComponent },
   { path: 'nueva-cartera', component: NuevaCarteraComponent },
@@ -45,7 +45,7 @@ const app_routes: Routes = [
   //{ path: 'usuariosReloaded', component: UsuariosComponent },
 
   { path: '**', pathMatch: 'full', redirectTo: 'home' }
->>>>>>> ramon
+
 ];
 
 export const APP_ROUTING = RouterModule.forRoot(app_routes);

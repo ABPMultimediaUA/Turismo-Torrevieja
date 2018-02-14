@@ -6,12 +6,12 @@ import { HttpModule } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 
-<<<<<<< HEAD
+
 import { APP_ROUTING } from "./app.routes"
-=======
+
 // servicios
 
->>>>>>> ramon
+
 
 import { UsuariosService }  from "./services/usuarios.service";
 import { CarterasService }  from "./services/carteras.service";
@@ -62,15 +62,15 @@ import { NuevaCarteraComponent } from './components/carteras/nueva-cartera.compo
     NuevoUsuarioComponent,
     MensajeComponent,
     MensajesComponent,
-<<<<<<< HEAD
-    CarteraComponent
-=======
+
+
+
     CarterasComponent,
     CarteraComponent,
     NuevaCarteraComponent
 
 
->>>>>>> ramon
+
   ],
   imports: [
     HttpClientModule,

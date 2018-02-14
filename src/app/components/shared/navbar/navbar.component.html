@@ -12,19 +12,14 @@
           <span class="icon-home-outline"></span> Inicio <span class="sr-only">(current)</span></a>
       </li>
       <li *ngIf="!logueadoService.estaLogueado"class="nav-item" routerLinkActive="active">
-        <a class="nav-link" href="https://gvent.ovh/chatbot/">
+        <a class="nav-link" [routerLink]="['chatbots']">
           <span class="icon-id-badge"></span> Chatbots</a>
       </li>
       <li *ngIf="!logueadoService.estaLogueado" class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['about']">
           <span class="icon-info-circled"></span> Acerca de GVENT</a>
       </li>
-<<<<<<< HEAD
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['chatbots']">Chatbots de ayuda</a>
-      </li>
-    </ul>
-=======
+
       <li *ngIf="!logueadoService.estaLogueado" class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['contact']">
           <span class="icon-mail"></span>Contacto</a>
@@ -39,11 +34,7 @@
           [routerLink]="['/home']"
           class="nav-link elemento-navbar d9d9d9" >
           <span class="icon-home-outline"></span> Inicio</a>
-          <a
-          role="button"
-          href="https://gvent.ovh/chatbot/"
-          class="nav-link elemento-navbar d9d9d9 " >
-          <span class="icon-id-badge"></span> Chatbots</a>
+        
           <a
           role="button"
           [routerLink]="['/about']"
@@ -201,20 +192,15 @@
 
 
 
->>>>>>> ramon
+
     <button
 
       *ngIf="!logueadoService.estaLogueado"
       class="btn btn-primary my-2 my-sm-0 small-margin-laterals"
         type="submit"
-<<<<<<< HEAD
-        [routerLink]="['login']">Chatbot</button>
-    <button class="btn btn-outline-success my-2 my-sm-0"
-        type="submit"
-        [routerLink]="['login']">Iniciar sesión</button>
-=======
+
         [routerLink]="['login']"><span class="icon-login"></span> Iniciar sesión</button>
->>>>>>> ramon
+
     <button
 
         *ngIf="logueadoService.estaLogueado"
