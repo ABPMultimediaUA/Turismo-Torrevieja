@@ -9,7 +9,6 @@ import { AlertService, AuthenticationService, RolesService, LogueadoService } fr
   templateUrl: './nuevo-rol.component.html'
 })
 export class NuevoRolComponent implements OnInit {
-
   errorRol = false;
   rgstrRol = false;
   errorRolActualizar = false;
@@ -47,43 +46,35 @@ export class NuevoRolComponent implements OnInit {
 
   guardar()
   {
-    console.log(this.rol);
-    console.log("hola");
       this._rolesService.nuevoRol( this.rol )
-        .subscribe( data=>{
-          console.log(data);
+        .subscribe( res=>{
+          this.rol = res.data;
+          console.log("GUARDANDO ROL VER DATA  " + this.rol);
           this.errorRol = false;
           this.rgstrRol = true;
+          //this.id = res.identificador
         },
         error=> {
           let mensaje=JSON.parse(error._body);//Cambiar mensaje devuelto a JSON
-          console.log(mensaje.error);
-
+          //console.log(mensaje.error)
           this.errorMensaje=[];
 
-                      if(mensaje.error=="No posee permisos para ejecutar esta acción")
-                      {
+                      if(mensaje.error=="No posee permisos para ejecutar esta acción") {
                         this.errorMensaje.push("No posee permisos para ejecutar esta acción");
                       }
-
-                      if(mensaje.error=="No estás verificado")
-                      {
+                      if(mensaje.error=="No estás verificado"){
                         this.errorMensaje.push("No estás verificado");
                       }
-
-          if (typeof(mensaje.error.nombreRol) != "undefined")
-          {
-            for(let i=0;i<mensaje.error.nombreRol.length;i++)
-            {
+          if (typeof(mensaje.error.nombreRol) != "undefined"){
+            for(let i=0;i<mensaje.error.nombreRol.length;i++){
               this.errorMensaje.push(mensaje.error.nombreRol[i]);
             }
           }
-
-          console.log(this.errorMensaje);
-
+          //console.log(this.errorMensaje);
           this.errorRol = true;
           this.rgstrRol = false;
         },);
+
       if(this.rgstrRol){
         for(var i=0; i<this.permisosCambiados.length; i++){
         //Guardamos (Si el permiso que se ha cambiado no existia en el aux, se guarda)

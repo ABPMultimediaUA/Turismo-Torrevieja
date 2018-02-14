@@ -38,35 +38,21 @@ export class RolesComponent implements OnInit {
     //console.log(this.logueadoService.estaLogueado);
     this._rolesService.getRoles("1")
     .subscribe( data =>{
-      //console.log(data);//la data del getHeroes
-
       this.roles= data.data;
-      //console.log("array de roles:");
-      // console.log(this.roles);
-      // console.log("roles[3]:");
-      // console.log(this.roles[3]);
       this.totalPaginas = Math.ceil(this.roles.length/10);
-      // console.log("this.totalPaginas:");
-      // console.log(this.totalPaginas);
       this.loading=false;
 
-      for(let i=0;i<this.totalPaginas;i++)
-      {
+      for(let i=0;i<this.totalPaginas;i++){
         this.cantidadPagina.push(i);
       }
 
       if(this.roles.length>9){
-        for(let i=0;i<=9;i++)
-        {
+        for(let i=0;i<=9;i++){
           this.rolesActuales.push(this.roles[i]);
-
         }
       }else{
-        for(let i=0;i<this.roles.length;i++)
-        {
-
+        for(let i=0;i<this.roles.length;i++){
           this.rolesActuales.push(this.roles[i]);
-
         }
       }
     })
