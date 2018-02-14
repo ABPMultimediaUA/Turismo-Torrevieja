@@ -59,7 +59,7 @@ export class LoginComponent implements OnInit {
             console.log("entra aqui");
               localStorage.setItem("accesToken", resultado.access_token );
                   this.logueadoService.logueando();
-            location.reload(true);
+                    //location.reload(true);
                     //console.log(document.getElementById("verUsuarios").style);
                     //console.log("token resultado= "+resultado.access_token);
 
@@ -84,8 +84,10 @@ export class LoginComponent implements OnInit {
                   //console.log(localStorage.loggedIn);
                   //this.navbar.loguea();
                   //console.log("navbar.logueado: "+this.navbar.logueado);
+                  //conectarse a la base de datos y guardar en el session storage la info del usuario
+                  // con el mail del login
 
-
+                  localStorage.setItem("Id_usuario", "19");
                   // if(this.logueadoService.estaLogueado==true){
                     this.router.navigate(['usuarios']);
                     this.logueadoService.logueando();
@@ -111,5 +113,6 @@ export class LoginComponent implements OnInit {
     logout() {
         // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
+
     }
 }

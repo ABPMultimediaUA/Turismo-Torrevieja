@@ -6,9 +6,15 @@ import { HttpModule } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 
+<<<<<<< HEAD
 import { APP_ROUTING } from "./app.routes"
+=======
+// servicios
+
+>>>>>>> ramon
 
 import { UsuariosService }  from "./services/usuarios.service";
+import { CarterasService }  from "./services/carteras.service";
 // import { AlertComponent } from './_directives/index';
 // import { AuthGuard } from './_guards/index';
 import { AlertService, AuthenticationService, TokenService, LogueadoService } from './services/index';
@@ -21,18 +27,23 @@ import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { LoginComponent } from './components/login/login.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
+
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { UsuarioComponent } from './components/usuarios/usuario.component';
+import { NuevoUsuarioComponent } from './components/usuarios/nuevo-usuario.component';
+
 import { ContactComponent } from './components/contact/contact.component';
 
 import {IdsPipe} from './components/pipes/ids.pipe';
 import { KeysPipe } from './components/pipes/keys.pipe';
-import { NuevoUsuarioComponent } from './components/usuarios/nuevo-usuario.component';
-import { SidenavbarComponent } from './components/shared/sidenavbar/sidenavbar.component';
+
+
 import { MensajeComponent } from './components/shared/mensaje/mensaje.component';
 import { MensajesComponent } from './components/mensajes/mensajes.component';
-import { CarteraComponent } from './components/cartera/cartera.component';
 
+import { CarterasComponent } from './components/carteras/carteras.component';
+import { CarteraComponent } from './components/carteras/cartera.component';
+import { NuevaCarteraComponent } from './components/carteras/nueva-cartera.component';
 
 
 @NgModule({
@@ -49,10 +60,17 @@ import { CarteraComponent } from './components/cartera/cartera.component';
     IdsPipe,
     KeysPipe,
     NuevoUsuarioComponent,
-    SidenavbarComponent,
     MensajeComponent,
     MensajesComponent,
+<<<<<<< HEAD
     CarteraComponent
+=======
+    CarterasComponent,
+    CarteraComponent,
+    NuevaCarteraComponent
+
+
+>>>>>>> ramon
   ],
   imports: [
     HttpClientModule,
@@ -63,6 +81,7 @@ import { CarteraComponent } from './components/cartera/cartera.component';
   ],
   providers: [
     UsuariosService,
+    CarterasService,
     AlertService,
     AuthenticationService,
     TokenService,

@@ -23,7 +23,7 @@ import { AlertService, AuthenticationService, LogueadoService} from '../../../se
   templateUrl: './navbar.component.html',
 })
 export class NavbarComponent implements OnInit {
-
+destino: string;
 
 
     constructor(
@@ -53,7 +53,9 @@ export class NavbarComponent implements OnInit {
 
 
 
-  logout(){
+  logout(desti:string){
+    // console.log("desti =", desti)  ;
+    // this.destino=desti;
     this.logueadoService.logouteando();
 
 
@@ -78,7 +80,13 @@ export class NavbarComponent implements OnInit {
         document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }
     //Terminar de borrar cookie
+    console.log("this.destino = ", this.destino);
+    if(this.destino=="login"){
+    this.router.navigate(['/login']);
+    }else{
       this.router.navigate(['/home']);
+    }
+
     //localStorage.removeItem(accessToken);
 
     //console.log("logueado: "+this.logueado);
@@ -88,7 +96,33 @@ export class NavbarComponent implements OnInit {
 
 
   }
+cambiarCuenta(){
+  this.logueadoService.logouteando();
 
+  console.log(localStorage.loggedIn);
+  localStorage.loggedIn=false;
+  console.log(localStorage.loggedIn);
+  delete localStorage.loggedIn;
+  console.log("loggedin despues del delete:")
+  console.log(localStorage.loggedIn);
+    // console.log(document.getElementById("verUsuarios").style);
+
+  delete localStorage.accesToken;
+
+  //Borrar cookie
+  var cookies = document.cookie.split(";");
+
+  for (var i = 0; i < cookies.length; i++) {
+      var cookie = cookies[i];
+      var eqPos = cookie.indexOf("=");
+      var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+  }
+  //Terminar de borrar cookie
+
+    this.router.navigate(['/login']);
+
+}
 
 
 

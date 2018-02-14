@@ -1,8 +1,10 @@
 
-
 <div class="container-fluid">
 
-        <h1><span class="icon-user-add-outline"></span> Nuevo Usuario <small>{{usuario.nombreUsuario}}</small></h1>
+
+
+
+        <h1><span class="icon-folder-add"></span> Nueva Cartera <small>{{usuario.nombreUsuario}}</small></h1>
         <!-- mensajes -->
         <div class="container" *ngIf="errorUsuario === true">
             <div class="jumbotron">
@@ -99,11 +101,18 @@
                type="submit" class="btn btn-outline-primary">
               Guardar cambios
             </button>
-
+            <button
+              [routerLink]="['/carteras']"
+               class="btn btn-danger">
+              Cancelar
+            </button>
           </div>
 
         </form>
         <br>
+
+
+
 
 
 

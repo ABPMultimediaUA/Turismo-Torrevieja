@@ -1,3 +1,4 @@
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-blue ">
   <a class="navbar-brand" [routerLink]="['home']">GVENT</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -6,35 +7,221 @@
 
   <div class="collapse navbar-collapse d9d9d9 "id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto d9d9d9">
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['home']">Inicio <span class="sr-only">(current)</span></a>
+      <li *ngIf="!logueadoService.estaLogueado"class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['home']">
+          <span class="icon-home-outline"></span> Inicio <span class="sr-only">(current)</span></a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['about']">Acerca de GVENT</a>
+      <li *ngIf="!logueadoService.estaLogueado"class="nav-item" routerLinkActive="active">
+        <a class="nav-link" href="https://gvent.ovh/chatbot/">
+          <span class="icon-id-badge"></span> Chatbots</a>
       </li>
-      <li class="nav-item" routerLinkActive="active">
-        <a class="nav-link" [routerLink]="['contact']">Contacto</a>
+      <li *ngIf="!logueadoService.estaLogueado" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['about']">
+          <span class="icon-info-circled"></span> Acerca de GVENT</a>
       </li>
+<<<<<<< HEAD
       <li class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['chatbots']">Chatbots de ayuda</a>
       </li>
     </ul>
+=======
+      <li *ngIf="!logueadoService.estaLogueado" class="nav-item" routerLinkActive="active">
+        <a class="nav-link" [routerLink]="['contact']">
+          <span class="icon-mail"></span>Contacto</a>
+      </li>
+      <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
+        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Info
+        </button>
+        <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
+          <a
+          role="button"
+          [routerLink]="['/home']"
+          class="nav-link elemento-navbar d9d9d9" >
+          <span class="icon-home-outline"></span> Inicio</a>
+          <a
+          role="button"
+          href="https://gvent.ovh/chatbot/"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-id-badge"></span> Chatbots</a>
+          <a
+          role="button"
+          [routerLink]="['/about']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-info-circled"></span> Acerca de Gvent</a>
+          <a
+          role="button"
+          [routerLink]="['/contact']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-mail"></span> Contacto</a>
+        </div>
+      </div>
+      <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
+        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         <span class="icon-user-outline"></span> Usuarios
+        </button>
+        <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
+          <a
+          role="button"
+          [routerLink]="['/usuarios']"
+          class="nav-link elemento-navbar d9d9d9" >
+          <span class="icon-users-outline"></span> Listado</a>
+          <a
+          role="button"
+          [routerLink]="['/nuevo-usuario']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-user-add-outline"></span> Nuevo Usuario</a>
+
+        </div>
+      </div>
+      <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
+        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         <span class="icon-folder"></span> Carteras
+        </button>
+        <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
+          <a
+          role="button"
+          [routerLink]="['/carteras']"
+          class="nav-link elemento-navbar d9d9d9" >
+          <span class="icon-archive-1"></span> Listado</a>
+          <a
+          role="button"
+          [routerLink]="['/nueva-cartera']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-folder-add"></span> Nueva Cartera</a>
+        </div>
+      </div>
+      <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
+        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         <span class="icon-star"></span> Roles y Permisos
+        </button>
+        <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
+          <a
+          role="button"
+          [routerLink]="['/roles']"
+          class="nav-link elemento-navbar d9d9d9" >
+          <span class="icon-crown"></span> Roles</a>
+          <a
+          role="button"
+          [routerLink]="['/nuevo-rol']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-crown-plus"></span> Nuevo Rol</a>
+
+        <div class="dropdown-divider"></div>
+
+          <a
+          role="button"
+          [routerLink]="['/carteras']"
+          class="nav-link elemento-navbar d9d9d9" >
+          <span class="icon-lock-open"></span> Permisos</a>
+          <a
+          role="button"
+          [routerLink]="['/nueva-cartera']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-plus-circled"></span> Nuevo Permiso</a>
+        </div>
+      </div>
+      <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
+        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         <span class="icon-town-hall"></span> Espacios
+        </button>
+        <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
+          <a
+          role="button"
+          [routerLink]="['/espacios']"
+          class="nav-link elemento-navbar d9d9d9" >
+          <span class="icon-town-hall"></span> Listado</a>
+          <a
+          role="button"
+          [routerLink]="['/nuevo-espacio']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-plus-circled"></span> Nuevo Espacio</a>
+        </div>
+      </div>
+
+      <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
+        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         <span class="icon-handshake-o"></span> Proveedores
+        </button>
+        <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
+          <a
+          role="button"
+          [routerLink]="['/espacios']"
+          class="nav-link elemento-navbar d9d9d9" >
+          <span class="icon-handshake-o"></span> Listado</a>
+          <a style="width:180px"
+          role="button"
+          [routerLink]="['/nuevo-espacio']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-plus-circled"></span> Nuevo Proveedor</a>
+        </div>
+      </div>
+    </ul>
+    <div  *ngIf="logueadoService.estaLogueado" class="dropdown ">
+      <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+       <span class="icon-vcard"></span> UsuarioX
+      </button>
+      <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
+        <a
+        role="button"
+        [routerLink]="['/perfil']"
+        class="nav-link elemento-navbar d9d9d9" >
+        <span class="icon-user"></span> Perfil</a>
+        <a style="width:180px"
+        role="button"
+        [routerLink]="['/login']"
+        (click)="cambiarCuenta()"
+        class="nav-link elemento-navbar d9d9d9 " >
+        <span class="icon-users"></span> Cambiar cuenta</a>
+        <a
+        role="button"
+        (click)="logout()"
+        [routerLink]="['/home']"
+        class="nav-link elemento-navbar d9d9d9 " >
+        <span class="icon-logout"></span> Cerrar Sesion</a>
+        <a
+        role="button"
+        [routerLink]="['/ajustes']"
+        class="nav-link elemento-navbar d9d9d9 " >
+        <span class="icon-cog"></span> Ajustes</a>
+        <a
+        role="button"
+        [routerLink]="['/contact']"
+        class="nav-link elemento-navbar d9d9d9 " >
+        <span class="icon-help"></span> Ayuda</a>
+        <a
+        role="button"
+        [routerLink]="['/contact']"
+        class="nav-link elemento-navbar d9d9d9 " >
+        <span class="icon-comment"></span> Sugerencias</a>
+
+      </div>
+    </div>
+
+
+
+
+>>>>>>> ramon
     <button
 
       *ngIf="!logueadoService.estaLogueado"
       class="btn btn-primary my-2 my-sm-0 small-margin-laterals"
         type="submit"
+<<<<<<< HEAD
         [routerLink]="['login']">Chatbot</button>
     <button class="btn btn-outline-success my-2 my-sm-0"
         type="submit"
         [routerLink]="['login']">Iniciar sesión</button>
+=======
+        [routerLink]="['login']"><span class="icon-login"></span> Iniciar sesión</button>
+>>>>>>> ramon
     <button
 
         *ngIf="logueadoService.estaLogueado"
         (click)="logout()"
         class="btn btn-danger my-2 my-sm-0 small-margin-laterals"
         type="submit"
-        >Logout</button>
+        ><span class="icon-logout"></span> Logout</button>
 
   </div>
 </nav>

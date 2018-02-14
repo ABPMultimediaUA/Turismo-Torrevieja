@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import {LoginComponent} from '../login/login.component';
 
-
+import { Cartera }  from "../../interfaces/cartera.interface";
 import {HomeComponent} from "../home/home.component";
 import { Router, ActivatedRoute } from '@angular/router';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';//ramoon
@@ -12,26 +12,27 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 // import { AuthenticationService } from '../../services/authentication.service';
 // import {AlertService } from '../../services/alert.service';
-import { AlertService, AuthenticationService, UsuariosService, LogueadoService } from '../../services/index';
+import { AlertService, AuthenticationService, CarterasService, LogueadoService } from '../../services/index';
 // import { AlertComponent } from '../../../_directives/index';
 // import { AuthGuard } from '../../../_guards/index';
 
 @Component({
-  selector: 'app-cartera',
-  templateUrl: './cartera.component.html',
-  styleUrls: ['./cartera.component.css']
+  selector: 'app-carteras',
+  templateUrl: './carteras.component.html'
 })
-export class CarteraComponent implements OnInit {
-  eventos:any[] = [];
+export class CarterasComponent implements OnInit {
+  carteras:any[] = [];
   loading:boolean = true;
   //pagination
   paginacion:any = [];
   cantidadPagina:any[]=[];
-
-  eventosActuales:any[] = [];
+  carterasPorPagina:number=10;
+  ItemsPorPagina:string;
+  carterasActuales:any[] = [];
   totalPaginas:number;
   currentPage:number = 1;
-  constructor(private _usuariosService:UsuariosService,
+  // k:number;
+  constructor(private _carterasService:CarterasService,
               private router:Router,
               private route:ActivatedRoute,
               public  logueadoService: LogueadoService
@@ -40,16 +41,21 @@ export class CarteraComponent implements OnInit {
 
               console.log("estaLogueado:");
               console.log(this.logueadoService.estaLogueado);
-        this._usuariosService.getUsuarios("1")
+        this._carterasService.getCarteras("1")
           .subscribe( data =>{
             console.log(data);//la data del getHeroes
 
-            this.eventos= data.data;
-            console.log("array de usuarios:");
-            console.log(this.eventos);
-            console.log("usuarios[3]:");
-            console.log(this.eventos[3]);
-            this.totalPaginas = Math.ceil(this.eventos.length/10);
+            this.carteras= data.data;
+            console.log("array de carteras:");
+            console.log(this.carteras);
+            console.log("carteras[3]:");
+            console.log(this.carteras[3]);
+
+            this.ItemsPorPagina = localStorage.getItem("ItemsPorPagina");
+            console.log("cojo Items por pagina de localstorage:",this.ItemsPorPagina );
+            this.carterasPorPagina = parseInt(this.ItemsPorPagina);
+            console.log("paso itemspor pagina a number y lo meto en carteras por pagina:",this.carterasPorPagina);
+            this.totalPaginas = Math.ceil(this.carteras.length/this.carterasPorPagina);
             console.log("this.totalPaginas:");
             console.log(this.totalPaginas);
             this.loading=false;
@@ -66,15 +72,15 @@ export class CarteraComponent implements OnInit {
               this.cantidadPagina.push(i);
             }
 
-            if(this.eventos.length>9){
-              for(let i=0;i<=9;i++)
+            if(this.carteras.length>(this.carterasPorPagina-1)){
+              for(let i=0;i<=(this.carterasPorPagina-1);i++)
               {
-                this.eventosActuales.push(this.eventos[i]);
+                this.carterasActuales.push(this.carteras[i]);
               }
             }else{
-              for(let i=0;i<=this.eventos.length;i++)
+              for(let i=0;i<=this.carteras.length;i++)
               {
-                this.eventosActuales.push(this.eventos[i]);
+                this.carterasActuales.push(this.carteras[i]);
               }
             }
 
@@ -98,23 +104,31 @@ export class CarteraComponent implements OnInit {
   }
   ngOnInit() {
   }
+  cambiarNumCarterasPorPagina(){
+    this.carterasPorPagina=this.carterasPorPagina;
+    console.log("nuevo numero de carteras por pagina: ", this.carterasPorPagina);
+    var n = this.carterasPorPagina.toString();
+    localStorage.setItem("ItemsPorPagina", n);
+
+     location.reload(true);
+  }
   nuevaPagina(pagina:number){
     this.currentPage=pagina;
     console.log("pagina que pido:");
     console.log(pagina);
-    let x = 10 * (pagina-1);
-    let y = x + 9;
-    this.eventosActuales=[];
+    let x = this.carterasPorPagina * (pagina-1);
+    let y = x + (this.carterasPorPagina-1);
+    this.carterasActuales=[];
 
     if(pagina==this.totalPaginas){
-      for(let i=x;i<this.eventos.length;i++)
+      for(let i=x;i<this.carteras.length;i++)
       {
-        this.eventosActuales.push(this.eventos[i]);
+        this.carterasActuales.push(this.carteras[i]);
       }
     }else{
       for(let i=x;i<=y;i++)
       {
-        this.eventosActuales.push(this.eventos[i]);
+        this.carterasActuales.push(this.carteras[i]);
       }
     }
 
@@ -145,21 +159,21 @@ export class CarteraComponent implements OnInit {
   // refresh(){
   // this.router.navigate(['usuarios']);
   // }
-  borrarUsuario(id:string){
-      this._usuariosService.borrarUsuario(id)
+  borrarCartera(id:string){
+      this._carterasService.borrarCartera(id)
           .subscribe(respuesta=>{
             if(respuesta){
               console.log("caracola");
               console.log(respuesta);
-              console.log( "borrausuario y ahora va a pedir todos los usuarios de nuevo" );
-            this._usuariosService.getUsuarios("1");
-            console.log( "aqui los ha pedido ya todos de nuevo y voy a hacer el router navigate a usuarios" );
+              console.log( "borracartera y ahora va a pedir todos los carteras de nuevo" );
+            this._carterasService.getCarteras("1");
+            console.log( "aqui los ha pedido ya todos de nuevo y voy a hacer el router navigate a carteras" );
             location.reload(true);
-            this.router.navigate(['usuarios']);
+            this.router.navigate(['carteras']);
             // this.refresh();
             }else{
               //todo bien
-              delete this.eventos[id];
+              delete this.carteras[id];
             //   console.log( "borrausuario y ahora va a pedir todos los usuarios de nuevo" );
             // this._usuariosService.getUsuarios();
             // console.log( "aqui los ha pedido ya todos de nuevo" );
@@ -171,4 +185,4 @@ export class CarteraComponent implements OnInit {
           })
 
     }
-}
+  }
