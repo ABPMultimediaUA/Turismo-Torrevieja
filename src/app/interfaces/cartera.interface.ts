@@ -7,4 +7,5 @@ export interface Cartera
     fechaCreacion:string;
     fechaActualizacion:string;
     fechaEliminacion:string;
+    estado:number;
 }
