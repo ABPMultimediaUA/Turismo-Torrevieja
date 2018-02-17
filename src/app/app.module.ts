@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { FormsModule }  from '@angular/forms';
+import { FormsModule, ReactiveFormsModule }  from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
@@ -10,16 +10,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { APP_ROUTING } from "./app.routes"
 
 // servicios
-
-
-
 import { UsuariosService }  from "./services/usuarios.service";
+import { RolesService }  from "./services/roles.service";
 import { CarterasService }  from "./services/carteras.service";
 // import { AlertComponent } from './_directives/index';
 // import { AuthGuard } from './_guards/index';
 import { AlertService, AuthenticationService, TokenService, LogueadoService } from './services/index';
-
-
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -45,6 +41,9 @@ import { CarterasComponent } from './components/carteras/carteras.component';
 import { CarteraComponent } from './components/carteras/cartera.component';
 import { NuevaCarteraComponent } from './components/carteras/nueva-cartera.component';
 
+import { RolesComponent } from './components/roles/roles.component';
+import { NuevoRolComponent } from './components/roles/nuevo-rol.component';
+import { RolComponent } from './components/roles/rol.component';
 
 @NgModule({
   declarations: [
@@ -62,26 +61,25 @@ import { NuevaCarteraComponent } from './components/carteras/nueva-cartera.compo
     NuevoUsuarioComponent,
     MensajeComponent,
     MensajesComponent,
-
-
-
     CarterasComponent,
     CarteraComponent,
-    NuevaCarteraComponent
-
-
-
+    NuevaCarteraComponent,
+    RolesComponent,
+    RolComponent,
+    NuevoRolComponent
   ],
   imports: [
     HttpClientModule,
     BrowserModule,
     FormsModule,
+    ReactiveFormsModule,
     HttpModule,
     APP_ROUTING
   ],
   providers: [
     UsuariosService,
     CarterasService,
+    RolesService,
     AlertService,
     AuthenticationService,
     TokenService,
