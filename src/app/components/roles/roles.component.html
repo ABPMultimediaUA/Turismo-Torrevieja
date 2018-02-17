@@ -1,66 +1,6 @@
 <div class="container-fluid">
   <div class="row ">
-      <nav class=" col-sm-3 col-md-2 d-none d-sm-block d9d9d9 bg-blue">
-        <ul class="nav nav-pills flex-column  d9d9d9  ">
-          <li class="nav-item " routerLinkActive="active">
-            <a
-            role="button"
-            [routerLink]="['/usuarios']"
-            class="nav-link elemento-navbar d9d9d9 " >Usuarios</a>
-          </li>
-          <li class="nav-item" routerLinkActive="active">
-            <a
-            role="button"
-            [routerLink]="['/nuevo-usuario']"
-            class="nav-link elemento-navbar d9d9d9 " >Nuevo Usuario</a>
-          </li>
-        </ul>
-        <br>
-        <ul class="nav nav-pills flex-column  d9d9d9  ">
-          <li class="nav-item " routerLinkActive="active">
-            <a
-            role="button"
-            [routerLink]="['/roles']"
-            class="nav-link elemento-navbar d9d9d9 " >Roles</a>
-          </li>
-          <li class="nav-item" routerLinkActive="active">
-            <a
-            role="button"
-            [routerLink]="['/nuevo-rol']"
-            class="nav-link elemento-navbar d9d9d9 " >Nuevo Rol</a>
-          </li>
-        </ul>
-        <br>
-        <ul class="nav nav-pills flex-column">
-          <li class="nav-item " routerLinkActive="active">
-            <a
-            role="button"
-            [routerLink]="['/cartera']"
-            class="nav-link elemento-navbar d9d9d9 " >Cartera de eventos</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link elemento-navbar d9d9d9 " href="#">Nuevo evento</a>
-          </li>
-        </ul>
-        <br>
-        <ul class="nav nav-pills flex-column">
-          <li class="nav-item">
-            <a class="nav-link elemento-navbar d9d9d9 " href="#">Gestiones</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link elemento-navbar d9d9d9 " href="#">Nueva gestion</a>
-          </li>
-        </ul>
-        <br>
-        <ul class="nav nav-pills flex-column">
-          <li class="nav-item">
-            <a class="nav-link elemento-navbar d9d9d9 " href="#">Opciones</a>
-          </li>
-        </ul>
-      </nav>
-
-      <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-        <h1>Roles</h1>
+        <h1><span class="icon-crown"></span>Roles</h1>
         <div class="table-responsive">
           <table class="table table-striped">
             <thead class="thead-dark">
@@ -77,14 +17,14 @@
                 <td>{{ i + 1 }}</td>
                 <td>{{ roles.identificador }}</td>
                 <td>{{ roles.nombreRol }}</td>
-                <td class="text-right w120">
+                <td class="text-right w20">
                   <button  [routerLink]="['/rol', roles.identificador]"
                   type="button" class="btn btn-outline-success">
-                    Editar
+                    <span class="icon-pencil"></span>
                   </button>
                   <button  (click)="borrarRol(roles.identificador)"
                   type="button" class="btn btn-outline-danger">
-                    Eliminar
+                    <span class="icon-trash"></span>
                   </button>
                 </td>
               </tr>
@@ -121,6 +61,5 @@
             </li>
           </ul>
         </nav>
-      </main>
     </div>
 </div>
