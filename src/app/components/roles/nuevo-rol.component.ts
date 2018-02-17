@@ -35,10 +35,7 @@ export class NuevoRolComponent implements OnInit {
   {
     this.logueadoService.comprobarLogueado();
 
-    this.route.params.subscribe(parametros=>{
-      console.log(parametros);
-    });
-
+    this.route.params.subscribe(parametros=>{ });
   }
 
   ngOnInit() {
@@ -48,15 +45,24 @@ export class NuevoRolComponent implements OnInit {
   {
       this._rolesService.nuevoRol( this.rol )
         .subscribe( res=>{
-          this.rol = res.data;
-          console.log("GUARDANDO ROL VER DATA  " + this.rol);
+          this.id = JSON.parse((<any>res)._body).data.identificador;
           this.errorRol = false;
           this.rgstrRol = true;
-          //this.id = res.identificador
+          //CREAMOS PERMISOS
+          for(var i=0; i<this.permisosCambiados.length; i++){
+          //Guardamos (Si el permiso que se ha cambiado no existia en el aux, se guarda)
+          //TODO Obtener el id del rol recien creado
+          this._rolesService.nuevoPermiso(this.id, this.permisosCambiados[i])
+            .subscribe(data=>{},
+            error=> {
+              let mensaje=JSON.parse(error._body);//Cambiar mensaje devuelto a JSON
+              this.errorMensaje.push("Error al añadir algún permiso.");
+              this.errorRolActualizar = true;
+            },);
+          }
         },
         error=> {
           let mensaje=JSON.parse(error._body);//Cambiar mensaje devuelto a JSON
-          //console.log(mensaje.error)
           this.errorMensaje=[];
 
                       if(mensaje.error=="No posee permisos para ejecutar esta acción") {
@@ -70,29 +76,10 @@ export class NuevoRolComponent implements OnInit {
               this.errorMensaje.push(mensaje.error.nombreRol[i]);
             }
           }
-          //console.log(this.errorMensaje);
           this.errorRol = true;
           this.rgstrRol = false;
         },);
-
-      if(this.rgstrRol){
-        for(var i=0; i<this.permisosCambiados.length; i++){
-        //Guardamos (Si el permiso que se ha cambiado no existia en el aux, se guarda)
-        //TODO Obtener el id del rol recien creado
-        this._rolesService.nuevoPermiso(this.id, this.permisosCambiados[i])
-          .subscribe(data=>{
-            console.log("permiso data que queremos añadir "+data);
-          },
-          error=> {
-            //console.log(error);
-            let mensaje=JSON.parse(error._body);//Cambiar mensaje devuelto a JSON
-            console.log(mensaje.error);
-            this.errorMensaje.push("Error al añadir algún permiso.");
-            this.errorRolActualizar = true;
-          },);
-        }
-      }
-      else{
+      if(!this.rgstrRol){
         this.errorMensaje.push("No se ha creado ningún rol antes de añadir los permisos.");
         this.errorRolActualizar = true;
       }
@@ -100,13 +87,11 @@ export class NuevoRolComponent implements OnInit {
 
     //GUARDAR ID DE TODOS LOS CHECKBOX MODIFICADOS
     checkboxCambiado(id){
-      //console.log(id);
       if(this.permisosCambiados.length == 0){ this.permisosCambiados.push(id); }
       else{
         var existe:number = -1;
         for(var i=0; i<this.permisosCambiados.length; i++){
           if(this.permisosCambiados[i]==id){
-            //console.log("son iguales");
             existe = i;
             i=this.permisosCambiados.length;
           }

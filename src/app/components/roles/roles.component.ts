@@ -34,8 +34,6 @@ export class RolesComponent implements OnInit {
                 )
   {
     this.logueadoService.comprobarLogueado();
-    //console.log("estaLogueado:");
-    //console.log(this.logueadoService.estaLogueado);
     this._rolesService.getRoles("1")
     .subscribe( data =>{
       this.roles= data.data;
@@ -63,20 +61,16 @@ export class RolesComponent implements OnInit {
 
   nuevaPagina(pagina:number){
     this.currentPage=pagina;
-    console.log("pagina que pido:");
-    console.log(pagina);
     let x = 10 * (pagina-1);
     let y = x + 9;
     this.rolesActuales=[];
 
     if(pagina==this.totalPaginas){
-      for(let i=x;i<this.roles.length;i++)
-      {
+      for(let i=x;i<this.roles.length;i++){
         this.rolesActuales.push(this.roles[i]);
       }
     }else{
-      for(let i=x;i<=y;i++)
-      {
+      for(let i=x;i<=y;i++){
         this.rolesActuales.push(this.roles[i]);
       }
     }
@@ -86,18 +80,12 @@ export class RolesComponent implements OnInit {
       this._rolesService.borrarRoles(id)
       .subscribe(respuesta=>{
         if(respuesta){
-          console.log("caracola");
-          console.log(respuesta);
-          console.log( "borra rol y ahora va a pedir todos los roles de nuevo" );
           this._rolesService.getRoles("1");
-          console.log( "aqui los ha pedido ya todos de nuevo y voy a hacer el router navigate a usuarios" );
           location.reload(true);
           this.router.navigate(['roles']);
           // this.refresh();
         }else{
-        //todo bien
           delete this.roles[id];
-
         }
 
     })
