@@ -14,7 +14,7 @@ import { UsuariosService }  from "./services/usuarios.service";
 import { CarterasService }  from "./services/carteras.service";
 // import { AlertComponent } from './_directives/index';
 // import { AuthGuard } from './_guards/index';
-import { AlertService, AuthenticationService, TokenService, LogueadoService } from './services/index';
+import { AlertService, AuthenticationService, TokenService, DatosUsuarioService, LogueadoService } from './services/index';
 
 
 
@@ -79,6 +79,7 @@ import { NuevaCarteraComponent } from './components/carteras/nueva-cartera.compo
     AlertService,
     AuthenticationService,
     TokenService,
+    DatosUsuarioService,
     NavbarComponent,
     HomeComponent,
     LogueadoService

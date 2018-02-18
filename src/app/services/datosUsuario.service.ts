@@ -14,16 +14,24 @@ export class DatosUsuarioService {
   constructor(private http:Http) { }
 
 
-  getDatosUsuario(){
+  getDatosUsuario(token){
     let headers = new Headers ({
 
       'Content-Type':'application/json',
       'Access-Control-Allow-Origin':'https://gvent.ovh/Prueba2_1/public',
-      'Authorization': this.First_accessToken+this.Secound_accessToken,
+      'Authorization': this.First_accessToken+token,
 
       //'X-XSRF-TOKEN':this.First_accessToken+this.Secound_accessToken
     });
-    return this.http.get(this.DatosUsuarioURL, { headers })
+    console.log("papapapapapapapapapapapapapapapapapapapapaap");
+    console.log( token);
+
+      
+      let url = this.DatosUsuarioURL;
+      console.log("papapapapapapapapaffffffffffffffffffffffffffapapapapapapaap");
+      console.log(url);
+    return this.http.get(url, { headers })
       .map( res=>res.json());
+
   }
 }

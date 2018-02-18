@@ -7,12 +7,13 @@ import {HomeComponent} from "../../home/home.component";
 import { Router, ActivatedRoute } from '@angular/router';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';//ramoon
 
+import { Usuario }  from "../../../interfaces/usuario.interface";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 // import { AuthenticationService } from '../../services/authentication.service';
 // import {AlertService } from '../../services/alert.service';
-import { AlertService, AuthenticationService, LogueadoService} from '../../../services/index';
+import { AlertService, AuthenticationService, LogueadoService, DatosUsuarioService} from '../../../services/index';
 // import { AlertComponent } from '../../../_directives/index';
 // import { AuthGuard } from '../../../_guards/index';
 
@@ -25,6 +26,14 @@ import { AlertService, AuthenticationService, LogueadoService} from '../../../se
 export class NavbarComponent implements OnInit {
 destino: string;
 
+identificador:number = 0;
+nombreUsuario:string = "";
+apodo:string = "";
+correo:string = "";
+esVerificado:number =0;
+rol:number =0;
+
+
 
     constructor(
         private route: ActivatedRoute,
@@ -35,6 +44,14 @@ destino: string;
         public  logueadoService: LogueadoService
         ) {
           this.logueadoService.comprobarLogueado();
+
+          this.identificador=localStorage.identificador;
+          this.nombreUsuario=localStorage.nombreUsuario;
+          this.apodo=localStorage.apodo;
+          this.correo=localStorage.correo;
+          this.esVerificado=localStorage.esVerificado;
+          this.rol=localStorage.rol;
+
          }
 
   ngOnInit() {
@@ -43,7 +60,7 @@ destino: string;
 
   }
 
-  
+
 
 
 
@@ -62,6 +79,12 @@ destino: string;
       // console.log(document.getElementById("verUsuarios").style);
 
     delete localStorage.accesToken;
+    delete localStorage.identificador;
+    delete localStorage.nombreUsuario;
+    delete localStorage.apodo;
+    delete localStorage.correo;
+    delete localStorage.rol;
+    delete localStorage.esVerificado;
 
     //Borrar cookie
     var cookies = document.cookie.split(";");

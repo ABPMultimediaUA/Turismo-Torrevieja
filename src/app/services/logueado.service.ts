@@ -50,6 +50,7 @@ logueando(){
   this.estaLogueado=true;
   console.log(" log de this.estaLogueado en logueando():");
   console.log(this.estaLogueado);
+  
   //aqui hay que guardar todo lo que viene por esta ruta
 //  https://gvent.ovh/Prueba2_1/public/quiensoy
 }
