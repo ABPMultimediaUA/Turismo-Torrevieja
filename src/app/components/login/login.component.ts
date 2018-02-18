@@ -25,6 +25,8 @@ export class LoginComponent implements OnInit {
     loginError = false;
 
 
+
+
     constructor(
         private route: ActivatedRoute,
         private router: Router,
@@ -86,6 +88,9 @@ export class LoginComponent implements OnInit {
                   //console.log("navbar.logueado: "+this.navbar.logueado);
                   //conectarse a la base de datos y guardar en el session storage la info del usuario
                   // con el mail del login
+
+
+
 
                   localStorage.setItem("Id_usuario", "19");
                   // if(this.logueadoService.estaLogueado==true){
