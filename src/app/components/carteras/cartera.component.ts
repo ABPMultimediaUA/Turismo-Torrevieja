@@ -21,8 +21,7 @@ public cartera:Cartera={
   trimestre:0,
   fechaCreacion:"",
   fechaActualizacion:"",
-  fechaEliminacion:"",
-  estado:0
+  fechaEliminacion:""
 };
 
 nuevo:boolean = false;

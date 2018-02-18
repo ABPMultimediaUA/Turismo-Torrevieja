@@ -72,15 +72,6 @@
               readonly
               type="text">
           </div>
-          <div *ngIf="!permisoEditar" class="form-group">
-            <label>Estado</label>
-            <input [(ngModel)]="cartera.estado"
-              name="estado"
-              class="form-control"
-              placeholder="Estado de la cartera"
-              readonly
-              type="text">
-          </div>
             <!-- *ngIf="permisoEditar" -->
           <div *ngIf="permisoEditar" class="form-group">
             <label>Nombre</label>
@@ -106,15 +97,6 @@
               name="trimestre"
               class="form-control"
               placeholder="Trimestre de la cartera"
-              required
-              type="text">
-          </div>
-          <div *ngIf="permisoEditar" class="form-group">
-            <label>Estado</label>
-            <input [(ngModel)]="cartera.estado"
-              name="estado"
-              class="form-control"
-              placeholder="Estado de la cartera"
               required
               type="text">
           </div>

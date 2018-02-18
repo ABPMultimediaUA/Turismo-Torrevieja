@@ -1,27 +1,28 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
-import { Cartera }  from "../../interfaces/cartera.interface";
-import { AlertService, AuthenticationService, CarterasService, LogueadoService } from '../../services/index';
+import { Usuario }  from "../../interfaces/usuario.interface";
+import { AlertService, AuthenticationService, UsuariosService, LogueadoService } from '../../services/index';
 
 @Component({
-  selector: 'app-cartera',
+  selector: 'app-usuario',
   templateUrl: './nueva-cartera.component.html'
 })
 export class NuevaCarteraComponent implements OnInit {
-errorCartera = false;
-rgstrCartera = false;
-errorCarteraActualizar = false;
+errorUsuario = false;
+rgstrUsuario = false;
+errorUsuarioActualizar = false;
 errorMensaje:string[]=[];
-public cartera:Cartera={
+public usuario:Usuario={
   identificador:"",
-  nombreCartera:"string",
-  year:0,
-  trimestre:0,
-  fechaCreacion:"",
-  fechaActualizacion:"",
-  fechaEliminacion:"",
-  estado:1
+  nombreUsuario:"",
+  apodo:"",
+  correo:"",
+  password:"",
+  password_confirmation:"",
+  esVerificado:0,
+  //key$?:string; identificador es la key
+  rol:0
 };
 
 nuevo:boolean = false;
@@ -30,7 +31,7 @@ nuevo:boolean = false;
 //
 
 
-constructor( private _carterasService: CarterasService,
+constructor( private _usuariosService: UsuariosService,
                 private router:Router,
                 private route:ActivatedRoute,//esto es para pasar como parametro
                 public  logueadoService: LogueadoService
@@ -64,14 +65,14 @@ constructor( private _carterasService: CarterasService,
   {
         //console.log("ewfefe"+this.id);
         //if(this.id == "nuevo"){
-          console.log(this.cartera);
+          console.log(this.usuario);
           console.log("hola");
-            this._carterasService.nuevaCartera( this.cartera )
+            this._usuariosService.nuevoUsuario( this.usuario )
               .subscribe( data=>{
                 //this.router.navigate(['/heroe',data.name])
                 console.log(data);
-                this.errorCartera = false;
-                this.rgstrCartera = true;
+                this.errorUsuario = false;
+                this.rgstrUsuario = true;
             //    this.ngForm.reset();
 
 
@@ -99,11 +100,11 @@ constructor( private _carterasService: CarterasService,
 
 
 
-                if (typeof(mensaje.error.nombreCartera) != "undefined")
+                if (typeof(mensaje.error.nombreUsuario) != "undefined")
                 {
-                  for(let i=0;i<mensaje.error.nombreCartera.length;i++)
+                  for(let i=0;i<mensaje.error.nombreUsuario.length;i++)
                   {
-                    this.errorMensaje.push(mensaje.error.nombreCartera[i]);
+                    this.errorMensaje.push(mensaje.error.nombreUsuario[i]);
                   }
                 }
                  if (typeof(mensaje.error.correo) != "undefined")
@@ -140,8 +141,8 @@ constructor( private _carterasService: CarterasService,
                 }
                 */
 
-                this.errorCartera = true;
-                this.rgstrCartera = false;
+                this.errorUsuario = true;
+                this.rgstrUsuario = false;
               },);
 
 

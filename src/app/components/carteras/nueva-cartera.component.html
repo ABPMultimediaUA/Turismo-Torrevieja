@@ -4,7 +4,7 @@
 
 
 
-        <h1><span class="icon-folder-add"></span> Nueva Cartera <small>{{cartera.nombreCartera}}</small></h1>
+        <h1><span class="icon-folder-add"></span> Nueva Cartera <small>{{usuario.nombreUsuario}}</small></h1>
         <!-- mensajes -->
         <div class="container" *ngIf="errorUsuario === true">
             <div class="jumbotron">
@@ -38,45 +38,64 @@
         <!-- fin mensajes -->
 
         <form class="animated fadeIn fast"(ngSubmit)="guardar()" #forma="ngForm">
-
-
-
           <div class="form-group">
             <label>Nombre</label>
-            <input [(ngModel)]="cartera.nombreCartera"
-              name="nombreCartera"
+            <input [(ngModel)]="usuario.nombreUsuario"
+              name="nombreUsuario"
               class="form-control"
-              placeholder="Nombre de la Cartera"
+              placeholder="Nombre del Usuario"
               required
               type="text">
           </div>
           <div class="form-group">
-            <label>Año</label>
-            <input [(ngModel)]="cartera.year"
-              name="año"
+            <label>Apodo</label>
+            <input [(ngModel)]="usuario.apodo"
+              name="apodo"
               class="form-control"
-              placeholder="Año de la Cartera"
+              placeholder="Apodo del Usuario"
               required
               type="text">
           </div>
           <div class="form-group">
-            <label>Trimestre</label>
-            <input [(ngModel)]="cartera.trimestre"
-              name="trimestre"
+            <label>Correo</label>
+            <input [(ngModel)]="usuario.correo"
+              name="correo"
               class="form-control"
-              placeholder="Trimestre de la cartera"
+              placeholder="Correo del Usuario"
               required
               type="text">
           </div>
           <div class="form-group">
-            <label>Estado</label>
-            <input [(ngModel)]="cartera.estado"
-              name="estado"
+            <label>Contraseña</label>
+            <input [(ngModel)]="usuario.password"
+              name="password"
               class="form-control"
-              placeholder="Estado de la cartera"
+              placeholder="Contraseña del Usuario"
               required
               type="text">
           </div>
+          <div class="form-group">
+            <label>Confirmacion de Contraseña</label>
+            <input [(ngModel)]="usuario.password_confirmation"
+              name="password_confirmation"
+              class="form-control"
+              placeholder="Confirmacion Contraseña del Usuario"
+              required
+              type="text">
+          </div>
+
+          <div class="form-group">
+                  <label>Rol</label>
+                  <select [(ngModel)]="usuario.rol"
+                    name="rol"
+                  class="form-control"
+                  >
+                    <option value="1">Administrador</option>
+                    <option value="2">trabajador</option>
+                    <option value="4">Otros</option>
+
+                  </select>
+                </div>
           <div class="form-group">
             <button [disabled]="!forma.valid"
                type="submit" class="btn btn-outline-primary">
