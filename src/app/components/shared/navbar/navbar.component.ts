@@ -54,8 +54,7 @@ destino: string;
 
 
   logout(desti:string){
-    // console.log("desti =", desti)  ;
-    // this.destino=desti;
+    this.destino=desti;
     this.logueadoService.logouteando();
 
 
@@ -80,7 +79,6 @@ destino: string;
         document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
     }
     //Terminar de borrar cookie
-    console.log("this.destino = ", this.destino);
     if(this.destino=="login"){
     this.router.navigate(['/login']);
     }else{
@@ -96,33 +94,7 @@ destino: string;
 
 
   }
-cambiarCuenta(){
-  this.logueadoService.logouteando();
 
-  console.log(localStorage.loggedIn);
-  localStorage.loggedIn=false;
-  console.log(localStorage.loggedIn);
-  delete localStorage.loggedIn;
-  console.log("loggedin despues del delete:")
-  console.log(localStorage.loggedIn);
-    // console.log(document.getElementById("verUsuarios").style);
-
-  delete localStorage.accesToken;
-
-  //Borrar cookie
-  var cookies = document.cookie.split(";");
-
-  for (var i = 0; i < cookies.length; i++) {
-      var cookie = cookies[i];
-      var eqPos = cookie.indexOf("=");
-      var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-  }
-  //Terminar de borrar cookie
-
-    this.router.navigate(['/login']);
-
-}
 
 
 
