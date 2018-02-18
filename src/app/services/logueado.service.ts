@@ -13,8 +13,8 @@ import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map'
 @Injectable()
 export class LogueadoService {
-  datosLoginsURL:string="https://gvent.ovh/Prueba2_1/public/quiensoy";
-  datosLoginURL:string="https://gvent.ovh/Prueba2_1/public/quiensoy";
+  // datosLoginsURL:string="https://gvent.ovh/Prueba2_1/public/quiensoy";
+  // datosLoginURL:string="https://gvent.ovh/Prueba2_1/public/quiensoy";
   First_accessToken:string="Bearer ";
   Secound_accessToken:string=localStorage.accesToken;
 

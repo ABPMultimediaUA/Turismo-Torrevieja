@@ -57,11 +57,17 @@ export class LoginComponent implements OnInit {
                   data => {
                     let resultado: any = {};
                     resultado=data;
+                
+                  console.log("entra aqui");
+                  localStorage.setItem("accesToken", resultado.access_token );
 
-            console.log("entra aqui");
-              localStorage.setItem("accesToken", resultado.access_token );
+
+
+
+
+                  localStorage.setItem("DatosUsuario",resultado.datos_usu);
                   this.logueadoService.logueando();
-            location.reload(true);
+                  location.reload(true);
                     //console.log(document.getElementById("verUsuarios").style);
                     //console.log("token resultado= "+resultado.access_token);
 
@@ -80,7 +86,7 @@ export class LoginComponent implements OnInit {
                   //console.log("Entrar data1");
                   localStorage.setItem("loggedIn", "true");
                 //  localStorage.setItem("accesToken", resultado.access_token );
-                  this.navbar.loguear();
+
 
                   console.log("despues de set logueado");
                   //console.log(localStorage.loggedIn);
@@ -92,7 +98,7 @@ export class LoginComponent implements OnInit {
 
 
 
-                  localStorage.setItem("Id_usuario", "19");
+
                   // if(this.logueadoService.estaLogueado==true){
                     this.router.navigate(['usuarios']);
                     this.logueadoService.logueando();

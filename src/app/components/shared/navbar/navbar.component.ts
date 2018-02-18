@@ -43,13 +43,7 @@ destino: string;
 
   }
 
-  loguear()
-  {
-
-    // document.getElementById("logout").style.display="inline";
-    // document.getElementById("login").style.display="none";
-
-  }
+  
 
 
 
