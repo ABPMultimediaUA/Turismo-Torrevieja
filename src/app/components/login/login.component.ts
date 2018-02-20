@@ -9,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 // import { AuthenticationService } from '../../services/authentication.service';
 // import {AlertService } from '../../services/alert.service';
-import { AuthenticationService, TokenService, LogueadoService} from '../../services/index';
+import { AuthenticationService, TokenService, LogueadoService, DatosUsuarioService} from '../../services/index';
 // import { AlertComponent } from '../../_directives/index';
 // import { AuthGuard } from '../../_guards/index';
 
@@ -24,12 +24,17 @@ export class LoginComponent implements OnInit {
     returnUrl: string;
     loginError = false;
 
+    model2: any = {};
+
+
+
 
     constructor(
         private route: ActivatedRoute,
         private router: Router,
         private authenticationService: AuthenticationService,
         private token:TokenService,
+        private datosUsu:DatosUsuarioService,
         private navbar:NavbarComponent,
         private home:HomeComponent,
         private logueadoService: LogueadoService
@@ -52,33 +57,46 @@ export class LoginComponent implements OnInit {
                 data => {
 
                   this.token.getToken(this.model).subscribe(
-                  data => {
-                    let resultado: any = {};
-                    resultado=data;
+                    data => {
+                      let resultado: any = {};
+                      resultado=data;
+                      localStorage.setItem("accesToken", resultado.access_token );
 
-            console.log("entra aqui");
-              localStorage.setItem("accesToken", resultado.access_token );
-                  this.logueadoService.logueando();
-                    //location.reload(true);
-                    //console.log(document.getElementById("verUsuarios").style);
-                    //console.log("token resultado= "+resultado.access_token);
+                      this.datosUsu.getDatosUsuario(resultado.access_token).subscribe(
+                        data => {
+                          let devuelto: any = {};
+                          devuelto=data;
 
-                    //console.log("token localStorage= "+localStorage.accesToken);
+                          console.log("devueltoooooooooooooooooooooooo:", devuelto);
 
-                    //console.log(resultado);
-                    /*
-                    localStorage.setItem('token', data.access_toke);
-                    var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-                    var token = currentUser.token; // your token
-                    */
-                  }
-                );
+                          localStorage.setItem("identificador", devuelto.data.identificador);
+                          localStorage.setItem("nombreUsuario", devuelto.data.nombreUsuario);
+                          localStorage.setItem("apodo", devuelto.data.apodo);
+                          localStorage.setItem("correo", devuelto.data.correo);
+                          localStorage.setItem("rol", devuelto.data.rol);
+                          localStorage.setItem("esVerificado", devuelto.data.esVerificado);
+                          console.log("identificadorrrrrrrrrrrrrrrrrrrrrrrrrrrr:");
+                          console.log(devuelto.data.identificador);
+                        }
+                      );
+
+                      
+
+                      this.logueadoService.logueando();
+                      //location.reload(true);
+                      console.log("ddatosusuariooooooooooooooooo:"+ localStorage.datosUsuario);
+                    }
+
+
+                  );
+
+
 
 
                   //console.log("Entrar data1");
                   localStorage.setItem("loggedIn", "true");
                 //  localStorage.setItem("accesToken", resultado.access_token );
-                  this.navbar.loguear();
+
 
                   console.log("despues de set logueado");
                   //console.log(localStorage.loggedIn);
@@ -87,7 +105,10 @@ export class LoginComponent implements OnInit {
                   //conectarse a la base de datos y guardar en el session storage la info del usuario
                   // con el mail del login
 
-                  localStorage.setItem("Id_usuario", "19");
+
+
+
+
                   // if(this.logueadoService.estaLogueado==true){
                     this.router.navigate(['usuarios']);
                     this.logueadoService.logueando();

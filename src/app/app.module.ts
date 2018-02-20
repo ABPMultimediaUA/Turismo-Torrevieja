@@ -15,7 +15,7 @@ import { RolesService }  from "./services/roles.service";
 import { CarterasService }  from "./services/carteras.service";
 // import { AlertComponent } from './_directives/index';
 // import { AuthGuard } from './_guards/index';
-import { AlertService, AuthenticationService, TokenService, LogueadoService } from './services/index';
+import { AlertService, AuthenticationService, TokenService, DatosUsuarioService, LogueadoService } from './services/index';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -83,6 +83,7 @@ import { RolComponent } from './components/roles/rol.component';
     AlertService,
     AuthenticationService,
     TokenService,
+    DatosUsuarioService,
     NavbarComponent,
     HomeComponent,
     LogueadoService
