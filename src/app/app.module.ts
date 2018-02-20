@@ -44,6 +44,7 @@ import { NuevaCarteraComponent } from './components/carteras/nueva-cartera.compo
 import { RolesComponent } from './components/roles/roles.component';
 import { NuevoRolComponent } from './components/roles/nuevo-rol.component';
 import { RolComponent } from './components/roles/rol.component';
+import { PerfilComponent } from './components/perfil/perfil.component';
 
 @NgModule({
   declarations: [
@@ -66,7 +67,8 @@ import { RolComponent } from './components/roles/rol.component';
     NuevaCarteraComponent,
     RolesComponent,
     RolComponent,
-    NuevoRolComponent
+    NuevoRolComponent,
+    PerfilComponent
   ],
   imports: [
     HttpClientModule,

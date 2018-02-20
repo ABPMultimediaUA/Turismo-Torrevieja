@@ -3,6 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from "./components/home/home.component";
 import { AboutComponent } from "./components/about/about.component";
 import { LoginComponent } from "./components/login/login.component";
+import { PerfilComponent } from "./components/perfil/perfil.component";
+
+
 
 import { UsuariosComponent } from "./components/usuarios/usuarios.component";
 import { NuevoUsuarioComponent } from "./components/usuarios/nuevo-usuario.component";
@@ -26,6 +29,7 @@ const app_routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'login', component: LoginComponent },
   { path: 'contact', component: ContactComponent },
+  { path: 'perfil', component: PerfilComponent },
 
   { path: 'chatbots', loadChildren: 'app/chatbots/chatbots.module#ChatbotsModule' },
 

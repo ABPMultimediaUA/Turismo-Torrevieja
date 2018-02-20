@@ -24,6 +24,9 @@
 .d9d9d9{
   color: #D9D9D9;
 }
+.d9d9d9-imp{
+  color: #D9D9D9!important;
+}
 /* .elemento-navbar{
 color: ;
 } */
@@ -43,6 +46,7 @@ color: ;
 .bg-a8a8a8{
   background-color: #a8a8a8;
 }
+
 .bg-blue{
   background-color: #05386B !important;
 }
