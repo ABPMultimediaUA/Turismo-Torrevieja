@@ -46,7 +46,9 @@ color: ;
 .bg-a8a8a8{
   background-color: #a8a8a8;
 }
-
+.width-60{
+  width: 60px !important;
+}
 .bg-blue{
   background-color: #05386B !important;
 }

@@ -22,7 +22,10 @@ import { AlertService, AuthenticationService, EventosService, LogueadoService } 
 })
 export class EventosComponent implements OnInit {
   eventos:any[] = [];
+  resultados:any[] = [];
   loading:boolean = true;
+  hasBuscado:boolean = false;
+
   //pagination
   paginacion:any = [];
   cantidadPagina:any[]=[];
@@ -163,4 +166,18 @@ export class EventosComponent implements OnInit {
           })
 
     }
+  buscarEvento(nombreBusqueda:string){
+  this.hasBuscado=true;
+  // var eventos = this.eventos;
+  console.log(nombreBusqueda);
+  this.resultados = this.eventos.filter(evento => evento.nombreEvento == nombreBusqueda);
+
+  // location.reload(true);
+
+  console.log(this.resultados);
+console.log(this.hasBuscado);
+
+
   }
+
+}

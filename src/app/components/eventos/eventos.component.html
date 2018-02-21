@@ -28,7 +28,7 @@
           <label>Cantidad personalizada: &nbsp;</label>
           <input [(ngModel)]="this.eventosPorPagina"
             name="eventosPorPagina"
-            class="form-control"
+            class="form-control width-60"
             placeholder="numero Por Pagina"
             type="text">
         </div>&nbsp;
@@ -39,11 +39,21 @@
           </button>
         </div>
       </form>&nbsp;
-      <br><hr>
-      <form class="form-inline">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-      </form>
+
+      <form class="form-inline" (ngSubmit)="buscarEvento(nombreBusqueda)" #forma="ngForm">
+        <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
+          <div class="form-group">
+          <input [(ngModel)]="this.nombreBusqueda"
+            name="nombreBusqueda"
+            class="form-control"
+            placeholder="nombre evento a buscar"
+            type="text">
+        </div>&nbsp;
+        <div class="form-group">
+          <button class="btn btn-outline-success my-2 my-sm-0"  type="submit">Buscar</button>
+        </div>
+      </form>&nbsp;
+
       <br><br>
 
 
@@ -90,6 +100,7 @@
           class="alert alert-info" role="alert">
               <strong>No hay </strong> eventos que mostrar
           </div>
+
           <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
               <li *ngIf="currentPage > 1 " class="page-item" >
@@ -99,7 +110,7 @@
                 </a>
               </li>
               <li class="page-item" *ngFor="let i of cantidadPagina" >
-                <a class="page-link" (click)="nuevaPagina(i+1)" >{{ i+1 }}</a>
+                <a  class="page-link" (click)="nuevaPagina(i+1)" >{{ i+1 }}</a>
               </li>
 
               <li *ngIf="currentPage!=totalPaginas" class="page-item" routerLinkActive="active">
@@ -109,9 +120,90 @@
                 </a>
               </li>
             </ul>
+          </nav>
 
 
-        </nav>
+
+
+
+
+
+
+
+
+ <!-- tabla de busqueda -->
+  <h2 *ngIf="hasBuscado">&nbsp;<span class="icon-doc"></span>Resultado de Busqueda&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+         <div *ngIf="hasBuscado" class="table-responsive">
+           <table class="table table-striped">
+             <thead class="thead-dark">
+               <tr>
+                 <th scope="col">#</th>
+                 <th scope="col">Id</th>
+                 <th scope="col">Nombre</th>
+                 <th scope="col">Usuario</th>
+                 <th scope="col">Fecha Creación</th>
+                 <th scope="col">Fecha Actualizacion</th>
+                 <th class="text-right">Opciones</th>
+               </tr>
+             </thead>
+             <tbody>
+                <!-- el pipe keys es para pasar un objeto a un array -->
+               <tr *ngFor="let resultado of  resultados  ; let i = index">
+                 <td>{{ i + 1 }}</td>
+                 <td>{{ evento.identificador }}</td>
+                 <td>{{ evento.nombreEvento }}</td>
+                 <td>{{ evento.usuario }}</td>
+                 <td>{{ evento.fechaCreacion }}</td>
+                 <td>{{ evento.fechaActualizacion }}</td>
+                 <td class="text-center w20">
+                   <button  [routerLink]="['/evento', evento.identificador]"
+                   type="button" class="btn btn-outline-success">
+                     <span class="icon-eye-outline"></span>
+                   </button>
+                   <button  (click)="borrarEvento(evento.identificador)"
+                   type="button" class="btn btn-outline-danger">
+                     <span class="icon-trash"></span>
+                   </button>
+                 </td>
+               </tr>
+
+             </tbody>
+
+           </table>
+
+           <!-- si no hay eventos muestra esto -->
+           <div *ngIf="(eventos).length === 0 && !loading"
+           class="alert alert-info" role="alert">
+               <strong>No hay </strong> eventos que mostrar
+           </div>
+
+           <nav *ngIf="hasBuscado" aria-label="Page navigation example">
+             <ul class="pagination justify-content-center">
+               <li *ngIf="currentPage > 1 " class="page-item" >
+                 <a class="page-link" (click)="nuevaPagina(currentPage-1)" aria-label="Previous">
+                   <span aria-hidden="true">&laquo;</span>
+                   <span class="sr-only">Previous</span>
+                 </a>
+               </li>
+               <li class="page-item" *ngFor="let i of cantidadPagina" >
+                 <a  class="page-link" (click)="nuevaPagina(i+1)" >{{ i+1 }}</a>
+               </li>
+
+               <li *ngIf="currentPage!=totalPaginas" class="page-item" routerLinkActive="active">
+                 <a class="page-link" (click)="nuevaPagina(currentPage+1)" aria-label="Next">
+                   <span aria-hidden="true">&raquo;</span>
+                   <span class="sr-only">Next</span>
+                 </a>
+               </li>
+             </ul>
+           </nav>
+
+
+
+
+
+
+
         </div>
         <br>
 
