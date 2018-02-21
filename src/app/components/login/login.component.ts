@@ -76,9 +76,10 @@ export class LoginComponent implements OnInit {
                           localStorage.setItem("rol", devuelto.data.rol);
                           localStorage.setItem("esVerificado", devuelto.data.esVerificado);
                           localStorage.setItem("fechaCreacion", devuelto.data.fechaCreacion);
-                        
+
                           console.log("identificadorrrrrrrrrrrrrrrrrrrrrrrrrrrr:");
                           console.log(devuelto.data.identificador);
+                          location.reload(true);
                         }
                       );
 
@@ -113,8 +114,10 @@ export class LoginComponent implements OnInit {
 
                   // if(this.logueadoService.estaLogueado==true){
                     this.router.navigate(['perfil']);
+
+                    // location.reload(true);
                     this.logueadoService.logueando();
-                  //  location.reload(true);
+
 
                     console.log("estaLogueado:");
                     console.log(this.logueadoService.estaLogueado);
