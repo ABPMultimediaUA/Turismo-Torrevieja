@@ -95,7 +95,7 @@
 
       <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
         <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-         <span class="icon-folder"></span> Carteras
+         <span class="icon-folder"></span> Carteras y Eventos
         </button>
         <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
           <a
@@ -122,36 +122,7 @@
           <span class="icon-doc-add"></span> Nuevo Evento</a>
         </div>
       </div>
-      <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
-        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-         <span class="icon-star"></span> Roles y Permisos
-        </button>
-        <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
-          <a
-          role="button"
-          [routerLink]="['/roles']"
-          class="nav-link elemento-navbar d9d9d9" >
-          <span class="icon-crown"></span> Roles</a>
-          <a
-          role="button"
-          [routerLink]="['/nuevo-rol']"
-          class="nav-link elemento-navbar d9d9d9 " >
-          <span class="icon-crown-plus"></span> Nuevo Rol</a>
 
-        <div class="dropdown-divider"></div>
-
-          <a
-          role="button"
-          [routerLink]="['/carteras']"
-          class="nav-link elemento-navbar d9d9d9" >
-          <span class="icon-lock-open"></span> Permisos</a>
-          <a
-          role="button"
-          [routerLink]="['/nueva-cartera']"
-          class="nav-link elemento-navbar d9d9d9 " >
-          <span class="icon-plus-circled"></span> Nuevo Permiso</a>
-        </div>
-      </div>
       <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
         <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          <span class="icon-town-hall"></span> Espacios
