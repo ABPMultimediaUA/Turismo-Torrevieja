@@ -108,6 +108,18 @@
           [routerLink]="['/nueva-cartera']"
           class="nav-link elemento-navbar d9d9d9 " >
           <span class="icon-folder-add"></span> Nueva Cartera</a>
+
+          <div class="dropdown-divider"></div>
+          <a
+          role="button"
+          [routerLink]="['/eventos']"
+          class="nav-link elemento-navbar d9d9d9" >
+          <span class="icon-doc"></span> Eventos</a>
+          <a
+          role="button"
+          [routerLink]="['/nuevo-evento']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-doc-add"></span> Nuevo Evento</a>
         </div>
       </div>
       <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">

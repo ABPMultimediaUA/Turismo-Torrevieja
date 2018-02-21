@@ -15,6 +15,10 @@ import { CarterasComponent } from './components/carteras/carteras.component';
 import { CarteraComponent } from './components/carteras/cartera.component';
 import { NuevaCarteraComponent } from './components/carteras/nueva-cartera.component';
 
+import { EventosComponent } from './components/eventos/eventos.component';
+import { EventoComponent } from './components/eventos/evento.component';
+import { NuevoEventoComponent } from './components/eventos/nuevo-evento.component';
+
 import { ContactComponent } from "./components/contact/contact.component";
 import { MensajesComponent } from "./components/mensajes/mensajes.component";
 
@@ -47,6 +51,11 @@ const app_routes: Routes = [
   { path: 'carteras', component: CarterasComponent },
   { path: 'nueva-cartera', component: NuevaCarteraComponent },
   { path: 'cartera/:id', component: CarteraComponent },
+
+  //rutas eventos
+  { path: 'eventos', component: EventosComponent },
+  { path: 'nuevo-evento', component: NuevoEventoComponent },
+  { path: 'evento/:id', component: EventoComponent },
 
   { path: 'mensajes/:parame', component: MensajesComponent },
   //{ path: 'usuariosReloaded', component: UsuariosComponent },

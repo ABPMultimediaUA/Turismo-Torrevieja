@@ -15,7 +15,9 @@ import { RolesService }  from "./services/roles.service";
 import { CarterasService }  from "./services/carteras.service";
 // import { AlertComponent } from './_directives/index';
 // import { AuthGuard } from './_guards/index';
-import { AlertService, AuthenticationService, TokenService, DatosUsuarioService, LogueadoService } from './services/index';
+import { AlertService, AuthenticationService,
+ TokenService, DatosUsuarioService,
+EventosService,  LogueadoService } from './services/index';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -40,6 +42,10 @@ import { MensajesComponent } from './components/mensajes/mensajes.component';
 import { CarterasComponent } from './components/carteras/carteras.component';
 import { CarteraComponent } from './components/carteras/cartera.component';
 import { NuevaCarteraComponent } from './components/carteras/nueva-cartera.component';
+
+import { EventosComponent } from './components/eventos/eventos.component';
+import { EventoComponent } from './components/eventos/evento.component';
+import { NuevoEventoComponent } from './components/eventos/nuevo-evento.component';
 
 import { RolesComponent } from './components/roles/roles.component';
 import { NuevoRolComponent } from './components/roles/nuevo-rol.component';
@@ -68,7 +74,10 @@ import { PerfilComponent } from './components/perfil/perfil.component';
     RolesComponent,
     RolComponent,
     NuevoRolComponent,
-    PerfilComponent
+    PerfilComponent,
+    EventosComponent,
+    EventoComponent,
+    NuevoEventoComponent
   ],
   imports: [
     HttpClientModule,
@@ -88,7 +97,8 @@ import { PerfilComponent } from './components/perfil/perfil.component';
     DatosUsuarioService,
     NavbarComponent,
     HomeComponent,
-    LogueadoService
+    LogueadoService,
+    EventosService
 
   ],
   bootstrap: [AppComponent]
