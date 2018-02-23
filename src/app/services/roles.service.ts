@@ -105,13 +105,13 @@ export class RolesService {
       return this.http.put(url, body, { headers }).map(res => res.json())
   }
 
-  borrarPermisos( ident_rol:string, ident_per:string ){
+  borrarPermisos( ident_rol:string){
     let headers = new Headers ({
       'Content-Type':'application/json',
       'Access-Control-Allow-Origin':'https://gvent.ovh/Prueba2_1/public',
       'Authorization': this.First_accessToken+this.Secound_accessToken,
     });
-      let url = `${this.permisoURL}/${ident_rol}/permiso/${ident_per}`;
+      let url = `${this.permisoURL}/${ident_rol}/permiso/}`;
       return this.http.delete(url, { headers }).map(res => res.json())
   }
 }

@@ -23,6 +23,10 @@ import { NuevoRolComponent } from "./components/roles/nuevo-rol.component";
 import { RolComponent } from "./components/roles/rol.component";
 import { ChatbotsComponent } from './chatbots/chatbots.component';
 
+import { ExpedienteComponent } from './components/expedientes/expediente.component';
+import { ExpedientesComponent } from './components/expedientes/expedientes.component';
+// import { NuevoExpedienteComponent } from './components/carteras/nueva-cartera.component';
+
 
 const app_routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -47,6 +51,10 @@ const app_routes: Routes = [
   { path: 'carteras', component: CarterasComponent },
   { path: 'nueva-cartera', component: NuevaCarteraComponent },
   { path: 'cartera/:id', component: CarteraComponent },
+
+  //expedientes
+  { path: 'expediente/:id', component: ExpedienteComponent },
+  { path: 'expedientes', component: ExpedientesComponent },
 
   { path: 'mensajes/:parame', component: MensajesComponent },
   //{ path: 'usuariosReloaded', component: UsuariosComponent },

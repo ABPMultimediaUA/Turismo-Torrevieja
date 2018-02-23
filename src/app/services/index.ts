@@ -6,3 +6,4 @@ export * from './roles.service';
 export * from './carteras.service';
 export * from './logueado.service';
 export * from './DatosUsuario.service';
+export * from './expediente.service';

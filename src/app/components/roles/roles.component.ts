@@ -4,7 +4,7 @@ import { HomeComponent } from "../home/home.component";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
-import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
+import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import { HttpModule } from '@angular/http';
 import { AlertService, AuthenticationService, RolesService, LogueadoService } from '../../services/index';
@@ -77,6 +77,8 @@ export class RolesComponent implements OnInit {
   }
 
     borrarRol(id:string){
+      //TODO hacer que elimine en la tabla pivote
+      //this._rolesService.borrarPermisos(id).subscribe(res =>{ })
       this._rolesService.borrarRoles(id)
       .subscribe(respuesta=>{
         if(respuesta){
@@ -87,8 +89,6 @@ export class RolesComponent implements OnInit {
         }else{
           delete this.roles[id];
         }
-
-    })
-
+      })
   }
 }
