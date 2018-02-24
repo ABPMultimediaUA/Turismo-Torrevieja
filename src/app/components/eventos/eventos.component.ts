@@ -24,7 +24,12 @@ export class EventosComponent implements OnInit {
   eventos:any[] = [];
   resultados:any[] = [];
   loading:boolean = true;
-  hasBuscado:boolean = false;
+  hasBuscado:boolean = false
+
+  nombreBusqueda:string = "";
+  // filterargs = {title: 'hello'};
+  // items = [{title: 'hello world'}, {title: 'hello kitty'}, {title: 'foo bar'}];
+  filterargs = {nombreEvento: this.nombreBusqueda};
   public resultado:Evento={
     identificador:"",
     nombreEvento:"",
@@ -42,6 +47,9 @@ export class EventosComponent implements OnInit {
   eventosActuales:any[] = [];
   totalPaginas:number;
   currentPage:number = 1;
+
+
+
   // k:number;
   constructor(private _eventosService:EventosService,
               private router:Router,
@@ -174,11 +182,15 @@ export class EventosComponent implements OnInit {
           })
 
     }
-  buscarEvento(nombreBusqueda:string){
+  volverEventos(){
+    location.reload(true);
+  }
+  buscarEvento(nombreABuscar:string){
+  this.nombreBusqueda= nombreABuscar;
   this.hasBuscado=true;
   // var eventos = this.eventos;
-  console.log(nombreBusqueda);
-  this.resultados = this.eventos.filter(evento => evento.nombreEvento == nombreBusqueda);
+  console.log(nombreABuscar);
+  this.resultados = this.eventos.filter(evento => evento.nombreEvento.toLowerCase() == this.nombreBusqueda.toLowerCase());
   this.resultado.identificador = this.resultados[0].identificador;
   this.resultado.nombreEvento = this.resultados[0].nombreEvento;
 

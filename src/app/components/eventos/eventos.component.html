@@ -60,6 +60,9 @@
       <div *ngIf="hasBuscado==false"><br><br></div>
 
 
+
+
+
       <div *ngIf="hasBuscado==false" class="table-responsive">
           <table class="table table-striped">
             <thead class="thead-dark">
@@ -135,25 +138,35 @@
 
 <br>
  <!-- tabla de busqueda -->
- <form *ngIf="hasBuscado==true" style="width:100%" class="form-inline" (ngSubmit)="buscarEvento(nombreBusqueda)" #forma="ngForm">
-   <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
-&nbsp;&nbsp;&nbsp;
-     <div class="form-group">
-     <input [(ngModel)]="this.nombreBusqueda"
-       name="nombreBusqueda"
-       class="form-control"
-       placeholder="nombre evento a buscar"
-       type="text">
-   </div>&nbsp;
-   <div class="form-group">
-     <button class="btn btn-outline-success"  type="submit">Buscar</button>
-   </div>
+ <div *ngIf="hasBuscado==true" style="width:100%">
+     <form   class="form-inline" (ngSubmit)="buscarEvento(nombreABuscar)" #forma="ngForm">
+       <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
+          &nbsp;&nbsp;&nbsp;
+           <div class="form-group">
+             <input [(ngModel)]="this.nombreBusqueda"
+             name="nombreBusqueda"
+             class="form-control"
+             placeholder="nombre evento a buscar"
+             type="text">
+           </div>&nbsp;
+           <div class="form-group">
+             <button class="btn btn-outline-success"  type="submit">Buscar</button>
+           </div>
+             &nbsp;&nbsp;
+           <button (click)="volverEventos()"
+           type="button" class="btn btn-outline-danger">
+             Volver
+           </button>
+           &nbsp;&nbsp;
+           <h3>Número de resultados:{{resultados.length}}</h3>
+     </form>&nbsp;
 
- </form>&nbsp;
+   </div>
          <div *ngIf="hasBuscado" class="table-responsive">
            <table class="table table-striped">
              <thead class="thead-dark">
                <tr>
+                 <th scope="col">#</th>
                  <th scope="col">Id</th>
                  <th scope="col">Nombre</th>
                  <th scope="col">Usuario</th>
@@ -164,8 +177,8 @@
              </thead>
              <tbody>
                 <!-- el pipe keys es para pasar un objeto a un array -->
-               <tr *ngFor="let resul of  resultados">
-
+               <tr *ngFor="let resul of  resultados; let i = index">
+                 <td>{{ i + 1 }}</td>
                  <td>{{ resul.identificador }}</td>
                  <td>{{ resul.nombreEvento }}</td>
                  <td>{{ resul.usuario }}</td>
