@@ -91,16 +91,18 @@
               required
               type="text">
           </div>
+          
           <div *ngIf="permisoEditar" class="form-group">
-            <label>Trimestre</label>
-            <input [(ngModel)]="cartera.trimestre"
-              name="trimestre"
-              class="form-control"
-              placeholder="Trimestre de la cartera"
-              required
-              type="text">
+                  <label>Trimestre</label>
+                  <select [(ngModel)]="cartera.trimestre"
+                    name="trimestre"
+                    class="form-control">
+                      <option value="1">1er Trimestre</option>
+                      <option value="2">2do Trimestre</option>
+                      <option value="3">3er Trimestre</option>
+                      <option value="4">4to Trimestre</option>
+                  </select>
           </div>
-
           <div class="form-group">
             <button *ngIf="permisoEditar"
             [disabled]="!forma.valid"

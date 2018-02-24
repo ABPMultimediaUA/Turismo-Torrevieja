@@ -68,7 +68,10 @@
                 <td>{{ cartera.identificador }}</td>
                 <td>{{ cartera.nombreCartera }}</td>
                 <td>{{ cartera.year }}</td>
-                <td>{{ cartera.trimestre }}</td>
+                <td *ngIf="cartera.trimestre==1">1er Trimestre</td>
+                <td *ngIf="cartera.trimestre==2">2do Trimestre</td>
+                <td *ngIf="cartera.trimestre==3">3er Trimestre</td>
+                <td *ngIf="cartera.trimestre==4">4to Trimestre</td>
                 <td>{{ cartera.fechaCreacion }}</td>
                 <td>{{ cartera.fechaActualizacion }}</td>
                 <td class="text-center w20">

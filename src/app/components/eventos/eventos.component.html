@@ -1,14 +1,16 @@
 <div class="container-fluid">
   <div class="row ">
-        <h1>&nbsp;<span class="icon-doc"></span> Eventos&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+        <h1 *ngIf="hasBuscado==false">&nbsp;<span class="icon-doc"></span> Eventos&nbsp;&nbsp;&nbsp;&nbsp;</h1>
 
+        <h1 style="width:100%" *ngIf="hasBuscado==true">&nbsp;<span class="icon-search"></span>Resultados de Busqueda&nbsp;&nbsp;&nbsp;&nbsp;</h1>
         <button
           class="btn btn-secondary  d9d9d9 my-2 my-sm-2 small-margin-laterals"
           type="submit"
+          *ngIf="hasBuscado==false"
           [routerLink]="['/nuevo-evento']"><span class="icon-folder-add"></span> Nuevo Evento&nbsp;</button>&nbsp;
+<div *ngIf="hasBuscado==false"><br><br></div>
 
-<br><br>
-      <form class="form-inline" (ngSubmit)="cambiarNumEventosPorPagina()" #forma="ngForm">
+      <form *ngIf="hasBuscado==false" class="form-inline" (ngSubmit)="cambiarNumEventosPorPagina()" #forma="ngForm">
         <div class="form-group">&nbsp;
           <label>Cantidad por página: &nbsp;</label>
           <select [(ngModel)]="eventosPorPagina"
@@ -40,7 +42,7 @@
         </div>
       </form>&nbsp;
 
-      <form class="form-inline" (ngSubmit)="buscarEvento(nombreBusqueda)" #forma="ngForm">
+      <form *ngIf="hasBuscado==false" class="form-inline" (ngSubmit)="buscarEvento(nombreBusqueda)" #forma="ngForm">
         <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
           <div class="form-group">
           <input [(ngModel)]="this.nombreBusqueda"
@@ -52,19 +54,20 @@
         <div class="form-group">
           <button class="btn btn-outline-success my-2 my-sm-0"  type="submit">Buscar</button>
         </div>
+
       </form>&nbsp;
 
-      <br><br>
+      <div *ngIf="hasBuscado==false"><br><br></div>
 
 
-        <div class="table-responsive">
+      <div *ngIf="hasBuscado==false" class="table-responsive">
           <table class="table table-striped">
             <thead class="thead-dark">
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Id</th>
                 <th scope="col">Nombre</th>
-                <th scope="col">Usuario</th>
+                <th scope="col">Usuario creador</th>
                 <th scope="col">Fecha Creación</th>
                 <th scope="col">Fecha Actualizacion</th>
                 <th class="text-right">Opciones</th>
@@ -94,14 +97,14 @@
             </tbody>
 
           </table>
-
+        </div>
           <!-- si no hay eventos muestra esto -->
           <div *ngIf="(eventos).length === 0 && !loading"
           class="alert alert-info" role="alert">
               <strong>No hay </strong> eventos que mostrar
           </div>
 
-          <nav aria-label="Page navigation example">
+          <nav *ngIf="hasBuscado==false" style="text-align:center; width:100%" aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
               <li *ngIf="currentPage > 1 " class="page-item" >
                 <a class="page-link" (click)="nuevaPagina(currentPage-1)" aria-label="Previous">
@@ -130,14 +133,27 @@
 
 
 
-
+<br>
  <!-- tabla de busqueda -->
-  <h2 *ngIf="hasBuscado">&nbsp;<span class="icon-doc"></span>Resultado de Busqueda&nbsp;&nbsp;&nbsp;&nbsp;</h2>
+ <form *ngIf="hasBuscado==true" style="width:100%" class="form-inline" (ngSubmit)="buscarEvento(nombreBusqueda)" #forma="ngForm">
+   <!-- <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search"> -->
+&nbsp;&nbsp;&nbsp;
+     <div class="form-group">
+     <input [(ngModel)]="this.nombreBusqueda"
+       name="nombreBusqueda"
+       class="form-control"
+       placeholder="nombre evento a buscar"
+       type="text">
+   </div>&nbsp;
+   <div class="form-group">
+     <button class="btn btn-outline-success"  type="submit">Buscar</button>
+   </div>
+
+ </form>&nbsp;
          <div *ngIf="hasBuscado" class="table-responsive">
            <table class="table table-striped">
              <thead class="thead-dark">
                <tr>
-                 <th scope="col">#</th>
                  <th scope="col">Id</th>
                  <th scope="col">Nombre</th>
                  <th scope="col">Usuario</th>
@@ -148,15 +164,15 @@
              </thead>
              <tbody>
                 <!-- el pipe keys es para pasar un objeto a un array -->
-               <tr *ngFor="let resultado of  resultados  ; let i = index">
-                 <td>{{ i + 1 }}</td>
-                 <td>{{ evento.identificador }}</td>
-                 <td>{{ evento.nombreEvento }}</td>
-                 <td>{{ evento.usuario }}</td>
-                 <td>{{ evento.fechaCreacion }}</td>
-                 <td>{{ evento.fechaActualizacion }}</td>
+               <tr *ngFor="let resul of  resultados">
+
+                 <td>{{ resul.identificador }}</td>
+                 <td>{{ resul.nombreEvento }}</td>
+                 <td>{{ resul.usuario }}</td>
+                 <td>{{ resul.fechaCreacion }}</td>
+                 <td>{{ resul.fechaActualizacion }}</td>
                  <td class="text-center w20">
-                   <button  [routerLink]="['/evento', evento.identificador]"
+                   <button  [routerLink]="['/evento', resul.identificador]"
                    type="button" class="btn btn-outline-success">
                      <span class="icon-eye-outline"></span>
                    </button>
@@ -170,14 +186,17 @@
              </tbody>
 
            </table>
-
+        </div>
            <!-- si no hay eventos muestra esto -->
-           <div *ngIf="(eventos).length === 0 && !loading"
-           class="alert alert-info" role="alert">
-               <strong>No hay </strong> eventos que mostrar
+           <div style="width: 100%; text-align:center" >
+             <div *ngIf="(resultados).length === 0 && !loading && hasBuscado==true"
+             class="alert alert-danger" style="width: 100%; text-align:center" role="alert">
+                 <strong>No se han </strong> encontrado resultados
+             </div>
            </div>
-
-           <nav *ngIf="hasBuscado" aria-label="Page navigation example">
+           <div *ngIf="hasBuscado==true"><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br></div>
+            <!-- paginacion resultados busqueda no implementada aun -->
+           <!-- <nav  aria-label="Page navigation example">
              <ul class="pagination justify-content-center">
                <li *ngIf="currentPage > 1 " class="page-item" >
                  <a class="page-link" (click)="nuevaPagina(currentPage-1)" aria-label="Previous">
@@ -196,7 +215,7 @@
                  </a>
                </li>
              </ul>
-           </nav>
+           </nav> -->
 
 
 
@@ -204,7 +223,7 @@
 
 
 
-        </div>
+
         <br>
 
     </div>

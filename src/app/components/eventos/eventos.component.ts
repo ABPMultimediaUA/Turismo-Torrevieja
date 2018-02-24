@@ -25,7 +25,15 @@ export class EventosComponent implements OnInit {
   resultados:any[] = [];
   loading:boolean = true;
   hasBuscado:boolean = false;
-
+  public resultado:Evento={
+    identificador:"",
+    nombreEvento:"",
+    usuario:"", //usuario que ha creado el evento
+    fechaCreacion:"",
+    fechaActualizacion:"",
+    fechaEliminacion:""
+  };
+  // nohasBuscado:boolean = true;
   //pagination
   paginacion:any = [];
   cantidadPagina:any[]=[];
@@ -171,11 +179,14 @@ export class EventosComponent implements OnInit {
   // var eventos = this.eventos;
   console.log(nombreBusqueda);
   this.resultados = this.eventos.filter(evento => evento.nombreEvento == nombreBusqueda);
+  this.resultado.identificador = this.resultados[0].identificador;
+  this.resultado.nombreEvento = this.resultados[0].nombreEvento;
 
   // location.reload(true);
+  console.log(this.resultados[0].nombreEvento);
 
   console.log(this.resultados);
-console.log(this.hasBuscado);
+  console.log(this.resultado.nombreEvento);
 
 
   }

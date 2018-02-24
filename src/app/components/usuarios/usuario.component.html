@@ -84,14 +84,12 @@
                   <label>Rol</label>
                   <select [(ngModel)]="usuario.rol"
                     name="rol"
-                  class="form-control"
-                  >
-                    <option value="1">Administrador</option>
-                    <option value="2">trabajador</option>
-                    <option value="4">Otros</option>
-
+                    class="form-control">
+                      <option value="1">Administrador</option>
+                      <option value="2">trabajador</option>
+                      <option value="4">Otros</option>
                   </select>
-                </div>
+          </div>
           <div class="form-group">
             <button [disabled]="!forma.valid"
                type="submit" class="btn btn-outline-primary">
