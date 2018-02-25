@@ -188,6 +188,7 @@ export class EventosComponent implements OnInit {
   buscarEvento(nombreABuscar:string){
   this.nombreBusqueda= nombreABuscar;
   this.hasBuscado=true;
+  
   // var eventos = this.eventos;
   console.log(nombreABuscar);
   this.resultados = this.eventos.filter(evento => evento.nombreEvento.toLowerCase() == this.nombreBusqueda.toLowerCase());

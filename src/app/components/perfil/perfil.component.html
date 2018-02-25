@@ -8,7 +8,14 @@
   		<div class="col-sm-4"><!--left col-->
 
           <ul class="list-group">
-            <li class="list-group-item  d9d9d9 bg-blue">Perfil &nbsp; <i class="fa fa-address-card"></i></li>
+            <li class="list-group-item  d9d9d9 bg-blue">Perfil &nbsp; <i class="fa fa-address-card"></i>
+							<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
+							<button  [routerLink]="['/usuario', identificador]"
+							(click)="vengoDePerfil()"
+							type="button" class="btn btn-outline-secondary pull-right">
+								<span class="icon-pencil"></span>
+							</button>
+						</li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Desde</strong></span> {{fechaCreacion | date}}</li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Ultima conexión</strong></span> Ayer</li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Apodo</strong></span>{{apodo}}</li>

@@ -1,6 +1,9 @@
 
 <div class="container-fluid">
-        <h1><span class="icon-user-outline"></span> Usuario <small>{{usuario.nombreUsuario}}</small></h1>
+        <h1 *ngIf="vengoDe2 != 'perfil'"><span class="icon-user-outline"></span> Usuario <small>{{usuario.nombreUsuario}}</small></h1>
+        <h1 *ngIf="vengoDe2 == 'perfil'"> Modifica tu perfil:</h1>
+
+        <h2 *ngIf="vengoDe2 == 'perfil'"><span class="icon-user-outline"></span> {{usuario.nombreUsuario}}</h2>
         <!-- mensajes -->
         <div class="container" *ngIf="errorUsuario === true">
             <div class="jumbotron">
@@ -80,7 +83,7 @@
               type="text">
           </div>
 
-          <div class="form-group">
+          <div *ngIf="vengoDe2 != 'perfil'" class="form-group">
                   <label>Rol</label>
                   <select [(ngModel)]="usuario.rol"
                     name="rol"
@@ -91,11 +94,22 @@
                   </select>
           </div>
           <div class="form-group">
-            <button [disabled]="!forma.valid"
+            <button *ngIf="vengoDe2 != 'perfil'" [disabled]="!forma.valid"
                type="submit" class="btn btn-outline-primary">
               Guardar cambios
             </button>
-
+            <button *ngIf="vengoDe2 == 'perfil'" [disabled]="!forma.valid"
+               type="submit" class="btn btn-outline-primary"
+               (click)="vaciarVengoDeYActualizarCosas()"
+               >
+              Modificar Perfil
+            </button>
+            <button *ngIf="vengoDe2 == 'perfil'" [disabled]="!forma.valid"
+                class="btn btn-outline-danger"
+                (click)="vaciarVengoDe()"
+                [routerLink]="['/perfil']">
+              Cancelar
+            </button>
           </div>
 
         </form>

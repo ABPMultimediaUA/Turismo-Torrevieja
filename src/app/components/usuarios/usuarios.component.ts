@@ -51,11 +51,26 @@ export class UsuariosComponent implements OnInit {
             console.log(this.usuarios);
             console.log("usuarios[3]:");
             console.log(this.usuarios[3]);
-            
+
             this.totalPaginas = Math.ceil(this.usuarios.length/10);
             console.log("this.totalPaginas:");
             console.log(this.totalPaginas);
             this.loading=false;
+            // if(localStorage.mecagoEnDios=="mucho"){
+            //   if(localStorage.vengoDe="modificarUsuario"){
+            //
+            //     console.log("salchipapaaaaaaaaa")
+            //     this.router.navigate(['/perfil']);
+            //     this.router.navigate(['perfil']);
+            //     console.log("salchipapaaaaaaaaaaaa2222222222222222222")
+            //     delete localStorage.vengoDe;
+            //     console.log("vengoDe despues de borrarlo",localStorage.vengoDe);
+            //     location.reload(true);
+            //     delete localStorage.vengoDe;
+            //     localStorage.setItem("mecagoEnDios", "poco");
+            //   }
+            // }
+
           //  this.paginacion = data.meta.pagination;
             //let paginaActual= data.meta.pagination.current_page;
 

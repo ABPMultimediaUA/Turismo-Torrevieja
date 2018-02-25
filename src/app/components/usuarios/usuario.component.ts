@@ -24,7 +24,7 @@ public usuario:Usuario={
   //key$?:string; identificador es la key
   rol:0
 };
-
+vengoDe2:string = "";
 nuevo:boolean = false;
 id:string;
 
@@ -37,7 +37,8 @@ constructor( private _usuariosService: UsuariosService,
                 public  logueadoService: LogueadoService
               ) {
               this.logueadoService.comprobarLogueado();
-
+              this.vengoDe2= localStorage.vengoDe;
+              console.log("vengoDe==", localStorage.vengoDe);
           this.route.params.subscribe(parametros=>{
                 console.log(parametros);
                 this.id = parametros['id']
@@ -250,7 +251,27 @@ constructor( private _usuariosService: UsuariosService,
         //     },
         //     error=>console.error(error));
         }
+      if(localStorage.vengoDe="perfil"){
+
+        console.log("hellocaramelloooooo")
+        this.router.navigate(['/perfil']);
+        this.router.navigate(['perfil']);
+        console.log("hellocaramelloooooo2222222222222222222")
+        delete localStorage.vengoDe;
+        location.reload(true);
+      }
 
     }
+  vaciarVengoDe(){
+    delete localStorage.vengoDe;
+  }
+  vaciarVengoDeYActualizarCosas(){
 
+    localStorage.setItem("identificador", this.usuario.identificador);
+    localStorage.setItem("nombreUsuario", this.usuario.nombreUsuario);
+    localStorage.setItem("apodo", this.usuario.apodo);
+    localStorage.setItem("correo", this.usuario.correo);
+    localStorage.setItem("vengoDe", "modificarUsuario");
+  localStorage.setItem("mecagoEnDios", "mucho");
+  }
 }

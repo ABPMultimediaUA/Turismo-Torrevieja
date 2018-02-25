@@ -34,7 +34,7 @@ import { ContactComponent } from './components/contact/contact.component';
 
 import {IdsPipe} from './components/pipes/ids.pipe';
 import { KeysPipe } from './components/pipes/keys.pipe';
-
+import {Filter1Pipe} from './components/pipes/filter1.pipe';
 
 import { MensajeComponent } from './components/shared/mensaje/mensaje.component';
 import { MensajesComponent } from './components/mensajes/mensajes.component';
@@ -65,6 +65,7 @@ import { PerfilComponent } from './components/perfil/perfil.component';
     ContactComponent,
     IdsPipe,
     KeysPipe,
+    Filter1Pipe,
     NuevoUsuarioComponent,
     MensajeComponent,
     MensajesComponent,

@@ -41,7 +41,9 @@ export class PerfilComponent implements OnInit {
       public  logueadoService: LogueadoService
       ) {
         this.logueadoService.comprobarLogueado();
-
+          delete localStorage.vengoDe;
+          // localStorage.setItem("mecagoEnDios", "poco");
+          localStorage.setItem("vengoDe", "caca");
         this.identificador=localStorage.identificador;
         this.nombreUsuario=localStorage.nombreUsuario;
         this.apodo=localStorage.apodo;
@@ -49,10 +51,13 @@ export class PerfilComponent implements OnInit {
         this.esVerificado=localStorage.esVerificado;
         this.rol=localStorage.rol;
         this.fechaCreacion=localStorage.fechaCreacion;
-        
+
        }
 
   ngOnInit() {
   }
+  vengoDePerfil(){
 
+    localStorage.setItem("vengoDe", "perfil");
+  }
 }
