@@ -19,6 +19,11 @@ import { EventosComponent } from './components/eventos/eventos.component';
 import { EventoComponent } from './components/eventos/evento.component';
 import { NuevoEventoComponent } from './components/eventos/nuevo-evento.component';
 
+
+import { ExpedientesComponent } from './components/expedientes/expedientes.component';
+import { ExpedienteComponent } from './components/expedientes/expediente.component';
+import { NuevoExpedienteComponent } from './components/expedientes/nuevo-expediente.component';
+
 import { ContactComponent } from "./components/contact/contact.component";
 import { MensajesComponent } from "./components/mensajes/mensajes.component";
 
@@ -56,6 +61,11 @@ const app_routes: Routes = [
   { path: 'eventos', component: EventosComponent },
   { path: 'nuevo-evento', component: NuevoEventoComponent },
   { path: 'evento/:id', component: EventoComponent },
+  //rutas expedientes
+  { path: 'expedientes', component: ExpedientesComponent },
+  { path: 'nuevo-expediente', component: NuevoExpedienteComponent },
+  { path: 'expediente/:id', component: ExpedienteComponent },
+
 
   { path: 'mensajes/:parame', component: MensajesComponent },
   //{ path: 'usuariosReloaded', component: UsuariosComponent },

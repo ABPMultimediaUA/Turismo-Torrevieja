@@ -95,7 +95,7 @@
 
       <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
         <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-         <span class="icon-folder"></span> Eventos y Carteras
+         <span class="icon-folder"></span> Gestion Eventos
         </button>
         <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
           <a
@@ -122,6 +122,19 @@
           [routerLink]="['/nueva-cartera']"
           class="nav-link elemento-navbar d9d9d9 " >
           <span class="icon-folder-add"></span> Nueva Cartera</a>
+
+          <div class="dropdown-divider"></div>
+
+          <a
+          role="button"
+          [routerLink]="['/expedientes']"
+          class="nav-link elemento-navbar d9d9d9" >
+          <span class="icon-doc"></span> Expedientes</a>
+          <a
+          role="button"
+          [routerLink]="['/nuevo-expediente']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-doc-add"></span> Nuevo Expediente</a>
 
         </div>
       </div>
