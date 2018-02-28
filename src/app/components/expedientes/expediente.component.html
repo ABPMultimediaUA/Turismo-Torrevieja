@@ -1,1 +1,173 @@
+<div class="container-fluid">
+  <div class="row ">
 
+      <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+
+        <h1><span class="icon-crown"></span>Expediente <small>{{expediente.nombreExpediente}}</small></h1>
+        <div class="container" *ngIf="errorActualizarItem === true">
+            <div class="jumbotron">
+                <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
+                <h1 class="text-center">¡Ups! <p> </p>
+                  <p><small class="text-center"> Ha habido un error actualizando el permiso.</small></p></h1>
+                  <p class="text-center text-danger" *ngFor="let mensaje of errorMensaje">
+                        {{mensaje}}
+                </p>
+            </div>
+        </div>
+        <div class="container" *ngIf="itemActualizado === true">
+            <div class="jumbotron">
+                <div class="text-center"><i class="fa fa-5x fa-smile-o" style="color:#28a745;"></i></div>
+                <h1 class="text-center">Expediente actualizado!</h1>
+            </div>
+        </div>
+        <br>
+        <form (ngSubmit)="guardar()" #forma="ngForm">
+          <div class="row">
+            <div class="col-sm-3">
+              <label>Nombre expediente</label>
+              <input [(ngModel)]="expediente.nombreExpediente"
+                name="nombreExp"
+                class="form-control"
+                placeholder="Nombre del expediente"
+                required
+                type="text">
+            </div>
+            <div class="col-sm-3">
+              <label>Título</label>
+              <input [(ngModel)]="expediente.titulo"
+                name="nombreTit"
+                class="form-control"
+                placeholder="Título del evento"
+                required
+                type="text">
+            </div>
+            <div class="col-sm-3">
+              <label>Fecha inicio</label>
+              <input [(ngModel)]="expediente.fechaInicio"
+                name="fechaInicio"
+                class="form-control"
+                required
+                type="text">
+            </div>
+            <div class="col-sm-3">
+              <label>Fecha fin</label>
+              <input [(ngModel)]="expediente.fechaFin"
+                name="fechaFin"
+                class="form-control"
+                required
+                type="text">
+            </div>
+            <div class="col-sm-3">
+              <label>Coordinador</label>
+              <input [(ngModel)]="expediente.coordinador"
+                name="coordinador"
+                class="form-control"
+                placeholder="Persona responsable"
+                required
+                type="text">
+            </div>
+            <div class="col-sm-3">
+              <label>Aforo</label>
+              <input [(ngModel)]="expediente.aforo"
+                name="aforo"
+                class="form-control"
+                required
+                type="text">
+            </div>
+            <div class="col-sm-3">
+              <label>Portal</label>
+              <input [(ngModel)]="expediente.portal"
+                name="portal"
+                class="form-control"
+                required
+                type="text">
+            </div>
+            <div class="col-sm-3">
+              <label>Precio</label>
+              <input [(ngModel)]="expediente.precio"
+                name="precio"
+                class="form-control"
+                required
+                type="text">
+            </div>
+            <div class="col-sm-3">
+              <label>Precio entrada</label>
+              <input [(ngModel)]="expediente.precioEntrada"
+                name="precioEntrada"
+                class="form-control"
+                required
+                type="text">
+            </div>
+            <div class="col-sm-3">
+              <label>Hora</label>
+              <input [(ngModel)]="expediente.hora"
+                name="hora"
+                class="form-control"
+                required
+                type="text">
+            </div>
+            <div class="col-sm-3">
+              <label>Actor</label>
+              <input [(ngModel)]="expediente.actor"
+                name="actor"
+                class="form-control"
+                required
+                type="text">
+            </div>
+            <div class="col-sm-3">
+              <label>Avance</label>
+              <input [(ngModel)]="expediente.avance"
+                name="avance"
+                class="form-control"
+                required
+                type="text">
+            </div>
+            <div class="col-sm-3">
+              <label>CIF</label>
+              <input [(ngModel)]="expediente.cif"
+                name="cif"
+                class="form-control"
+                required
+                type="text">
+            </div>
+            <div class="col-sm-3">
+              <label>Separacion</label>
+              <input [(ngModel)]="expediente.separacion"
+                name="separacion"
+                class="form-control"
+                required
+                type="text">
+            </div>
+            <div class="col-sm-3">
+              <label>Detalles</label>
+              <input [(ngModel)]="expediente.detalle"
+                name="detalle"
+                class="form-control"
+                required
+                type="text">
+            </div>
+            <div class="col-sm-3">
+              <img src="{{expediente.imagen}}" alt="Imagen evento" width="200px">
+            </div>
+          </div>
+          <br>
+          <div id="DivActividades">
+
+          </div>
+          <div id="DivContratos">
+
+          </div>
+          <div id="DivTareas">
+
+          </div>
+          <div class="form-group">
+            <button [disabled]="!forma.valid"
+               type="submit" class="btn btn-outline-primary">
+              Guardar cambios
+            </button>
+          </div>
+        </form>
+        <br>
+      </main>
+    </div>
+</div>

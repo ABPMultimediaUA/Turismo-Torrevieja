@@ -34,17 +34,18 @@ constructor(  private _rolService: RolesService,
               private router:Router,
               private route:ActivatedRoute,//esto es para pasar como parametro
               public  logueadoService: LogueadoService
-            ) {
-              this.logueadoService.comprobarLogueado();
+            )
+{
+    this.logueadoService.comprobarLogueado();
 
-          this.route.params.subscribe(parametros=>{
-                this.id = parametros['id']
-                this._rolService.getRol(this.id)
-                    .subscribe( rol => {rol.data.password="",   this.rol = rol.data})
+    this.route.params.subscribe(parametros=>{
+          this.id = parametros['id']
+          this._rolService.getRol(this.id)
+              .subscribe( rol => {rol.data.password="",   this.rol = rol.data})
 
-                this._rolService.getPermisos(this.id)
-                    .subscribe( permiso => {this.permiso = permiso.data, this.marcarPermisos()})
-          });
+          this._rolService.getPermisos(this.id)
+              .subscribe( permiso => {this.permiso = permiso.data, this.marcarPermisos()})
+    });
   }
 
   ngOnInit() {

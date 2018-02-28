@@ -77,8 +77,6 @@ export class RolesComponent implements OnInit {
   }
 
     borrarRol(id:string){
-      //TODO hacer que elimine en la tabla pivote
-      //this._rolesService.borrarPermisos(id).subscribe(res =>{ })
       this._rolesService.borrarRoles(id)
       .subscribe(respuesta=>{
         if(respuesta){

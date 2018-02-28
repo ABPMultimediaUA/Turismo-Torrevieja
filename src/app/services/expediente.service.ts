@@ -34,10 +34,16 @@ export class ExpedienteService {
       case 3:
           url += "contrato"
           break;
+      case 4:
+          url += `DeExpediente/${id}/actividades`;
+          break;
+      case 5:
+          url += `DeExpediente/${id}/tareas`;
+          break;
       default:
           console.log("No se ha especificado correctamente una URL.");
     }
-    if(id>-1) url+=`/${id}`;
+    if(id>-1 && tipo <4) url+=`/${id}`;
     return url;
   }
 

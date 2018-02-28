@@ -1,23 +1,23 @@
 export interface ExpedienteInterfaz
 {
-    identificador:Int32Array;
-    nombrePermiso:string;
-    actor:Int32Array;
-    aforo:Int32Array;
+    identificador:number;
+    actor:number;
+    aforo:number;
     avance:string;
-    cartera:Int32Array;
-    cif:Int32Array;
+    cartera:number;
+    cif:string;
     coordinador:string;
-    detalle:string;espacio:Int32Array;
+    detalle:string;
+    espacio:number;
     evento:string;
     fechaFin:Date;
     fechaInicio:Date;
-    hora:Int8Array;
+    hora:number;
     imagen:string;
     nombreExpediente:string;
     portal:string;
-    precio:Int32Array;
-    precioEntrada:DoubleRange;
+    precio:number;
+    precioEntrada:number;
     separacion:string;
     titulo:string;
 }

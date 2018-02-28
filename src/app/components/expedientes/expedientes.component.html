@@ -7,7 +7,11 @@
               <tr>
                 <th scope="col">#</th>
                 <th scope="col">Id</th>
+                <th scope="col">Nombre</th>
                 <th scope="col">Título</th>
+                <th scope="col">Coordinador</th>
+                <th scope="col">Fecha Inicio</th>
+                <th scope="col">Fecha Fin</th>
                 <th class="text-right">Opciones</th>
               </tr>
             </thead>
@@ -16,16 +20,20 @@
               <tr *ngFor="let item of  itemsActuales  ; let i = index">
                 <td>{{ i + 1 }}</td>
                 <td>{{ item.identificador }}</td>
+                <td>{{ item.nombreExpediente }}</td>
                 <td>{{ item.titulo }}</td>
+                <td>{{ item.coordinador }}</td>
+                <td>{{ item.fechaInicio }}</td>
+                <td>{{ item.fechaFin }}</td>
                 <td class="text-right w20">
                   <button  [routerLink]="['/expediente', item.identificador]"
                   type="button" class="btn btn-outline-success">
                     <span class="icon-pencil"></span>
                   </button>
-                  <button  (click)="borrarItem(item.identificador)"
+                  <!-- <button  (click)="borrarItem(item.identificador)"
                   type="button" class="btn btn-outline-danger">
                     <span class="icon-trash"></span>
-                  </button>
+                  </button> -->
                 </td>
               </tr>
 
