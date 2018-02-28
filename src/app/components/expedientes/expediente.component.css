@@ -2,3 +2,15 @@ input{
   margin:-.3em auto 1.1em;
   width:90%;
 }
+#DivActividades, #DivContratos, #DivTareas{
+  border-style: solid;
+  border-radius: 1px;
+  border-color: gray;
+  margin:2em auto;
+}
+.CuadroActividad, .CuadroContrato, .CuadroTarea{
+    border-style: solid;
+    border-radius: 1px;
+    border-color: gray;
+    margin:1em;
+}

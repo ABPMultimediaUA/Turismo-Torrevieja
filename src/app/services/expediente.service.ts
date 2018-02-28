@@ -40,6 +40,9 @@ export class ExpedienteService {
       case 5:
           url += `DeExpediente/${id}/tareas`;
           break;
+      case 6:
+          url += `DeExpediente/${id}/contratos`;
+          break;
       default:
           console.log("No se ha especificado correctamente una URL.");
     }

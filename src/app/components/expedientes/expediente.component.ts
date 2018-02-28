@@ -100,6 +100,14 @@ export class ExpedienteComponent implements OnInit {
                 console.log(this.tareas); //TODO Eliminar
               }
             );
+
+            //COGEMOS LOS CONTRATOS
+            this._ItemService.getItem(6,this.id).then(
+              res => {
+                // this.tareas = res as TareasInterface;
+                console.log(res); //TODO Eliminar
+              }
+            );
       });
     }
 
