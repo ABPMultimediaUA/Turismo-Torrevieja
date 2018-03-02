@@ -80,8 +80,6 @@ export class ExpedienteService {
       let url = this.crearURL(tipo,id);
       let body = JSON.stringify( _body );
       let headers = this.header;
-      console.log("BODY UPDATE");
-      console.log(body);
       this.http.put(url, body, { headers })
         .toPromise()
           .then( res => { resolve( res.json().data ); })

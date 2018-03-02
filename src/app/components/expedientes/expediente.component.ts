@@ -101,35 +101,34 @@ export class ExpedienteComponent implements OnInit {
 
   crearPlantillaActividad(){
     var nuevasActividades = document.getElementById("nuevaActividad");
-    // var nuevoDiv = '<div class="row CuadroActividad"></div>';
     var nuevoDiv = document.createElement('div');
     nuevoDiv.setAttribute("class","row CuadroActividad");
     nuevoDiv.innerHTML = '<div class="col-sm-3">'+
                       '<label>Nombre de la actividad</label>'+
-                      '<input [(ngModel)]="" name="" class="form-control" required type="text">'+
+                      '<input name="" class="form-control" required type="text">'+
                     '</div>'+
                     '<div class="col-sm-3">'+
                       '<label>Fecha inicio</label>'+
-                      '<input [(ngModel)]="" name="" class="form-control" required type="text">'+
+                      '<input name="" class="form-control" required type="text">'+
                     '</div>'+
                     '<div class="col-sm-3">'+
                       '<label>Fecha final</label>'+
-                      '<input [(ngModel)]="" name="" class="form-control" required type="text">'+
+                      '<input name="" class="form-control" required type="text">'+
                     '</div>'+
                     '<div class="col-sm-3">'+
                       '<label>Hora</label>'+
-                      '<input [(ngModel)]="" name="" class="form-control" required type="text">'+
+                      '<input name="" class="form-control" required type="text">'+
                     '</div>'+
                     '<div class="col-sm-3">'+
                       '<label>Espacio</label>'+
-                      '<input [(ngModel)]="" name="" class="form-control" required type="text">'+
+                      '<input name="" class="form-control" required type="text">'+
                     '</div>'+
                     '<div class="col-sm-3">'+
                       '<label>Capacidad</label>'+
-                      '<input [(ngModel)]="" name="" class="form-control" required type="text">'+
+                      '<input name="" class="form-control" required type="text">'+
                     '</div>'+
                     '<div class="col-sm-3">'+
-                      '<button (click)="eliminarActividad($event.target)" type="button" class="btn btn-outline-danger">'+
+                      '<button (click)="this.eliminarActividad(-1,$event.target)" type="button" class="btn btn-outline-danger">'+
                         '<span class="icon-trash"></span>'+
                       '</button>'+
                     '</div>';
@@ -148,16 +147,18 @@ export class ExpedienteComponent implements OnInit {
 
   guardarCambios(){
     //ACTUALIZAR EXPEDIENTE
-    // console.log(JSON.stringify(this.expediente));
-    //TODO VER POR QUE FALLA Y POR QUE CADA VARIABLE CAMBIA
-    // console.log(this.expediente.evento);
-    // this.expediente.evento = +this.expediente.evento;
-    // console.log(this.expediente);
-    this._ItemService.actualizarItem(0,this.id,this.expediente).then(
-      res => {
-        console.log(res);
-      }
-    );
+    // this._ItemService.actualizarItem(0,this.id,this.expediente)
+    //   .catch( (err) => { console.log( err.toString() ); })
+    //ELIMINAR ACTIVIDADES
+    //CREAR ACTIVIDADES
+    //MODIFICAR ACTIVIDADES
+    var actFor = document.getElementById("forActividades");
+    var act = actFor.getElementsByClassName("CuadroActividad"));
+    // for(var i=0; i<act.length; i++){
+    //   console.log(act[i]);
+    // }
+    console.log(this);
+
   }
 
 }
