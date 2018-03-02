@@ -9,7 +9,7 @@ export interface ExpedienteInterfaz
     coordinador:string;
     detalle:string;
     espacio:number;
-    evento:string;
+    evento:number;
     fechaFin:Date;
     fechaInicio:Date;
     hora:number;

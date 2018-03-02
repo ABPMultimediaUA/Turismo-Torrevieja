@@ -21,154 +21,130 @@
             </div>
         </div>
         <br>
-        <form (ngSubmit)="guardar()" #forma="ngForm">
+        <form (ngSubmit)="guardarCambios()" #forma="ngForm">
           <div class="row">
             <div class="col-sm-3">
               <label>Nombre expediente</label>
-              <input [(ngModel)]="expediente.nombreExpediente"
-                name="nombreExp"
-                class="form-control"
-                placeholder="Nombre del expediente"
-                required
-                type="text">
+              <input [(ngModel)]="expediente.nombreExpediente" name="nombreExp" class="form-control" placeholder="Nombre del expediente" required type="text">
             </div>
             <div class="col-sm-3">
               <label>Título</label>
-              <input [(ngModel)]="expediente.titulo"
-                name="nombreTit"
-                class="form-control"
-                placeholder="Título del evento"
-                required
-                type="text">
+              <input [(ngModel)]="expediente.titulo" name="nombreTit" class="form-control" placeholder="Título del evento" required type="text">
             </div>
             <div class="col-sm-3">
               <label>Fecha inicio</label>
-              <input [(ngModel)]="expediente.fechaInicio"
-                name="fechaInicio"
-                class="form-control"
-                required
-                type="text">
+              <input [(ngModel)]="expediente.fechaInicio" name="fechaInicio" class="form-control" required type="text">
             </div>
             <div class="col-sm-3">
               <label>Fecha fin</label>
-              <input [(ngModel)]="expediente.fechaFin"
-                name="fechaFin"
-                class="form-control"
-                required
-                type="text">
+              <input [(ngModel)]="expediente.fechaFin" name="fechaFin" class="form-control" required type="text">
             </div>
             <div class="col-sm-3">
               <label>Coordinador</label>
-              <input [(ngModel)]="expediente.coordinador"
-                name="coordinador"
-                class="form-control"
-                placeholder="Persona responsable"
-                required
-                type="text">
+              <input [(ngModel)]="expediente.coordinador" name="coordinador" class="form-control" placeholder="Persona responsable" required type="text">
             </div>
             <div class="col-sm-3">
               <label>Aforo</label>
-              <input [(ngModel)]="expediente.aforo"
-                name="aforo"
-                class="form-control"
-                required
-                type="text">
+              <input [(ngModel)]="expediente.aforo" name="aforo" class="form-control" required type="text">
             </div>
             <div class="col-sm-3">
               <label>Portal</label>
-              <input [(ngModel)]="expediente.portal"
-                name="portal"
-                class="form-control"
-                required
-                type="text">
+              <input [(ngModel)]="expediente.portal" name="portal" class="form-control" required type="text">
             </div>
             <div class="col-sm-3">
               <label>Precio</label>
-              <input [(ngModel)]="expediente.precio"
-                name="precio"
-                class="form-control"
-                required
-                type="text">
+              <input [(ngModel)]="expediente.precio" name="precio" class="form-control" required type="text">
             </div>
             <div class="col-sm-3">
               <label>Precio entrada</label>
-              <input [(ngModel)]="expediente.precioEntrada"
-                name="precioEntrada"
-                class="form-control"
-                required
-                type="text">
+              <input [(ngModel)]="expediente.precioEntrada" name="precioEntrada" class="form-control" required type="text">
             </div>
             <div class="col-sm-3">
               <label>Hora</label>
-              <input [(ngModel)]="expediente.hora"
-                name="hora"
-                class="form-control"
-                required
-                type="text">
+              <input [(ngModel)]="expediente.hora" name="hora" class="form-control" required type="text">
             </div>
             <div class="col-sm-3">
               <label>Actor</label>
-              <input [(ngModel)]="expediente.actor"
-                name="actor"
-                class="form-control"
-                required
-                type="text">
+              <input [(ngModel)]="expediente.actor" name="actor" class="form-control" required type="text">
             </div>
-            <div class="col-sm-3">
+            <!-- <div class="col-sm-3">
               <label>Avance</label>
-              <input [(ngModel)]="expediente.avance"
-                name="avance"
-                class="form-control"
-                required
-                type="text">
-            </div>
-            <div class="col-sm-3">
+              <input [(ngModel)]="expediente.avance" name="avance" class="form-control" required type="text">
+            </div> -->
+            <!-- <div class="col-sm-3">
               <label>CIF</label>
-              <input [(ngModel)]="expediente.cif"
-                name="cif"
-                class="form-control"
-                required
-                type="text">
-            </div>
+              <input [(ngModel)]="expediente.cif" name="cif" class="form-control" required type="text">
+            </div> -->
             <div class="col-sm-3">
               <label>Separacion</label>
-              <input [(ngModel)]="expediente.separacion"
-                name="separacion"
-                class="form-control"
-                required
-                type="text">
+              <input [(ngModel)]="expediente.separacion" name="separacion" class="form-control" required type="text">
             </div>
             <div class="col-sm-3">
               <label>Detalles</label>
-              <input [(ngModel)]="expediente.detalle"
-                name="detalle"
-                class="form-control"
-                required
-                type="text">
+              <input [(ngModel)]="expediente.detalle" name="detalle" class="form-control" required type="text">
             </div>
             <div class="col-sm-3">
               <img src="{{expediente.imagen}}" alt="Imagen evento" width="200px">
             </div>
           </div>
           <br>
+          <!-- ***************** EMPIEZAN ACTIVIDADES ***************** -->
           <div id="DivActividades">
             <h3>ACTIVIDADES</h3>
-            <div class="CuadroActividad">
+            <div id="forActividades">
+              <div *ngFor="let a of actividades; let i = index">
+                <div class="row CuadroActividad">
+                  <div class="col-sm-3">
+                    <label>Nombre de la actividad</label>
+                    <input [(ngModel)]="a.nombreActividad" name=Actividad_nombreActividad{{i}} class="form-control" required type="text">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Fecha inicio</label>
+                    <input [(ngModel)]="a.fechaInicio" name=Actividad_fechaInicio{{i}} class="form-control" required type="text">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Fecha final</label>
+                    <input [(ngModel)]="a.fechaFinal" name=Actividad_fechaFinal{{i}} class="form-control" required type="text">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Hora</label>
+                    <input [(ngModel)]="a.tiempoHora" name=Actividad_tiempoHora{{i}} class="form-control" required type="text">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Espacio</label>
+                    <input [(ngModel)]="a.espacio" name=Actividad_espacio{{i}} class="form-control" required type="text">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Capacidad</label>
+                    <input [(ngModel)]="a.capacidad" name=Actividad_capacidad{{i}} class="form-control" required type="text">
+                  </div>
+                  <div class="col-sm-3">
+                    <button (click)="eliminarActividad(i, $event.target)" type="button" class="btn btn-outline-danger">
+                      <span class="icon-trash"></span>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
+            <div id="nuevaActividad"></div>
+            <button type="button" class="btn btn-outline-success" (click)="crearPlantillaActividad()">
+              <span class=""></span>Nueva actividad
+            </button>
           </div>
+          <!-- ***************** EMPIEZAN CONTRATOS ***************** -->
           <div id="DivContratos">
             <h3>CONTRATOS</h3>
             <div class="CuadroContrato">
             </div>
           </div>
+          <!-- ***************** EMPIEZAN TAREAS ***************** -->
           <div id="DivTareas">
             <h3>TAREAS</h3>
             <div class="CuadroTarea">
             </div>
           </div>
           <div class="form-group">
-            <button [disabled]="!forma.valid"
-               type="submit" class="btn btn-outline-primary">
+            <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
               Guardar cambios
             </button>
           </div>

@@ -3,7 +3,8 @@ import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
 import { ActividadInterface }  from "../../interfaces/actividad.interface";
-import { TareasInterface }  from "../../interfaces/tareas.interface";
+import { TareaInterface }  from "../../interfaces/tareas.interface";
+import { ContratoInterface }  from "../../interfaces/contrato.interface";
 import { AlertService, AuthenticationService, ExpedienteService, LogueadoService } from '../../services/index';
 
 @Component({
@@ -30,7 +31,7 @@ export class ExpedienteComponent implements OnInit {
     coordinador:"",
     detalle:"",
     espacio:0,
-    evento:"",
+    evento:0,
     fechaFin:null,
     fechaInicio:null,
     hora:0,
@@ -43,25 +44,9 @@ export class ExpedienteComponent implements OnInit {
     titulo:"",
   };
 
-  public actividad:ActividadInterface={
-    capacidad:0,
-    espacio:0,
-    expediente:0,
-    fechaActualizacion:"",
-    fechaFinal:"",
-    fechaInicio:"",
-    identificador:0,
-    nombreActividad:"",
-    tiempoHora:0,
-  };
-
-  public tareas:TareasInterface={
-    expediente:0,
-    finalizado:0,
-    identificador:0,
-    nombreTarea:"",
-    usuario:0,
-  }
+  public actividades:ActividadInterface[];
+  public tareas:TareaInterface[];
+  public contratos:ContratoInterface[];
 
   constructor(  private _ItemService: ExpedienteService,
                 private router:Router,
@@ -80,15 +65,15 @@ export class ExpedienteComponent implements OnInit {
                 this.expediente = res as ExpedienteInterfaz;
                 console.log(res); //TODO Eliminar
                 //TODO eliminar, esta porque el enlace de imagen guardado no sirve
-                this.expediente.imagen = 'https://web.ua.es/es/actualidad-universitaria/imagenes/febrero18-2da-quin/estrella-supergigante1.jpg';
+                this.expediente.imagen = '';
               }
             );
 
             //COGEMOS LAS ACTIVIDADES
             this._ItemService.getItem(4,this.id).then(
               res => {
-                this.actividad = res as ActividadInterface;
-                console.log(this.actividad); //TODO Eliminar
+                this.actividades = res as ActividadInterface[];
+                console.log(this.actividades); //TODO Eliminar
 
               }
             );
@@ -96,7 +81,7 @@ export class ExpedienteComponent implements OnInit {
             //COGEMOS LAS TAREAS
             this._ItemService.getItem(5,this.id).then(
               res => {
-                this.tareas = res as TareasInterface;
+                this.tareas = res as TareaInterface[];
                 console.log(this.tareas); //TODO Eliminar
               }
             );
@@ -104,14 +89,75 @@ export class ExpedienteComponent implements OnInit {
             //COGEMOS LOS CONTRATOS
             this._ItemService.getItem(6,this.id).then(
               res => {
-                // this.tareas = res as TareasInterface;
-                console.log(res); //TODO Eliminar
+                this.contratos = res as ContratoInterface[];
+                console.log(this.contratos); //TODO Eliminar
               }
             );
       });
     }
 
   ngOnInit() {
+  }
+
+  crearPlantillaActividad(){
+    var nuevasActividades = document.getElementById("nuevaActividad");
+    // var nuevoDiv = '<div class="row CuadroActividad"></div>';
+    var nuevoDiv = document.createElement('div');
+    nuevoDiv.setAttribute("class","row CuadroActividad");
+    nuevoDiv.innerHTML = '<div class="col-sm-3">'+
+                      '<label>Nombre de la actividad</label>'+
+                      '<input [(ngModel)]="" name="" class="form-control" required type="text">'+
+                    '</div>'+
+                    '<div class="col-sm-3">'+
+                      '<label>Fecha inicio</label>'+
+                      '<input [(ngModel)]="" name="" class="form-control" required type="text">'+
+                    '</div>'+
+                    '<div class="col-sm-3">'+
+                      '<label>Fecha final</label>'+
+                      '<input [(ngModel)]="" name="" class="form-control" required type="text">'+
+                    '</div>'+
+                    '<div class="col-sm-3">'+
+                      '<label>Hora</label>'+
+                      '<input [(ngModel)]="" name="" class="form-control" required type="text">'+
+                    '</div>'+
+                    '<div class="col-sm-3">'+
+                      '<label>Espacio</label>'+
+                      '<input [(ngModel)]="" name="" class="form-control" required type="text">'+
+                    '</div>'+
+                    '<div class="col-sm-3">'+
+                      '<label>Capacidad</label>'+
+                      '<input [(ngModel)]="" name="" class="form-control" required type="text">'+
+                    '</div>'+
+                    '<div class="col-sm-3">'+
+                      '<button (click)="eliminarActividad($event.target)" type="button" class="btn btn-outline-danger">'+
+                        '<span class="icon-trash"></span>'+
+                      '</button>'+
+                    '</div>';
+    nuevasActividades.appendChild(nuevoDiv);
+  }
+
+  eliminarActividad(i,event: any){
+    var mensaje = "¿Está seguro de que desea eliminar esta actividad?\n"+
+    "(Hasta que no se guarden los cambios del expediente no se realizará la eliminación.)";
+    if(confirm(mensaje)){
+      var activ = event.parentElement.parentElement.parentElement;
+      activ.parentNode.removeChild(activ);
+      //TODO registrar el cambio
+    }
+  }
+
+  guardarCambios(){
+    //ACTUALIZAR EXPEDIENTE
+    // console.log(JSON.stringify(this.expediente));
+    //TODO VER POR QUE FALLA Y POR QUE CADA VARIABLE CAMBIA
+    // console.log(this.expediente.evento);
+    // this.expediente.evento = +this.expediente.evento;
+    // console.log(this.expediente);
+    this._ItemService.actualizarItem(0,this.id,this.expediente).then(
+      res => {
+        console.log(res);
+      }
+    );
   }
 
 }
