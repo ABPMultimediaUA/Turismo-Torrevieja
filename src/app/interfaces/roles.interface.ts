@@ -1,7 +1,4 @@
-export interface Roles {
+export interface RolesInterface {
   identificador:string;
   nombreRol:string;
-  fechaCreacion:DateTimeFormat;
-  fechaActualizacion:DateTimeFormat;
-  fechaEliminacion:DateTimeFormat;
 }

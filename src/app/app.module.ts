@@ -11,7 +11,6 @@ import { APP_ROUTING } from "./app.routes"
 
 // servicios
 import { UsuariosService }  from "./services/usuarios.service";
-import { RolesService }  from "./services/roles.service";
 import { CarterasService }  from "./services/carteras.service";
 import { PeticionesCrudService }  from "./services/peticionesCRUD.service";
 // import { AlertComponent } from './_directives/index';
@@ -87,7 +86,6 @@ import { ExpedientesComponent } from './components/expedientes/expedientes.compo
   providers: [
     UsuariosService,
     CarterasService,
-    RolesService,
     PeticionesCrudService,
     AlertService,
     AuthenticationService,

@@ -24,27 +24,27 @@ export class PeticionesCrudService {
     switch(tipo) {
       case 0:
           //Sin id muestra todos los items
-          //Con id modifica, elimina o devuelve ese item
+          //Con id crud
           url += "expediente";
           break;
       case 1:
           //Sin id muestra todos los items
-          //Con id modifica, elimina o devuelve ese item
+          //Con id crud
           url += "actividad";
           break;
       case 2:
           //Sin id muestra todos los items
-          //Con id modifica, elimina o devuelve ese item
+          //Con id crud
           url += "tarea";
           break;
       case 3:
           //Sin id muestra todos los items
-          //Con id modifica, elimina o devuelve ese item
+          //Con id crud
           url += "contrato";
           break;
       case 4:
           //Sin id muestra todos los items
-          //Con id modifica, elimina o devuelve ese item
+          //Con id crud
           url += "rol";
           break;
       case 101:
@@ -62,9 +62,11 @@ export class PeticionesCrudService {
       case 104:
           //Todos los permisos de un id rol
           url += `rols/${id}/permisos`;
+          break;
       case 105:
-          //Insertar o eliminar a un id rol un permiso id2
+          //Insertar o eliminar a un id rol un permiso id2, utiliza put (actualizar)
           url += `rol/${id}/permiso/${id2}`;
+          break;
       default:
           console.log("No se ha especificado correctamente una URL.");
     }

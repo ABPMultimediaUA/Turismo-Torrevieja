@@ -7,7 +7,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 
 import { HttpModule } from '@angular/http';
-import { AlertService, AuthenticationService, RolesService, LogueadoService } from '../../services/index';
+import { AlertService, AuthenticationService, PeticionesCrudService, LogueadoService } from '../../services/index';
 
 @Component({
   selector: 'app-roles',
@@ -27,16 +27,16 @@ export class RolesComponent implements OnInit {
   currentPage:number = 1;
 
 
-  constructor(  private _rolesService: RolesService,
+  constructor(  private _rolesService: PeticionesCrudService,
                 private router:Router,
                 private route:ActivatedRoute,//esto es para pasar como parametro
                 public  logueadoService: LogueadoService
                 )
   {
     this.logueadoService.comprobarLogueado();
-    this._rolesService.getRoles("1")
-    .subscribe( data =>{
-      this.roles= data.data;
+    this._rolesService.getItem(4,-1,-1,3)
+    .then( data =>{ console.log(data);
+      this.roles= data as any;
       this.totalPaginas = Math.ceil(this.roles.length/10);
       this.loading=false;
 
@@ -77,10 +77,10 @@ export class RolesComponent implements OnInit {
   }
 
     borrarRol(id:string){
-      this._rolesService.borrarRoles(id)
-      .subscribe(respuesta=>{
+      this._rolesService.eliminarItem(4,id,-1)
+      .then(respuesta=>{
         if(respuesta){
-          this._rolesService.getRoles("1");
+          this._rolesService.getItem(4,1,-1,-1);
           location.reload(true);
           this.router.navigate(['roles']);
           // this.refresh();

@@ -1,4 +1,4 @@
-export interface Permisos
+export interface PermisosInterface
 {
     identificador:string;
     nombrePermiso:string;
