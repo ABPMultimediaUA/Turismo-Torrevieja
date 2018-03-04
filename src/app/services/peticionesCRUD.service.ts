@@ -47,6 +47,21 @@ export class PeticionesCrudService {
           //Con id crud
           url += "rol";
           break;
+      case 5:
+          //Sin id muestra todos los items
+          //Con id crud
+          url += "user";
+          break;
+      case 6:
+          //Sin id muestra todos los items
+          //Con id crud
+          url += "espacio";
+          break;
+      case 7:
+          //Sin id muestra todos los items
+          //Con id crud
+          url += "proveedor";
+          break;
       case 101:
           //Todas las actividades de un expediente
           url += `DeExpediente/${id}/actividades`;

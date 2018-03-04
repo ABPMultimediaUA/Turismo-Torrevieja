@@ -5,6 +5,9 @@ import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
 import { ActividadInterface }  from "../../interfaces/actividad.interface";
 import { TareaInterface }  from "../../interfaces/tareas.interface";
 import { ContratoInterface }  from "../../interfaces/contrato.interface";
+import { Usuario }  from "../../interfaces/usuario.interface";
+import { EspacioInterface }  from "../../interfaces/espacio.interface";
+import { ProveedorInterface }  from "../../interfaces/proveedor.interface";
 import { AlertService, AuthenticationService,PeticionesCrudService,LogueadoService } from '../../services/index';
 @Component({
   selector: 'app-expediente',
@@ -46,6 +49,9 @@ export class ExpedienteComponent implements OnInit {
   public actividades:ActividadInterface[];
   public tareas:TareaInterface[];
   public contratos:ContratoInterface[];
+  public users:Usuario[];
+  public espacio:EspacioInterface[];
+  public proveedor:ProveedorInterface[];
 
   constructor(  private _ItemService: PeticionesCrudService,
                 private router:Router,
@@ -89,6 +95,30 @@ export class ExpedienteComponent implements OnInit {
               res => {
                 this.contratos = res as ContratoInterface[];
                 console.log(this.contratos); //TODO Eliminar
+              }
+            );
+
+            //COGEMOS LOS USUARIOS
+            this._ItemService.getItem(5,-1,-1,-1).then(
+              res => {
+                this.users = res as Usuario[];
+                console.log(this.users); //TODO Eliminar
+              }
+            );
+
+            //COGEMOS LOS ESPACIOS
+            this._ItemService.getItem(6,-1,-1,-1).then(
+              res => {
+                this.espacio = res as EspacioInterface[];
+                console.log(this.espacio); //TODO Eliminar
+              }
+            );
+
+            //COGEMOS LOS PROVEEDORES
+            this._ItemService.getItem(7,-1,-1,-1).then(
+              res => {
+                this.proveedor = res as ProveedorInterface[];
+                console.log(this.proveedor); //TODO Eliminar
               }
             );
       });
