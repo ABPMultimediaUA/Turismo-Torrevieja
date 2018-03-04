@@ -21,7 +21,7 @@
             </div>
         </div>
         <br>
-        <form (ngSubmit)="guardarCambios()" #forma="ngForm">
+        <form (ngSubmit)="guardarCambiosExp()" #forma="ngForm">
           <div class="row">
             <div class="col-sm-3">
               <label>Nombre expediente</label>
@@ -87,62 +87,6 @@
               <img src="{{expediente.imagen}}" alt="Imagen evento" width="200px">
             </div>
           </div>
-          <br>
-          <!-- ***************** EMPIEZAN ACTIVIDADES ***************** -->
-          <div id="DivActividades">
-            <h3>ACTIVIDADES</h3>
-            <div id="forActividades">
-              <div *ngFor="let a of actividades; let i = index">
-                <div class="row CuadroActividad">
-                  <div class="col-sm-3">
-                    <label>Nombre de la actividad</label>
-                    <input [(ngModel)]="a.nombreActividad" name=Actividad_nombreActividad{{i}} class="form-control" required type="text">
-                  </div>
-                  <div class="col-sm-3">
-                    <label>Fecha inicio</label>
-                    <input [(ngModel)]="a.fechaInicio" name=Actividad_fechaInicio{{i}} class="form-control" required type="text">
-                  </div>
-                  <div class="col-sm-3">
-                    <label>Fecha final</label>
-                    <input [(ngModel)]="a.fechaFinal" name=Actividad_fechaFinal{{i}} class="form-control" required type="text">
-                  </div>
-                  <div class="col-sm-3">
-                    <label>Hora</label>
-                    <input [(ngModel)]="a.tiempoHora" name=Actividad_tiempoHora{{i}} class="form-control" required type="text">
-                  </div>
-                  <div class="col-sm-3">
-                    <label>Espacio</label>
-                    <input [(ngModel)]="a.espacio" name=Actividad_espacio{{i}} class="form-control" required type="text">
-                  </div>
-                  <div class="col-sm-3">
-                    <label>Capacidad</label>
-                    <input [(ngModel)]="a.capacidad" name=Actividad_capacidad{{i}} class="form-control" required type="text">
-                  </div>
-                  <div class="col-sm-3">
-                    <button (click)="eliminarActividad(i, $event.target)" type="button" class="btn btn-outline-danger">
-                      <span class="icon-trash"></span>
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div id="nuevaActividad"></div>
-            <button type="button" class="btn btn-outline-success" (click)="crearPlantillaActividad()">
-              <span class=""></span>Nueva actividad
-            </button>
-          </div>
-          <!-- ***************** EMPIEZAN CONTRATOS ***************** -->
-          <div id="DivContratos">
-            <h3>CONTRATOS</h3>
-            <div class="CuadroContrato">
-            </div>
-          </div>
-          <!-- ***************** EMPIEZAN TAREAS ***************** -->
-          <div id="DivTareas">
-            <h3>TAREAS</h3>
-            <div class="CuadroTarea">
-            </div>
-          </div>
           <div class="form-group">
             <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
               Guardar cambios
@@ -150,6 +94,156 @@
           </div>
         </form>
         <br>
+        <!-- ***************** EMPIEZAN ACTIVIDADES ***************** -->
+        <div id="DivActividades">
+          <h3>ACTIVIDADES</h3>
+          <div>
+            <div *ngFor="let a of actividades; let i = index">
+              <form (ngSubmit)="crearModificarActConTar(1,a)" #forma="ngForm">
+                <div class="row CuadroActividad">
+                  <div class="col-sm-3">
+                    <label>Nombre de la actividad</label>
+                    <input [(ngModel)]="a.nombreActividad" name=Actividad_nombre{{i}} class="form-control" required type="text">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Fecha inicio</label>
+                    <input [(ngModel)]="a.fechaInicio" name=Actividad_fechaInicio{{i}} class="form-control" type="date">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Fecha final</label>
+                    <input [(ngModel)]="a.fechaFinal" name=Actividad_fechaFinal{{i}} class="form-control" type="date">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Hora</label>
+                    <input [(ngModel)]="a.tiempoHora" name=Actividad_tiempoHora{{i}} class="form-control" type="time">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Espacio</label>
+                    <input [(ngModel)]="a.espacio" name=Actividad_espacio{{i}} class="form-control" type="text">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Capacidad</label>
+                    <input [(ngModel)]="a.capacidad" name=Actividad_capacidad{{i}} class="form-control" type="text">
+                  </div>
+                  <div class="col-sm-3" *ngIf="a.identificador !== null">
+                    <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
+                      Guardar cambios
+                    </button>
+                  </div>
+                  <div class="col-sm-3" *ngIf="a.identificador === null">
+                    <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
+                      Añadir actividad
+                    </button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button (click)="eliminarItem(1, a.identificador, $event.target)" type="button" class="btn btn-outline-danger">
+                      <span class="icon-trash"></span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <button type="button" class="btn btn-outline-success" (click)="crearPlantillaAct()">
+            <span class=""></span>Nueva actividad
+          </button>
+        </div>
+        <!-- ***************** EMPIEZAN CONTRATOS ***************** -->
+        <div id="DivContratos">
+          <h3>CONTRATOS</h3>
+          <div>
+            <div *ngFor="let a of contratos; let i = index">
+              <form (ngSubmit)="crearModificarActConTar(3,a)" #forma="ngForm">
+                <div class="row CuadroContrato">
+                  <div class="col-sm-3">
+                    <label>Nombre del contrato</label>
+                    <input [(ngModel)]="a.nombreContrato" name=Contrato_nombre{{i}} class="form-control" required type="text">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Proveedor</label>
+                    <input [(ngModel)]="a.proveedor" name=Contrato_proveedor{{i}} class="form-control" type="text">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Precio</label>
+                    <input [(ngModel)]="a.precio" name=Contrato_precio{{i}} class="form-control" type="text">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Tiempo</label>
+                    <input [(ngModel)]="a.tiempo" name=Contrato_tiempo{{i}} class="form-control" type="text">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Clase</label>
+                    <input [(ngModel)]="a.clase" name=Contrato_clase{{i}} class="form-control" type="text">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Archivo</label>
+                    <input [(ngModel)]="a.archivo" name=Contrato_archivo{{i}} class="form-control" type="text">
+                  </div>
+                  <div class="col-sm-3" *ngIf="a.identificador !== null">
+                    <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
+                      Guardar cambios
+                    </button>
+                  </div>
+                  <div class="col-sm-3" *ngIf="a.identificador === null">
+                    <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
+                      Añadir contrato
+                    </button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button (click)="eliminarItem(3, a.identificador, $event.target)" type="button" class="btn btn-outline-danger">
+                      <span class="icon-trash"></span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <button type="button" class="btn btn-outline-success" (click)="crearPlantillaCon()">
+            <span class=""></span>Nuevo contrato
+          </button>
+        </div>
+        <!-- ***************** EMPIEZAN TAREAS ***************** -->
+        <div id="DivTareas">
+          <h3>TAREAS</h3>
+          <div>
+            <div *ngFor="let a of tareas; let i = index">
+              <form (ngSubmit)="crearModificarActConTar(2,a)" #forma="ngForm">
+                <div class="row CuadroTarea">
+                  <div class="col-sm-3">
+                    <label>Nombre de la tarea</label>
+                    <input [(ngModel)]="a.nombreTarea" name=Tarea_nombre{{i}} class="form-control" required type="text">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Usuario responsable</label>
+                    <input [(ngModel)]="a.usuario" name=Tarea_usuario{{i}} class="form-control" type="text">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Finalizada</label>
+                    <input [(ngModel)]="a.finalizado" name=Tarea_finalizado{{i}} class="form-control" type="text">
+                  </div>
+                  <div class="col-sm-3" *ngIf="a.identificador !== null">
+                    <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
+                      Guardar cambios
+                    </button>
+                  </div>
+                  <div class="col-sm-3" *ngIf="a.identificador === null">
+                    <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
+                      Añadir tarea
+                    </button>
+                  </div>
+                  <div class="col-sm-3">
+                    <button (click)="eliminarItem(2, a.identificador, $event.target)" type="button" class="btn btn-outline-danger">
+                      <span class="icon-trash"></span>
+                    </button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+          <button type="button" class="btn btn-outline-success" (click)="crearPlantillaTar()">
+            <span class=""></span>Nueva tarea
+          </button>
+        </div>
       </main>
     </div>
 </div>

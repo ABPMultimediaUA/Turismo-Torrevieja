@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http, Headers } from "@angular/http";
 
 @Injectable()
-export class ExpedienteService {
+export class PeticionesCrudService {
 
   //TOKEN
   First_accessToken:string="Bearer ";
@@ -19,40 +19,63 @@ export class ExpedienteService {
   constructor( private http:Http ) { }
 
   //FUNCION QUE CREA LAS URL
-  crearURL (tipo,id){
+  crearURL (tipo,id,id2,pgn){
     let url = "https://gvent.ovh/Prueba2_1/public/";
     switch(tipo) {
       case 0:
-          url += "expediente"
+          //Sin id muestra todos los items
+          //Con id modifica, elimina o devuelve ese item
+          url += "expediente";
           break;
       case 1:
-          url += "actividad"
+          //Sin id muestra todos los items
+          //Con id modifica, elimina o devuelve ese item
+          url += "actividad";
           break;
       case 2:
-          url += "tarea"
+          //Sin id muestra todos los items
+          //Con id modifica, elimina o devuelve ese item
+          url += "tarea";
           break;
       case 3:
-          url += "contrato"
+          //Sin id muestra todos los items
+          //Con id modifica, elimina o devuelve ese item
+          url += "contrato";
           break;
       case 4:
+          //Sin id muestra todos los items
+          //Con id modifica, elimina o devuelve ese item
+          url += "rol";
+          break;
+      case 101:
+          //Todas las actividades de un expediente
           url += `DeExpediente/${id}/actividades`;
           break;
-      case 5:
+      case 102:
+          //Todas las tareas de un expediente
           url += `DeExpediente/${id}/tareas`;
           break;
-      case 6:
+      case 103:
+          //Todas los contratos de un expediente
           url += `DeExpediente/${id}/contratos`;
           break;
+      case 104:
+          //Todos los permisos de un id rol
+          url += `rols/${id}/permisos`;
+      case 105:
+          //Insertar o eliminar a un id rol un permiso id2
+          url += `rol/${id}/permiso/${id2}`;
       default:
           console.log("No se ha especificado correctamente una URL.");
     }
-    if(id>-1 && tipo <4) url+=`/${id}`;
+    if(id>-1 && tipo <101) url+=`/${id}`;
+    if(pgn>-1) url+= `/?page=${pgn}`;
     return url;
   }
 
-  crearItem (tipo,id,_body){
+  crearItem (tipo,_body){
     let promise = new Promise((resolve, reject) => {
-      let url = this.crearURL(tipo,id);
+      let url = this.crearURL(tipo,-1,-1,-1);
       let body = JSON.stringify( _body );
       let headers = this.header;
       this.http.post(url, body, { headers })
@@ -63,9 +86,9 @@ export class ExpedienteService {
     return promise;
   }
 
-  getItem (tipo,id){
+  getItem (tipo,id,id2,pgn){
     let promise = new Promise((resolve, reject) => {
-      let url = this.crearURL(tipo,id);
+      let url = this.crearURL(tipo,id,id2,pgn);
       let headers = this.header;
       this.http.get(url, { headers })
         .toPromise()
@@ -75,9 +98,9 @@ export class ExpedienteService {
     return promise;
   }
 
-  actualizarItem (tipo,id, _body){
+  actualizarItem (tipo,id, _body, id2){
     let promise = new Promise((resolve, reject) => {
-      let url = this.crearURL(tipo,id);
+      let url = this.crearURL(tipo,id,id2,-1);
       let body = JSON.stringify( _body );
       let headers = this.header;
       this.http.put(url, body, { headers })
@@ -88,9 +111,9 @@ export class ExpedienteService {
     return promise;
   }
 
-  eliminarItem (tipo,id){
+  eliminarItem (tipo,id,id2){
     let promise = new Promise((resolve, reject) => {
-      let url = this.crearURL(tipo,id);
+      let url = this.crearURL(tipo,id,id2,-1);
       let headers = this.header;
       this.http.delete(url, { headers })
         .toPromise()

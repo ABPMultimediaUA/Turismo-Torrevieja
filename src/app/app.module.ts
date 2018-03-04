@@ -13,7 +13,7 @@ import { APP_ROUTING } from "./app.routes"
 import { UsuariosService }  from "./services/usuarios.service";
 import { RolesService }  from "./services/roles.service";
 import { CarterasService }  from "./services/carteras.service";
-import { ExpedienteService }  from "./services/expediente.service";
+import { PeticionesCrudService }  from "./services/peticionesCRUD.service";
 // import { AlertComponent } from './_directives/index';
 // import { AuthGuard } from './_guards/index';
 import { AlertService, AuthenticationService, TokenService, DatosUsuarioService, LogueadoService } from './services/index';
@@ -88,7 +88,7 @@ import { ExpedientesComponent } from './components/expedientes/expedientes.compo
     UsuariosService,
     CarterasService,
     RolesService,
-    ExpedienteService,
+    PeticionesCrudService,
     AlertService,
     AuthenticationService,
     TokenService,

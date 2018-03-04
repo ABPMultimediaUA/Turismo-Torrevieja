@@ -5,8 +5,7 @@ import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
 import { ActividadInterface }  from "../../interfaces/actividad.interface";
 import { TareaInterface }  from "../../interfaces/tareas.interface";
 import { ContratoInterface }  from "../../interfaces/contrato.interface";
-import { AlertService, AuthenticationService, ExpedienteService, LogueadoService } from '../../services/index';
-
+import { AlertService, AuthenticationService,PeticionesCrudService,LogueadoService } from '../../services/index';
 @Component({
   selector: 'app-expediente',
   templateUrl: './expediente.component.html',
@@ -48,7 +47,7 @@ export class ExpedienteComponent implements OnInit {
   public tareas:TareaInterface[];
   public contratos:ContratoInterface[];
 
-  constructor(  private _ItemService: ExpedienteService,
+  constructor(  private _ItemService: PeticionesCrudService,
                 private router:Router,
                 private route:ActivatedRoute,//esto es para pasar como parametro
                 public  logueadoService: LogueadoService
@@ -60,7 +59,7 @@ export class ExpedienteComponent implements OnInit {
             this.id = parametros['id'];
 
             //COGEMOS EL EXPEDIENTE
-            this._ItemService.getItem(0,this.id).then(
+            this._ItemService.getItem(0,this.id,-1,-1).then(
               res => {
                 this.expediente = res as ExpedienteInterfaz;
                 console.log(res); //TODO Eliminar
@@ -70,16 +69,15 @@ export class ExpedienteComponent implements OnInit {
             );
 
             //COGEMOS LAS ACTIVIDADES
-            this._ItemService.getItem(4,this.id).then(
+            this._ItemService.getItem(101,this.id,-1,-1).then(
               res => {
                 this.actividades = res as ActividadInterface[];
                 console.log(this.actividades); //TODO Eliminar
-
               }
             );
 
             //COGEMOS LAS TAREAS
-            this._ItemService.getItem(5,this.id).then(
+            this._ItemService.getItem(102,this.id,-1,-1).then(
               res => {
                 this.tareas = res as TareaInterface[];
                 console.log(this.tareas); //TODO Eliminar
@@ -87,7 +85,7 @@ export class ExpedienteComponent implements OnInit {
             );
 
             //COGEMOS LOS CONTRATOS
-            this._ItemService.getItem(6,this.id).then(
+            this._ItemService.getItem(103,this.id,-1,-1).then(
               res => {
                 this.contratos = res as ContratoInterface[];
                 console.log(this.contratos); //TODO Eliminar
@@ -99,66 +97,83 @@ export class ExpedienteComponent implements OnInit {
   ngOnInit() {
   }
 
-  crearPlantillaActividad(){
-    var nuevasActividades = document.getElementById("nuevaActividad");
-    var nuevoDiv = document.createElement('div');
-    nuevoDiv.setAttribute("class","row CuadroActividad");
-    nuevoDiv.innerHTML = '<div class="col-sm-3">'+
-                      '<label>Nombre de la actividad</label>'+
-                      '<input name="" class="form-control" required type="text">'+
-                    '</div>'+
-                    '<div class="col-sm-3">'+
-                      '<label>Fecha inicio</label>'+
-                      '<input name="" class="form-control" required type="text">'+
-                    '</div>'+
-                    '<div class="col-sm-3">'+
-                      '<label>Fecha final</label>'+
-                      '<input name="" class="form-control" required type="text">'+
-                    '</div>'+
-                    '<div class="col-sm-3">'+
-                      '<label>Hora</label>'+
-                      '<input name="" class="form-control" required type="text">'+
-                    '</div>'+
-                    '<div class="col-sm-3">'+
-                      '<label>Espacio</label>'+
-                      '<input name="" class="form-control" required type="text">'+
-                    '</div>'+
-                    '<div class="col-sm-3">'+
-                      '<label>Capacidad</label>'+
-                      '<input name="" class="form-control" required type="text">'+
-                    '</div>'+
-                    '<div class="col-sm-3">'+
-                      '<button (click)="this.eliminarActividad(-1,$event.target)" type="button" class="btn btn-outline-danger">'+
-                        '<span class="icon-trash"></span>'+
-                      '</button>'+
-                    '</div>';
-    nuevasActividades.appendChild(nuevoDiv);
+  //CREAR NUEVAS PLANTILLA
+  crearPlantillaAct(){
+    var a:ActividadInterface;
+    a={
+      capacidad:null,
+      espacio:null,
+      expediente:+this.id,
+      fechaFinal:null,
+      fechaInicio:null,
+      identificador:null,
+      nombreActividad:null,
+      tiempoHora:null,
+    };
+    this.actividades.push(a);
   }
 
-  eliminarActividad(i,event: any){
-    var mensaje = "¿Está seguro de que desea eliminar esta actividad?\n"+
-    "(Hasta que no se guarden los cambios del expediente no se realizará la eliminación.)";
-    if(confirm(mensaje)){
-      var activ = event.parentElement.parentElement.parentElement;
-      activ.parentNode.removeChild(activ);
-      //TODO registrar el cambio
+  crearPlantillaCon(){
+    var c:ContratoInterface;
+    c={
+      archivo:null,
+      clase:null,
+      expediente:+this.id,
+      identificador:null,
+      nombreContrato:null,
+      precio:null,
+      proveedor:null,
+      tiempo:null,
+      usuario:null,
+    };
+    this.contratos.push(c);
+  }
+
+  crearPlantillaTar(){
+    var t:TareaInterface;
+    t={
+      expediente:+this.id,
+      finalizado:null,
+      identificador:null,
+      nombreTarea:null,
+      usuario:null,
+    };
+    this.tareas.push(t);
+  }
+
+  //ELIMINAR ITEMS
+  eliminarItem(a, i, event){
+    console.log(i);
+    var form = event.parentElement.parentElement.parentElement.parentElement;
+    if (i != null){
+      var mensaje = "Va a eliminarse de forma definitiva.\n"+
+                    "¿Continuar?";
+      if(confirm(mensaje)){
+        this._ItemService.eliminarItem(a,i,-1).then(form.parentNode.removeChild(form));
+      }
+    }
+    else{
+      form.parentNode.removeChild(form);
     }
   }
 
-  guardarCambios(){
-    //ACTUALIZAR EXPEDIENTE
-    // this._ItemService.actualizarItem(0,this.id,this.expediente)
-    //   .catch( (err) => { console.log( err.toString() ); })
-    //ELIMINAR ACTIVIDADES
-    //CREAR ACTIVIDADES
-    //MODIFICAR ACTIVIDADES
-    var actFor = document.getElementById("forActividades");
-    var act = actFor.getElementsByClassName("CuadroActividad"));
-    // for(var i=0; i<act.length; i++){
-    //   console.log(act[i]);
-    // }
-    console.log(this);
-
+  //ACTUALIZAR Y GUARDAR NUEVOS ITEMS
+  guardarCambiosExp(){
+    this._ItemService.actualizarItem(0,this.id,this.expediente,-1)
+      .then( res=> {alert("Actualizado correctamente."); })
+      .catch( (err) => { console.log( err.toString() ); })
   }
 
+  crearModificarActConTar(i,a){
+    if(a.identificador != null){
+      this._ItemService.actualizarItem(i,a.identificador,a,-1)
+        .then( res=> {alert("Actualizado correctamente."); })
+        .catch( (err) => { console.log( err.toString() ); })
+    }
+    else{
+      this._ItemService.crearItem(i,a)
+        .then( res=> {alert("Creado correctamente."); })
+        .catch( (err) => { console.log( err.toString() ); })
+    }
+  }
 }

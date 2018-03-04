@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { HttpModule } from '@angular/http';
-import { AlertService, AuthenticationService, ExpedienteService, LogueadoService } from '../../services/index';
+import { AlertService, AuthenticationService, PeticionesCrudService, LogueadoService } from '../../services/index';
 
 @Component({
   selector: 'app-expedientes',
@@ -25,14 +25,14 @@ export class ExpedientesComponent implements OnInit {
   totalPaginas:number;
   currentPage:number = 1;
 
-  constructor(  private _ItemService: ExpedienteService,
+  constructor(  private _ItemService: PeticionesCrudService,
                 private router:Router,
                 private route:ActivatedRoute,//esto es para pasar como parametro
                 public  logueadoService: LogueadoService
               )
   {
     this.logueadoService.comprobarLogueado();
-    this._ItemService.getItem(0,-1).then(
+    this._ItemService.getItem(0,-1,-1,-1).then(
       res => {
         this.item = res as any;
         console.log("MOSTRAMOS EXPEDIENTES");
