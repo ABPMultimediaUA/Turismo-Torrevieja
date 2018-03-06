@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-
+import { ViewChild} from '@angular/core';
+import {MatTableDataSource, MatSort} from '@angular/material';
+import { MatFormFieldModule } from '@angular/material';
+import {MatInputModule} from '@angular/material';
+import { MatIcon } from '@angular/material';
 import {LoginComponent} from '../login/login.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconRegistry, MatIconModule, MatButtonModule } from '@angular/material';
 
+import { Element }  from "../../interfaces/element.interface";
 import { Evento }  from "../../interfaces/evento.interface";
 import {HomeComponent} from "../home/home.component";
 import { Router, ActivatedRoute } from '@angular/router';
@@ -15,11 +22,11 @@ import { HttpModule } from '@angular/http';
 import { AlertService, AuthenticationService, EventosService, LogueadoService } from '../../services/index';
 // import { AlertComponent } from '../../../_directives/index';
 // import { AuthGuard } from '../../../_guards/index';
-
 @Component({
   selector: 'app-eventos',
   templateUrl: './eventos.component.html'
 })
+
 export class EventosComponent implements OnInit {
   eventos:any[] = [];
   resultados:any[] = [];
@@ -50,6 +57,77 @@ export class EventosComponent implements OnInit {
 
 
 
+
+//   ELEMENT_DATA: Element[] = [
+//   {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
+//   {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
+//   {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
+//   {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
+//   {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
+//   {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
+//   {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
+//   {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
+//   {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
+//   {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
+//   {position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na'},
+//   {position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg'},
+//   {position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al'},
+//   {position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si'},
+//   {position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P'},
+//   {position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S'},
+//   {position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl'},
+//   {position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar'},
+//   {position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K'},
+//   {position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca'},
+// ];
+//   displayedColumns = ['position', 'name', 'weight', 'symbol'];
+//   dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+//
+//
+//   @ViewChild(MatSort) sort: MatSort;
+//
+//     /**
+//      * Set the sort after the view init since this component will
+//      * be able to query its view for the initialized sort.
+//      */
+//     ngAfterViewInit() {
+//       this.dataSource.sort = this.sort;
+//     }
+    // eventosString:string = localStorage.getItem("eventos");
+
+    // ELEMENT_DATA: Evento[] = this.eventos;
+    // // ELEMENT_DATA: Evento[] = [
+    // //   {identificador: '1', nombreEvento: 'etdadadda', usuario: '1', fechaCreacion: '2017-11-29 14:19:23', fechaEliminacion: null, fechaActualizacion: '2018-02-21 15:26:37'},
+    // //   {identificador: "2", nombreEvento: "rerum", usuario: "22", fechaCreacion: "2017-11-29 14:19:23", fechaEliminacion: null, fechaActualizacion: "2017-11-29 14:19:23"},
+    // // ];
+    // displayedColumns = ['identificador', 'nombreEvento', 'usuario', 'fechaCreacion','fechaActualizacion'];
+    // dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+    ELEMENT_DATA: Evento[];
+    // ELEMENT_DATA: Evento[] = [
+    //   {identificador: '1', nombreEvento: 'etdadadda', usuario: '1', fechaCreacion: '2017-11-29 14:19:23', fechaEliminacion: null, fechaActualizacion: '2018-02-21 15:26:37'},
+    //   {identificador: "2", nombreEvento: "rerum", usuario: "22", fechaCreacion: "2017-11-29 14:19:23", fechaEliminacion: null, fechaActualizacion: "2017-11-29 14:19:23"},
+    // ];
+    displayedColumns = ['identificador', 'nombreEvento', 'usuario', 'fechaCreacion','fechaActualizacion'];
+    dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+    // applyFilter(filterValue: string) {
+    //   filterValue = filterValue.trim(); // Remove whitespace
+    //   filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    //   this.dataSource.filter = filterValue;
+    // }
+    @ViewChild(MatSort) sort: MatSort;
+
+      /**
+       * Set the sort after the view init since this component will
+       * be able to query its view for the initialized sort.
+       */
+      ngAfterViewInit() {
+          console.log("entra en el sort ese");
+
+        this.dataSource.sort = this.sort;
+        console.log(this.dataSource.sort);
+      }
+
+
   // k:number;
   constructor(private _eventosService:EventosService,
               private router:Router,
@@ -57,7 +135,8 @@ export class EventosComponent implements OnInit {
               public  logueadoService: LogueadoService
             ) {
               this.logueadoService.comprobarLogueado();
-
+                console.log("this.eventos:");
+              console.log(this.eventos);
               console.log("estaLogueado:");
               console.log(this.logueadoService.estaLogueado);
         this._eventosService.getEventos("1")
@@ -69,6 +148,21 @@ export class EventosComponent implements OnInit {
             console.log(this.eventos);
             console.log("eventos[3]:");
             console.log(this.eventos[3]);
+            console.log("this.eventos222:");
+            console.log(this.eventos);
+
+            //
+            // localStorage.setItem("eventos", this.eventos.toString());
+            //
+            // console.log("eventosString=", this.eventosString);
+            this.ELEMENT_DATA = this.eventos;
+            // ELEMENT_DATA: Evento[] = [
+            //   {identificador: '1', nombreEvento: 'etdadadda', usuario: '1', fechaCreacion: '2017-11-29 14:19:23', fechaEliminacion: null, fechaActualizacion: '2018-02-21 15:26:37'},
+            //   {identificador: "2", nombreEvento: "rerum", usuario: "22", fechaCreacion: "2017-11-29 14:19:23", fechaEliminacion: null, fechaActualizacion: "2017-11-29 14:19:23"},
+            // ];
+            this.displayedColumns = ['identificador', 'nombreEvento', 'usuario', 'fechaCreacion','fechaActualizacion'];
+            this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+            this.dataSource.sort = this.sort;
 
             this.ItemsPorPagina = localStorage.getItem("ItemsPorPagina");
             console.log("cojo Items por pagina de localstorage:",this.ItemsPorPagina );
@@ -121,7 +215,13 @@ export class EventosComponent implements OnInit {
             // }
           })
   }
+
   ngOnInit() {
+  }
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
   cambiarNumEventosPorPagina(){
     this.eventosPorPagina=this.eventosPorPagina;
@@ -156,6 +256,7 @@ export class EventosComponent implements OnInit {
 
   }
 
+
   borrarEvento(id:string){
       this._eventosService.borrarEvento(id)
           .subscribe(respuesta=>{
@@ -188,7 +289,7 @@ export class EventosComponent implements OnInit {
   buscarEvento(nombreABuscar:string){
   this.nombreBusqueda= nombreABuscar;
   this.hasBuscado=true;
-  
+
   // var eventos = this.eventos;
   console.log(nombreABuscar);
   this.resultados = this.eventos.filter(evento => evento.nombreEvento.toLowerCase() == this.nombreBusqueda.toLowerCase());
@@ -203,5 +304,6 @@ export class EventosComponent implements OnInit {
 
 
   }
+
 
 }

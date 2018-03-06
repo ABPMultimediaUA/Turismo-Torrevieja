@@ -5,7 +5,13 @@ import { HttpModule } from '@angular/http';
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
-
+import { MatIcon } from '@angular/material';
+import {Component, ViewChild} from '@angular/core';
+import {MatTableDataSource, MatSort, MatSortModule, MatTableModule} from '@angular/material';
+import { MatFormFieldModule } from '@angular/material';
+import { MatIconRegistry, MatIconModule,MatButtonModule } from '@angular/material';
+import {MatInputModule} from '@angular/material';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { APP_ROUTING } from "./app.routes"
 
@@ -93,6 +99,14 @@ import { PerfilComponent } from './components/perfil/perfil.component';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    MatInputModule,
+    MatSortModule,
+    MatTableModule,
+    MatFormFieldModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatIconModule,
+
     APP_ROUTING
   ],
   providers: [
