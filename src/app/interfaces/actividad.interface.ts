@@ -7,5 +7,5 @@ export interface ActividadInterface
   fechaInicio:string;
   identificador:number;
   nombreActividad:string;
-  tiempoHora:number;
+  tiempoHora:any;
 }

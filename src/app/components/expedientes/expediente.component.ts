@@ -37,7 +37,7 @@ export class ExpedienteComponent implements OnInit {
     fechaFin:null,
     fechaInicio:null,
     hora:0,
-    imagen:"",
+    imagen:null,
     nombreExpediente:"",
     portal:"",
     precio:0,
@@ -68,9 +68,6 @@ export class ExpedienteComponent implements OnInit {
             this._ItemService.getItem(0,this.id,-1,-1).then(
               res => {
                 this.expediente = res as ExpedienteInterfaz;
-                console.log(res); //TODO Eliminar
-                //TODO eliminar, esta porque el enlace de imagen guardado no sirve
-                this.expediente.imagen = '';
               }
             );
 
@@ -78,7 +75,6 @@ export class ExpedienteComponent implements OnInit {
             this._ItemService.getItem(101,this.id,-1,-1).then(
               res => {
                 this.actividades = res as ActividadInterface[];
-                console.log(this.actividades); //TODO Eliminar
               }
             );
 
@@ -86,7 +82,6 @@ export class ExpedienteComponent implements OnInit {
             this._ItemService.getItem(102,this.id,-1,-1).then(
               res => {
                 this.tareas = res as TareaInterface[];
-                console.log(this.tareas); //TODO Eliminar
               }
             );
 
@@ -94,7 +89,6 @@ export class ExpedienteComponent implements OnInit {
             this._ItemService.getItem(103,this.id,-1,-1).then(
               res => {
                 this.contratos = res as ContratoInterface[];
-                console.log(this.contratos); //TODO Eliminar
               }
             );
 
@@ -102,7 +96,6 @@ export class ExpedienteComponent implements OnInit {
             this._ItemService.getItem(5,-1,-1,-1).then(
               res => {
                 this.users = res as Usuario[];
-                console.log(this.users); //TODO Eliminar
               }
             );
 
@@ -110,7 +103,6 @@ export class ExpedienteComponent implements OnInit {
             this._ItemService.getItem(6,-1,-1,-1).then(
               res => {
                 this.espacio = res as EspacioInterface[];
-                console.log(this.espacio); //TODO Eliminar
               }
             );
 
@@ -118,7 +110,6 @@ export class ExpedienteComponent implements OnInit {
             this._ItemService.getItem(7,-1,-1,-1).then(
               res => {
                 this.proveedor = res as ProveedorInterface[];
-                console.log(this.proveedor); //TODO Eliminar
               }
             );
       });
@@ -163,7 +154,7 @@ export class ExpedienteComponent implements OnInit {
     var t:TareaInterface;
     t={
       expediente:+this.id,
-      finalizado:null,
+      finalizado:0,
       identificador:null,
       nombreTarea:null,
       usuario:null,
@@ -194,15 +185,25 @@ export class ExpedienteComponent implements OnInit {
       .catch( (err) => { console.log( err.toString() ); })
   }
 
-  crearModificarActConTar(i,a){
+  crearModificarActConTar(i,a,index){
     if(a.identificador != null){
       this._ItemService.actualizarItem(i,a.identificador,a,-1)
-        .then( res=> {alert("Actualizado correctamente."); })
+        .then( res=> { alert("Actualizado correctamente."); })
         .catch( (err) => { console.log( err.toString() ); })
     }
     else{
       this._ItemService.crearItem(i,a)
-        .then( res=> {alert("Creado correctamente."); })
+        .then( res=> {
+          if(i==1){
+            this.actividades[index] = res as ActividadInterface;
+          }
+          else if(i==3){
+            this.contratos[index] = res as ContratoInterface;
+          }
+          else if(i==2){
+            this.tareas[index] = res as TareaInterface;
+          }
+          alert("Creado correctamente."); })
         .catch( (err) => { console.log( err.toString() ); })
     }
   }

@@ -13,7 +13,7 @@ export interface ExpedienteInterfaz
     fechaFin:Date;
     fechaInicio:Date;
     hora:number;
-    imagen:string;
+    imagen:ImageData;
     nombreExpediente:string;
     portal:string;
     precio:number;
