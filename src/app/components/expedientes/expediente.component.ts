@@ -163,18 +163,26 @@ export class ExpedienteComponent implements OnInit {
   }
 
   //ELIMINAR ITEMS
-  eliminarItem(a, i, event){
-    console.log(i);
-    var form = event.parentElement.parentElement.parentElement.parentElement;
+  eliminarItem(a, i, event, index){
+    var div = event.parentElement.parentElement.parentElement.parentElement.parentElement;
     if (i != null){
       var mensaje = "Va a eliminarse de forma definitiva.\n"+
                     "¿Continuar?";
       if(confirm(mensaje)){
-        this._ItemService.eliminarItem(a,i,-1).then(form.parentNode.removeChild(form));
+        this._ItemService.eliminarItem(a,i,-1).then(div.parentNode.removeChild(div));
       }
     }
     else{
-      form.parentNode.removeChild(form);
+      div.parentNode.removeChild(div);
+      if(a==1){
+        this.actividades.splice(index);
+      }
+      else if(a==3){
+        this.contratos.splice(index);
+      }
+      else if(a==2){
+        this.tareas.splice(index);
+      }
     }
   }
 
