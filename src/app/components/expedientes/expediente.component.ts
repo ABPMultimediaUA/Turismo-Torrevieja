@@ -29,20 +29,20 @@ export class ExpedienteComponent implements OnInit {
     aforo:0,
     avance:"",
     cartera:0,
-    cif:"",
+    // cif:"",
     coordinador:"",
     detalle:"",
-    espacio:0,
+    // espacio:0,
     evento:0,
     fechaFin:null,
     fechaInicio:null,
-    hora:0,
+    // hora:0,
     imagen:null,
     nombreExpediente:"",
-    portal:"",
+    // portal:"",
     precio:0,
-    precioEntrada:0.0,
-    separacion:"",
+    // precioEntrada:0.0,
+    // separacion:"",
     titulo:"",
   };
 
@@ -122,14 +122,18 @@ export class ExpedienteComponent implements OnInit {
   crearPlantillaAct(){
     var a:ActividadInterface;
     a={
-      capacidad:null,
+      capacidadMinimo:null,
+      capacidadMaximo:null,
       espacio:null,
       expediente:+this.id,
       fechaFinal:null,
       fechaInicio:null,
       identificador:null,
       nombreActividad:null,
-      tiempoHora:null,
+      HoraInicio:null,
+      HoraFinal:null,
+      detalleEntrada:null,
+      precioEntrada:null,
     };
     this.actividades.push(a);
   }

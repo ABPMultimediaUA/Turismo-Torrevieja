@@ -43,30 +43,27 @@
               <label>Coordinador</label>
               <input [(ngModel)]="expediente.coordinador" name="coordinador" class="form-control" placeholder="Persona responsable" required type="text">
             </div>
-            <div class="col-sm-3">
+            <!-- <div class="col-sm-3">
               <label>Aforo</label>
               <input [(ngModel)]="expediente.aforo" name="aforo" class="form-control" required type="text">
-            </div>
-            <div class="col-sm-3">
+            </div> -->
+            <!-- <div class="col-sm-3">
               <label>Portal</label>
               <input [(ngModel)]="expediente.portal" name="portal" class="form-control" required type="text">
-            </div>
+            </div> -->
             <div class="col-sm-3">
               <label>Precio</label>
               <input [(ngModel)]="expediente.precio" name="precio" class="form-control" required type="text">
             </div>
-            <div class="col-sm-3">
+            <!-- <div class="col-sm-3">
               <label>Precio entrada</label>
               <input [(ngModel)]="expediente.precioEntrada" name="precioEntrada" class="form-control" required type="text">
-            </div>
-            <div class="col-sm-3">
-              <label>Hora</label>
-              <input [(ngModel)]="expediente.hora" name="hora" class="form-control" required type="text">
-            </div>
-            <div class="col-sm-3">
+            </div> -->
+
+            <!-- <div class="col-sm-3">
               <label>Actor</label>
               <input [(ngModel)]="expediente.actor" name="actor" class="form-control" required type="text">
-            </div>
+            </div> -->
             <!-- <div class="col-sm-3">
               <label>Avance</label>
               <input [(ngModel)]="expediente.avance" name="avance" class="form-control" required type="text">
@@ -75,10 +72,10 @@
               <label>CIF</label>
               <input [(ngModel)]="expediente.cif" name="cif" class="form-control" required type="text">
             </div> -->
-            <div class="col-sm-3">
+            <!-- <div class="col-sm-3">
               <label>Separacion</label>
               <input [(ngModel)]="expediente.separacion" name="separacion" class="form-control" required type="text">
-            </div>
+            </div> -->
             <div class="col-sm-3">
               <label>Detalles</label>
               <input [(ngModel)]="expediente.detalle" name="detalle" class="form-control" required type="text">
@@ -115,8 +112,12 @@
                     <input [(ngModel)]="a.fechaFinal" name=Actividad_fechaFinal{{i}} class="form-control" type="date">
                   </div>
                   <div class="col-sm-3">
-                    <label>Hora</label>
-                    <input [(ngModel)]="a.tiempoHora" name=Actividad_tiempoHora{{i}} class="form-control" type="time">
+                    <label>Hora inicio</label>
+                    <input [(ngModel)]="a.HoraInicio" name=Actividad_HoraInicio{{i}} class="form-control" type="time">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Hora final</label>
+                    <input [(ngModel)]="a.HoraFinal" name=Actividad_HoraFinal{{i}} class="form-control" type="time">
                   </div>
                   <div class="col-sm-3">
                     <label>Espacio</label>
@@ -125,8 +126,20 @@
                     </select>
                   </div>
                   <div class="col-sm-3">
-                    <label>Capacidad</label>
-                    <input [(ngModel)]="a.capacidad" name=Actividad_capacidad{{i}} class="form-control" type="text">
+                    <label>Capacidad máxima</label>
+                    <input [(ngModel)]="a.capacidadMinimo" name=Actividad_capacidad_min{{i}} class="form-control" type="text">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Capacidad mínima</label>
+                    <input [(ngModel)]="a.capacidadMaximo" name=Actividad_capacidad_max{{i}} class="form-control" type="text">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Detalle de Entrada</label>
+                    <input [(ngModel)]="a.detalleEntrada" name=Actividad_detalle_entrada{{i}} class="form-control" type="text">
+                  </div>
+                  <div class="col-sm-3">
+                    <label>Precio de Entrada</label>
+                    <input [(ngModel)]="a.precioEntrada" name=Actividad_precio_entrada{{i}} class="form-control" type="text">
                   </div>
                   <div class="col-sm-3" *ngIf="a.identificador !== null">
                     <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">

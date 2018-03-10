@@ -1,7 +1,7 @@
 export interface TareaInterface
 {
   expediente:number;
-  finalizado:number;
+  finalizado:string;
   identificador:number;
   nombreTarea:string;
   usuario:number;
