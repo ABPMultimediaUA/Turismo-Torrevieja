@@ -1,0 +1,60 @@
+<!-- EDITANDO UN  EVENTO -->
+<h1 *ngIf="editando==false;" mat-dialog-title style="text-align:center">Editar evento: {{row.nombreEvento}}</h1>
+<ul *ngIf="editando==false;">
+  <li>
+    <mat-form-field>
+    Nombre: <br><br> <input matInput [(ngModel)]="row.nombreEvento" >
+    </mat-form-field>
+  </li>
+  <li>
+    <mat-form-field>
+      Identificador:  <br><br> <input matInput [(ngModel)]="row.identificador" >
+    </mat-form-field>
+  </li>
+  <li>
+    <mat-form-field>
+      Usuario: <br><br> <input matInput [(ngModel)]="row.usuario" >
+    </mat-form-field>
+  </li>
+</ul>
+   <mat-dialog-actions *ngIf="editando==false;" style="display:block; text-align:center;">
+      <button  mat-raised-button (click)="editarEvento()" color="primary" >Guardar</button>
+      <button  mat-raised-button (click)="cancelar()" color="warn">Cancelar</button>
+  </mat-dialog-actions>
+
+  <h1 *ngIf="editando==true;" mat-dialog-title style="text-align:center">Guardando cambios</h1>
+  <div *ngIf="editando==true;" style="margin-left:150px;">
+      <mat-spinner color="primary"></mat-spinner>
+  </div>
+
+
+<!-- CREANDO UN NUEVO EVENTO -->
+<h1 *ngIf="creando==false;" mat-dialog-title style="text-align:center">Crear evento: </h1>
+<!-- <p *ngIf="editando==false;" style="text-align:center; margin-bottom:0px;">Edita lo que quieras macetoncio</p> -->
+<ul *ngIf="creando==false;">
+  <li>
+    <mat-form-field>
+    Nombre: <br><br> <input matInput [(ngModel)]="row.nombreEvento" >
+    </mat-form-field>
+  </li>
+  <li>
+    <mat-form-field>
+      Identificador:  <br><br> <input matInput [(ngModel)]="row.identificador" >
+    </mat-form-field>
+  </li>
+  <li>
+    <mat-form-field>
+      Usuario: <br><br> <input matInput [(ngModel)]="row.usuario" >
+    </mat-form-field>
+  </li>
+</ul>
+   <mat-dialog-actions *ngIf="creando==false;" style="display:block; text-align:center;">
+      <button  mat-raised-button (click)="crearEvento()" color="primary" >Crear</button>
+      <button  mat-raised-button (click)="cancelar()" color="warn">Cancelar</button>
+  </mat-dialog-actions>
+
+
+  <h1 *ngIf="creando==true;"  mat-dialog-title style="text-align:center">Creando Evento</h1>
+  <div *ngIf="creando==true;" style="margin-left:150px;">
+      <mat-spinner color="primary"></mat-spinner>
+  </div>

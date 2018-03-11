@@ -59,6 +59,7 @@ const app_routes: Routes = [
 
   //rutas eventos
   { path: 'eventos', component: EventosComponent },
+  { path: 'eventos/:id', component: EventosComponent },
   { path: 'nuevo-evento', component: NuevoEventoComponent },
   { path: 'evento/:id', component: EventoComponent },
   //rutas expedientes

@@ -6,13 +6,21 @@ import { HttpModule } from '@angular/http';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { MatIcon } from '@angular/material';
+import { MatPaginatorModule } from '@angular/material';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 import {Component, ViewChild} from '@angular/core';
 import {MatTableDataSource, MatSort, MatSortModule, MatTableModule} from '@angular/material';
 import { MatFormFieldModule } from '@angular/material';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatProgressBarModule,MatProgressSpinnerModule} from '@angular/material';
+import {MatDialogModule} from '@angular/material/dialog';
+import {EliminarDialog} from "./components/eventos/eliminar-dialog.component";
+import {EditarDialog} from "./components/eventos/editar-dialog.component";
+
+
 import { MatIconRegistry, MatIconModule,MatButtonModule } from '@angular/material';
 import {MatInputModule} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import {SelectionModel} from '@angular/cdk/collections';
 import { APP_ROUTING } from "./app.routes"
 
 // servicios
@@ -63,6 +71,10 @@ import { RolComponent } from './components/roles/rol.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 
 @NgModule({
+  entryComponents: [
+    EliminarDialog,
+    EditarDialog
+  ],
   declarations: [
     AppComponent,
     NavbarComponent,
@@ -91,7 +103,9 @@ import { PerfilComponent } from './components/perfil/perfil.component';
     NuevoEventoComponent,
     ExpedientesComponent,
     ExpedienteComponent,
-    NuevoExpedienteComponent
+    NuevoExpedienteComponent,
+    EliminarDialog,
+    EditarDialog
   ],
   imports: [
     HttpClientModule,
@@ -106,6 +120,12 @@ import { PerfilComponent } from './components/perfil/perfil.component';
     BrowserAnimationsModule,
     MatButtonModule,
     MatIconModule,
+    MatPaginatorModule,
+    MatCheckboxModule,
+    MatDialogModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule,
+
 
     APP_ROUTING
   ],
@@ -121,7 +141,8 @@ import { PerfilComponent } from './components/perfil/perfil.component';
     HomeComponent,
     LogueadoService,
     EventosService,
-    ExpedientesService
+    ExpedientesService,
+    EliminarDialog
 
   ],
   bootstrap: [AppComponent]

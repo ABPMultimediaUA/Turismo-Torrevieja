@@ -46,9 +46,7 @@ constructor( private _eventosService: EventosService,
 
 
 
-  guardar()
-
-  {
+  guardar(){
 
           console.log(this.evento);
           console.log("hola");
