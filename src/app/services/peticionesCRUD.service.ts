@@ -83,6 +83,10 @@ export class PeticionesCrudService {
           //Insertar o eliminar a un id rol un permiso id2, utiliza put (actualizar)
           url += `rol/${id}/permiso/${id2}`;
           break;
+      case 201:
+          //Insertar imagen en expediente
+          url += `expediente/${id}/?imagen`;
+          break;
       default:
           console.log("No se ha especificado correctamente una URL.");
     }
@@ -134,6 +138,20 @@ export class PeticionesCrudService {
       let url = this.crearURL(tipo,id,id2,-1);
       let headers = this.header;
       this.http.delete(url, { headers })
+        .toPromise()
+          .then( res => { resolve( res.json().data ); })
+          .catch((err) => { console.log( err.toString() ); })
+    });
+    return promise;
+  }
+
+  subirFile(tipo, id, file: File) {
+    let promise = new Promise((resolve, reject) => {
+      let url = this.crearURL(tipo,id,-1,-1);
+      let headers = this.header;
+      let formData: FormData = new FormData();
+      formData.append('fileKey', file, file.name);
+      this.http.post(url, formData, { headers })
         .toPromise()
           .then( res => { resolve( res.json().data ); })
           .catch((err) => { console.log( err.toString() ); })

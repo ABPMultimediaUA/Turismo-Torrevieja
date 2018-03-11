@@ -18,8 +18,10 @@ export class ExpedienteComponent implements OnInit {
 
   id:string;
   errorActualizarItem = false;
-  errorMensaje:string[]=[];
+  errorMensaje:string[] = [];
   itemActualizado = false;
+  archivoImg:ImageData = null;
+  // archivoImg:File = null;
   // permisosCambiados:string[]=[];
   // auxPermisos:string[]=[];
 
@@ -76,7 +78,6 @@ export class ExpedienteComponent implements OnInit {
             this._ItemService.getItem(102,this.id,-1,-1).then(
               res => {
                 this.tareas = res as TareaInterface[];
-                console.log(res);
               }
             );
 
@@ -190,12 +191,42 @@ export class ExpedienteComponent implements OnInit {
 
   //ACTUALIZAR Y GUARDAR NUEVOS ITEMS
   guardarCambiosExp(){
-    this._ItemService.actualizarItem(0,this.id,this.expediente,-1)
-      .then( res=> {alert("Actualizado correctamente."); })
-      .catch( (err) => { console.log( err.toString() ); })
+    this._ItemService.crearItem(0,this.expediente)
+    .then( res=> {
+      // console.log("ACTUALIZAR IMG");
+      // console.log(this.archivoImg);
+      // if(this.archivoImg != null && this.archivoImg != undefined){
+        // this._ItemService.subirFile(201,this.id,this.archivoImg)
+        //   .then( res=>{ alert("Actualizado correctamente."); })
+        //   .catch( (er) => { alert("Expediente actualizado correctamente, a excepción de la imagen.");
+        //                     console.log( er.toString()) })
+      // }
+      // else{
+         alert("Actualizado correctamente.");
+      // }
+    })
+    .catch( (err) => { alert("Se ha producido un error inesperado.\nNo se ha podido actualizar el expediente.");
+                       console.log( err.toString()) })
+    // this._ItemService.actualizarItem(0,this.id,this.expediente,-1)
+    //   .then( res=> {
+    //     console.log("ACTUALIZAR IMG");
+    //     console.log(this.archivoImg);
+    //     if(this.archivoImg != null && this.archivoImg != undefined){
+    //       // this._ItemService.subirFile(201,this.id,this.archivoImg)
+    //       //   .then( res=>{ alert("Actualizado correctamente."); })
+    //       //   .catch( (er) => { alert("Expediente actualizado correctamente, a excepción de la imagen.");
+    //       //                     console.log( er.toString()) })
+    //     }
+    //     else{
+    //        alert("Actualizado correctamente.");
+    //     }
+    //   })
+    //   .catch( (err) => { alert("Se ha producido un error inesperado.\nNo se ha podido actualizar el expediente.");
+    //                      console.log( err.toString()) })
   }
 
   crearModificarActConTar(i,a,index){
+    console.log(a);
     if(a.identificador != null){
       this._ItemService.actualizarItem(i,a.identificador,a,-1)
         .then( res=> { alert("Actualizado correctamente."); })
@@ -216,5 +247,13 @@ export class ExpedienteComponent implements OnInit {
           alert("Creado correctamente."); })
         .catch( (err) => { console.log( err.toString() ); })
     }
+  }
+
+  cargarImg(files: FileList){
+    // this.archivoImg = files.item(0);
+    console.log(files.item(0));
+    // this.archivoImg = files.item(0);
+    // this.expediente.imagen=this.archivoImg;
+    //   console.log(this.archivoImg);
   }
 }
