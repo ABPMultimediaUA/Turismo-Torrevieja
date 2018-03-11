@@ -99,6 +99,7 @@ export class PeticionesCrudService {
     let promise = new Promise((resolve, reject) => {
       let url = this.crearURL(tipo,-1,-1,-1);
       let body = JSON.stringify( _body );
+      console.log(body);
       let headers = this.header;
       this.http.post(url, body, { headers })
         .toPromise()
@@ -145,13 +146,28 @@ export class PeticionesCrudService {
     return promise;
   }
 
-  subirFile(tipo, id, file: File) {
+  // subirFile(tipo, id, file: File) {
+  //   let promise = new Promise((resolve, reject) => {
+  //     let url = this.crearURL(tipo,id,-1,-1);
+  //     let headers = this.header;
+  //     let formData: FormData = new FormData();
+  //     formData.append('fileKey', file, file.name);
+  //     this.http.post(url, formData, { headers })
+  //       .toPromise()
+  //         .then( res => { resolve( res.json().data ); })
+  //         .catch((err) => { console.log( err.toString() ); })
+  //   });
+  //   return promise;
+  // }
+
+  modificarItemConFile (tipo,_body){
     let promise = new Promise((resolve, reject) => {
-      let url = this.crearURL(tipo,id,-1,-1);
+      let url = this.crearURL(tipo,-1,-1,-1);
+      let body = JSON.stringify( _body );
+      // body = body.replace('}', ',_method="put"}');
+      console.log(body);
       let headers = this.header;
-      let formData: FormData = new FormData();
-      formData.append('fileKey', file, file.name);
-      this.http.post(url, formData, { headers })
+      this.http.post(url, body, { headers })
         .toPromise()
           .then( res => { resolve( res.json().data ); })
           .catch((err) => { console.log( err.toString() ); })

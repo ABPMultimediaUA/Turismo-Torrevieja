@@ -31,19 +31,15 @@
             </div>
             <div class="col-sm-3">
               <label>Fecha inicio</label>
-              <input [(ngModel)]="expediente.fechaInicio" name="fechaInicio" class="form-control" required type="text">
+              <input [(ngModel)]="expediente.fechaInicio" name="fechaInicio" class="form-control" required type="date">
             </div>
             <div class="col-sm-3">
               <label>Fecha fin</label>
-              <input [(ngModel)]="expediente.fechaFin" name="fechaFin" class="form-control" required type="text">
+              <input [(ngModel)]="expediente.fechaFin" name="fechaFin" class="form-control" required type="date">
             </div>
             <div class="col-sm-3">
               <label>Coordinador</label>
               <input [(ngModel)]="expediente.coordinador" name="coordinador" class="form-control" placeholder="Persona responsable" required type="text">
-            </div>
-            <div class="col-sm-3">
-              <label>Precio</label>
-              <input [(ngModel)]="expediente.precio" name="precio" class="form-control" required type="text">
             </div>
             <div class="col-sm-3">
               <label>Detalles</label>
@@ -51,10 +47,11 @@
             </div>
             <div class="col-sm-9">
               <label for="imagenForm">Imagen evento</label>
-              <img src="{{expediente.imagen}}" alt="Imagen del evento" width="200px" id="etiquetaImgExp">
+              <img src="{{expediente.image}}" alt="Imagen del evento" width="200px" id="etiquetaImgExp">
               <input type="file" id="imagenForm" (change)="cargarImg($event.target.files)" accept="image/*">
             </div>
           </div>
+          <input name="_method" type="hidden" value="PUT">
           <div class="form-group">
             <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
               Guardar cambios

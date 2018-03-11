@@ -27,18 +27,14 @@ export class ExpedienteComponent implements OnInit {
 
   public expediente:ExpedienteInterfaz={
     identificador:0,
-    actor:0,
-    aforo:0,
     avance:"",
     cartera:0,
     coordinador:"",
     detalle:"",
-    evento:0,
     fechaFin:null,
     fechaInicio:null,
-    imagen:null,
+    image:null,
     nombreExpediente:"",
-    precio:0,
     titulo:"",
   };
 
@@ -64,6 +60,8 @@ export class ExpedienteComponent implements OnInit {
             this._ItemService.getItem(0,this.id,-1,-1).then(
               res => {
                 this.expediente = res as ExpedienteInterfaz;
+                // this.expediente["_metodo"] = "put";
+                // console.log(this.expediente);
               }
             );
 
@@ -191,7 +189,7 @@ export class ExpedienteComponent implements OnInit {
 
   //ACTUALIZAR Y GUARDAR NUEVOS ITEMS
   guardarCambiosExp(){
-    this._ItemService.crearItem(0,this.expediente)
+    this._ItemService.modificarItemConFile(0,this.expediente)
     .then( res=> {
       // console.log("ACTUALIZAR IMG");
       // console.log(this.archivoImg);
@@ -250,6 +248,14 @@ export class ExpedienteComponent implements OnInit {
   }
 
   cargarImg(files: FileList){
+    var r = new FileReader();
+    r.onload = function(e){
+      // let img = document.getElementById("etiquetaImgExp");
+      // img.setAttribute('src', r.result);
+      // img.setAttribute('alt',files[0].name);
+      // img.setAttribute('sizes', files[0].sizes)
+      // console.log(img);
+    }
     // this.archivoImg = files.item(0);
     console.log(files.item(0));
     // this.archivoImg = files.item(0);
