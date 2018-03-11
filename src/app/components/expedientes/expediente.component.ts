@@ -29,20 +29,14 @@ export class ExpedienteComponent implements OnInit {
     aforo:0,
     avance:"",
     cartera:0,
-    // cif:"",
     coordinador:"",
     detalle:"",
-    // espacio:0,
     evento:0,
     fechaFin:null,
     fechaInicio:null,
-    // hora:0,
     imagen:null,
     nombreExpediente:"",
-    // portal:"",
     precio:0,
-    // precioEntrada:0.0,
-    // separacion:"",
     titulo:"",
   };
 
@@ -82,6 +76,7 @@ export class ExpedienteComponent implements OnInit {
             this._ItemService.getItem(102,this.id,-1,-1).then(
               res => {
                 this.tareas = res as TareaInterface[];
+                console.log(res);
               }
             );
 
@@ -158,7 +153,7 @@ export class ExpedienteComponent implements OnInit {
     var t:TareaInterface;
     t={
       expediente:+this.id,
-      finalizado:0,
+      finalizado:null,
       identificador:null,
       nombreTarea:null,
       usuario:null,
@@ -167,25 +162,28 @@ export class ExpedienteComponent implements OnInit {
   }
 
   //ELIMINAR ITEMS
-  eliminarItem(a, i, event, index){
-    var div = event.parentElement.parentElement.parentElement.parentElement.parentElement;
+  eliminarItem(a, i, index){
+  console.log(index);
     if (i != null){
       var mensaje = "Va a eliminarse de forma definitiva.\n"+
                     "¿Continuar?";
       if(confirm(mensaje)){
-        this._ItemService.eliminarItem(a,i,-1).then(div.parentNode.removeChild(div));
+        this._ItemService.eliminarItem(a,i,-1).then( res=>{
+          if(a==1){ this.actividades.splice(index,1); }
+          else if(a==3){ this.contratos.splice(index,1); }
+          else if(a==2){ this.tareas.splice(index,1); }
+        });
       }
     }
     else{
-      div.parentNode.removeChild(div);
       if(a==1){
-        this.actividades.splice(index);
+        this.actividades.splice(index,1);
       }
       else if(a==3){
-        this.contratos.splice(index);
+        this.contratos.splice(index,1);
       }
       else if(a==2){
-        this.tareas.splice(index);
+        this.tareas.splice(index,1);
       }
     }
   }
