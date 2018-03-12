@@ -160,14 +160,24 @@ export class PeticionesCrudService {
   //   return promise;
   // }
 
-  modificarItemConFile (tipo,_body){
+  modificarItemConFile (tipo, id, _body, file: File){
     let promise = new Promise((resolve, reject) => {
       let url = this.crearURL(tipo,-1,-1,-1);
-      let body = JSON.stringify( _body );
+      let formData: FormData = new FormData();
+      formData.append('cartera_id', _body.cartera);
+      formData.append('nombre', _body.nombreExpediente);
+      formData.append('fecha_inicio', _body.fechaInicio);
+      formData.append('fecha_fin', _body.fechaFin);
+      formData.append('titulo', _body.titulo);
+      formData.append('descripcion', _body.detalle);
+      formData.append('organizador', _body.coordinador);
+      formData.append('progreso', _body.avance);
+      if(file) formData.append('image', file, file.name);
+      // formData.append('_method','put');
+      // let body = JSON.stringify( _body );
       // body = body.replace('}', ',_method="put"}');
-      console.log(body);
       let headers = this.header;
-      this.http.post(url, body, { headers })
+      this.http.put(url, formData, { headers })
         .toPromise()
           .then( res => { resolve( res.json().data ); })
           .catch((err) => { console.log( err.toString() ); })

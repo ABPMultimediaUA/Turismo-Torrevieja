@@ -47,7 +47,7 @@
             </div>
             <div class="col-sm-9">
               <label for="imagenForm">Imagen evento</label>
-              <img src="{{expediente.image}}" alt="Imagen del evento" width="200px" id="etiquetaImgExp">
+              <img src="{{expediente.image}}" alt="Imagen del evento" width="200px" #etiquetaImgExp>
               <input type="file" id="imagenForm" (change)="cargarImg($event.target.files)" accept="image/*">
             </div>
           </div>

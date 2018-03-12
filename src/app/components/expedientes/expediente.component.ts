@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
 import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
@@ -20,8 +20,8 @@ export class ExpedienteComponent implements OnInit {
   errorActualizarItem = false;
   errorMensaje:string[] = [];
   itemActualizado = false;
-  archivoImg:ImageData = null;
-  // archivoImg:File = null;
+  @ViewChild("etiquetaImgExp") etiqueta;
+  archivoImg:File = null;
   // permisosCambiados:string[]=[];
   // auxPermisos:string[]=[];
 
@@ -189,8 +189,9 @@ export class ExpedienteComponent implements OnInit {
 
   //ACTUALIZAR Y GUARDAR NUEVOS ITEMS
   guardarCambiosExp(){
-    this._ItemService.modificarItemConFile(0,this.expediente)
+    this._ItemService.modificarItemConFile(0,this.id,this.expediente,this.archivoImg)
     .then( res=> {
+      console.log(res);
       // console.log("ACTUALIZAR IMG");
       // console.log(this.archivoImg);
       // if(this.archivoImg != null && this.archivoImg != undefined){
@@ -248,18 +249,14 @@ export class ExpedienteComponent implements OnInit {
   }
 
   cargarImg(files: FileList){
+    this.archivoImg = files.item(0);
+    var etiqueta = this.etiqueta;
     var r = new FileReader();
     r.onload = function(e){
-      // let img = document.getElementById("etiquetaImgExp");
-      // img.setAttribute('src', r.result);
-      // img.setAttribute('alt',files[0].name);
-      // img.setAttribute('sizes', files[0].sizes)
-      // console.log(img);
+      let o = etiqueta.nativeElement as HTMLImageElement;
+      o.src = r.result;
+      o.alt = files[0].name;
     }
-    // this.archivoImg = files.item(0);
-    console.log(files.item(0));
-    // this.archivoImg = files.item(0);
-    // this.expediente.imagen=this.archivoImg;
-    //   console.log(this.archivoImg);
+    r.readAsDataURL(files[0]);
   }
 }
