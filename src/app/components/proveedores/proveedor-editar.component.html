@@ -1,5 +1,5 @@
 
-<div class="container-fluid">
+<div class="container-fluid"> // *ngif="editar===true"
   <div class="row ">
       <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
         <h1>Datos del Proveedor: <small>{{proveedor.nombreProveedor}}</small></h1>
@@ -78,7 +78,7 @@
           <div class="form-group">
             <button [disabled]="!forma.valid"
                type="submit" class="btn btn-outline-primary">
-              Guardar cambios
+              Guardar
             </button>
 
           </div>
@@ -88,6 +88,50 @@
 
 
 
+      </main>
+    </div>
+
+</div>
+
+
+
+<div class="container-fluid" > //*ngIf="editar===false"
+  <div class="row ">
+    <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+    <h1>Datos del Proveedor: <small>{{proveedor.nombreProveedor}}</small></h1>
+    <br>
+  <table class="table">
+  <tbody>
+    <tr>
+      <th scope="row">Nombre: </th>
+      <td>{{proveedor.nombreProveedor}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Tipo: </th>
+      <td>{{proveedor.clase}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Correo 1:</th>
+      <td>{{proveedor.correoUno}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Correo 2:</th>
+      <td>{{proveedor.correoDos}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Teléfono 1:</th>
+      <td>{{proveedor.telefonoUno}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Teléfono 2:</th>
+      <td>{{proveedor.telefonoDos}}</td>
+    </tr>
+    <tr>
+      <th scope="row">Teléfono 3:</th>
+      <td>{{proveedor.telefonoTres}}</td>
+    </tr>
+  </tbody>
+</table>
       </main>
     </div>
 

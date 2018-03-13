@@ -51,6 +51,7 @@ export class UsuariosComponent implements OnInit {
             console.log(this.usuarios);
             console.log("usuarios[3]:");
             console.log(this.usuarios[3]);
+            
             this.totalPaginas = Math.ceil(this.usuarios.length/10);
             console.log("this.totalPaginas:");
             console.log(this.totalPaginas);
@@ -96,6 +97,7 @@ export class UsuariosComponent implements OnInit {
             //   console.log( data[key$]);//separo la data
             //   this.heroes.push(data[key$]);
             // }
+
           })
   }
   ngOnInit() {

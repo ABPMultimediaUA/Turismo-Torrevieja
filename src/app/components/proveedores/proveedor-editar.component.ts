@@ -11,6 +11,8 @@ import { AlertService, AuthenticationService, LogueadoService } from '../../serv
 })
 export class ProveedorEditarComponent implements OnInit {
 
+
+  editar:boolean=true;
   public proveedor:Proveedor={
     nombreProveedor:"",
     telefonoUno:"",

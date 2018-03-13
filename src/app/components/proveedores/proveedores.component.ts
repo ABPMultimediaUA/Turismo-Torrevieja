@@ -36,11 +36,8 @@ proveedores:any[] = [];
       this._proveedorService.borrarProveedor(id)
           .subscribe(respuesta=>{
             if(respuesta){
-              console.log("caracola");
               console.log(respuesta);
-              console.log( "borrausuario y ahora va a pedir todos los usuarios de nuevo" );
             this._proveedorService.getProveedores();
-            console.log( "aqui los ha pedido ya todos de nuevo y voy a hacer el router navigate a usuarios" );
             location.reload(true);
             this.router.navigate(['proveedores']);
             // this.refresh();

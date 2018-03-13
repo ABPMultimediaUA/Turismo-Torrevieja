@@ -1,13 +1,6 @@
 <div class="container-fluid">
   <div class="row ">
-
-      <a
-      role="button"
-      [routerLink]="['/nuevo-proveedor']"
-      class="btn" >Nuevo Proveedor</a>
-
-      <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-        <h1>Proveedores</h1>
+        <h1 class="ml-1"> <span class="icon-handshake-o"> </span> Proveedores</h1>
         <div class="table-responsive">
           <table class="table table-striped">
             <thead class="thead-dark">
@@ -15,8 +8,7 @@
                 <th scope="col">ID</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Tipo</th>
-                <th scope="col">Detalles</th>
-                <th scope="col">Modificar</th>
+                <th scope="col">Acceder</th>
                 <th scope="col">Eliminar</th>
               </tr>
             </thead>
@@ -26,14 +18,9 @@
                 <td>{{ i + 1 }}</td>
                 <td>{{ proveedor.nombreProveedor }}</td>
                 <td>{{ proveedor.clase }}</td>
-                <td>
-                  <button  [routerLink]="['/proveedor', proveedor.identificador]"
-                  type="button" class="btn btn-outline-success">
-                    Detalles
-                  </button></td>
                 <td><button  [routerLink]="['/proveedoredit', proveedor.identificador]"
                 type="button" class="btn btn-outline-success">
-                  Modificar
+                  Abrir
                 </button></td>
                 <td><button  (click)="borrarProveedor(proveedor.identificador)"
                 type="button" class="btn btn-outline-danger">
@@ -46,7 +33,7 @@
           </table>
 
           <!-- si no hay usuarios muestra esto -->
-          <div *ngIf="(proveedores).length === 0 && !loading"
+          <div *ngIf="(proveedores).length === 0"
           class="alert alert-info" role="alert">
               <strong>No hay </strong> proveedores
           </div>
@@ -73,7 +60,6 @@
             </li>
           </ul>
         </nav> -->
-      </main>
     </div>
 
 </div>

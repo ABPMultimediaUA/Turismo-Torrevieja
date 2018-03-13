@@ -28,12 +28,7 @@ export class AuthenticationService {
 
                 }
 
-    login(
-
-      model) {
-      //let cuerpo = JSON.stringify( model );
-      //this.http.post(this.loginURL, { email, password }).map(user=>{console.log("loguear correctamente");});
-      //console.log("hola");
+    login(model) {
       console.log("Body "+model);
 
       return this.http.post(this.loginURL, model,
@@ -61,11 +56,8 @@ export class AuthenticationService {
         return user;
     });
     }
-    // comprobarLoguin(){
-    // console.log(localStorage.loggedIn);
-    //   return localStorage.loggedIn;
-    //
-    // }
+
+
     logout() {
         // remove user from local storage to log user out
         this.logueado = false ;

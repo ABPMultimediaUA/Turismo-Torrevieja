@@ -1,0 +1,82 @@
+<br><br>
+<div class="container">
+	<div class="row">
+  		<div class="col-sm-10"><h1>{{nombreUsuario}}</h1></div>
+    	<div class="col-sm-2"><img title="profile image" class="img-circle img-responsive" srcset="../assets/fotoPerfil.jpg" ></div>
+    </div>
+    <div class="row">
+  		<div class="col-sm-4"><!--left col-->
+
+          <ul class="list-group">
+            <li class="list-group-item  d9d9d9 bg-blue">Perfil &nbsp; <i class="fa fa-address-card"></i></li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Desde</strong></span> {{fechaCreacion | date}}</li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Ultima conexión</strong></span> Ayer</li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Apodo</strong></span>{{apodo}}</li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Correo</strong></span>{{correo}}</li>
+
+
+            <!-- roles -->
+            <li *ngIf="rol ==1"class="list-group-item text-right"><span class="pull-left"><strong>Rol</strong></span>Administrador</li>
+            <li *ngIf="rol ==2"class="list-group-item text-right"><span class="pull-left"><strong>Rol</strong></span>Trabajador</li>
+            <li *ngIf="rol !=1"class="list-group-item text-right"><span class="pull-left"><strong>Rol</strong></span>Otro</li>
+
+          </ul>
+
+        <br><br>
+
+
+          <ul class="list-group">
+            <li class="list-group-item d9d9d9 bg-blue">Actividad &nbsp;<i class="fa fa-line-chart"></i></li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Eventos</strong></span> 125</li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Actividades</strong></span> 13</li>
+            <li class="list-group-item text-right"><span class="pull-left"><strong>Social Posts</strong></span> 37</li>
+          </ul>
+
+          <br><br><br>
+
+        </div><!--/col-3-->
+    	<div class="col-sm-8">
+        <h4>Actividad reciente</h4>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <td> Hoy, 1:00 - Creaste el evento taltaltal.</td>
+              </tr>
+              <tr>
+                <td> Hoy, 12:23 - posteaste en facebook la publicacion del evento tal.</td>
+              </tr>
+              <tr>
+                <td> Hoy, 12:20 - Actualizaste la cartera del primer cuatrimeste de 2020.</td>
+              </tr>
+              <tr>
+                <td> Ayer - Añadiste una actividad al evento de las flores.</td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+        <h4>Tareas pendientes</h4>
+        <div class="table-responsive">
+          <table class="table table-hover">
+            <tbody>
+              <tr>
+                <td><i class="pull-right fa fa-edit"></i> Contratar servicio de musica para la actividad taltal.</td>
+              </tr>
+              <tr>
+                <td><i class="pull-right fa fa-edit"></i> Crear publicacion instagram para el evento concierto de shakira.</td>
+              </tr>
+              <tr>
+                <td><i class="pull-right fa fa-edit"></i> Llevar a aprobar la cartera del cuatrimestre 3 de 2019 </td>
+
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+
+
+          </div>
+
+        </div>
+    </div>

@@ -41,6 +41,17 @@ constructor( private _usuariosService: UsuariosService,
           this.route.params.subscribe(parametros=>{
                 console.log(parametros);
                 this.id = parametros['id']
+
+                //
+                // if(this.id == "nuevo"){
+                //   //insertando
+                //   this.TituloNuevo="Nuevo ";
+                //   console.log("nuevo usuario");
+                //
+                //
+                // }else{
+                // actualizando
+
                 this._usuariosService.getUsuario(this.id)
                     .subscribe( usuario => {usuario.data.password="",   this.usuario = usuario.data, console.log(usuario)})
                     console.log("pone password vacio");
@@ -53,7 +64,9 @@ constructor( private _usuariosService: UsuariosService,
 
 
 
-  guardar(){
+  guardar()
+
+  {
         console.log("ewfefe"+this.id);
         if(this.id == "nuevo"){
           console.log("voy a guardar nuevo usuario(abajo):");
@@ -65,6 +78,8 @@ constructor( private _usuariosService: UsuariosService,
                 this.errorUsuario = false;
                 this.rgstrUsuario = true;
             //    this.ngForm.reset();
+
+
 
               },
               error=> {
@@ -84,6 +99,10 @@ constructor( private _usuariosService: UsuariosService,
                             {
                               this.errorMensaje.push("No estás verificado");
                             }
+
+
+
+
 
                 if (typeof(mensaje.error.nombreUsuario) != "undefined")
                 {
@@ -115,6 +134,9 @@ constructor( private _usuariosService: UsuariosService,
                  }
 
                 console.log(this.errorMensaje);
+
+
+
                 /*
                 for(let i=0; i<mensaje.error.length;i++)
                 {
@@ -127,6 +149,14 @@ constructor( private _usuariosService: UsuariosService,
                 this.rgstrUsuario = false;
               },);
 
+
+
+          //insertando
+          // this._usuariosService.nuevoUsuario(this.usuario)
+          //     .subscribe(data=>{
+          //         this.router.navigate(['/usuario',data.name])
+          //     },
+          //     error=>console.error(error));
         }else{
 
         //actualizando
@@ -154,6 +184,11 @@ constructor( private _usuariosService: UsuariosService,
                           {
                             this.errorMensaje.push("No estás verificado");
                           }
+
+
+
+
+
               if (typeof(mensaje.error.nombreUsuario) != "undefined")
               {
                 for(let i=0;i<mensaje.error.nombreUsuario.length;i++)
@@ -189,10 +224,31 @@ constructor( private _usuariosService: UsuariosService,
                    this.errorMensaje.push(mensaje.error.password[i]);
                  }
                }
+
               console.log(this.errorMensaje);
+
+
+
+              /*
+              for(let i=0; i<mensaje.error.length;i++)
+              {
+                console.log("Entrar2");
+                console.log(mensaje.error[i]);
+              }
+              */
+
 
               this.errorUsuarioActualizar =true;
             },);
+
+
+
+        //insertando
+        // this._usuariosService.nuevoUsuario(this.usuario)
+        //     .subscribe(data=>{
+        //         this.router.navigate(['/usuario',data.name])
+        //     },
+        //     error=>console.error(error));
         }
 
     }

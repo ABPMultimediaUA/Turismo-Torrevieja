@@ -1,39 +1,55 @@
 
-/* BOTON */
-button{
-  border-radius: 1px !important;
-  width: 6em !important;
+
+.carteras2{
+  color: rgb(45, 255, 173) !important;
 }
-.btn{
-  border-radius: 1px!important;
-  margin-bottom: 1em;
-  border: none !important;
+.carteras1{
+  color: yellow !important;
 }
 
-.text-home{
-  padding-left: 10em;
-  padding-right: 10em;
-  text-align: justify;
+.eventosycarteras{
+  width: 12.5em !important;
 }
-@media screen and (max-width: 1200px) {
-    .text-home{
-        padding-right: 1em !important;
-        padding-left: 1em !important;
-    }
+.usuarioyrol{
+  width: 11.65em !important;
 }
+.rolypermiso{
+  width: 11.82em !important;
+}
+
+.btn.focus{
+  box-shadow: none !important;
+}
+
+button{
+  box-shadow: 1px !important;
+  border-radius: 1px !important;
+}
+
+.dropdown-toggle:focus{
+  box-shadow: 0px 2px 0px 0px #042649 !important;
+}
+
+
 
 .main-container{
-  margin-top: 4em;
-  margin-bottom: 4em;
+  margin-top: 40px;
+  margin-bottom: 40px;
 }
 .d9d9d9{
   color: #D9D9D9;
 }
+.d9d9d9-imp{
+  color: #D9D9D9!important;
+}
 /* .elemento-navbar{
 color: ;
 } */
+.white{
+
+}
 .nomargin{
-  margin-bottom:  0em !important;
+  margin-bottom:  0rem !important;
 }
 .elemento-navbar:hover {
     background-color: #042649;
@@ -45,12 +61,16 @@ color: ;
 .bg-a8a8a8{
   background-color: #a8a8a8;
 }
+
 .bg-blue{
+  background-color: #05386B !important;
+}
+.bg-blue-no-imp{
   background-color: #05386B;
 }
 .small-margin-laterals{
-  margin-left:0.2em !important;
-  margin-right:0.2em !important;
+  margin-left:2px;
+  margin-right:2px;
 }
 .puntero{
   cursor: pointer;
