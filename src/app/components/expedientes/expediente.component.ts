@@ -61,7 +61,7 @@ export class ExpedienteComponent implements OnInit {
               res => {
                 this.expediente = res as ExpedienteInterfaz;
                 // this.expediente["_metodo"] = "put";
-                // console.log(this.expediente);
+                console.log(this.expediente);
               }
             );
 
@@ -189,20 +189,20 @@ export class ExpedienteComponent implements OnInit {
 
   //ACTUALIZAR Y GUARDAR NUEVOS ITEMS
   guardarCambiosExp(){
-    this._ItemService.modificarItemConFile(0,this.id,this.expediente,this.archivoImg)
+    this._ItemService.actualizarItem(0,this.id,this.expediente,-1)
     .then( res=> {
       console.log(res);
-      // console.log("ACTUALIZAR IMG");
-      // console.log(this.archivoImg);
-      // if(this.archivoImg != null && this.archivoImg != undefined){
-        // this._ItemService.subirFile(201,this.id,this.archivoImg)
-        //   .then( res=>{ alert("Actualizado correctamente."); })
-        //   .catch( (er) => { alert("Expediente actualizado correctamente, a excepción de la imagen.");
-        //                     console.log( er.toString()) })
-      // }
-      // else{
+      console.log("ACTUALIZAR IMG");
+      console.log(this.archivoImg);
+      if(this.archivoImg){
+        this._ItemService.subirFile(0,this.id,this.archivoImg)
+          .then( res=>{ alert("Actualizado correctamente."); })
+          .catch( (er) => { alert("Expediente actualizado correctamente, a excepción de la imagen.");
+                            console.log( er.toString()) })
+      }
+      else{
          alert("Actualizado correctamente.");
-      // }
+      }
     })
     .catch( (err) => { alert("Se ha producido un error inesperado.\nNo se ha podido actualizar el expediente.");
                        console.log( err.toString()) })
