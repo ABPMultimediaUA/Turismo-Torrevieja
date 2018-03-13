@@ -31,7 +31,7 @@ import { CarterasService }  from "./services/carteras.service";
 // import { AuthGuard } from './_guards/index';
 import { AlertService, AuthenticationService,
  TokenService, DatosUsuarioService,
-EventosService,  LogueadoService, ExpedientesService } from './services/index';
+EventosService,  LogueadoService, ExpedientesService  } from './services/index';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -69,6 +69,8 @@ import { RolesComponent } from './components/roles/roles.component';
 import { NuevoRolComponent } from './components/roles/nuevo-rol.component';
 import { RolComponent } from './components/roles/rol.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
+
+
 
 @NgModule({
   entryComponents: [
@@ -125,7 +127,8 @@ import { PerfilComponent } from './components/perfil/perfil.component';
     MatDialogModule,
     MatProgressBarModule,
     MatProgressSpinnerModule,
-
+    // FacebookModule.forRoot(),
+    // FacebookModule,
 
     APP_ROUTING
   ],
@@ -143,7 +146,6 @@ import { PerfilComponent } from './components/perfil/perfil.component';
     EventosService,
     ExpedientesService,
     EliminarDialog
-
   ],
   bootstrap: [AppComponent]
 })

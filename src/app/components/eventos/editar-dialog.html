@@ -30,30 +30,28 @@
 
 <!-- CREANDO UN NUEVO EVENTO -->
 <h1 *ngIf="creando==false;" mat-dialog-title style="text-align:center">Crear evento: </h1>
-<!-- <p *ngIf="editando==false;" style="text-align:center; margin-bottom:0px;">Edita lo que quieras macetoncio</p> -->
-<ul *ngIf="creando==false;">
-  <li>
-    <mat-form-field>
-    Nombre: <br><br> <input matInput [(ngModel)]="row.nombreEvento" >
-    </mat-form-field>
-  </li>
-  <li>
-    <mat-form-field>
-      Identificador:  <br><br> <input matInput [(ngModel)]="row.identificador" >
-    </mat-form-field>
-  </li>
-  <li>
-    <mat-form-field>
-      Usuario: <br><br> <input matInput [(ngModel)]="row.usuario" >
-    </mat-form-field>
-  </li>
-</ul>
-   <mat-dialog-actions *ngIf="creando==false;" style="display:block; text-align:center;">
-      <button  mat-raised-button (click)="crearEvento()" color="primary" >Crear</button>
-      <button  mat-raised-button (click)="cancelar()" color="warn">Cancelar</button>
-  </mat-dialog-actions>
 
 
+
+  <form *ngIf="creando==false;" style="margin-left:60px" (ngSubmit)="crearEvento()">
+    <mat-form-field  hintLabel="Max 20 caracteres">
+    <input  matInput   name="nombreEvento"  [(ngModel)]="evento.nombreEvento" placeholder="Nombre">
+    </mat-form-field>
+    <th><br>
+    <mat-form-field  hintLabel="Solo numeros">
+    <input  matInput   name="identificador"  [(ngModel)]="evento.identificador" placeholder="Identificador">
+    </mat-form-field>
+    <tr><br>
+    <mat-form-field   hintLabel="Max 10 caracteres">
+    <input  matInput   name="usuario"  [(ngModel)]="evento.usuario" placeholder="Usuario">
+    </mat-form-field>
+    <br><br><br><br>
+    <mat-dialog-actions *ngIf="creando==false;" style="display:block; text-align:center;">
+      <button type="submit" color="primary" mat-raised-button>Submit</button>
+    <button  mat-raised-button (click)="cancelar()" color="warn">Cancelar</button>
+   </mat-dialog-actions>
+
+  </form>
   <h1 *ngIf="creando==true;"  mat-dialog-title style="text-align:center">Creando Evento</h1>
   <div *ngIf="creando==true;" style="margin-left:150px;">
       <mat-spinner color="primary"></mat-spinner>

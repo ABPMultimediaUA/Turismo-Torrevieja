@@ -35,7 +35,7 @@ constructor( private _eventosService: EventosService,
               ) {
                 this.logueadoService.comprobarLogueado();
                 this.evento.usuario= localStorage.identificador;
-          this.route.params.subscribe(parametros=>{
+                this.route.params.subscribe(parametros=>{
                 console.log(parametros);
 
           });
