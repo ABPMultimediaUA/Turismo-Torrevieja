@@ -161,20 +161,62 @@ export class PeticionesCrudService {
   // }
 
   subirFile (tipo, id, file: File){
-    let promise = new Promise((resolve, reject) => {
+    let promise = new Promise((resolve, reject)=>{
       let url = this.crearURL(tipo,id,-1,-1);
-      let formData: FormData = new FormData();
-      formData.append('image', file, file.name);
-      // formData.append('_method','put');
-      // console.log("cartera", formData.get('cartera_id'),url);
+      let body: FormData = new FormData();
+          body.append('image',file,file.name);
 
-      let headers = this.header;
-      this.http.put(url, formData, { headers })
-        .toPromise()
-          .then( res => { resolve( res.json().data ); })
-          .catch((err) => { console.log( err.toString() ); })
-    });
-    return promise;
+      var headers = new Headers();
+          headers.append('Content-Type', 'application/x-www-form-urlencoded; charset=utf-8');
+          headers.append('Access-Control-Allow-Credentials', "true");
+          // headers.append('Access-Control-Allow-Headers','')
+
+      let options = {headers: headers, withCredentials: true};
+
+      this.http.put(url, body, options)
+          .toPromise()
+            .then( res => { resolve( res.json().data ); })
+            .catch((err) => { console.log( err.toString() ); })
+      });
+      return promise;
+
+
+
+    // let promise = new Promise((resolve, reject) => {
+    //
+    //   let url = this.crearURL(tipo,id,-1,-1);
+    //   let formData: FormData = new FormData();
+    //   formData.append('image', file, file.name);
+    //   formData.append('_method','put');
+    //   // console.log("cartera", formData.get('cartera_id'),url);
+    //
+    //   let headers = new Headers ({
+    //     'Content-Type':'application/form-data',
+    //     'Access-Control-Allow-Origin':'https://gvent.ovh/Prueba2_1/public',
+    //     'Authorization': this.First_accessToken+this.Secound_accessToken,
+    //   });
+    //   this.http.post(url, formData, { headers })
+    //     .toPromise()
+    //       .then( res => { resolve( res.json().data ); })
+    //       .catch((err) => { console.log( err.toString() ); })
+    // });
+    // return promise;
+
+
+    // let promise = new Promise((resolve, reject) => {
+    //   let url = this.crearURL(tipo,id,-1,-1);
+    //   let formData: FormData = new FormData();
+    //   formData.append('image', file, file.name);
+    //   // formData.append('_method','put');
+    //   // console.log("cartera", formData.get('cartera_id'),url);
+    //
+    //   let headers = this.header;
+    //   this.http.put(url, formData, { headers })
+    //     .toPromise()
+    //       .then( res => { resolve( res.json().data ); })
+    //       .catch((err) => { console.log( err.toString() ); })
+    // });
+    // return promise;
   }
 
 }

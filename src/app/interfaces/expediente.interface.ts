@@ -7,7 +7,7 @@ export interface ExpedienteInterfaz
     detalle:string;
     fechaFin:Date;
     fechaInicio:Date;
-    image:ImageData;
+    image:string;
     nombreExpediente:string;
     titulo:string;
 }

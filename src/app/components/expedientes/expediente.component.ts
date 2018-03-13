@@ -33,7 +33,7 @@ export class ExpedienteComponent implements OnInit {
     detalle:"",
     fechaFin:null,
     fechaInicio:null,
-    image:null,
+    image:"",
     nombreExpediente:"",
     titulo:"",
   };
@@ -191,17 +191,15 @@ export class ExpedienteComponent implements OnInit {
   guardarCambiosExp(){
     this._ItemService.actualizarItem(0,this.id,this.expediente,-1)
     .then( res=> {
-      console.log(res);
-      console.log("ACTUALIZAR IMG");
-      console.log(this.archivoImg);
       if(this.archivoImg){
         this._ItemService.subirFile(0,this.id,this.archivoImg)
-          .then( res=>{ alert("Actualizado correctamente."); })
+          .then( res=>{ alert("Actualizado correctamente."); console.log(res);})
           .catch( (er) => { alert("Expediente actualizado correctamente, a excepción de la imagen.");
                             console.log( er.toString()) })
       }
       else{
-         alert("Actualizado correctamente.");
+         alert("Actualizado correctamente." + "SIN IMAGEN");
+         //TODO eliminar imagen desde laravel
       }
     })
     .catch( (err) => { alert("Se ha producido un error inesperado.\nNo se ha podido actualizar el expediente.");
