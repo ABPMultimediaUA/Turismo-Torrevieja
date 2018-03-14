@@ -33,7 +33,7 @@ import { AlertService, AuthenticationService, EventosService, LogueadoService } 
   templateUrl: 'editar-dialog.html',
 })
 export class EditarDialog {
-  row:any[];
+  row:Evento;
   id:string;
   // evento:Evento[];
   editando:boolean;
@@ -57,7 +57,7 @@ export class EditarDialog {
               if(data.row!=null){
                 this.row=data.row;
 
-                console.log(this.row.identificador);
+                // console.log(this.row.identificador);
                  this.id=this.row.identificador;
                  this.evento=this.row;
                  console.log(this.evento);
@@ -247,7 +247,7 @@ export class EditarDialog {
 
 
 
-               },
+               }
                // error=> {
                //   //this.router.navigate(['/heroe',data.name])
                //   //console.log(error);
@@ -334,10 +334,9 @@ export class EditarDialog {
          this._eventosService.actualizarEvento(this.evento, this.id)
              .subscribe(data=>{
                console.log("data que queremos actualizar"+data);
-               this.errorEventoActualizar = false;
+               // this.errorEventoActualizar = false;
                  this.router.navigate(['eventos']);
-             }
-             ,
+             } ,
              // error=> {
              //   //this.router.navigate(['/heroe',data.name])
              //   //console.log(error);
@@ -400,7 +399,7 @@ export class EditarDialog {
              //
              //   this.errorEventoActualizar =true;
              // }
-             ,);
+             );
 
          // setTimeout(()=>{
          //

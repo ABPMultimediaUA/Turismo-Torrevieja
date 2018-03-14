@@ -1,10 +1,5 @@
 <div class="container-fluid">
   <div class="row ">
-
-
-
-
-
       <div *ngIf="hasBuscado==false" class="table-responsive">
         <div class="example-container mat-elevation-z8">
           <div class="example-header">
@@ -53,18 +48,12 @@
                                  <button (click)="openDialogEliminar(row)"  class="botonMat" mat-icon-button color="warn">
                                      <mat-icon style="color:#dc3545" >delete</mat-icon>
                                 </button>
-<!-- (click)="borrarEvento(row.identificador)"  -->
+
                    </mat-checkbox>
 
                  </mat-cell>
                </ng-container>
-               <!-- <mat-checkbox [(ngModel)]="selection.hasValue() && isAllSelected()"
-                                 [(indeterminate)]="selection.hasValue() && !isAllSelected()">
-                   </mat-checkbox> -->
 
-
-
-            <!-- Position Column -->
             <ng-container matColumnDef="identificador">
               <mat-header-cell *matHeaderCellDef mat-sort-header>Id </mat-header-cell>
 
@@ -96,11 +85,6 @@
               <mat-header-cell *matHeaderCellDef mat-sort-header> fechaActualizacion </mat-header-cell>
               <mat-cell  *matCellDef="let evento"> {{evento.fechaActualizacion}} </mat-cell>
             </ng-container>
-
-
-            <!-- <mat-header-row  *matHeaderRowDef="displayedColumns"></mat-header-row>
-
-            <mat-row   *matRowDef="let row; columns: displayedColumns; "></mat-row> -->
 
             <mat-header-row *matHeaderRowDef="['select','identificador', 'nombreEvento', 'usuario','fechaCreacion','fechaActualizacion']"></mat-header-row>
             <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','identificador', 'nombreEvento', 'usuario','fechaCreacion','fechaActualizacion']" (click)="openDialogEditar(row)"></mat-row>

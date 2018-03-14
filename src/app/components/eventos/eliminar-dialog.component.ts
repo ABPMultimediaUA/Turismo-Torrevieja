@@ -32,7 +32,7 @@ import { AlertService, AuthenticationService, EventosService, LogueadoService } 
   templateUrl: 'eliminar-dialog.html',
 })
 export class EliminarDialog {
-  row:any[];
+  row:Evento;
   id:string;
   eliminando:boolean =false;
   constructor(private _eventosService:EventosService,
@@ -44,7 +44,13 @@ export class EliminarDialog {
               @Inject(MAT_DIALOG_DATA) public data: any
             ) {
               this.row=data.row;
+              console.log(this.row);
+
+              
                this.id=this.row.identificador;
+
+               console.log(this.row.identificador);
+
 
                   this.eliminando=false;
  }
