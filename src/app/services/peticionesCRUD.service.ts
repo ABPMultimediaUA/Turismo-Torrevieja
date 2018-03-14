@@ -164,11 +164,14 @@ export class PeticionesCrudService {
     let promise = new Promise((resolve, reject) => {
       let url = this.crearURL(tipo,id,-1,-1);
       let formData: FormData = new FormData();
-      formData.append('image', file, file.name);
+      formData.append('image', file);
       // formData.append('_method','put');
       // console.log("cartera", formData.get('cartera_id'),url);
 
-      let headers = this.header;
+      let headers = new Headers ({
+        'Access-Control-Allow-Origin':'https://gvent.ovh/Prueba2_1/public',
+        'Authorization': this.First_accessToken+this.Secound_accessToken,
+      });
       this.http.put(url, formData, { headers })
         .toPromise()
           .then( res => { resolve( res.json().data ); })
