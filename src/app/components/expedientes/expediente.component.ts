@@ -61,6 +61,7 @@ export class ExpedienteComponent implements OnInit {
               res => {
                 this.expediente = res as ExpedienteInterfaz;
                 // this.expediente["_metodo"] = "put";
+                // this.expediente.image=null;
                 console.log(this.expediente);
               }
             );
@@ -204,22 +205,6 @@ export class ExpedienteComponent implements OnInit {
     })
     .catch( (err) => { alert("Se ha producido un error inesperado.\nNo se ha podido actualizar el expediente.");
                        console.log( err.toString()) })
-    // this._ItemService.actualizarItem(0,this.id,this.expediente,-1)
-    //   .then( res=> {
-    //     console.log("ACTUALIZAR IMG");
-    //     console.log(this.archivoImg);
-    //     if(this.archivoImg != null && this.archivoImg != undefined){
-    //       // this._ItemService.subirFile(201,this.id,this.archivoImg)
-    //       //   .then( res=>{ alert("Actualizado correctamente."); })
-    //       //   .catch( (er) => { alert("Expediente actualizado correctamente, a excepción de la imagen.");
-    //       //                     console.log( er.toString()) })
-    //     }
-    //     else{
-    //        alert("Actualizado correctamente.");
-    //     }
-    //   })
-    //   .catch( (err) => { alert("Se ha producido un error inesperado.\nNo se ha podido actualizar el expediente.");
-    //                      console.log( err.toString()) })
   }
 
   crearModificarActConTar(i,a,index){
