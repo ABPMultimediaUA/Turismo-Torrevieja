@@ -53,7 +53,7 @@
         <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          <span class="icon-user-outline"></span> Usuarios y Roles
         </button>
-        <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
+        <div class="bg-blue dropdown-menu usuarioyrol" aria-labelledby="dropdownMenuButton">
           <a
           role="button"
           [routerLink]="['/usuarios']"
@@ -95,26 +95,38 @@
 
       <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
         <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-         <span class="icon-folder"></span> Carteras
+         <span class="icon-folder"></span> Eventos y Carteras
         </button>
-        <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
-          <a
-          role="button"
+
+        <div class="bg-blue dropdown-menu eventosycarteras " aria-labelledby="dropdownMenuButton">
+          <a role="button"
           [routerLink]="['/carteras']"
           class="nav-link elemento-navbar d9d9d9" >
-          <span class="icon-archive-1"></span> Listado</a>
-          <a
-          role="button"
-          [routerLink]="['/nueva-cartera']"
-          class="nav-link elemento-navbar d9d9d9 " >
-          <span class="icon-folder-add"></span> Nueva Cartera</a>
+            <span class="icon-archive-1"></span> Gestión  Carteras</a>
+          <hr>
+
+          <a *ngFor="let carteranav2 of  carterasnav2  ; let i2 = index2" role="button"
+          [routerLink]="['/cartera', carteranav2.identificador]"
+          class="nav-link elemento-navbar d9d9d9 carteras1" >
+          <span class="icon-archive-1" > {{carteranav2.nombreCartera}}</span> </a>
+          <hr>
+
+          <a *ngFor="let carteranav of  carterasnav  ; let i = index" role="button"
+          [routerLink]="['/cartera', carteranav.identificador]"
+          class="nav-link elemento-navbar d9d9d9 carteras2" >
+          <span class="icon-archive-1" > {{carteranav.nombreCartera}}</span> </a>
+
+
+
+
         </div>
       </div>
+
       <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
         <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          <span class="icon-star"></span> Roles y Permisos
         </button>
-        <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
+        <div class="bg-blue dropdown-menu rolypermiso" aria-labelledby="dropdownMenuButton">
           <a
           role="button"
           [routerLink]="['/roles']"
@@ -165,22 +177,15 @@
         <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
           <a
           role="button"
-          [routerLink]="['/espacios']"
+          [routerLink]="['/proveedores']"
           class="nav-link elemento-navbar d9d9d9" >
           <span class="icon-handshake-o"></span> Listado</a>
           <a style="width:180px"
           role="button"
-          [routerLink]="['/nuevo-espacio']"
+          [routerLink]="['/nuevo-proveedor']"
           class="nav-link elemento-navbar d9d9d9 " >
           <span class="icon-plus-circled"></span> Nuevo Proveedor</a>
         </div>
-      </div>
-      <div  *ngIf="logueadoService.estaLogueado" class="dropdown ">
-        <a
-        role="button"
-        [routerLink]="['/expedientes']"
-        class="nav-link elemento-navbar d9d9d9 " >
-        <span class="icon-comment"></span> Expedientes</a>
       </div>
     </ul>
     <div  *ngIf="logueadoService.estaLogueado" class="dropdown ">
@@ -224,21 +229,15 @@
       </div>
     </div>
 
-
 &nbsp;
 
-
-
     <button
-
       *ngIf="!logueadoService.estaLogueado"
       class="btn btn-primary my-2 my-sm-0 small-margin-laterals"
         type="submit"
-
         [routerLink]="['login']"><span class="icon-login"></span> Iniciar sesión</button>
 
     <button
-
         *ngIf="logueadoService.estaLogueado"
         (click)="logout()"
         class="btn btn-danger my-2 my-sm-0 small-margin-laterals"

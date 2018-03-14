@@ -15,13 +15,13 @@ errorCarteraActualizar = false;
 //TituloNuevo = "";
 errorMensaje:string[]=[];
 public cartera:Cartera={
-  identificador:"",
   nombreCartera:"string",
   year:0,
   trimestre:0,
   fechaCreacion:"",
   fechaActualizacion:"",
-  fechaEliminacion:""
+  fechaEliminacion:"",
+  estado:0,
 };
 
 nuevo:boolean = false;

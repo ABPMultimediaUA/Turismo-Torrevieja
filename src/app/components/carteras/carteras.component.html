@@ -1,13 +1,15 @@
 <div class="container-fluid">
-  <div class="row ">
+  <div class="">
+    <div class="row">
+
+
         <h1>&nbsp;<span class="icon-archive-1"></span> Carteras&nbsp;&nbsp;&nbsp;&nbsp;</h1>
-
-        <button
-          class="btn btn-secondary  d9d9d9 my-2 my-sm-2 small-margin-laterals"
-          type="submit"
-          [routerLink]="['/nueva-cartera']"><span class="icon-folder-add"></span> Nueva Cartera&nbsp;</button>&nbsp;
-
-<br><br>
+        <form class="form-inline">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
+        </form>
+      </div>
+      <br><hr>
       <form class="form-inline" (ngSubmit)="cambiarNumCarterasPorPagina()" #forma="ngForm">
         <div class="form-group">&nbsp;
           <label>Cantidad por página: &nbsp;</label>
@@ -40,10 +42,11 @@
         </div>
       </form>&nbsp;
       <br><hr>
-      <form class="form-inline">
-        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Buscar</button>
-      </form>
+      <button
+        class="btn btn-secondary  d9d9d9 my-2 my-sm-2 small-margin-laterals"
+        type="submit"
+        [routerLink]="['/nueva-cartera']"><span class="icon-folder-add"></span> Nueva Cartera&nbsp;</button>&nbsp;
+
       <br><br>
 
 
@@ -52,7 +55,6 @@
             <thead class="thead-dark">
               <tr>
                 <th scope="col">#</th>
-                <th scope="col">Id</th>
                 <th scope="col">Nombre</th>
                 <th scope="col">Año</th>
                 <th scope="col">Trimestre</th>
@@ -65,7 +67,6 @@
                <!-- el pipe keys es para pasar un objeto a un array -->
               <tr *ngFor="let cartera of  carterasActuales  ; let i = index">
                 <td>{{ i + 1 }}</td>
-                <td>{{ cartera.identificador }}</td>
                 <td>{{ cartera.nombreCartera }}</td>
                 <td>{{ cartera.year }}</td>
                 <td>{{ cartera.trimestre }}</td>

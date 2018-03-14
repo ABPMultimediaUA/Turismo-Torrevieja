@@ -12,6 +12,31 @@ export class CarterasService {
   Secound_accessToken:string=localStorage.accesToken;
   constructor( private http:Http ) { }
 
+
+
+  getCarterasNav(tipo:string){
+    let headers = new Headers ({
+
+      'Content-Type':'application/json',
+      'Access-Control-Allow-Origin':'https://gvent.ovh/Prueba2_1/public',
+      'Authorization': this.First_accessToken+this.Secound_accessToken,
+    });
+
+    let url = `${this.carteraURL}`;
+    console.log(url);
+console.log(tipo+'TIPOO');
+
+
+
+     console.log(this.http.get("https://gvent.ovh/Prueba2_1/public/estado/"+tipo+"/carteras", { headers })
+       .subscribe( res=>res.json()) );
+
+    console.log("HEMOS ENTRADO AL GET CARTERAS NAV")
+
+    return this.http.get("https://gvent.ovh/Prueba2_1/public/estado/"+tipo+"/carteras", { headers })
+      .map( res=>res.json());
+  }
+
   nuevaCartera( cartera:Cartera )
   {
 
@@ -77,26 +102,6 @@ export class CarterasService {
     return this.http.get(url, { headers })
       .map( res=>res.json());
   }
-  // getUsuariosantiguo
-  // getUsuarios(pagina:string){
-  //   let headers = new Headers ({
-  //
-  //     'Content-Type':'application/json',
-  //     'Access-Control-Allow-Origin':'https://gvent.ovh/Prueba2_1/public',
-  //     'Authorization': this.First_accessToken+this.Secound_accessToken,
-  //
-  //     //'X-XSRF-TOKEN':this.First_accessToken+this.Secound_accessToken
-  //   });
-  //   console.log("pagina que paso a getusuarios:");
-  //   console.log(pagina);
-  //   let url = `${this.usuarioURL}/?page=${pagina}`;
-  //   console.log("url a la que pido:");
-  //   console.log(url);
-  //   console.log(this.http.get("https://gvent.ovh/Prueba2_1/public/user?page=3", { headers })
-  //     .subscribe( res=>res.json()) );
-  //   return this.http.get("https://gvent.ovh/Prueba2_1/public/user?page=3", { headers })
-  //     .map( res=>res.json()); //aqui llamo a esa url y transformo el json
-  // }
 
 
   getCarteras(pagina:string){
@@ -120,11 +125,16 @@ export class CarterasService {
     let url = `${this.carteraURL}/?page=${pagina}`;
     console.log("url a la que pido:");
     console.log(url);
+    console.log("11111111111111111111111111111111");
     console.log(this.http.get("https://gvent.ovh/Prueba2_1/public/cartera?page=3", { headers })
       .subscribe( res=>res.json()) );
+    console.log("AAAAAAAAAAAAAAAAAAAAAAAAA");
     return this.http.get("https://gvent.ovh/Prueba2_1/public/cartera?page=3", { headers })
       .map( res=>res.json()); //aqui llamo a esa url y transformo el json
   }
+
+
+
 
 // "https://gvent.ovh/Prueba2_1/public/user?page=2"
 

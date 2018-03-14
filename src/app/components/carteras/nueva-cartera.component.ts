@@ -21,7 +21,6 @@ public usuario:Usuario={
   password:"",
   password_confirmation:"",
   esVerificado:0,
-  //key$?:string; identificador es la key
   rol:0
 };
 

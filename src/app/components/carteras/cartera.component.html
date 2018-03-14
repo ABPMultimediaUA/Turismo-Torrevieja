@@ -1,5 +1,6 @@
 
 <div class="container-fluid">
+
       <div style="width:100%">
         <h1 style="margin:auto;"><span class="icon-folder-open"></span> Cartera
           <small>{{cartera.nombreCartera}}</small>
@@ -8,6 +9,7 @@
             <span class="icon-pencil"></span>Editar
           </button>
         </h1>
+
       </div>
         <!-- mensajes -->
         <div class="container" *ngIf="errorCartera === true">
@@ -30,6 +32,7 @@
                 </p>
             </div>
         </div>
+
         <div class="container" *ngIf="rgstrCartera === true">
             <div class="jumbotron">
                 <div class="text-center"><i class="fa fa-5x fa-smile-o" style="color:#28a745;"></i></div>
@@ -38,7 +41,12 @@
 
             </div>
         </div>
+        <!-- fin mensajes -->
+
         <form (ngSubmit)="guardar()" #forma="ngForm">
+          <div class="row">
+
+
         <!-- *ngIf="!permisoEditar" -->
           <div *ngIf="!permisoEditar" class="form-group">
             <label>Nombre</label>
@@ -67,6 +75,8 @@
               readonly
               type="text">
           </div>
+          </div>
+          <div class="row">
             <!-- *ngIf="permisoEditar" -->
           <div *ngIf="permisoEditar" class="form-group">
             <label>Nombre</label>
@@ -112,6 +122,7 @@
                class="btn btn-outline-danger">
               Atras
             </button>
+          </div>
           </div>
         </form>
         <br>

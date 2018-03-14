@@ -12,6 +12,10 @@ import { APP_ROUTING } from "./app.routes"
 // servicios
 import { UsuariosService }  from "./services/usuarios.service";
 import { CarterasService }  from "./services/carteras.service";
+
+import { ProveedorService }  from "./services/proveedor.service";
+
+
 import { PeticionesCrudService }  from "./services/peticionesCRUD.service";
 // import { AlertComponent } from './_directives/index';
 // import { AuthGuard } from './_guards/index';
@@ -27,6 +31,12 @@ import { FooterComponent } from './components/shared/footer/footer.component';
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { UsuarioComponent } from './components/usuarios/usuario.component';
 import { NuevoUsuarioComponent } from './components/usuarios/nuevo-usuario.component';
+
+import { ProveedoresComponent } from './components/proveedores/proveedores.component';
+import { ProveedorComponent } from './components/proveedores/proveedor.component';
+import { ProveedorEditarComponent } from './components/proveedores/proveedor-editar.component';
+import { NuevoProveedorComponent } from './components/proveedores/nuevo-proveedor.component';
+
 
 import { ContactComponent } from './components/contact/contact.component';
 
@@ -60,6 +70,10 @@ import { ExpedientesComponent } from './components/expedientes/expedientes.compo
     UsuariosComponent,
     UsuarioComponent,
     ContactComponent,
+    ProveedoresComponent,
+    ProveedorComponent,
+    ProveedorEditarComponent,
+    NuevoProveedorComponent,
     IdsPipe,
     KeysPipe,
     NuevoUsuarioComponent,
@@ -88,6 +102,7 @@ import { ExpedientesComponent } from './components/expedientes/expedientes.compo
     CarterasService,
     PeticionesCrudService,
     AlertService,
+    ProveedorService,
     AuthenticationService,
     TokenService,
     DatosUsuarioService,
