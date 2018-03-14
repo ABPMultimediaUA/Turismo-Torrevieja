@@ -1,6 +1,6 @@
+import { Cartera }  from "../interfaces/cartera.interface";
 import { Injectable } from '@angular/core';
 import { Http, Headers } from "@angular/http";
-import { Cartera }  from "../interfaces/cartera.interface";
 import 'rxjs/Rx';
 
 @Injectable()

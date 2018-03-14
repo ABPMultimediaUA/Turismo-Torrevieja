@@ -7,7 +7,7 @@ import { TareaInterface }  from "../../interfaces/tareas.interface";
 import { ContratoInterface }  from "../../interfaces/contrato.interface";
 import { Usuario }  from "../../interfaces/usuario.interface";
 import { EspacioInterface }  from "../../interfaces/espacio.interface";
-import { ProveedorInterface }  from "../../interfaces/proveedor.interface";
+import { Proveedor }  from "../../interfaces/proveedor.interface";
 import { AlertService, AuthenticationService,PeticionesCrudService,LogueadoService } from '../../services/index';
 @Component({
   selector: 'app-expediente',
@@ -51,7 +51,7 @@ export class ExpedienteComponent implements OnInit {
   public contratos:ContratoInterface[];
   public users:Usuario[];
   public espacio:EspacioInterface[];
-  public proveedor:ProveedorInterface[];
+  public proveedor:Proveedor[];
 
   constructor(  private _ItemService: PeticionesCrudService,
                 private router:Router,
@@ -109,7 +109,7 @@ export class ExpedienteComponent implements OnInit {
             //COGEMOS LOS PROVEEDORES
             this._ItemService.getItem(7,-1,-1,-1).then(
               res => {
-                this.proveedor = res as ProveedorInterface[];
+                this.proveedor = res as Proveedor[];
               }
             );
       });

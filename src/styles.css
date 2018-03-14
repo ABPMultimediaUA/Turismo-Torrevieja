@@ -1,17 +1,32 @@
-
-/* -------------MENU LATERAL-------------*/
-.lateral{
-  position: fixed;z-index: 3em !important;
-  bottom: 0;
-  top: 0;
+.carteras2{
+  color: rgb(45, 255, 173) !important;
 }
-.lista-menu{
-  display: block;
-  list-style: none;
-  margin-left: 0.2em;
-  padding-left: 0.2em;
+.carteras1{
+  color: yellow !important;
 }
 
+.eventosycarteras{
+  width: 12.5em !important;
+}
+.usuarioyrol{
+  width: 11.65em !important;
+}
+.rolypermiso{
+  width: 11.82em !important;
+}
+
+.btn.focus{
+  box-shadow: none !important;
+}
+
+button{
+  box-shadow: 1px !important;
+  border-radius: 1px !important;
+}
+
+.dropdown-toggle:focus{
+  box-shadow: 0px 2px 0px 0px #042649 !important;
+}
 
 
 

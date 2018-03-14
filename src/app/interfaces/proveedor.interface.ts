@@ -1,11 +1,10 @@
-export interface ProveedorInterface
+export interface Proveedor
 {
   clase:string;
   correoDos:string;
   correoUno:string;
-  identificador:number;
   nombreProveedor:string;
-  telefonoDos:number;
-  telefonoTres:number;
-  telefonoUno:number;
+  telefonoDos:string;
+  telefonoTres:string;
+  telefonoUno:string;
 }
