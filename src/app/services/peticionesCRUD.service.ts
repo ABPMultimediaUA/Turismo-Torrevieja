@@ -146,20 +146,6 @@ export class PeticionesCrudService {
     return promise;
   }
 
-  // subirFile(tipo, id, file: File) {
-  //   let promise = new Promise((resolve, reject) => {
-  //     let url = this.crearURL(tipo,id,-1,-1);
-  //     let headers = this.header;
-  //     let formData: FormData = new FormData();
-  //     formData.append('fileKey', file, file.name);
-  //     this.http.post(url, formData, { headers })
-  //       .toPromise()
-  //         .then( res => { resolve( res.json().data ); })
-  //         .catch((err) => { console.log( err.toString() ); })
-  //   });
-  //   return promise;
-  // }
-
   subirFile (tipo, id, file: File){
     let promise = new Promise((resolve, reject) => {
       let url = this.crearURL(tipo,id,-1,-1);
@@ -169,6 +155,10 @@ export class PeticionesCrudService {
       // console.log("cartera", formData.get('cartera_id'),url);
 
       let headers = new Headers ({
+        'Content-Type': 'multipart/form-data',
+        'Cache-Control':'no-cache',
+        // 'Content-Type': 'image/jpeg',
+        // 'Content-Disposition':'form-data',
         'Access-Control-Allow-Origin':'https://gvent.ovh/Prueba2_1/public',
         'Authorization': this.First_accessToken+this.Secound_accessToken,
       });

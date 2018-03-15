@@ -193,46 +193,25 @@ export class ExpedienteComponent implements OnInit {
 
   //ACTUALIZAR Y GUARDAR NUEVOS ITEMS
   guardarCambiosExp(){
-    console.log(this.expediente); //TODO eliminar
-
-    let xhr = new XMLHttpRequest();
-            let url = 'https://gvent.ovh/Prueba2_1/public/expediente/' + this.id;
-            let fd  = new FormData();
-
-
-            fd.append('image', this.archivoImg);
-
-        xhr.open('PUT', url, true);
-        xhr.onload = function(){
-            //console.log(xhr.responseText);
-            if(xhr.responseText){ console.log(xhr.responseText)}
-            else{ console.log("ERRRRRRRRRRRRRRRROR IMG") }
-        };
-        xhr.setRequestHeader('Authorization', this.First_accessToken+this.Secound_accessToken);
-        xhr.send(fd);
-
-
-
-    // this._ItemService.actualizarItem(0,this.id,this.expediente,-1)
-    // .then( res=> {
-    //   if(this.archivoImg){
-    //     console.log("ENTRA");
-    //     this._ItemService.subirFile(0,this.id,this.archivoImg)
-    //       .then( res=>{ alert("Actualizado correctamente."); console.log(res);})
-    //       .catch( (er) => { alert("Expediente actualizado correctamente, a excepción de la imagen.");
-    //                         console.log( er.toString()) })
-    //   }
-    //   else{
-    //      alert("Actualizado correctamente." + "SIN IMAGEN");
-    //      //TODO eliminar imagen desde laravel
-    //   }
-    // })
-    // .catch( (err) => { alert("Se ha producido un error inesperado.\nNo se ha podido actualizar el expediente.");
-    //                    console.log( err.toString()) })
+    var expBody = this.expediente;
+    delete expBody.image;
+    this._ItemService.actualizarItem(0,this.id,expBody,-1)
+    .then( res=> {
+      if(this.archivoImg){
+        this._ItemService.subirFile(0,this.id,this.archivoImg)
+          .then( res=>{ alert("Actualizado correctamente."); console.log(res);})
+          .catch( (er) => { alert("Expediente actualizado correctamente, a excepción de la imagen.");
+                            console.log( er.toString()) })
+      }
+      else{
+         alert("Actualizado correctamente." + "SIN IMAGEN");
+      }
+    })
+    .catch( (err) => { alert("Se ha producido un error inesperado.\nNo se ha podido actualizar el expediente.");
+                       console.log( err.toString()) })
   }
 
   crearModificarActConTar(i,a,index){
-    console.log(a);
     if(a.identificador != null){
       this._ItemService.actualizarItem(i,a.identificador,a,-1)
         .then( res=> { alert("Actualizado correctamente."); })
