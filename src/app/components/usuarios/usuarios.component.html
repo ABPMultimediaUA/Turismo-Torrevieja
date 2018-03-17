@@ -1,80 +1,109 @@
-
 <div class="container-fluid">
   <div class="row ">
-        <h1><span class="icon-users-outline"></span>  Usuarios</h1>
-        <div class="table-responsive">
-          <table class="table table-striped">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Apodo</th>
-                <th scope="col">Correo</th>
-                <th scope="col">Verificado</th>
-                <th scope="col">rol</th>
-                <th class="text-right">Opciones</th>
-              </tr>
-            </thead>
-            <tbody>
-               <!-- el pipe keys es para pasar un objeto a un array -->
-              <tr *ngFor="let usuario of  usuariosActuales  ; let i = index">
-                <td>{{ i + 1 }}</td>
-                <td>{{ usuario.identificador }}</td>
-                <td>{{ usuario.nombreUsuario }}</td>
-                <td>{{ usuario.apodo }}</td>
-                <td>{{ usuario.correo }}</td>
-                <td *ngIf="!usuario.esVerificado ==0">Si</td>
-                <td *ngIf="usuario.esVerificado ==0">No</td>
-                <td *ngIf="usuario.rol ==1">Administrador</td>
-                <td *ngIf="usuario.rol ==2">Trabajador</td>
-                <td *ngIf="usuario.rol !=1 && usuario.rol !=2">Otros roles</td>
+      <div  class="table-responsive">
+        <div class="example-container mat-elevation-z8">
+          <div class="example-header">
+            <h1 style="margin-left:30px; padding-top:30px; margin-bottom:10px;" class="mat-display-1">Usuarios</h1>
+            <!-- subheader -->
 
-                <td class="text-center w20">
-                  <button  [routerLink]="['/usuario', usuario.identificador]"
-                  type="button" class="btn btn-outline-success">
-                    <span class="icon-pencil"></span>
-                  </button>
-                  <button  (click)="borrarUsuario(usuario.identificador)"
-                  type="button" class="btn btn-outline-danger">
-                    <span class="icon-trash"></span>
-                  </button>
-                </td>
-              </tr>
+              <button style="margin-left:30px;"  mat-raised-button
+                class="botonMat"
+                type="submit"
+                color="primary"
 
-            </tbody>
+                (click)="openDialogEditar()"> Nuevo Usuario
+              </button>
+              <mat-form-field style="margin-left:30px;">
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
+              </mat-form-field>
 
-          </table>
+              <mat-paginator style="width:auto; margin-right:30px;" #paginator
+                    [pageSize]="10"
+                    [pageSizeOptions]="[5, 10, 20, 50, 100]"
+                    [showFirstLastButtons]="true">
+               </mat-paginator>
 
-          <!-- si no hay usuarios muestra esto -->
-          <div *ngIf="(usuarios).length === 0 && !loading"
-          class="alert alert-info" role="alert">
-              <strong>No hay </strong> usuarios que mostrar
           </div>
-          <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center">
-              <li *ngIf="currentPage > 1 " class="page-item" >
-                <a class="page-link" (click)="nuevaPagina(currentPage-1)" aria-label="Previous">
-                  <span aria-hidden="true">&laquo;</span>
-                  <span class="sr-only">Previous</span>
-                </a>
-              </li>
-              <li class="page-item" *ngFor="let i of cantidadPagina" >
-                <a class="page-link" (click)="nuevaPagina(i+1)" >{{ i+1 }}</a>
-              </li>
 
-              <li *ngIf="currentPage!=totalPaginas" class="page-item" routerLinkActive="active">
-                <a class="page-link" (click)="nuevaPagina(currentPage+1)" aria-label="Next">
-                  <span aria-hidden="true">&raquo;</span>
-                  <span class="sr-only">Next</span>
-                </a>
-              </li>
-            </ul>
-          </nav>
+
+          <mat-table style="margin-left:30px; margin-right:30px;" #table [dataSource]="dataSource" matSort>
+
+
+            <!-- Checkbox Column -->
+               <ng-container  matColumnDef="select">
+                 <mat-header-cell color="primary" *matHeaderCellDef>
+                   <mat-checkbox color="primary" (change)="$event ? masterToggle() : null"
+                                 [checked]="selection.hasValue() && isAllSelected()"
+                                 [indeterminate]="selection.hasValue() && !isAllSelected()">
+                   </mat-checkbox>
+
+                   <button *ngIf="isAllSelected()" (click)="borrarUsuario(usuario.identificador)" style="min-width:10px;" class="botonMat"  mat-button><mat-icon style="color:#dc3545">delete</mat-icon></button>
+
+                 </mat-header-cell>
+                 <mat-cell  color="primary" *matCellDef="let row">
+                   <mat-checkbox class="noAnim" color="primary"
+                                (click)="$event.stopPropagation()"
+                                 (change)="$event ? selection.toggle(row) : null"
+                                 [checked]="selection.isSelected(row)">
+                                 <button (click)="openDialogEliminar(row)"  class="botonMat" mat-icon-button color="warn">
+                                     <mat-icon color="warn" >delete</mat-icon>
+                                </button>
+
+                   </mat-checkbox>
+
+                 </mat-cell>
+               </ng-container>
+
+            <ng-container matColumnDef="identificador">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Id </mat-header-cell>
+              <mat-cell   *matCellDef="let usuario">{{usuario.identificador}}</mat-cell>
+            </ng-container>
+
+
+            <ng-container matColumnDef="nombreUsuario">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
+              <mat-cell  *matCellDef="let usuario">{{usuario.nombreUsuario}}</mat-cell>
+            </ng-container>
+
+            <!-- Weight Column -->
+            <ng-container matColumnDef="apodo">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Apodo </mat-header-cell>
+              <mat-cell   *matCellDef="let usuario"> {{usuario.apodo}} </mat-cell>
+            </ng-container>
+
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="correo">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Correo </mat-header-cell>
+              <mat-cell   *matCellDef="let usuario"> {{usuario.correo}} </mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="esVerificado">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Verificado </mat-header-cell>
+              <!-- <mat-cell *matCellDef="let usuario"> <div *ngIf="usuario.esVerificado ==0">No</div> </mat-cell> -->
+              <mat-cell *matCellDef="let usuario">
+                <div *ngIf="!usuario.esVerificado ==0">Si</div>
+                <div *ngIf="usuario.esVerificado ==0">No</div>
+              </mat-cell>
+
+              <!-- <mat-cell *ngIf="!usuario.esVerificado ==0" matCellDef="let usuario"> Si </mat-cell> -->
+              <!-- <mat-cell *ngIf="usuario.esVerificado ==0" matCellDef="let usuario"> No </mat-cell> -->
+            </ng-container>
+
+            <ng-container matColumnDef="rol">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Rol </mat-header-cell>
+              <mat-cell *matCellDef="let usuario">
+                <div *ngIf="usuario.rol ==1">Administrador</div>
+                <div *ngIf="usuario.rol ==2">TRabajador</div>
+                <div *ngIf="usuario.rol !=1 && usuario.rol !=2">Otros roles</div>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="['select','identificador', 'nombreUsuario', 'apodo', 'esVerificado','rol']"></mat-header-row>
+            <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','identificador', 'nombreUsuario', 'apodo', 'esVerificado','rol']" (click)="openDialogEditar(row)"></mat-row>
+          </mat-table>
+<br><br><br>
         </div>
-        <br>
-
-    </div>
+      </div>
 
 </div>
 <!-- aqui acaba el container fluid -->

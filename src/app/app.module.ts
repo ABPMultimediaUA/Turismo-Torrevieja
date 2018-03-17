@@ -7,6 +7,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { MatIcon } from '@angular/material';
 import { MatPaginatorModule } from '@angular/material';
+import {MatMenuModule} from '@angular/material/menu';
+
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {Component, ViewChild} from '@angular/core';
 import {MatTableDataSource, MatSort, MatSortModule, MatTableModule} from '@angular/material';
@@ -15,6 +17,14 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatProgressBarModule,MatProgre
 import {MatDialogModule} from '@angular/material/dialog';
 import {EliminarDialog} from "./components/eventos/eliminar-dialog.component";
 import {EditarDialog} from "./components/eventos/editar-dialog.component";
+import {MatSelectModule} from '@angular/material/select';
+import {MatCardModule} from '@angular/material/card';
+import {MatListModule} from '@angular/material/list';
+import {MatToolbarModule} from '@angular/material/toolbar';
+
+import {EliminarUsuarioDialog} from "./components/usuarios/eliminar-usuario-dialog.component";
+import {EditarUsuarioDialog} from "./components/usuarios/editar-usuario-dialog.component";
+import {EditarPerfilDialog} from "./components/perfil/editar-perfil-dialog.component";
 
 
 import { MatIconRegistry, MatIconModule,MatButtonModule } from '@angular/material';
@@ -75,7 +85,10 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 @NgModule({
   entryComponents: [
     EliminarDialog,
-    EditarDialog
+    EditarDialog,
+    EliminarUsuarioDialog,
+    EditarUsuarioDialog,
+    EditarPerfilDialog
   ],
   declarations: [
     AppComponent,
@@ -107,7 +120,10 @@ import { PerfilComponent } from './components/perfil/perfil.component';
     ExpedienteComponent,
     NuevoExpedienteComponent,
     EliminarDialog,
-    EditarDialog
+    EditarDialog,
+    EliminarUsuarioDialog,
+    EditarUsuarioDialog,
+    EditarPerfilDialog
   ],
   imports: [
     HttpClientModule,
@@ -115,17 +131,22 @@ import { PerfilComponent } from './components/perfil/perfil.component';
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
+    MatCardModule,
     MatInputModule,
+    MatListModule,
     MatSortModule,
     MatTableModule,
     MatFormFieldModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    MatToolbarModule,
     MatIconModule,
     MatPaginatorModule,
     MatCheckboxModule,
     MatDialogModule,
+    MatMenuModule,
     MatProgressBarModule,
+    MatSelectModule,
     MatProgressSpinnerModule,
     // FacebookModule.forRoot(),
     // FacebookModule,

@@ -1,5 +1,15 @@
+<!-- <mat-toolbar>
+  <span>My Application</span>
+  <button mat-button [matMenuTriggerFor]="menu">Menu</button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>Item 1</button>
+    <button mat-menu-item>Item 2</button>
+  </mat-menu>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-blue ">
+</mat-toolbar> -->
+
+
+<mat-toolbar  class="navbar shadow navbar-expand-lg navbar-dark bg-blue ">
   <a class="navbar-brand" [routerLink]="['home']">GVENT</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -220,21 +230,15 @@
 
 
 
-    <button
 
-      *ngIf="!logueadoService.estaLogueado"
-      class="btn btn-primary my-2 my-sm-0 small-margin-laterals"
-        type="submit"
 
-        [routerLink]="['login']"><span class="icon-login"></span> Iniciar sesión</button>
-
-    <button
-
-        *ngIf="logueadoService.estaLogueado"
-        (click)="logout()"
-        class="btn btn-danger my-2 my-sm-0 small-margin-laterals"
-        type="submit"
-        ><span class="icon-logout"></span> Logout</button>
-
+        <button style="margin-left:30px;"  mat-raised-button
+          *ngIf="!logueadoService.estaLogueado"  class="botonMat"  type="submit"  color="primary"  [routerLink]="['login']">
+          <span class="icon-login"></span>Login
+        </button>
+        <button style="margin-left:30px;"  mat-raised-button
+          *ngIf="logueadoService.estaLogueado"   class="botonMat"  type="submit"  color="warn"  (click)="logout()">
+          <span class="icon-logout"></span>Logout
+        </button>
   </div>
-</nav>
+</mat-toolbar>

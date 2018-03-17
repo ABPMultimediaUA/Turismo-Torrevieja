@@ -39,6 +39,7 @@ const app_routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'contact', component: ContactComponent },
   { path: 'perfil', component: PerfilComponent },
+  { path: 'perfil/:id', component: PerfilComponent },
 
   { path: 'chatbots', loadChildren: 'app/chatbots/chatbots.module#ChatbotsModule' },
 

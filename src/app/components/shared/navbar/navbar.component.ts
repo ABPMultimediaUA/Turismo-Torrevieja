@@ -11,6 +11,9 @@ import { Usuario }  from "../../../interfaces/usuario.interface";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+import {MatMenuModule} from '@angular/material/menu';
+import {MatToolbarModule} from '@angular/material/toolbar';
+
 // import { AuthenticationService } from '../../services/authentication.service';
 // import {AlertService } from '../../services/alert.service';
 import { AlertService, AuthenticationService, LogueadoService, DatosUsuarioService} from '../../../services/index';

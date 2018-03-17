@@ -1,5 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { ViewChild} from '@angular/core';
+
+
 import {MatTableDataSource, MatSort} from '@angular/material';
 import { MatFormFieldModule } from '@angular/material';
 import {MatInputModule} from '@angular/material';
@@ -36,7 +38,7 @@ import {EditarDialog} from "./editar-dialog.component";
 })
 
 export class EventosComponent implements OnInit {
-  eventos:any[] = [];
+
   resultados:any[] = [];
   loading:boolean = true;
   hasBuscado:boolean = false
@@ -67,17 +69,14 @@ export class EventosComponent implements OnInit {
 
 
     ELEMENT_DATA: Evento[];
-
+    eventos:any[] = [];
     displayedColumns = ['select','identificador', 'nombreEvento', 'usuario', 'fechaCreacion','fechaActualizacion'];
     dataSource = new MatTableDataSource(this.ELEMENT_DATA);
     selection = new SelectionModel<Evento>(true, []);
 
     @ViewChild(MatSort) sort: MatSort;
     @ViewChild(MatPaginator) paginator: MatPaginator;
-      /**
-       * Set the sort after the view init since this component will
-       * be able to query its view for the initialized sort.
-       */
+
       ngAfterViewInit() {
           console.log("entra en el sort ese");
 
@@ -117,18 +116,14 @@ export class EventosComponent implements OnInit {
             // localStorage.setItem("eventos", this.eventos.toString());
             //
             // console.log("eventosString=", this.eventosString);
+            //megapis
             this.ELEMENT_DATA = this.eventos;
-            // ELEMENT_DATA: Evento[] = [
-            //   {identificador: '1', nombreEvento: 'etdadadda', usuario: '1', fechaCreacion: '2017-11-29 14:19:23', fechaEliminacion: null, fechaActualizacion: '2018-02-21 15:26:37'},
-            //   {identificador: "2", nombreEvento: "rerum", usuario: "22", fechaCreacion: "2017-11-29 14:19:23", fechaEliminacion: null, fechaActualizacion: "2017-11-29 14:19:23"},
-            // ];
             this.displayedColumns = ['select','identificador', 'nombreEvento', 'usuario', 'fechaCreacion','fechaActualizacion'];
-
             this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
             this.selection = new SelectionModel<Evento>(true, []);
             this.dataSource.sort = this.sort;
             this.dataSource.paginator = this.paginator;
-
+            //finalmegapis
             this.ItemsPorPagina = localStorage.getItem("ItemsPorPagina");
             console.log("cojo Items por pagina de localstorage:",this.ItemsPorPagina );
             this.eventosPorPagina = parseInt(this.ItemsPorPagina);
@@ -231,87 +226,87 @@ openDialogEditar(row){
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
-  cambiarNumEventosPorPagina(){
-    this.eventosPorPagina=this.eventosPorPagina;
-    console.log("nuevo numero de carteras por pagina: ", this.eventosPorPagina);
-    var n = this.eventosPorPagina.toString();
-    localStorage.setItem("ItemsPorPagina", n);
-
-     location.reload(true);
-  }
-  nuevaPagina(pagina:number){
-    this.currentPage=pagina;
-    console.log("pagina que pido:");
-    console.log(pagina);
-    let x = this.eventosPorPagina * (pagina-1);
-    let y = x + (this.eventosPorPagina-1);
-    this.eventosActuales=[];
-
-    if(pagina==this.totalPaginas){
-      for(let i=x;i<this.eventos.length;i++)
-      {
-        this.eventosActuales.push(this.eventos[i]);
-      }
-    }else{
-      for(let i=x;i<=y;i++)
-      {
-        this.eventosActuales.push(this.eventos[i]);
-      }
-    }
-
-
-
-
-  }
-
-
-  borrarEvento(id:string){
-      this._eventosService.borrarEvento(id)
-          .subscribe(respuesta=>{
-            if(respuesta){
-              console.log("caracola");
-              console.log(respuesta);
-              console.log( "borraevento y ahora va a pedir todos los eventos de nuevo" );
-            this._eventosService.getEventos("1");
-            console.log( "aqui los ha pedido ya todos de nuevo y voy a hacer el router navigate a eventos" );
-            location.reload(true);
-            // this.router.navigate(['eventos']);
-            // this.refresh();
-            }else{
-              //todo bien
-              delete this.eventos[id];
-            //   console.log( "borrausuario y ahora va a pedir todos los usuarios de nuevo" );
-            // this._usuariosService.getUsuarios();
-            // console.log( "aqui los ha pedido ya todos de nuevo" );
-            // this.refresh();
-
-
-            }
-
-          })
-
-    }
-  volverEventos(){
-    location.reload(true);
-  }
-  buscarEvento(nombreABuscar:string){
-  this.nombreBusqueda= nombreABuscar;
-  this.hasBuscado=true;
-
-  // var eventos = this.eventos;
-  console.log(nombreABuscar);
-  this.resultados = this.eventos.filter(evento => evento.nombreEvento.toLowerCase() == this.nombreBusqueda.toLowerCase());
-  this.resultado.identificador = this.resultados[0].identificador;
-  this.resultado.nombreEvento = this.resultados[0].nombreEvento;
-
-  // location.reload(true);
-  console.log(this.resultados[0].nombreEvento);
-
-  console.log(this.resultados);
-  console.log(this.resultado.nombreEvento);
-
-
-  }
+  // cambiarNumEventosPorPagina(){
+  //   this.eventosPorPagina=this.eventosPorPagina;
+  //   console.log("nuevo numero de carteras por pagina: ", this.eventosPorPagina);
+  //   var n = this.eventosPorPagina.toString();
+  //   localStorage.setItem("ItemsPorPagina", n);
+  //
+  //    location.reload(true);
+  // }
+  // nuevaPagina(pagina:number){
+  //   this.currentPage=pagina;
+  //   console.log("pagina que pido:");
+  //   console.log(pagina);
+  //   let x = this.eventosPorPagina * (pagina-1);
+  //   let y = x + (this.eventosPorPagina-1);
+  //   this.eventosActuales=[];
+  //
+  //   if(pagina==this.totalPaginas){
+  //     for(let i=x;i<this.eventos.length;i++)
+  //     {
+  //       this.eventosActuales.push(this.eventos[i]);
+  //     }
+  //   }else{
+  //     for(let i=x;i<=y;i++)
+  //     {
+  //       this.eventosActuales.push(this.eventos[i]);
+  //     }
+  //   }
+  //
+  //
+  //
+  //
+  // }
+  //
+  //
+  // borrarEvento(id:string){
+  //     this._eventosService.borrarEvento(id)
+  //         .subscribe(respuesta=>{
+  //           if(respuesta){
+  //             console.log("caracola");
+  //             console.log(respuesta);
+  //             console.log( "borraevento y ahora va a pedir todos los eventos de nuevo" );
+  //           this._eventosService.getEventos("1");
+  //           console.log( "aqui los ha pedido ya todos de nuevo y voy a hacer el router navigate a eventos" );
+  //           location.reload(true);
+  //           // this.router.navigate(['eventos']);
+  //           // this.refresh();
+  //           }else{
+  //             //todo bien
+  //             delete this.eventos[id];
+  //           //   console.log( "borrausuario y ahora va a pedir todos los usuarios de nuevo" );
+  //           // this._usuariosService.getUsuarios();
+  //           // console.log( "aqui los ha pedido ya todos de nuevo" );
+  //           // this.refresh();
+  //
+  //
+  //           }
+  //
+  //         })
+  //
+  //   }
+  // volverEventos(){
+  //   location.reload(true);
+  // }
+  // buscarEvento(nombreABuscar:string){
+  // this.nombreBusqueda= nombreABuscar;
+  // this.hasBuscado=true;
+  //
+  // // var eventos = this.eventos;
+  // console.log(nombreABuscar);
+  // this.resultados = this.eventos.filter(evento => evento.nombreEvento.toLowerCase() == this.nombreBusqueda.toLowerCase());
+  // this.resultado.identificador = this.resultados[0].identificador;
+  // this.resultado.nombreEvento = this.resultados[0].nombreEvento;
+  //
+  // // location.reload(true);
+  // console.log(this.resultados[0].nombreEvento);
+  //
+  // console.log(this.resultados);
+  // console.log(this.resultado.nombreEvento);
+  //
+  //
+  // }
 
 
 }

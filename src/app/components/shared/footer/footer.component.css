@@ -3,9 +3,12 @@ footer{
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: #262626;
+/* background-color: #06407a; */
+  background-color: #074d92;
+  /* background-color: #262626; */
   color: #D9D9D9;
   padding: 1em 0;
+  text-align: center;
 }
 
 footer a{
@@ -18,4 +21,18 @@ footer a:hover{
 
 footer i{
   margin: 0px 5px 0px 5px;
+}
+.example-spacer {
+  flex: 1 1 auto;
+}
+mat-toolbar{
+  background-color: #05386B;
+    color: #D9D9D9;
+}
+mat-toolbar a{
+  color: #D9D9D9;
+}
+
+mat-toolbar a:hover{
+  text-decoration: none;
 }

@@ -1,47 +1,79 @@
-<br><br>
+<br><br><br><br><br>
 <div class="container">
-	<div class="row">
-  		<div class="col-sm-10"><h1>{{nombreUsuario}}</h1></div>
+	<!-- <div class="row">
+  		<div class="col-sm-10"><h1>{{usuario.nombreUsuario}}</h1></div>
     	<div class="col-sm-2"><img title="profile image" class="img-circle img-responsive" srcset="../assets/fotoPerfil.jpg" ></div>
-    </div>
+    </div> -->
     <div class="row">
-  		<div class="col-sm-4"><!--left col-->
+  		<div class="col-4"><!--left col-->
+				<mat-card>
+					<mat-card-header>
+				    <div mat-card-avatar class="example-header-image"
+				    	style="background-image: url('../assets/fotoPerfil.jpg');  background-size: cover;">
+				    </div>
+				    <mat-card-title>{{usuario.nombreUsuario}}</mat-card-title>
+				    <mat-card-subtitle>{{usuario.apodo}}</mat-card-subtitle>
+						<!-- <button   mat-raised-button style="max-width:10px"
+							class="botonMat "color="primary"	(click)="openDialogEditarPerfil()">	<span class="icon-pencil"></span>
+						</button> -->
+				  </mat-card-header>
 
-          <ul class="list-group">
-            <li class="list-group-item  d9d9d9 bg-blue">Perfil &nbsp; <i class="fa fa-address-card"></i>
-							<!-- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -->
-							<button  [routerLink]="['/usuario', identificador]"
-							(click)="vengoDePerfil()"
-							type="button" class="btn btn-outline-secondary pull-right">
-								<span class="icon-pencil"></span>
-							</button>
-						</li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Desde</strong></span> {{fechaCreacion | date}}</li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Ultima conexión</strong></span> Ayer</li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Apodo</strong></span>{{apodo}}</li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Correo</strong></span>{{correo}}</li>
+					<button mat-mini-fab 	class="botonMat pull-right" (click)="openDialogEditarPerfil()" color="primary"><span class="icon-pencil"></span></button>
+						<hr>
+					<mat-list>
+							<mat-list-item>
+								<h4 mat-line>Usuario desde</h4>
+	     					<p mat-line> {{fechaCreacion | date}}</p>
+	 					 	</mat-list-item>
+						 	<mat-list-item>
+							 <h4 mat-line>Última conexión</h4>
+	    				 <p mat-line> Hoy</p>
+						 </mat-list-item>
+						 <mat-list-item>
+							<h4 mat-line>Correo</h4>
+							<p mat-line> {{usuario.correo}}</p>
+						</mat-list-item>
+							<mat-list-item>
+							 <h4 mat-line>Rol</h4>
+							 <p  *ngIf="usuario.rol ==1"mat-line> Administrador</p>
+							 <p  *ngIf="usuario.rol ==2"mat-line> Trabajador</p>
+							 <p  *ngIf="usuario.rol ==4"mat-line> Otro</p>
+
+						 </mat-list-item>
+						 <!-- <mat-list-item class="padding-left:300px;">
+							 <div class="text-right">
+								 <button   mat-raised-button style="max-width:10px"
+	 								class="botonMat pull-right"color="primary"	(click)="openDialogEditarPerfil()">	<span class="icon-pencil"></span>
+	 							</button>
+							 </div>
+
+					 </mat-list-item> -->
+					</mat-list>
+					<!-- <mat-card-actions>
+				    <button mat-button></button>
+						<button   mat-raised-button style="max-width:10px"
+							class="botonMat "color="primary"	(click)="openDialogEditarPerfil()">	<span class="icon-pencil"></span>
+						</button>
+				  </mat-card-actions> -->
+
+				</mat-card><br><br>
 
 
-            <!-- roles -->
-            <li *ngIf="rol ==1"class="list-group-item text-right"><span class="pull-left"><strong>Rol</strong></span>Administrador</li>
-            <li *ngIf="rol ==2"class="list-group-item text-right"><span class="pull-left"><strong>Rol</strong></span>Trabajador</li>
-            <li *ngIf="rol !=1"class="list-group-item text-right"><span class="pull-left"><strong>Rol</strong></span>Otro</li>
-
-          </ul>
-
-        <br><br>
-
-
+<!--
           <ul class="list-group">
             <li class="list-group-item d9d9d9 bg-blue">Actividad &nbsp;<i class="fa fa-line-chart"></i></li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Eventos</strong></span> 125</li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Actividades</strong></span> 13</li>
             <li class="list-group-item text-right"><span class="pull-left"><strong>Social Posts</strong></span> 37</li>
-          </ul>
+          </ul> -->
 
-          <br><br><br>
+
 
         </div><!--/col-3-->
+
+
+
+
     	<div class="col-sm-8">
         <h4>Actividad reciente</h4>
         <div class="table-responsive">
