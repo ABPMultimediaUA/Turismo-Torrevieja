@@ -19,13 +19,14 @@ import { AuthenticationService, TokenService, LogueadoService, DatosUsuarioServi
 })
 
 export class LoginComponent implements OnInit {
+  
     model: any = {};
     loading = false;
     returnUrl: string;
     loginError = false;
 
     model2: any = {};
-
+    logueando:boolean=false;
 
 
 
@@ -38,7 +39,9 @@ export class LoginComponent implements OnInit {
         private navbar:NavbarComponent,
         private home:HomeComponent,
         private logueadoService: LogueadoService
-      ) { }
+      ) {
+      this.logueando=false;
+      }
 
     ngOnInit() {
         // reset login status
@@ -49,7 +52,8 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-
+        this.logueando=true;
+        console.log(this.logueando);
         this.loading = true;
         console.log("antes de this.authen");
         this.authenticationService.login(this.model)
@@ -127,7 +131,7 @@ export class LoginComponent implements OnInit {
                   // }
 
 
-
+                      this.logueando=true;
                     //this.router.navigate([this.returnUrl]);
                 },
                 error => {

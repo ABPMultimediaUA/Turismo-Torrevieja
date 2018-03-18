@@ -87,7 +87,16 @@ color: ;
   right: 0;
   z-index: 2;
 }
-
+.loginClass{
+  position: fixed!important;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  padding-top: 200px;
+  max-width: 100%!important;
+  height: 100%!important;
+}
 .w120{
   width: 120px;
 }
