@@ -63,6 +63,11 @@ export class PeticionesCrudService {
           //Con id crud
           url += "proveedor";
           break;
+      case 8:
+          //Sin id muestra todos los items
+          //Con id crud
+          url += "cartera";
+          break;
       case 101:
           //Todas las actividades de un expediente
           url += `DeExpediente/${id}/actividades`;
@@ -147,29 +152,29 @@ export class PeticionesCrudService {
   }
 
   subirFile (tipo, id, file: File){
-    let promise = new Promise((resolve, reject) => {
-      let url = this.crearURL(tipo,id,-1,-1);
-      let formData: FormData = new FormData();
-      formData.append('image', file);
-      formData.append('_method','put');
-      // console.log("cartera", formData.get('cartera_id'),url);
-
-      let headers = new Headers ({
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Cache-Control':'no-cache',
-        'Accept':'image/*',
-        // 'Content-Type': 'image/jpeg',
-        // 'Content-Disposition':'form-data',
-        'Access-Control-Allow-Origin':'https://gvent.ovh/Prueba2_1/public',
-        'Authorization': this.First_accessToken+this.Secound_accessToken,
-      });
-      // headers.append('Accept','image/*');
-      this.http.put(url, formData, { headers })
-        .toPromise()
-          .then( res => { resolve( res.json().data ); })
-          .catch((err) => { console.log( err.toString() ); })
-    });
-    return promise;
+    // let promise = new Promise((resolve, reject) => {
+    //   let url = this.crearURL(tipo,id,-1,-1);
+    //   let formData: FormData = new FormData();
+    //   formData.append('image', file);
+    //   formData.append('_method','put');
+    //   // console.log("cartera", formData.get('cartera_id'),url);
+    //
+    //   let headers = new Headers ({
+    //     'Content-Type': 'application/x-www-form-urlencoded',
+    //     'Cache-Control':'no-cache',
+    //     'Accept':'image/*',
+    //     // 'Content-Type': 'image/jpeg',
+    //     // 'Content-Disposition':'form-data',
+    //     'Access-Control-Allow-Origin':'https://gvent.ovh/Prueba2_1/public',
+    //     'Authorization': this.First_accessToken+this.Secound_accessToken,
+    //   });
+    //   // headers.append('Accept','image/*');
+    //   this.http.put(url, formData, { headers })
+    //     .toPromise()
+    //       .then( res => { resolve( res.json().data ); })
+    //       .catch((err) => { console.log( err.toString() ); })
+    // });
+    // return promise;
   }
 
 }

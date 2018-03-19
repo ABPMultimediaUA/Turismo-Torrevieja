@@ -190,22 +190,22 @@ export class ExpedienteComponent implements OnInit {
       }
     }
   }
-
+  
   //ACTUALIZAR Y GUARDAR NUEVOS ITEMS
   guardarCambiosExp(){
     var expBody = this.expediente;
     delete expBody.image;
     this._ItemService.actualizarItem(0,this.id,expBody,-1)
     .then( res=> {
-      if(this.archivoImg){
-        this._ItemService.subirFile(0,this.id,this.archivoImg)
-          .then( res=>{ alert("Actualizado correctamente."); console.log(res);})
-          .catch( (er) => { alert("Expediente actualizado correctamente, a excepción de la imagen.");
-                            console.log( er.toString()) })
-      }
-      else{
+      // if(this.archivoImg){ //ACTUALIZAMOS IMG
+      //   this._ItemService.subirFile(0,this.id,this.archivoImg)
+      //     .then( res=>{ alert("Actualizado correctamente."); console.log(res);})
+      //     .catch( (er) => { alert("Expediente actualizado correctamente, a excepción de la imagen.");
+      //                       console.log( er.toString()) })
+      // }
+      // else{
          alert("Actualizado correctamente." + "SIN IMAGEN");
-      }
+      // }
     })
     .catch( (err) => { alert("Se ha producido un error inesperado.\nNo se ha podido actualizar el expediente.");
                        console.log( err.toString()) })
