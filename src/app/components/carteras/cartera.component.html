@@ -136,7 +136,7 @@
         <br>
         <div class="row">
            <h3 class="col-sm-3">Expedientes</h3>
-           <button *ngIf="!formExVisible" (click)="mostrarFormExp(true)" type="button" name="button" class="btn btn-outline-primary">Nuevo expediente</button>
+           <button *ngIf="!formExVisible && cartera.estado <3 " (click)="mostrarFormExp(true)" type="button" name="button" class="btn btn-outline-primary">Nuevo expediente</button>
            <button *ngIf="formExVisible" (click)="mostrarFormExp(false)" type="button" name="button" class="btn btn-outline-danger">Cancelar</button>
         </div>
         <br>
@@ -186,7 +186,7 @@
               <th scope="col">Coordinador</th>
               <th scope="col">Fecha Inicio</th>
               <th scope="col">Fecha Fin</th>
-              <th class="text-right">Opciones</th>
+              <th *ngIf="cartera.estado >=3 " class="text-right">Opciones</th>
             </tr>
           </thead>
           <tbody>
@@ -199,7 +199,7 @@
               <td>{{ e.fechaInicio }}</td>
               <td>{{ e.fechaFin }}</td>
               <td class="text-right w20">
-                <button  [routerLink]="['/expediente', e.identificador]"
+                <button *ngIf="cartera.estado >=3 "  [routerLink]="['/expediente', e.identificador]"
                 type="button" class="btn btn-outline-success">
                   <span class="icon-pencil"></span>
                 </button>

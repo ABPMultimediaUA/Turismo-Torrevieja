@@ -17,6 +17,8 @@ export class CarteraComponent implements OnInit {
   rgstrCartera = false;
   permisoEditar = false;
   errorCarteraActualizar = false;
+
+
   //TituloNuevo = "";
   errorMensaje:string[]=[];
 
