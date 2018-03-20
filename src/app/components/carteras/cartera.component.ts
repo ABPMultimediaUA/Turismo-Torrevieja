@@ -25,6 +25,7 @@ export class CarteraComponent implements OnInit {
     nombreCartera:"string",
     year:0,
     trimestre:0,
+    estado:0,
     fechaCreacion:"",
     fechaActualizacion:"",
     fechaEliminacion:""
