@@ -118,6 +118,47 @@ export class ExpedienteComponent implements OnInit {
   ngOnInit() {
   }
 
+  //MOSTRAR OCULTAR
+  cambiaVisibilidad() {
+       var div1 = document.getElementById('DivActividades');
+       var div2 = document.getElementById('DivContratos');
+       var div3 = document.getElementById('DivTareas');
+       if(div1.style.display == 'block'){
+           // div2.style.display = 'none';
+           // div1.style.display = 'block';
+       }else{
+          div2.style.display = 'none';
+          div3.style.display = 'none';
+          div1.style.display = 'block';
+         }
+   }
+   cambiaVisibilidad2() {
+        var div1 = document.getElementById('DivActividades');
+        var div2 = document.getElementById('DivContratos');
+        var div3 = document.getElementById('DivTareas');
+        if(div2.style.display == 'block'){
+            // div2.style.display = 'none';
+            // div1.style.display = 'block';
+        }else{
+           div1.style.display = 'none';
+           div3.style.display = 'none';
+           div2.style.display = 'block';
+          }
+    }
+    cambiaVisibilidad3() {
+         var div1 = document.getElementById('DivActividades');
+         var div2 = document.getElementById('DivContratos');
+         var div3 = document.getElementById('DivTareas');
+         if(div3.style.display == 'block'){
+             // div2.style.display = 'none';
+             // div1.style.display = 'block';
+         }else{
+            div2.style.display = 'none';
+            div1.style.display = 'none';
+            div3.style.display = 'block';
+           }
+     }
+
   //CREAR NUEVAS PLANTILLA
   crearPlantillaAct(){
     var a:ActividadInterface;

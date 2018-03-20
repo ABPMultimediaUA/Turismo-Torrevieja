@@ -1,7 +1,7 @@
 <div class="container-fluid">
   <div class="row ">
 
-      <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+      <main role="main" class="mainExpediente">
 
         <h1><span class="icon-crown"></span>Expediente <small>{{expediente.nombreExpediente}}</small></h1>
         <div class="container" *ngIf="errorActualizarItem === true">
@@ -43,47 +43,14 @@
               <label>Coordinador</label>
               <input [(ngModel)]="expediente.coordinador" name="coordinador" class="form-control" placeholder="Persona responsable" required type="text">
             </div>
-            <!-- <div class="col-sm-3">
-              <label>Aforo</label>
-              <input [(ngModel)]="expediente.aforo" name="aforo" class="form-control" required type="text">
-            </div> -->
-            <!-- <div class="col-sm-3">
-              <label>Portal</label>
-              <input [(ngModel)]="expediente.portal" name="portal" class="form-control" required type="text">
-            </div> -->
             <div class="col-sm-3">
               <label>Precio</label>
               <input [(ngModel)]="expediente.precio" name="precio" class="form-control" required type="text">
             </div>
-            <!-- <div class="col-sm-3">
-              <label>Precio entrada</label>
-              <input [(ngModel)]="expediente.precioEntrada" name="precioEntrada" class="form-control" required type="text">
-            </div> -->
-
-            <!-- <div class="col-sm-3">
-              <label>Actor</label>
-              <input [(ngModel)]="expediente.actor" name="actor" class="form-control" required type="text">
-            </div> -->
-            <!-- <div class="col-sm-3">
-              <label>Avance</label>
-              <input [(ngModel)]="expediente.avance" name="avance" class="form-control" required type="text">
-            </div> -->
-            <!-- <div class="col-sm-3">
-              <label>CIF</label>
-              <input [(ngModel)]="expediente.cif" name="cif" class="form-control" required type="text">
-            </div> -->
-            <!-- <div class="col-sm-3">
-              <label>Separacion</label>
-              <input [(ngModel)]="expediente.separacion" name="separacion" class="form-control" required type="text">
-            </div> -->
             <div class="col-sm-3">
               <label>Detalles</label>
               <input [(ngModel)]="expediente.detalle" name="detalle" class="form-control" required type="text">
             </div>
-            <!-- <div class="col-sm-6">
-              <img src="{{expediente.imagen}}" alt="Imagen evento" width="200px">
-              <input [(ngModel)]="expediente.imagen" name="detalle" type="file">
-            </div> -->
           </div>
           <div class="form-group">
             <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
@@ -91,8 +58,15 @@
             </button>
           </div>
         </form>
+
+        <hr>
+        <button (click)="cambiaVisibilidad()"><a id="accionar">Actividades</a></button>
+        <button (click)="cambiaVisibilidad2()"><a id="accionar">Contratos</a></button>
+        <button (click)="cambiaVisibilidad3()"><a id="accionar">Tareas</a></button>
         <br>
+
         <!-- ***************** EMPIEZAN ACTIVIDADES ***************** -->
+        <div class="fondoExpediente">
         <div id="DivActividades">
           <h3>ACTIVIDADES</h3>
           <div>
@@ -135,11 +109,11 @@
                   </div>
                   <div class="col-sm-3">
                     <label>Detalle de Entrada</label>
-                    <input [(ngModel)]="a.detalleEntrada" name=Actividad_detalle_entrada{{i}} class="form-control" type="text">
+                    <input [(ngModel)]="a.detalleEntrada" name=Actividad_detalle_entrada{{i}} class="" type="text">
                   </div>
                   <div class="col-sm-3">
                     <label>Precio de Entrada</label>
-                    <input [(ngModel)]="a.precioEntrada" name=Actividad_precio_entrada{{i}} class="form-control" type="text">
+                    <input [(ngModel)]="a.precioEntrada" name=Actividad_precio_entrada{{i}} class="" type="text">
                   </div>
                   <div class="col-sm-3" *ngIf="a.identificador !== null">
                     <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
@@ -165,7 +139,7 @@
           </button>
         </div>
         <!-- ***************** EMPIEZAN CONTRATOS ***************** -->
-        <div id="DivContratos">
+        <div style="display:none;" id="DivContratos" >
           <h3>CONTRATOS</h3>
           <div>
             <div *ngFor="let a of contratos; let i = index">
@@ -227,7 +201,7 @@
           </button>
         </div>
         <!-- ***************** EMPIEZAN TAREAS ***************** -->
-        <div id="DivTareas">
+        <div style="display:none;" id="DivTareas">
           <h3>TAREAS</h3>
           <div>
             <div *ngFor="let a of tareas; let i = index">
@@ -269,6 +243,7 @@
           <button type="button" class="btn btn-outline-success" (click)="crearPlantillaTar()">
             <span class=""></span>Nueva tarea
           </button>
+        </div>
         </div>
       </main>
     </div>
