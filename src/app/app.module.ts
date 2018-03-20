@@ -49,6 +49,8 @@ import { PerfilComponent } from './components/perfil/perfil.component';
 import { ExpedienteComponent } from './components/expedientes/expediente.component';
 import { ExpedientesComponent } from './components/expedientes/expedientes.component';
 
+import { FileUploadModule } from 'ng2-file-upload';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -81,7 +83,8 @@ import { ExpedientesComponent } from './components/expedientes/expedientes.compo
     FormsModule,
     ReactiveFormsModule,
     HttpModule,
-    APP_ROUTING
+    APP_ROUTING,
+    FileUploadModule
   ],
   providers: [
     UsuariosService,

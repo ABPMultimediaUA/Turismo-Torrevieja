@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from "@angular/http";
+import { environment } from "../../environments/environment";
 
 @Injectable()
 export class PeticionesCrudService {
@@ -62,6 +63,11 @@ export class PeticionesCrudService {
           //Con id crud
           url += "proveedor";
           break;
+      case 8:
+          //Sin id muestra todos los items
+          //Con id crud
+          url += "cartera";
+          break;
       case 101:
           //Todas las actividades de un expediente
           url += `DeExpediente/${id}/actividades`;
@@ -82,6 +88,14 @@ export class PeticionesCrudService {
           //Insertar o eliminar a un id rol un permiso id2, utiliza put (actualizar)
           url += `rol/${id}/permiso/${id2}`;
           break;
+      case 106:
+          //Insertar o eliminar a un id rol un permiso id2, utiliza put (actualizar)
+          url += `DeCartera/${id}/expedientes`;
+          break;
+      case 201:
+          //Insertar imagen en expediente
+          url += `expediente/${id}/?imagen`;
+          break;
       default:
           console.log("No se ha especificado correctamente una URL.");
     }
@@ -94,6 +108,7 @@ export class PeticionesCrudService {
     let promise = new Promise((resolve, reject) => {
       let url = this.crearURL(tipo,-1,-1,-1);
       let body = JSON.stringify( _body );
+      console.log(body);
       let headers = this.header;
       this.http.post(url, body, { headers })
         .toPromise()
@@ -138,6 +153,32 @@ export class PeticionesCrudService {
           .catch((err) => { console.log( err.toString() ); })
     });
     return promise;
+  }
+
+  subirFile (tipo, id, file: File){
+    // let promise = new Promise((resolve, reject) => {
+    //   let url = this.crearURL(tipo,id,-1,-1);
+    //   let formData: FormData = new FormData();
+    //   formData.append('image', file);
+    //   formData.append('_method','put');
+    //   // console.log("cartera", formData.get('cartera_id'),url);
+    //
+    //   let headers = new Headers ({
+    //     'Content-Type': 'application/x-www-form-urlencoded',
+    //     'Cache-Control':'no-cache',
+    //     'Accept':'image/*',
+    //     // 'Content-Type': 'image/jpeg',
+    //     // 'Content-Disposition':'form-data',
+    //     'Access-Control-Allow-Origin':'https://gvent.ovh/Prueba2_1/public',
+    //     'Authorization': this.First_accessToken+this.Secound_accessToken,
+    //   });
+    //   // headers.append('Accept','image/*');
+    //   this.http.put(url, formData, { headers })
+    //     .toPromise()
+    //       .then( res => { resolve( res.json().data ); })
+    //       .catch((err) => { console.log( err.toString() ); })
+    // });
+    // return promise;
   }
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
 import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
@@ -16,33 +16,28 @@ import { AlertService, AuthenticationService,PeticionesCrudService,LogueadoServi
 })
 export class ExpedienteComponent implements OnInit {
 
+  First_accessToken:string="Bearer ";
+  Secound_accessToken:string=localStorage.accesToken;
+
   id:string;
   errorActualizarItem = false;
-  errorMensaje:string[]=[];
+  errorMensaje:string[] = [];
   itemActualizado = false;
+  @ViewChild("etiquetaImgExp") etiqueta;
+  archivoImg:File = null;
   // permisosCambiados:string[]=[];
   // auxPermisos:string[]=[];
 
   public expediente:ExpedienteInterfaz={
     identificador:0,
-    actor:0,
-    aforo:0,
     avance:"",
     cartera:0,
-    // cif:"",
     coordinador:"",
     detalle:"",
-    // espacio:0,
-    evento:0,
     fechaFin:null,
     fechaInicio:null,
-    // hora:0,
-    imagen:null,
+    image:"",
     nombreExpediente:"",
-    // portal:"",
-    precio:0,
-    // precioEntrada:0.0,
-    // separacion:"",
     titulo:"",
   };
 
@@ -68,6 +63,9 @@ export class ExpedienteComponent implements OnInit {
             this._ItemService.getItem(0,this.id,-1,-1).then(
               res => {
                 this.expediente = res as ExpedienteInterfaz;
+                // this.expediente["_metodo"] = "put";
+                // this.expediente.image=null;
+                console.log(this.expediente);
               }
             );
 
@@ -158,7 +156,7 @@ export class ExpedienteComponent implements OnInit {
     var t:TareaInterface;
     t={
       expediente:+this.id,
-      finalizado:0,
+      finalizado:null,
       identificador:null,
       nombreTarea:null,
       usuario:null,
@@ -167,34 +165,50 @@ export class ExpedienteComponent implements OnInit {
   }
 
   //ELIMINAR ITEMS
-  eliminarItem(a, i, event, index){
-    var div = event.parentElement.parentElement.parentElement.parentElement.parentElement;
+  eliminarItem(a, i, index){
+  console.log(index);
     if (i != null){
       var mensaje = "Va a eliminarse de forma definitiva.\n"+
                     "¿Continuar?";
       if(confirm(mensaje)){
-        this._ItemService.eliminarItem(a,i,-1).then(div.parentNode.removeChild(div));
+        this._ItemService.eliminarItem(a,i,-1).then( res=>{
+          if(a==1){ this.actividades.splice(index,1); }
+          else if(a==3){ this.contratos.splice(index,1); }
+          else if(a==2){ this.tareas.splice(index,1); }
+        });
       }
     }
     else{
-      div.parentNode.removeChild(div);
       if(a==1){
-        this.actividades.splice(index);
+        this.actividades.splice(index,1);
       }
       else if(a==3){
-        this.contratos.splice(index);
+        this.contratos.splice(index,1);
       }
       else if(a==2){
-        this.tareas.splice(index);
+        this.tareas.splice(index,1);
       }
     }
   }
-
+  
   //ACTUALIZAR Y GUARDAR NUEVOS ITEMS
   guardarCambiosExp(){
-    this._ItemService.actualizarItem(0,this.id,this.expediente,-1)
-      .then( res=> {alert("Actualizado correctamente."); })
-      .catch( (err) => { console.log( err.toString() ); })
+    var expBody = this.expediente;
+    delete expBody.image;
+    this._ItemService.actualizarItem(0,this.id,expBody,-1)
+    .then( res=> {
+      // if(this.archivoImg){ //ACTUALIZAMOS IMG
+      //   this._ItemService.subirFile(0,this.id,this.archivoImg)
+      //     .then( res=>{ alert("Actualizado correctamente."); console.log(res);})
+      //     .catch( (er) => { alert("Expediente actualizado correctamente, a excepción de la imagen.");
+      //                       console.log( er.toString()) })
+      // }
+      // else{
+         alert("Actualizado correctamente." + "SIN IMAGEN");
+      // }
+    })
+    .catch( (err) => { alert("Se ha producido un error inesperado.\nNo se ha podido actualizar el expediente.");
+                       console.log( err.toString()) })
   }
 
   crearModificarActConTar(i,a,index){
@@ -218,5 +232,18 @@ export class ExpedienteComponent implements OnInit {
           alert("Creado correctamente."); })
         .catch( (err) => { console.log( err.toString() ); })
     }
+  }
+
+  cargarImg(files: FileList){
+    this.archivoImg = files.item(0);
+    var exp = this.expediente;
+    var etiqueta = this.etiqueta;
+    var r = new FileReader();
+    r.onload = function(e){
+      let o = etiqueta.nativeElement as HTMLImageElement;
+      o.src = r.result;
+      exp.image = o.alt = files[0].name;
+    }
+    r.readAsDataURL(files[0]);
   }
 }

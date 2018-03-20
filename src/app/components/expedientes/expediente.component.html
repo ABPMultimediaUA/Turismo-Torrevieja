@@ -1,8 +1,6 @@
 <div class="container-fluid">
   <div class="row ">
-
       <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
-
         <h1><span class="icon-crown"></span>Expediente <small>{{expediente.nombreExpediente}}</small></h1>
         <div class="container" *ngIf="errorActualizarItem === true">
             <div class="jumbotron">
@@ -33,58 +31,27 @@
             </div>
             <div class="col-sm-3">
               <label>Fecha inicio</label>
-              <input [(ngModel)]="expediente.fechaInicio" name="fechaInicio" class="form-control" required type="text">
+              <input [(ngModel)]="expediente.fechaInicio" name="fechaInicio" class="form-control" required type="date">
             </div>
             <div class="col-sm-3">
               <label>Fecha fin</label>
-              <input [(ngModel)]="expediente.fechaFin" name="fechaFin" class="form-control" required type="text">
+              <input [(ngModel)]="expediente.fechaFin" name="fechaFin" class="form-control" required type="date">
             </div>
             <div class="col-sm-3">
               <label>Coordinador</label>
               <input [(ngModel)]="expediente.coordinador" name="coordinador" class="form-control" placeholder="Persona responsable" required type="text">
             </div>
-            <!-- <div class="col-sm-3">
-              <label>Aforo</label>
-              <input [(ngModel)]="expediente.aforo" name="aforo" class="form-control" required type="text">
-            </div> -->
-            <!-- <div class="col-sm-3">
-              <label>Portal</label>
-              <input [(ngModel)]="expediente.portal" name="portal" class="form-control" required type="text">
-            </div> -->
-            <div class="col-sm-3">
-              <label>Precio</label>
-              <input [(ngModel)]="expediente.precio" name="precio" class="form-control" required type="text">
-            </div>
-            <!-- <div class="col-sm-3">
-              <label>Precio entrada</label>
-              <input [(ngModel)]="expediente.precioEntrada" name="precioEntrada" class="form-control" required type="text">
-            </div> -->
-
-            <!-- <div class="col-sm-3">
-              <label>Actor</label>
-              <input [(ngModel)]="expediente.actor" name="actor" class="form-control" required type="text">
-            </div> -->
-            <!-- <div class="col-sm-3">
-              <label>Avance</label>
-              <input [(ngModel)]="expediente.avance" name="avance" class="form-control" required type="text">
-            </div> -->
-            <!-- <div class="col-sm-3">
-              <label>CIF</label>
-              <input [(ngModel)]="expediente.cif" name="cif" class="form-control" required type="text">
-            </div> -->
-            <!-- <div class="col-sm-3">
-              <label>Separacion</label>
-              <input [(ngModel)]="expediente.separacion" name="separacion" class="form-control" required type="text">
-            </div> -->
             <div class="col-sm-3">
               <label>Detalles</label>
               <input [(ngModel)]="expediente.detalle" name="detalle" class="form-control" required type="text">
             </div>
-            <!-- <div class="col-sm-6">
-              <img src="{{expediente.imagen}}" alt="Imagen evento" width="200px">
-              <input [(ngModel)]="expediente.imagen" name="detalle" type="file">
-            </div> -->
+            <div class="col-sm-9">
+              <label for="imagenForm">Imagen evento</label>
+              <img src="" alt="Imagen del evento" width="200px" #etiquetaImgExp>
+              <input type="file" id="imagenForm" (change)="cargarImg($event.target.files)" accept="image/*">
+            </div>
           </div>
+          <input name="_method" type="hidden" value="PUT">
           <div class="form-group">
             <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
               Guardar cambios
@@ -152,7 +119,7 @@
                     </button>
                   </div>
                   <div class="col-sm-3">
-                    <button (click)="eliminarItem(1, a.identificador, $event.target,i)" type="button" class="btn btn-outline-danger">
+                    <button (click)="eliminarItem(1, a.identificador, i)" type="button" class="btn btn-outline-danger">
                       <span class="icon-trash"></span>
                     </button>
                   </div>
@@ -214,7 +181,7 @@
                     </button>
                   </div>
                   <div class="col-sm-3">
-                    <button (click)="eliminarItem(3, a.identificador, $event.target,i)" type="button" class="btn btn-outline-danger">
+                    <button (click)="eliminarItem(3, a.identificador, i)" type="button" class="btn btn-outline-danger">
                       <span class="icon-trash"></span>
                     </button>
                   </div>
@@ -243,9 +210,14 @@
                       <option [ngValue]="u.identificador" *ngFor="let u of users">{{u.nombreUsuario}}</option>
                     </select>
                   </div>
-                  <div class="col-sm-3">
+                  <!-- <div class="col-sm-3">
                     <label>Finalizada</label>
                     <input [(ngModel)]="a.finalizado" name=Tarea_finalizado{{i}} class="form-control" type="text">
+                  </div> -->
+                  <div class="col-sm-3">
+                    <label>Finalizada
+                      <input [(ngModel)]="a.finalizado" name=Tarea_finalizado{{i}} class="form-control" type="checkbox">
+                    </label>
                   </div>
                   <div class="col-sm-3" *ngIf="a.identificador !== null">
                     <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
@@ -258,7 +230,7 @@
                     </button>
                   </div>
                   <div class="col-sm-3">
-                    <button (click)="eliminarItem(2, a.identificador, $event.target,i)" type="button" class="btn btn-outline-danger">
+                    <button (click)="eliminarItem(2, a.identificador,i)" type="button" class="btn btn-outline-danger">
                       <span class="icon-trash"></span>
                     </button>
                   </div>

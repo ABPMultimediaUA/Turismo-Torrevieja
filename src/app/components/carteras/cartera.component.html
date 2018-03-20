@@ -1,4 +1,3 @@
-
 <div class="container-fluid">
       <div style="width:100%">
         <h1 style="margin:auto;"><span class="icon-folder-open"></span> Cartera
@@ -39,62 +38,64 @@
             </div>
         </div>
         <form (ngSubmit)="guardar()" #forma="ngForm">
-        <!-- *ngIf="!permisoEditar" -->
-          <div *ngIf="!permisoEditar" class="form-group">
-            <label>Nombre</label>
-            <input [(ngModel)]="cartera.nombreCartera"
-              name="nombreCartera"
-              class="form-control"
-              placeholder="Nombre de la Cartera"
-              readonly
-              type="text">
-          </div>
-          <div *ngIf="!permisoEditar" class="form-group">
-            <label>Año</label>
-            <input [(ngModel)]="cartera.year"
-              name="año"
-              class="form-control"
-              placeholder="Año de la Cartera"
-              readonly
-              type="text">
-          </div>
-          <div *ngIf="!permisoEditar" class="form-group">
-            <label>Trimestre</label>
-            <input [(ngModel)]="cartera.trimestre"
-              name="trimestre"
-              class="form-control"
-              placeholder="Trimestre de la cartera"
-              readonly
-              type="text">
-          </div>
-            <!-- *ngIf="permisoEditar" -->
-          <div *ngIf="permisoEditar" class="form-group">
-            <label>Nombre</label>
-            <input [(ngModel)]="cartera.nombreCartera"
-              name="nombreCartera"
-              class="form-control"
-              placeholder="Nombre de la Cartera"
-              required
-              type="text">
-          </div>
-          <div *ngIf="permisoEditar" class="form-group">
-            <label>Año</label>
-            <input [(ngModel)]="cartera.year"
-              name="año"
-              class="form-control"
-              placeholder="Año de la Cartera"
-              required
-              type="text">
-          </div>
-          <div *ngIf="permisoEditar" class="form-group">
-            <label>Trimestre</label>
-            <input [(ngModel)]="cartera.trimestre"
-              name="trimestre"
-              class="form-control"
-              placeholder="Trimestre de la cartera"
-              required
-              type="text">
-          </div>
+          <div class="row">
+          <!-- *ngIf="!permisoEditar" -->
+            <div *ngIf="!permisoEditar" class="form-group col-sm-3">
+              <label>Nombre</label>
+              <input [(ngModel)]="cartera.nombreCartera"
+                name="nombreCartera"
+                class="form-control"
+                placeholder="Nombre de la Cartera"
+                readonly
+                type="text">
+            </div>
+            <div *ngIf="!permisoEditar" class="form-group col-sm-3">
+              <label>Año</label>
+              <input [(ngModel)]="cartera.year"
+                name="año"
+                class="form-control"
+                placeholder="Año de la Cartera"
+                readonly
+                type="text">
+            </div>
+            <div *ngIf="!permisoEditar" class="form-group col-sm-3">
+              <label>Trimestre</label>
+              <input [(ngModel)]="cartera.trimestre"
+                name="trimestre"
+                class="form-control"
+                placeholder="Trimestre de la cartera"
+                readonly
+                type="text">
+            </div>
+              <!-- *ngIf="permisoEditar" -->
+            <div *ngIf="permisoEditar" class="form-group col-sm-3">
+              <label>Nombre</label>
+              <input [(ngModel)]="cartera.nombreCartera"
+                name="nombreCartera"
+                class="form-control"
+                placeholder="Nombre de la Cartera"
+                required
+                type="text">
+            </div>
+            <div *ngIf="permisoEditar" class="form-group col-sm-3">
+              <label>Año</label>
+              <input [(ngModel)]="cartera.year"
+                name="año"
+                class="form-control"
+                placeholder="Año de la Cartera"
+                required
+                type="text">
+            </div>
+            <div *ngIf="permisoEditar" class="form-group col-sm-3">
+              <label>Trimestre</label>
+              <input [(ngModel)]="cartera.trimestre"
+                name="trimestre"
+                class="form-control"
+                placeholder="Trimestre de la cartera"
+                required
+                type="text">
+            </div>
+        </div>
 
           <div class="form-group">
             <button *ngIf="permisoEditar"
@@ -115,9 +116,76 @@
           </div>
         </form>
         <br>
-
-
-
-
-
-<!-- aqui acaba el container fluid -->
+        <div class="row">
+           <h3 class="col-sm-3">Expedientes</h3>
+           <button *ngIf="!formExVisible" (click)="mostrarFormExp(true)" type="button" name="button" class="btn btn-outline-primary">Nuevo expediente</button>
+           <button *ngIf="formExVisible" (click)="mostrarFormExp(false)" type="button" name="button" class="btn btn-outline-danger">Cancelar</button>
+        </div>
+        <br>
+        <!-- ***************** FORMULARIO EXPEDIENTE ***************** -->
+        <div *ngIf="formExVisible">
+          <form (ngSubmit)="crearNuevoExp()" #forma="ngForm">
+            <div class="row">
+              <div class="col-sm-3">
+                <label>Nombre del expediente</label>
+                <input [(ngModel)]="expN.nombreExpediente" name=Exp_nomb class="form-control" required type="text">
+              </div>
+              <div class="col-sm-3">
+                <label>Título</label>
+                <input [(ngModel)]="expN.titulo" name=Exp_tit class="form-control" type="text">
+              </div>
+              <div class="col-sm-3">
+                <label>Coordinador</label>
+                <select class="form-control" name=Exp_user [(ngModel)]="expN.coordinador">
+                  <option [ngValue]="u.identificador" *ngFor="let u of users">{{u.nombreUsuario}}</option>
+                </select>
+              </div>
+              <div class="col-sm-3">
+                <label>Fecha inicio</label>
+                <input [(ngModel)]="expN.fechaInicio" name=Exp_fechaIn class="form-control" type="date">
+              </div>
+              <div class="col-sm-3">
+                <label>Fecha final</label>
+                <input [(ngModel)]="expN.fechaFin" name=Exp_fechaFin class="form-control" type="date">
+              </div>
+              <div class="col-sm-3">
+                <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
+                  Crear
+                </button>
+              </div>
+            </div>
+          </form>
+          <br>
+        </div>
+        <!-- ***************** LISTA EXPEDIENTES ***************** -->
+        <table class="table table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Id</th>
+              <th scope="col">Nombre</th>
+              <th scope="col">Título</th>
+              <th scope="col">Coordinador</th>
+              <th scope="col">Fecha Inicio</th>
+              <th scope="col">Fecha Fin</th>
+              <th class="text-right">Opciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let e of  expediente; let i = index">
+              <td>{{ i + 1 }}</td>
+              <td>{{ e.identificador }}</td>
+              <td>{{ e.nombreExpediente }}</td>
+              <td>{{ e.titulo }}</td>
+              <td>{{ e.coordinador }}</td>
+              <td>{{ e.fechaInicio }}</td>
+              <td>{{ e.fechaFin }}</td>
+              <td class="text-right w20">
+                <button  [routerLink]="['/expediente', e.identificador]"
+                type="button" class="btn btn-outline-success">
+                  <span class="icon-pencil"></span>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
