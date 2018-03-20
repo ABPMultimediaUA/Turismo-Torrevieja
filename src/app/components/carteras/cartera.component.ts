@@ -2,60 +2,82 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Cartera }  from "../../interfaces/cartera.interface";
-import { AlertService, AuthenticationService, CarterasService, LogueadoService } from '../../services/index';
+import { Usuario }  from "../../interfaces/usuario.interface";
+import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
+import { AlertService, AuthenticationService, PeticionesCrudService, LogueadoService } from '../../services/index';
+
 @Component({
   selector: 'app-cartera',
   templateUrl: './cartera.component.html'
 })
+
 export class CarteraComponent implements OnInit {
-errorCartera = false;
-rgstrCartera = false;
-permisoEditar = false;
-errorCarteraActualizar = false;
-//TituloNuevo = "";
-errorMensaje:string[]=[];
-public cartera:Cartera={
-  identificador:"",
-  nombreCartera:"string",
-  year:0,
-  trimestre:0,
-  fechaCreacion:"",
-  fechaActualizacion:"",
-  fechaEliminacion:""
-};
+  formExVisible = false;
+  errorCartera = false;
+  rgstrCartera = false;
+  permisoEditar = false;
+  errorCarteraActualizar = false;
+  //TituloNuevo = "";
+  errorMensaje:string[]=[];
 
-nuevo:boolean = false;
-id:string;
+  public cartera:Cartera={
+    identificador:"",
+    nombreCartera:"string",
+    year:0,
+    trimestre:0,
+    fechaCreacion:"",
+    fechaActualizacion:"",
+    fechaEliminacion:""
+  };
 
+  public expediente:ExpedienteInterfaz[];
+  public users:Usuario[];
+  public expN:ExpedienteInterfaz={
+    identificador:null,
+    avance:"",
+    cartera:0,
+    coordinador:"",
+    detalle:"",
+    fechaFin:null,
+    fechaInicio:null,
+    image:"",
+    nombreExpediente:"",
+    titulo:"",
+  };
 
+  nuevo:boolean = false;
+  id:string;
 
+  constructor( private _carterasService: PeticionesCrudService,
+                  private router:Router,
+                  private route:ActivatedRoute,//esto es para pasar como parametro
+                  public  logueadoService: LogueadoService
+                )
+  {
+    this.logueadoService.comprobarLogueado();
 
-constructor( private _carterasService: CarterasService,
-                private router:Router,
-                private route:ActivatedRoute,//esto es para pasar como parametro
-                public  logueadoService: LogueadoService
-              ) {
-              this.logueadoService.comprobarLogueado();
+    this.route.params.subscribe(parametros=>{
+      this.id = parametros['id'];
 
-          this.route.params.subscribe(parametros=>{
-                console.log(parametros);
-                this.id = parametros['id']
+      //COGEMOS LA CARTERA
+      this._carterasService.getItem(8,this.id,-1,-1).then(
+        res => {
+          this.cartera = res as Cartera;
+      });
 
-                //
-                // if(this.id == "nuevo"){
-                //   //insertando
-                //   this.TituloNuevo="Nuevo ";
-                //   console.log("nuevo usuario");
-                //
-                //
-                // }else{
-                // actualizando
+      //COGEMOS SU EXPEDIENTES
+      this._carterasService.getItem(106,this.id,-1,-1).then(
+        res => {
+          this.expediente = res as ExpedienteInterfaz[];
+          console.log(res);
+      });
 
-                this._carterasService.getCartera(this.id)
-                    .subscribe( cartera => {cartera.data.password="",   this.cartera = cartera.data, console.log(cartera)})
-                    console.log("pone password vacio");
-              // }
-          });
+      //COGEMOS LOS USUARIOS
+      this._carterasService.getItem(5,-1,-1,-1).then(
+        res => {
+          this.users = res as Usuario[];
+      });
+    });
   }
 
   ngOnInit() {
@@ -63,200 +85,52 @@ constructor( private _carterasService: CarterasService,
 
 
 
-  guardar()
+  guardar(){
+    this._carterasService.actualizarItem(8,this.id,this.cartera,-1)
+      .then( res=> { alert("Actualizado correctamente."); })
+      .catch( (err) => { alert("Se ha producido un error inesperado.\nNo se ha podido actualizar la cartera.");
+                         console.log( err.toString()) })
+  }
 
-  {
-        console.log("ewfefe"+this.id);
-        if(this.id == "nuevo"){
-          console.log("voy a guardar nueva cartera(abajo):");
-            console.log(this.cartera);
-            this._carterasService.nuevaCartera( this.cartera )
-              .subscribe( data=>{
-                //this.router.navigate(['/heroe',data.name])
-                console.log(data);
-                this.errorCartera = false;
-                this.rgstrCartera = true;
-            //    this.ngForm.reset();
+  puedeEditar(){
+    console.log("1.puedeEditar? =",this.permisoEditar);
+    this.permisoEditar = true;
+    console.log("2.puedeEditar? =",this.permisoEditar);
+    return this.permisoEditar;
+  }
 
+  mostrarFormExp(i){
+      this.formExVisible = i;
+      this.borrarFormExp();
+  }
 
+  crearNuevoExp(){
+    this.expN.cartera = +this.id;
+    this.expN.avance += 0;
+    this._carterasService.crearItem(0,this.expN)
+      .then( res=> {
+        alert("Expediente creado correctamente.");
+        this.expediente.push(res as ExpedienteInterfaz);
+        this.borrarFormExp();
+        this.formExVisible = false;
+      })
+      .catch( (err) => { alert("Se ha producido un error inesperado.\nNo se ha podido crear el expediente.");
+                         console.log( err.toString()) })
+  }
 
-              },
-              error=> {
-                //this.router.navigate(['/heroe',data.name])
-                //console.log(error);
-                let mensaje=JSON.parse(error._body);//Cambiar mensaje devuelto a JSON
-                console.log(mensaje.error);
-
-                this.errorMensaje=[];
-
-                            if(mensaje.error=="No posee permisos para ejecutar esta acción")
-                            {
-                              this.errorMensaje.push("No posee permisos para ejecutar esta acción");
-                            }
-
-                            if(mensaje.error=="No estás verificado")
-                            {
-                              this.errorMensaje.push("No estás verificado");
-                            }
-
-
-
-
-
-                if (typeof(mensaje.error.nombreCartera) != "undefined")
-                {
-                  for(let i=0;i<mensaje.error.nombreCartera.length;i++)
-                  {
-                    this.errorMensaje.push(mensaje.error.nombreCartera[i]);
-                  }
-                }
-                 if (typeof(mensaje.error.correo) != "undefined")
-                 {
-                   for(let i=0;i<mensaje.error.correo.length;i++)
-                   {
-                     this.errorMensaje.push(mensaje.error.correo[i]);
-                   }
-                 }
-                 if (typeof(mensaje.error.apodo) != "undefined")
-                 {
-                   for(let i=0;i<mensaje.error.apodo.length;i++)
-                   {
-                     this.errorMensaje.push(mensaje.error.apodo[i]);
-                   }
-                 }
-                 if (typeof(mensaje.error.password) != "undefined")
-                 {
-                   for(let i=0;i<mensaje.error.password.length;i++)
-                   {
-                     this.errorMensaje.push(mensaje.error.password[i]);
-                   }
-                 }
-
-                console.log(this.errorMensaje);
-
-
-
-                /*
-                for(let i=0; i<mensaje.error.length;i++)
-                {
-                  console.log("Entrar2");
-                  console.log(mensaje.error[i]);
-                }
-                */
-
-                this.errorCartera = true;
-                this.rgstrCartera = false;
-              },);
-
-
-
-          //insertando
-          // this._usuariosService.nuevoUsuario(this.usuario)
-          //     .subscribe(data=>{
-          //         this.router.navigate(['/usuario',data.name])
-          //     },
-          //     error=>console.error(error));
-        }else{
-
-        //actualizando
-        console.log("voy a actualizar usuario");
-        this._carterasService.actualizarCartera(this.cartera, this.id)
-            .subscribe(data=>{
-              console.log("data que queremos actualizar"+data);
-              this.errorCarteraActualizar = false;
-                this.router.navigate(['carteras']);
-            },
-            error=> {
-              //this.router.navigate(['/heroe',data.name])
-              //console.log(error);
-              let mensaje=JSON.parse(error._body);//Cambiar mensaje devuelto a JSON
-              console.log(mensaje.error);
-
-              this.errorMensaje=[];
-
-                          if(mensaje.error=="No posee permisos para ejecutar esta acción")
-                          {
-                            this.errorMensaje.push("No posee permisos para ejecutar esta acción");
-                          }
-
-                          if(mensaje.error=="No estás verificado")
-                          {
-                            this.errorMensaje.push("No estás verificado");
-                          }
-
-
-
-
-
-              if (typeof(mensaje.error.nombreCartera) != "undefined")
-              {
-                for(let i=0;i<mensaje.error.nombreCartera.length;i++)
-                {
-                  this.errorMensaje.push(mensaje.error.nombreCartera[i]);
-                }
-              }
-               if (typeof(mensaje.error.correo) != "undefined")
-               {
-                 for(let i=0;i<mensaje.error.correo.length;i++)
-                 {
-                   if(mensaje.error.correo[i]=="The correo must be a valid correo address.")//este ya esta traducido
-                   {
-                     this.errorMensaje.push("El correo debe ser un correo válido");
-                   }
-                   else{
-                     this.errorMensaje.push(mensaje.error.correo[i]);//aqui guarda todos los errores de correo y los muestra
-                   }
-
-                 }
-               }
-               if (typeof(mensaje.error.apodo) != "undefined")
-               {
-                 for(let i=0;i<mensaje.error.apodo.length;i++)
-                 {
-                   this.errorMensaje.push(mensaje.error.apodo[i]);
-                 }
-               }
-               if (typeof(mensaje.error.password) != "undefined")
-               {
-                 for(let i=0;i<mensaje.error.password.length;i++)
-                 {
-                   this.errorMensaje.push(mensaje.error.password[i]);
-                 }
-               }
-
-              console.log(this.errorMensaje);
-
-
-
-              /*
-              for(let i=0; i<mensaje.error.length;i++)
-              {
-                console.log("Entrar2");
-                console.log(mensaje.error[i]);
-              }
-              */
-
-
-              this.errorCarteraActualizar =true;
-            },);
-
-
-
-        //insertando
-        // this._usuariosService.nuevoUsuario(this.usuario)
-        //     .subscribe(data=>{
-        //         this.router.navigate(['/usuario',data.name])
-        //     },
-        //     error=>console.error(error));
-        }
-
+  borrarFormExp(){
+    this.expN={
+      identificador:null,
+      avance:"",
+      cartera:0,
+      coordinador:"",
+      detalle:"",
+      fechaFin:null,
+      fechaInicio:null,
+      image:"",
+      nombreExpediente:"",
+      titulo:"",
     }
-
-    puedeEditar(){
-      console.log("1.puedeEditar? =",this.permisoEditar);
-      this.permisoEditar = true;
-      console.log("2.puedeEditar? =",this.permisoEditar);
-      return this.permisoEditar;
-    }
+  }
 
 }
