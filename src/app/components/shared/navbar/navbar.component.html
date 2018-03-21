@@ -108,7 +108,7 @@
          <span class="icon-folder"></span> Gestion Eventos
         </button>
         <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
-          <a
+          <!-- <a
           role="button"
           [routerLink]="['/eventos']"
           class="nav-link elemento-navbar d9d9d9" >
@@ -120,7 +120,7 @@
           <span class="icon-doc-add"></span> Nuevo Evento</a>
 
 
-          <div class="dropdown-divider"></div>
+          <div class="dropdown-divider"></div> -->
 
           <a
           role="button"
@@ -184,13 +184,13 @@
           <span class="icon-plus-circled"></span> Nuevo Proveedor</a>
         </div>
       </div>
-      <div  *ngIf="logueadoService.estaLogueado" class="dropdown ">
+      <!-- <div  *ngIf="logueadoService.estaLogueado" >
         <a
         role="button"
         [routerLink]="['/expedientes']"
         class="nav-link elemento-navbar d9d9d9 " >
         <span class="icon-comment"></span> Expedientes</a>
-      </div>
+      </div> -->
     </ul>
     <div  *ngIf="logueadoService.estaLogueado" class="dropdown ">
       <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
