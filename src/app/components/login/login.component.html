@@ -27,7 +27,9 @@
                 <input type="text" class="form-control" name="email" [(ngModel)]="model.email" #username="ngModel" required />
                 <div *ngIf="f.submitted && !username.valid" class="help-block">Username is required</div>
             </div> -->
-            <mat-form-field  [ngClass]="{ 'has-error': f.submitted && !password.valid }" style="width:300px; padding-left:30px; padding-top:20px;" hintLabel="Contraseña válida">
+            <!-- <mat-form-field  [ngClass]="{ 'has-error': f.submitted && !password.valid }" style="width:300px; padding-left:30px; padding-top:20px;" hintLabel="Contraseña válida"> -->
+              <mat-form-field  [ngClass]="{ 'has-error': f.submitted }" style="width:300px; padding-left:30px; padding-top:20px;" hintLabel="Contraseña válida">
+
             <input  matInput type="password"  name="password" [(ngModel)]="model.password" #username="ngModel" required  placeholder="Contraseña">
             </mat-form-field>
             <!-- <mat-error *ngIf="f.submitted && !password.valid" class="help-block">Debes introducir una contraseña</mat-error><br><br> -->
@@ -44,9 +46,9 @@
               <button type="submit" style="width:200px" color="primary" mat-raised-button>Login</button>
 
            </mat-dialog-actions>
-           <div *ngIf="logueando==true;" >
+           <!-- <div *ngIf="logueando==true;" >
                <mat-spinner  color="primary"></mat-spinner>
-           </div>
+           </div> -->
             <!-- <mat-form-field  hintLabel="Max 20 caracteres">
             <input  matInput   name="nombreUsuario"  [(ngModel)]="usuario.nombreUsuario" placeholder="Nombre">
             </mat-form-field>

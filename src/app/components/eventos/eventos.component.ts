@@ -133,7 +133,7 @@ export class EventosComponent implements OnInit {
             console.log(this.totalPaginas);
             this.loading=false;
 
-        
+
 
             for(let i=0;i<this.totalPaginas;i++)
             {

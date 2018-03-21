@@ -103,7 +103,7 @@ export class UsuariosComponent implements OnInit {
             console.log("this.totalPaginas:");
             console.log(this.totalPaginas);
             this.loading=false;
-      
+
 
             for(let i=0;i<this.totalPaginas;i++)
             {
@@ -146,6 +146,7 @@ export class UsuariosComponent implements OnInit {
     }
 
 openDialogEditar(row){
+   
    console.log(row);
    const dialogRef = this.dialog.open(EditarUsuarioDialog, {
      height: '600px',

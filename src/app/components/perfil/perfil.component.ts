@@ -192,7 +192,7 @@ export class PerfilComponent implements OnInit {
 
   ngOnInit() {
   }
-  openDialogEditarPerfil(usuario){
+  openDialogEditarPerfil(){
      console.log(this.usuario);
      const dialogRef = this.dialog.open(EditarPerfilDialog, {
        height: '500px',

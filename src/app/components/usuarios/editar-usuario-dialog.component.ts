@@ -150,7 +150,7 @@ export class EditarUsuarioDialog {
 
           this.dialogRef.close();
             // this.router.navigate(['/eventos', 1]);
-       // location.reload(true);
+       location.reload(true);
      },2000);
            console.log(this.usuario);
            console.log("hola");
