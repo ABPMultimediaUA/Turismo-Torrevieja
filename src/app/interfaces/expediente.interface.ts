@@ -1,26 +1,13 @@
-export interface Expediente
+export interface ExpedienteInterfaz
 {
-identificador:string;
-evento:string;
-cartera:number;
-espacio:number;
-nombreExpediente:string;
-fechaInicio:string;
-fechaFin:string;
-hora:number;
-aforo:number;
-titulo:string;
-actor:number;
-precio:number;
-portal:string;
-separacion:string;
-precioEntrada:number;
-coordinador:string;
-cif:number;
-detalle:string;
-imagen:string;
-avance:string;
-fechaCreacion:string;
-fechaActualizacion:string;
-fechaEliminacion:string;
+    identificador:number;
+    avance:string;
+    cartera:number;
+    coordinador:string;
+    detalle:string;
+    fechaFin:Date;
+    fechaInicio:Date;
+    image:string;
+    nombreExpediente:string;
+    titulo:string;
 }

@@ -1,261 +1,249 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
 import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
-import { Evento }  from "../../interfaces/evento.interface";
-import { AlertService, AuthenticationService, EventosService, LogueadoService } from '../../services/index';
+import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
+import { ActividadInterface }  from "../../interfaces/actividad.interface";
+import { TareaInterface }  from "../../interfaces/tareas.interface";
+import { ContratoInterface }  from "../../interfaces/contrato.interface";
+import { Usuario }  from "../../interfaces/usuario.interface";
+import { EspacioInterface }  from "../../interfaces/espacio.interface";
+import { ProveedorInterface }  from "../../interfaces/proveedor.interface";
+import { AlertService, AuthenticationService,PeticionesCrudService,LogueadoService } from '../../services/index';
 @Component({
   selector: 'app-expediente',
-  templateUrl: './expediente.component.html'
+  templateUrl: './expediente.component.html',
+  styleUrls: ['./expediente.component.css']
 })
 export class ExpedienteComponent implements OnInit {
-errorEvento = false;
-rgstrEvento = false;
-permisoEditar = false;
-errorEventoActualizar = false;
-//TituloNuevo = "";
-errorMensaje:string[]=[];
-public evento:Evento={
-  identificador:"",
-  nombreEvento:"",
-  usuario:"", //usuario que ha creado el evento
-  fechaCreacion:"",
-  fechaActualizacion:"",
-  fechaEliminacion:""
-};
 
-nuevo:boolean = false;
-id:string;
+  First_accessToken:string="Bearer ";
+  Secound_accessToken:string=localStorage.accesToken;
 
+  id:string;
+  errorActualizarItem = false;
+  errorMensaje:string[] = [];
+  itemActualizado = false;
+  @ViewChild("etiquetaImgExp") etiqueta;
+  archivoImg:File = null;
+  // permisosCambiados:string[]=[];
+  // auxPermisos:string[]=[];
 
+  public expediente:ExpedienteInterfaz={
+    identificador:0,
+    avance:"",
+    cartera:0,
+    coordinador:"",
+    detalle:"",
+    fechaFin:null,
+    fechaInicio:null,
+    image:"",
+    nombreExpediente:"",
+    titulo:"",
+  };
 
+  public actividades:ActividadInterface[];
+  public tareas:TareaInterface[];
+  public contratos:ContratoInterface[];
+  public users:Usuario[];
+  public espacio:EspacioInterface[];
+  public proveedor:ProveedorInterface[];
 
-constructor( private _eventosService: EventosService,
+  constructor(  private _ItemService: PeticionesCrudService,
                 private router:Router,
                 private route:ActivatedRoute,//esto es para pasar como parametro
                 public  logueadoService: LogueadoService
-              ) {
-              this.logueadoService.comprobarLogueado();
+              )
+  {
+      this.logueadoService.comprobarLogueado();
 
-          this.route.params.subscribe(parametros=>{
-                console.log(parametros);
-                this.id = parametros['id']
+      this.route.params.subscribe(parametros=>{
+            this.id = parametros['id'];
 
-                //
-                // if(this.id == "nuevo"){
-                //   //insertando
-                //   this.TituloNuevo="Nuevo ";
-                //   console.log("nuevo usuario");
-                //
-                //
-                // }else{
-                // actualizando
+            //COGEMOS EL EXPEDIENTE
+            this._ItemService.getItem(0,this.id,-1,-1).then(
+              res => {
+                this.expediente = res as ExpedienteInterfaz;
+                // this.expediente["_metodo"] = "put";
+                // this.expediente.image=null;
+                console.log(this.expediente);
+              }
+            );
 
-                this._eventosService.getEvento(this.id)
-                    .subscribe( evento => {evento.data.password="",   this.evento = evento.data, console.log(evento)})
-                    console.log("pone password vacio");
-              // }
-          });
-  }
+            //COGEMOS LAS ACTIVIDADES
+            this._ItemService.getItem(101,this.id,-1,-1).then(
+              res => {
+                this.actividades = res as ActividadInterface[];
+              }
+            );
+
+            //COGEMOS LAS TAREAS
+            this._ItemService.getItem(102,this.id,-1,-1).then(
+              res => {
+                this.tareas = res as TareaInterface[];
+              }
+            );
+
+            //COGEMOS LOS CONTRATOS
+            this._ItemService.getItem(103,this.id,-1,-1).then(
+              res => {
+                this.contratos = res as ContratoInterface[];
+              }
+            );
+
+            //COGEMOS LOS USUARIOS
+            this._ItemService.getItem(5,-1,-1,-1).then(
+              res => {
+                this.users = res as Usuario[];
+              }
+            );
+
+            //COGEMOS LOS ESPACIOS
+            this._ItemService.getItem(6,-1,-1,-1).then(
+              res => {
+                this.espacio = res as EspacioInterface[];
+              }
+            );
+
+            //COGEMOS LOS PROVEEDORES
+            this._ItemService.getItem(7,-1,-1,-1).then(
+              res => {
+                this.proveedor = res as ProveedorInterface[];
+              }
+            );
+      });
+    }
 
   ngOnInit() {
   }
 
+  //CREAR NUEVAS PLANTILLA
+  crearPlantillaAct(){
+    var a:ActividadInterface;
+    a={
+      capacidadMinimo:null,
+      capacidadMaximo:null,
+      espacio:null,
+      expediente:+this.id,
+      fechaFinal:null,
+      fechaInicio:null,
+      identificador:null,
+      nombreActividad:null,
+      HoraInicio:null,
+      HoraFinal:null,
+      detalleEntrada:null,
+      precioEntrada:null,
+    };
+    this.actividades.push(a);
+  }
 
+  crearPlantillaCon(){
+    var c:ContratoInterface;
+    c={
+      archivo:null,
+      clase:null,
+      expediente:+this.id,
+      identificador:null,
+      nombreContrato:null,
+      precio:null,
+      proveedor:null,
+      tiempo:null,
+      usuario:null,
+    };
+    this.contratos.push(c);
+  }
 
-  guardar()
+  crearPlantillaTar(){
+    var t:TareaInterface;
+    t={
+      expediente:+this.id,
+      finalizado:null,
+      identificador:null,
+      nombreTarea:null,
+      usuario:null,
+    };
+    this.tareas.push(t);
+  }
 
-  {
-        console.log("ewfefe"+this.id);
-        if(this.id == "nuevo"){
-          console.log("voy a guardar nueva evento(abajo):");
-            console.log(this.evento);
-            this._eventosService.nuevoEvento( this.evento )
-              .subscribe( data=>{
-                //this.router.navigate(['/heroe',data.name])
-                console.log(data);
-                this.errorEvento = false;
-                this.rgstrEvento = true;
-            //    this.ngForm.reset();
-
-
-
-              },
-              error=> {
-                //this.router.navigate(['/heroe',data.name])
-                //console.log(error);
-                let mensaje=JSON.parse(error._body);//Cambiar mensaje devuelto a JSON
-                console.log(mensaje.error);
-
-                this.errorMensaje=[];
-
-                            if(mensaje.error=="No posee permisos para ejecutar esta acción")
-                            {
-                              this.errorMensaje.push("No posee permisos para ejecutar esta acción");
-                            }
-
-                            if(mensaje.error=="No estás verificado")
-                            {
-                              this.errorMensaje.push("No estás verificado");
-                            }
-
-
-
-
-
-                if (typeof(mensaje.error.nombreEvento) != "undefined")
-                {
-                  for(let i=0;i<mensaje.error.nombreEvento.length;i++)
-                  {
-                    this.errorMensaje.push(mensaje.error.nombreEvento[i]);
-                  }
-                }
-                 if (typeof(mensaje.error.correo) != "undefined")
-                 {
-                   for(let i=0;i<mensaje.error.correo.length;i++)
-                   {
-                     this.errorMensaje.push(mensaje.error.correo[i]);
-                   }
-                 }
-                 if (typeof(mensaje.error.apodo) != "undefined")
-                 {
-                   for(let i=0;i<mensaje.error.apodo.length;i++)
-                   {
-                     this.errorMensaje.push(mensaje.error.apodo[i]);
-                   }
-                 }
-                 if (typeof(mensaje.error.password) != "undefined")
-                 {
-                   for(let i=0;i<mensaje.error.password.length;i++)
-                   {
-                     this.errorMensaje.push(mensaje.error.password[i]);
-                   }
-                 }
-
-                console.log(this.errorMensaje);
-
-
-
-                /*
-                for(let i=0; i<mensaje.error.length;i++)
-                {
-                  console.log("Entrar2");
-                  console.log(mensaje.error[i]);
-                }
-                */
-
-                this.errorEvento = true;
-                this.rgstrEvento = false;
-              },);
-
-
-
-          //insertando
-          // this._usuariosService.nuevoUsuario(this.usuario)
-          //     .subscribe(data=>{
-          //         this.router.navigate(['/usuario',data.name])
-          //     },
-          //     error=>console.error(error));
-        }else{
-
-        //actualizando
-        console.log("voy a actualizar usuario");
-        this._eventosService.actualizarEvento(this.evento, this.id)
-            .subscribe(data=>{
-              console.log("data que queremos actualizar"+data);
-              this.errorEventoActualizar = false;
-                this.router.navigate(['eventos']);
-            },
-            error=> {
-              //this.router.navigate(['/heroe',data.name])
-              //console.log(error);
-              let mensaje=JSON.parse(error._body);//Cambiar mensaje devuelto a JSON
-              console.log(mensaje.error);
-
-              this.errorMensaje=[];
-
-                          if(mensaje.error=="No posee permisos para ejecutar esta acción")
-                          {
-                            this.errorMensaje.push("No posee permisos para ejecutar esta acción");
-                          }
-
-                          if(mensaje.error=="No estás verificado")
-                          {
-                            this.errorMensaje.push("No estás verificado");
-                          }
-
-
-
-
-
-              if (typeof(mensaje.error.nombreEvento) != "undefined")
-              {
-                for(let i=0;i<mensaje.error.nombreEvento.length;i++)
-                {
-                  this.errorMensaje.push(mensaje.error.nombreEventoa[i]);
-                }
-              }
-               if (typeof(mensaje.error.correo) != "undefined")
-               {
-                 for(let i=0;i<mensaje.error.correo.length;i++)
-                 {
-                   if(mensaje.error.correo[i]=="The correo must be a valid correo address.")//este ya esta traducido
-                   {
-                     this.errorMensaje.push("El correo debe ser un correo válido");
-                   }
-                   else{
-                     this.errorMensaje.push(mensaje.error.correo[i]);//aqui guarda todos los errores de correo y los muestra
-                   }
-
-                 }
-               }
-               if (typeof(mensaje.error.apodo) != "undefined")
-               {
-                 for(let i=0;i<mensaje.error.apodo.length;i++)
-                 {
-                   this.errorMensaje.push(mensaje.error.apodo[i]);
-                 }
-               }
-               if (typeof(mensaje.error.password) != "undefined")
-               {
-                 for(let i=0;i<mensaje.error.password.length;i++)
-                 {
-                   this.errorMensaje.push(mensaje.error.password[i]);
-                 }
-               }
-
-              console.log(this.errorMensaje);
-
-
-
-              /*
-              for(let i=0; i<mensaje.error.length;i++)
-              {
-                console.log("Entrar2");
-                console.log(mensaje.error[i]);
-              }
-              */
-
-
-              this.errorEventoActualizar =true;
-            },);
-
-
-
-        //insertando
-        // this._usuariosService.nuevoUsuario(this.usuario)
-        //     .subscribe(data=>{
-        //         this.router.navigate(['/usuario',data.name])
-        //     },
-        //     error=>console.error(error));
-        }
-
+  //ELIMINAR ITEMS
+  eliminarItem(a, i, index){
+  console.log(index);
+    if (i != null){
+      var mensaje = "Va a eliminarse de forma definitiva.\n"+
+                    "¿Continuar?";
+      if(confirm(mensaje)){
+        this._ItemService.eliminarItem(a,i,-1).then( res=>{
+          if(a==1){ this.actividades.splice(index,1); }
+          else if(a==3){ this.contratos.splice(index,1); }
+          else if(a==2){ this.tareas.splice(index,1); }
+        });
+      }
     }
-
-    puedeEditar(){
-      console.log("1.puedeEditar? =",this.permisoEditar);
-      this.permisoEditar = true;
-      console.log("2.puedeEditar? =",this.permisoEditar);
-      return this.permisoEditar;
+    else{
+      if(a==1){
+        this.actividades.splice(index,1);
+      }
+      else if(a==3){
+        this.contratos.splice(index,1);
+      }
+      else if(a==2){
+        this.tareas.splice(index,1);
+      }
     }
+  }
 
+  //ACTUALIZAR Y GUARDAR NUEVOS ITEMS
+  guardarCambiosExp(){
+    var expBody = this.expediente;
+    delete expBody.image;
+    this._ItemService.actualizarItem(0,this.id,expBody,-1)
+    .then( res=> {
+      // if(this.archivoImg){ //ACTUALIZAMOS IMG
+      //   this._ItemService.subirFile(0,this.id,this.archivoImg)
+      //     .then( res=>{ alert("Actualizado correctamente."); console.log(res);})
+      //     .catch( (er) => { alert("Expediente actualizado correctamente, a excepción de la imagen.");
+      //                       console.log( er.toString()) })
+      // }
+      // else{
+         alert("Actualizado correctamente." + "SIN IMAGEN");
+      // }
+    })
+    .catch( (err) => { alert("Se ha producido un error inesperado.\nNo se ha podido actualizar el expediente.");
+                       console.log( err.toString()) })
+  }
+
+  crearModificarActConTar(i,a,index){
+    if(a.identificador != null){
+      this._ItemService.actualizarItem(i,a.identificador,a,-1)
+        .then( res=> { alert("Actualizado correctamente."); })
+        .catch( (err) => { console.log( err.toString() ); })
+    }
+    else{
+      this._ItemService.crearItem(i,a)
+        .then( res=> {
+          if(i==1){
+            this.actividades[index] = res as ActividadInterface;
+          }
+          else if(i==3){
+            this.contratos[index] = res as ContratoInterface;
+          }
+          else if(i==2){
+            this.tareas[index] = res as TareaInterface;
+          }
+          alert("Creado correctamente."); })
+        .catch( (err) => { console.log( err.toString() ); })
+    }
+  }
+
+  cargarImg(files: FileList){
+    this.archivoImg = files.item(0);
+    var exp = this.expediente;
+    var etiqueta = this.etiqueta;
+    var r = new FileReader();
+    r.onload = function(e){
+      let o = etiqueta.nativeElement as HTMLImageElement;
+      o.src = r.result;
+      exp.image = o.alt = files[0].name;
+    }
+    r.readAsDataURL(files[0]);
+  }
 }

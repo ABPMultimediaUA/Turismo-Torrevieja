@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
-import { Expediente }  from "../../interfaces/expediente.interface";
+import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
 import { Evento }  from "../../interfaces/evento.interface";
 
 import { AlertService, AuthenticationService, EventosService, ExpedientesService, LogueadoService } from '../../services/index';

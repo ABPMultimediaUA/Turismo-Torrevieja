@@ -20,6 +20,7 @@ export class NuevaCarteraComponent implements OnInit {
     nombreCartera:"",
     year:0,
     trimestre:0,
+    estado:0,
     fechaCreacion:"",
     fechaActualizacion:"",
     fechaEliminacion:""

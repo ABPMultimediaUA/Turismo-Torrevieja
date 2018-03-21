@@ -33,6 +33,9 @@ import { RolComponent } from "./components/roles/rol.component";
 import { ChatbotsComponent } from './chatbots/chatbots.component';
 
 
+// import { NuevoExpedienteComponent } from './components/carteras/nueva-cartera.component';
+
+
 const app_routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'about', component: AboutComponent },

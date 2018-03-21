@@ -35,8 +35,8 @@ import { APP_ROUTING } from "./app.routes"
 
 // servicios
 import { UsuariosService }  from "./services/usuarios.service";
-import { RolesService }  from "./services/roles.service";
 import { CarterasService }  from "./services/carteras.service";
+import { PeticionesCrudService }  from "./services/peticionesCRUD.service";
 // import { AlertComponent } from './_directives/index';
 // import { AuthGuard } from './_guards/index';
 import { AlertService, AuthenticationService,
@@ -81,6 +81,10 @@ import { NuevoRolComponent } from './components/roles/nuevo-rol.component';
 import { RolComponent } from './components/roles/rol.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 
+
+
+
+import { FileUploadModule } from 'ng2-file-upload';
 
 
 @NgModule({
@@ -152,12 +156,13 @@ import { PerfilComponent } from './components/perfil/perfil.component';
     // FacebookModule.forRoot(),
     // FacebookModule,
 
-    APP_ROUTING
+    APP_ROUTING,
+    FileUploadModule
   ],
   providers: [
     UsuariosService,
     CarterasService,
-    RolesService,
+    PeticionesCrudService,
     AlertService,
     AuthenticationService,
     TokenService,
