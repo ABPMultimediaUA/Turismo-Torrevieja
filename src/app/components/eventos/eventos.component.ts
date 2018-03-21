@@ -132,13 +132,8 @@ export class EventosComponent implements OnInit {
             console.log("this.totalPaginas:");
             console.log(this.totalPaginas);
             this.loading=false;
-          //  this.paginacion = data.meta.pagination;
-            //let paginaActual= data.meta.pagination.current_page;
 
-            // console.log("paginaActual");
-            // console.log(paginaActual);
-            // console.log("totalPaginas");
-            // console.log(this.paginacion.total_pages);
+        
 
             for(let i=0;i<this.totalPaginas;i++)
             {
@@ -157,22 +152,6 @@ export class EventosComponent implements OnInit {
               }
             }
 
-
-
-            // this.k=this.usuarios[0].identificador;
-            // console.log(k)
-            // para retrasar esto
-            // //this.loading=false;
-            // setTimeout(()=> {
-            //   this.loading = false;
-            //   this.heroes= data
-            // }, 3000);
-
-
-            // for(let key$ in data){
-            //   console.log( data[key$]);//separo la data
-            //   this.heroes.push(data[key$]);
-            // }
           })
   }
 

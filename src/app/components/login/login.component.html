@@ -5,15 +5,15 @@
 <div style="background-color:#074d92;" class="container loginClass">
   <div class="row ">
     <div class="container main-container text-center">
-      <mat-card style="text-align:center;  padding-left: 10px; color: white; background-color:#f44336; width:400px; margin:auto;"  *ngIf="loginError === true">
+      <mat-card  style="text-align:center;  padding-left: 10px; color: white; background-color:#f44336; width:400px; margin:auto;"  *ngIf="loginError === true">
               Usuario o contraseña incorrecto
       </mat-card>
-      <br>
+      <br><br>
 
       <mat-card style="text-align:center;  padding-left: 0px;  padding-top: 0px; width:400px; margin:auto;">
 
-        <mat-toolbar class=" text-center"  style="width:400px;color: white;padding-left: 170px;background-color:#05386B">
-          GVENT
+        <mat-toolbar class=" text-center"  style="width:400px;color: white;padding-left: 140px;background-color:#05386B">
+        <a [routerLink]="['home']"><img alt="" src="../assets/logo.png" style="width:120px; height:auto;"></a>
         </mat-toolbar>
 
         <form name="form" (ngSubmit)="login()" #f="ngForm" novalidate>
@@ -41,7 +41,8 @@
                 <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
             </div> -->
             <mat-dialog-actions  style="display:block; padding-top: 30px;   padding-left: 10px; text-align:center;">
-              <button type="submit" color="primary" mat-raised-button>Login</button>
+              <button type="submit" style="width:200px" color="primary" mat-raised-button>Login</button>
+
            </mat-dialog-actions>
            <div *ngIf="logueando==true;" >
                <mat-spinner  color="primary"></mat-spinner>

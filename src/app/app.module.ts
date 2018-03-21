@@ -41,7 +41,8 @@ import { CarterasService }  from "./services/carteras.service";
 // import { AuthGuard } from './_guards/index';
 import { AlertService, AuthenticationService,
  TokenService, DatosUsuarioService,
-EventosService,  LogueadoService, ExpedientesService  } from './services/index';
+EventosService,  LogueadoService, ExpedientesService,
+ TareasService } from './services/index';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -165,6 +166,7 @@ import { PerfilComponent } from './components/perfil/perfil.component';
     HomeComponent,
     LogueadoService,
     EventosService,
+    TareasService,
     ExpedientesService,
     EliminarDialog
   ],

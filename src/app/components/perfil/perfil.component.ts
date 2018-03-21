@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import {LoginComponent} from '../login/login.component';
 
+
+import { ViewChild} from '@angular/core';
 import {MatTableDataSource, MatSort} from '@angular/material';
 import { MatFormFieldModule } from '@angular/material';
 import {MatInputModule} from '@angular/material';
@@ -20,13 +22,15 @@ import {HomeComponent} from "../home/home.component";
 import { Router, ActivatedRoute } from '@angular/router';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';//ramoon
 
-import { Usuario }  from "../../interfaces/usuario.interface";
+import { Usuario}  from "../../interfaces/usuario.interface";
+import { Tarea}  from "../../interfaces/tarea.interface";
+
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 // import { AuthenticationService } from '../../services/authentication.service';
 // import {AlertService } from '../../services/alert.service';
-import { AlertService, AuthenticationService, LogueadoService, UsuariosService, DatosUsuarioService} from '../../services/index';
+import { AlertService, AuthenticationService, LogueadoService, UsuariosService, DatosUsuarioService, TareasService} from '../../services/index';
 // import { AlertComponent } from '../../../_directives/index';
 // import { AuthGuard } from '../../../_guards/index';
 
@@ -46,6 +50,37 @@ export class PerfilComponent implements OnInit {
   rol:number =0;
   fechaCreacion:string = "";
   id:string;
+
+
+  // INterfaz tarea
+  // id:number;
+  // expediente_id:number;
+  // nombre:string;
+  // user_id:number;
+  // terminado:boolean;
+  // created_at:string;
+  // updated_at:string;
+  // deleted_at:string;
+      ELEMENT_DATA: Tarea[];
+      tareas:any[] = [];
+      displayedColumns = ['select','id', 'expediente_id', 'nombre', 'user_id','terminado','created_at','updated_at'];
+      dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+      selection = new SelectionModel<Tarea>(true, []);
+
+      @ViewChild(MatSort) sort: MatSort;
+      @ViewChild(MatPaginator) paginator: MatPaginator;
+
+        ngAfterViewInit() {
+            console.log("entra en el sort ese");
+
+          this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+          this.selection = new SelectionModel<Tarea>(true, []);
+          console.log(this.dataSource.sort);
+        }
+
+
+
 
   public usuario:Usuario={
     identificador:"",
@@ -72,42 +107,92 @@ export class PerfilComponent implements OnInit {
       private home:HomeComponent,
       public  logueadoService: LogueadoService,
         public dialog: MatDialog,
-        private _usuariosService:UsuariosService
+        private _usuariosService:UsuariosService,
+        private _tareasService:TareasService
       ) {
         this.logueadoService.comprobarLogueado();
-
-        // this.identificador=localStorage.identificador;
-        // this.nombreUsuario=localStorage.nombreUsuario;
-        // this.apodo=localStorage.apodo;
-        // this.correo=localStorage.correo;
-        // this.esVerificado=localStorage.esVerificado;
-        // this.rol=localStorage.rol;
         this.id= localStorage.identificador;
+
+        //recoger las tareas del usuario
+        // this._eventosService.getEventos("1")
+        //   .subscribe( data =>{
+        //     console.log(data);//la data del getHeroes
+        //
+        //     this.eventos= data.data;
+        //
+        //
+        // this._tareasService.getTareas(this.id)
+        //     .subscribe(
+        //       tareas => {tareas.data.password="",   this.tareas = tareas.data, console.log(this.tareas)})
+
+
+
+
+              this._tareasService.getTareas()
+                .subscribe( data =>{
+                  console.log(data);//la data del getHeroes
+
+                  this.tareas= data.data;
+                  console.log("array de tareas:");
+                  console.log(this.tareas);
+                  // interfaz tarea
+                  // identificador:number;
+                  // expediente:number;
+                  // nombreTarea:string;
+                  // usuario:number;
+                  // finalizado:boolean;
+                  // fechaCreacion:string;
+                  // fechaActualizacion:string;
+                  // fechaEliminacion:string;
+                  //megapis
+                  this.ELEMENT_DATA = this.tareas;
+                  this.displayedColumns = ['select','identificador', 'expediente', 'nombreTarea', 'usuario','finalizado','fechaCreacion','fechaActualizacion'];
+                  this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+                  this.selection = new SelectionModel<Tarea>(true, []);
+                  this.dataSource.sort = this.sort;
+                  this.dataSource.paginator = this.paginator;
+                  // // finalmegapis
+                  //
+                  //
+                  //
+                  // this.loading=false;
+                  //
+                  //
+                  //
+                  // for(let i=0;i<this.totalPaginas;i++)
+                  // {
+                  //   this.cantidadPagina.push(i);
+                  // }
+                  //
+                  // if(this.eventos.length>(this.eventosPorPagina-1)){
+                  //   for(let i=0;i<=(this.eventosPorPagina-1);i++)
+                  //   {
+                  //     this.eventosActuales.push(this.eventos[i]);
+                  //   }
+                  // }else{
+                  //   for(let i=0;i<this.eventos.length;i++)
+                  //   {
+                  //     this.eventosActuales.push(this.eventos[i]);
+                  //   }
+                  // }
+
+                })
+
+
+
+
+
+
+        //recoger la info del usuario
         this._usuariosService.getUsuario(this.id)
             .subscribe( usuario => {usuario.data.password="",   this.usuario = usuario.data, console.log(this.usuario)})
 
         this.fechaCreacion=localStorage.fechaCreacion;
-        //
-        //
-        // this.idNumber= parseInt(localStorage.identificador);
-        // this.usuario.identificador=localStorage.identificador;
-        // this.usuario.nombreUsuario=localStorage.nombreUsuario;
-        // this.usuario.apodo=localStorage.apodo;
-        // this.usuario.correo=localStorage.correo;
-        // this.usuario.esVerificado=localStorage.esVerificado;
-        // this.usuario.rol=localStorage.rol;
-
        }
 
   ngOnInit() {
   }
   openDialogEditarPerfil(usuario){
-    // this.usuario.identificador=this.identificador;
-    // this.usuario.nombreUsuario=this.nombreUsuario;
-    // this.usuario.apodo=this.apodo;
-    // this.usuario.correo=this.correo;
-
-
      console.log(this.usuario);
      const dialogRef = this.dialog.open(EditarPerfilDialog, {
        height: '500px',
@@ -116,4 +201,50 @@ export class PerfilComponent implements OnInit {
      });
   }
 
+
+  // openDialogEliminar(row) {
+  //   console.log(row);
+  //
+  //     const dialogRef = this.dialog.open(EliminarUsuarioDialog, {
+  //       height: '200px',
+  //       width: '450px',
+  //       data: { row: row }
+  //     });
+  //
+  //     // dialogRef.afterClosed().subscribe(result => {
+  //     //   console.log(`Dialog result: ${result}`);
+  //     // });
+  //   }
+  //
+  // openDialogEditar(row){
+  //  console.log(row);
+  //  const dialogRef = this.dialog.open(EditarUsuarioDialog, {
+  //    height: '600px',
+  //    width: '450px',
+  //    data: { row: row }
+  //  });
+  // }
+  selectRow(row) {
+   console.log(row);
+   this.router.navigate(['/evento', row.identificador]);
+  }
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+
+    return numSelected === numRows;
+
+    // console.log("isAllSelected() "+this.selection);
+  }
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
+        console.log("masterToggle() "+this.selection);
+  }
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
 }

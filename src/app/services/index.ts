@@ -8,4 +8,5 @@ export * from './logueado.service';
 export * from './DatosUsuario.service';
 export * from './eventos.service';
 export * from './expedientes.service';
+export * from './tareas.service';
 // export * from './facebook.service';

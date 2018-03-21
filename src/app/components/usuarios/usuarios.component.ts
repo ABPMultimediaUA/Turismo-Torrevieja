@@ -86,7 +86,7 @@ export class UsuariosComponent implements OnInit {
 
             this.usuarios= data.data;
             console.log("array de usuarios:");
-            console.log(this.usuarios); 
+            console.log(this.usuarios);
 
 
             //megapis
@@ -103,28 +103,7 @@ export class UsuariosComponent implements OnInit {
             console.log("this.totalPaginas:");
             console.log(this.totalPaginas);
             this.loading=false;
-            // if(localStorage.mecagoEnDios=="mucho"){
-            //   if(localStorage.vengoDe="modificarUsuario"){
-            //
-            //     console.log("salchipapaaaaaaaaa")
-            //     this.router.navigate(['/perfil']);
-            //     this.router.navigate(['perfil']);
-            //     console.log("salchipapaaaaaaaaaaaa2222222222222222222")
-            //     delete localStorage.vengoDe;
-            //     console.log("vengoDe despues de borrarlo",localStorage.vengoDe);
-            //     location.reload(true);
-            //     delete localStorage.vengoDe;
-            //     localStorage.setItem("mecagoEnDios", "poco");
-            //   }
-            // }
-
-          //  this.paginacion = data.meta.pagination;
-            //let paginaActual= data.meta.pagination.current_page;
-
-            // console.log("paginaActual");
-            // console.log(paginaActual);
-            // console.log("totalPaginas");
-            // console.log(this.paginacion.total_pages);
+      
 
             for(let i=0;i<this.totalPaginas;i++)
             {
@@ -145,20 +124,6 @@ export class UsuariosComponent implements OnInit {
 
 
 
-            // this.k=this.usuarios[0].identificador;
-            // console.log(k)
-            // para retrasar esto
-            // //this.loading=false;
-            // setTimeout(()=> {
-            //   this.loading = false;
-            //   this.heroes= data
-            // }, 3000);
-
-
-            // for(let key$ in data){
-            //   console.log( data[key$]);//separo la data
-            //   this.heroes.push(data[key$]);
-            // }
 
           })
   }
@@ -211,77 +176,5 @@ openDialogEditar(row){
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
-  // nuevaPagina(pagina:number){
-  //   this.currentPage=pagina;
-  //   console.log("pagina que pido:");
-  //   console.log(pagina);
-  //   let x = 10 * (pagina-1);
-  //   let y = x + 9;
-  //   this.usuariosActuales=[];
-  //
-  //   if(pagina==this.totalPaginas){
-  //     for(let i=x;i<this.usuarios.length;i++)
-  //     {
-  //       this.usuariosActuales.push(this.usuarios[i]);
-  //     }
-  //   }else{
-  //     for(let i=x;i<=y;i++)
-  //     {
-  //       this.usuariosActuales.push(this.usuarios[i]);
-  //     }
-  //   }
 
-
-
-
-    // this._usuariosService.getUsuarios(pagina)
-    //   .subscribe( data =>{
-    //     console.log(data);//la data del getUsuarios
-    //
-    //     this.usuarios= data.data;
-    //     this.loading=false;
-    //     this.paginacion = data.meta.pagination;
-    //     console.log(this.paginacion.total_pages);
-    //
-    //     for(let i=0;i<this.paginacion.total_pages;i++)
-    //     {
-    //       this.cantidadPagina.push(i);
-    //     }
-    //   })
-  // }
-  // ngOnChange(){
-  //   this._usuariosService.getUsuarios();
-  //
-  //   this.refresh();
-  // }
-
-  // refresh(){
-  // this.router.navigate(['usuarios']);
-  // }
-  // borrarUsuario(id:string){
-  //     this._usuariosService.borrarUsuario(id)
-  //         .subscribe(respuesta=>{
-  //           if(respuesta){
-  //             console.log("caracola");
-  //             console.log(respuesta);
-  //             console.log( "borrausuario y ahora va a pedir todos los usuarios de nuevo" );
-  //           this._usuariosService.getUsuarios("1");
-  //           console.log( "aqui los ha pedido ya todos de nuevo y voy a hacer el router navigate a usuarios" );
-  //           location.reload(true);
-  //           this.router.navigate(['usuarios']);
-  //           // this.refresh();
-  //           }else{
-  //             //todo bien
-  //             delete this.usuarios[id];
-  //           //   console.log( "borrausuario y ahora va a pedir todos los usuarios de nuevo" );
-  //           // this._usuariosService.getUsuarios();
-  //           // console.log( "aqui los ha pedido ya todos de nuevo" );
-  //           // this.refresh();
-  //
-  //
-  //           }
-  //
-  //         })
-  //
-  //   }
 }
