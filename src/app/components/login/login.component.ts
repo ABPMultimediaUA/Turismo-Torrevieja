@@ -19,7 +19,7 @@ import { AuthenticationService, TokenService, LogueadoService, DatosUsuarioServi
 })
 
 export class LoginComponent implements OnInit {
-  
+
     model: any = {};
     loading = false;
     returnUrl: string;
@@ -106,18 +106,20 @@ export class LoginComponent implements OnInit {
 
 
                   console.log("despues de set logueado");
-                  //console.log(localStorage.loggedIn);
-                  //this.navbar.loguea();
-                  //console.log("navbar.logueado: "+this.navbar.logueado);
-                  //conectarse a la base de datos y guardar en el session storage la info del usuario
-                  // con el mail del login
+                  
 
+                  // setTimeout(()=>{
+                  //   console.log("timeoutlogin");
+                  //
+                  //        // this.router.navigate(['/perfil', 2]);
+                  //
+                  //  this.router.navigate(['perfil']);
+                  // },2000);
 
-
-
+                    this.router.navigate(['perfil']);
 
                   // if(this.logueadoService.estaLogueado==true){
-                    this.router.navigate(['perfil']);
+                    // this.router.navigate(['perfil']);
 
                     // location.reload(true);
                     this.logueadoService.logueando();
