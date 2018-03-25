@@ -8,12 +8,12 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatIcon } from '@angular/material';
 import { MatPaginatorModule } from '@angular/material';
 import {MatMenuModule} from '@angular/material/menu';
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {Component, ViewChild} from '@angular/core';
 import {MatTableDataSource, MatSort, MatSortModule, MatTableModule} from '@angular/material';
-import { MatFormFieldModule } from '@angular/material';
+import { MatFormFieldModule,MatNativeDateModule } from '@angular/material';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatProgressBarModule,MatProgressSpinnerModule} from '@angular/material';
 import {MatDialogModule} from '@angular/material/dialog';
 import {EliminarDialog} from "./components/eventos/eliminar-dialog.component";
@@ -25,6 +25,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 
 import {EliminarCarteraDialog} from "./components/carteras/eliminar-cartera-dialog.component";
 import {EditarCarteraDialog} from "./components/carteras/editar-cartera-dialog.component";
+import {CrearExpedienteDialog} from "./components/carteras/crear-expediente-dialog.component";
+import {EliminarExpedienteDialog} from "./components/carteras/eliminar-expediente-dialog.component";
 
 import {EliminarUsuarioDialog} from "./components/usuarios/eliminar-usuario-dialog.component";
 import {EditarUsuarioDialog} from "./components/usuarios/editar-usuario-dialog.component";
@@ -99,7 +101,9 @@ import { FileUploadModule } from 'ng2-file-upload';
     EditarUsuarioDialog,
     EliminarCarteraDialog,
     EditarPerfilDialog,
-    EditarCarteraDialog
+    EditarCarteraDialog,
+    CrearExpedienteDialog,
+    EliminarExpedienteDialog
   ],
   declarations: [
     AppComponent,
@@ -136,7 +140,9 @@ import { FileUploadModule } from 'ng2-file-upload';
     EditarUsuarioDialog,
     EditarPerfilDialog,
     EliminarCarteraDialog,
-    EditarCarteraDialog
+    EditarCarteraDialog,
+    CrearExpedienteDialog,
+    EliminarExpedienteDialog
   ],
   imports: [
     HttpClientModule,
@@ -161,7 +167,9 @@ import { FileUploadModule } from 'ng2-file-upload';
     MatProgressBarModule,
     MatSelectModule,
     MatTooltipModule,
+    MatDatepickerModule,
     MatProgressSpinnerModule,
+    MatNativeDateModule,
     // FacebookModule.forRoot(),
     // FacebookModule,
 
@@ -182,7 +190,9 @@ import { FileUploadModule } from 'ng2-file-upload';
     EventosService,
     TareasService,
     ExpedientesService,
-    EliminarDialog
+    EliminarDialog,
+    MatDatepickerModule,
+
   ],
   bootstrap: [AppComponent]
 })

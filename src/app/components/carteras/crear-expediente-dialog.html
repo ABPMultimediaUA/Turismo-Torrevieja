@@ -1,0 +1,142 @@
+<!--
+<h1 *ngIf="editando==false;" mat-dialog-title style="text-align:center">Editar Usuario: {{row.nombreUsuario}}</h1>
+<ul style="width:90%" *ngIf="editando==false;">
+  <li>
+    <mat-form-field>
+    Nombre: <br><br> <input matInput [(ngModel)]="row.nombreUsuario" >
+    </mat-form-field>
+  </li>
+  <li>
+    <mat-form-field>
+      Apodo: <br><br> <input matInput [(ngModel)]="row.apodo" >
+    </mat-form-field>
+  </li>
+  <li >
+    <mat-form-field style="width:90%" >
+      Correo: <br><br> <input matInput [(ngModel)]="row.correo" >
+    </mat-form-field>
+  </li>
+  <li>
+    <mat-form-field>
+      Rol: <br><br> <input matInput [(ngModel)]="row.rol" >
+    </mat-form-field>
+  </li>
+</ul>
+   <mat-dialog-actions *ngIf="editando==false;" style="display:block; text-align:center;">
+      <button  mat-raised-button (click)="editarUsuario()" color="primary" >Guardar</button>
+      <button  mat-raised-button (click)="cancelar()" color="warn">Cancelar</button>
+  </mat-dialog-actions>
+
+  <h1 *ngIf="editando==true;" mat-dialog-title style="text-align:center">Guardando cambios</h1>
+  <div *ngIf="editando==true;" style="margin-left:150px;">
+      <mat-spinner color="primary"></mat-spinner>
+  </div> -->
+
+
+<!-- CREANDO UN NUEVO EXPEDIENTE -->
+<h1 *ngIf="creando==false;" mat-dialog-title style="text-align:center">Crear Expediente: </h1>
+  <form *ngIf="creando==false;" style="margin-left:60px" (ngSubmit)="crearExpediente(expediente.usuario)">
+    <mat-form-field  hintLabel="Max 20 caracteres">
+    <input  matInput   name="nombreExpediente"  [(ngModel)]="expediente.nombreExpediente" placeholder="Nombre">
+    </mat-form-field>
+    <th>
+    <mat-form-field  hintLabel="Max 20 caracteres">
+    <input  matInput   name="titulo"  [(ngModel)]="expediente.titulo" placeholder="Titulo">
+    </mat-form-field>
+    <tr>
+
+
+    <!-- <mat-select placeholder="Trimestre" [(ngModel)]="cartera.trimestre"  name="trimestre"  >
+      <mat-option *ngFor="let trimestre of trimestres" [value]="trimestre.value">
+        {{ trimestre.viewValue }}
+      </mat-option>
+    </mat-select> -->
+
+     <mat-form-field>
+      <mat-select placeholder="Coordinador" [(ngModel)]="expediente.usuario"  name="usuario"  >
+        <mat-option *ngFor="let u of users" [value]="u.nombreUsuario">
+          {{ u.nombreUsuario }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <tr>
+
+    <mat-form-field>
+        <input matInput [(ngModel)]="expediente.fechaInicio" name="fechaInicio"  placeholder="Fecha de inicio"  class="form-control" type="date">
+      <!-- <input matInput [(ngModel)]="expediente.fechaInicio"  name="fechaInicio" [matDatepicker]="fechaInicio" placeholder="Fecha de inicio">
+      <mat-datepicker-toggle matSuffix [for]="fechaInicio"></mat-datepicker-toggle>
+      <mat-datepicker #fechaInicio></mat-datepicker> -->
+    </mat-form-field>
+    <tr>
+
+    <mat-form-field>
+        <input matInput [(ngModel)]="expediente.fechaFin"  name="fechaFin"  placeholder="Fecha de fin"  class="form-control" type="date">
+      <!-- <input matInput [(ngModel)]="expediente.fechaInicio"  name="fechaInicio" [matDatepicker]="fechaInicio" placeholder="Fecha de inicio">
+      <mat-datepicker-toggle matSuffix [for]="fechaInicio"></mat-datepicker-toggle>
+      <mat-datepicker #fechaInicio></mat-datepicker> -->
+    </mat-form-field>
+    <!-- <mat-form-field>
+      <input matInput [(ngModel)]="expediente.fechaFin"  name="fechaFin" [matDatepicker]="fechaFin" placeholder="Fecha de fin">
+      <mat-datepicker-toggle matSuffix [for]="fechaFin"></mat-datepicker-toggle>
+      <mat-datepicker #fechaFin></mat-datepicker>
+    </mat-form-field> -->
+
+
+    <br><br>
+    <mat-dialog-actions *ngIf="creando==false;" style="display:block; text-align:center;">
+      <button type="submit" color="primary" mat-raised-button>Crear</button>
+    <button  mat-raised-button (click)="cancelar()" color="warn">Cancelar</button>
+   </mat-dialog-actions>
+
+  </form>
+
+  <h1 *ngIf="creando==true;"  mat-dialog-title style="text-align:center">Creando Expediente</h1>
+  <div *ngIf="creando==true;" style="margin-left:150px;">
+      <mat-spinner color="primary"></mat-spinner>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <!-- <div *ngIf="formExVisible">
+    <form (ngSubmit)="crearNuevoExp()" #forma="ngForm">
+      <div class="row">
+        <div class="col-sm-3">
+          <label>Nombre del expediente</label>
+          <input [(ngModel)]="expN.nombreExpediente" name=Exp_nomb class="form-control" required type="text">
+        </div>
+        <div class="col-sm-3">
+          <label>Título</label>
+          <input [(ngModel)]="expN.titulo" name=Exp_tit class="form-control" type="text">
+        </div>
+        <div class="col-sm-3">
+          <label>Coordinador</label>
+          <select class="form-control" name=Exp_user [(ngModel)]="expN.coordinador">
+            <option [ngValue]="u.identificador" *ngFor="let u of users">{{u.nombreUsuario}}</option>
+          </select>
+        </div>
+        <div class="col-sm-3">
+          <label>Fecha inicio</label>
+          <input [(ngModel)]="expN.fechaInicio" name=Exp_fechaIn class="form-control" type="date">
+        </div>
+        <div class="col-sm-3">
+          <label>Fecha final</label>
+          <input [(ngModel)]="expN.fechaFin" name=Exp_fechaFin class="form-control" type="date">
+        </div>
+        <div class="col-sm-3">
+          <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
+            Crear
+          </button>
+        </div>
+      </div>
+    </form> -->

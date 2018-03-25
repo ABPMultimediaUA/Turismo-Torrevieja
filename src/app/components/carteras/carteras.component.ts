@@ -99,41 +99,6 @@ export class CarterasComponent implements OnInit {
 
 
 
-            //
-            // this.ItemsPorPagina = localStorage.getItem("ItemsPorPagina");
-            // console.log("cojo Items por pagina de localstorage:",this.ItemsPorPagina );
-            // this.carterasPorPagina = parseInt(this.ItemsPorPagina);
-            // console.log("paso itemspor pagina a number y lo meto en carteras por pagina:",this.carterasPorPagina);
-            // this.totalPaginas = Math.ceil(this.carteras.length/this.carterasPorPagina);
-            // console.log("this.totalPaginas:");
-            // console.log(this.totalPaginas);
-            // this.loading=false;
-          //  this.paginacion = data.meta.pagination;
-            //let paginaActual= data.meta.pagination.current_page;
-
-            // console.log("paginaActual");
-            // console.log(paginaActual);
-            // console.log("totalPaginas");
-            // console.log(this.paginacion.total_pages);
-            //
-            // for(let i=0;i<this.totalPaginas;i++)
-            // {
-            //   this.cantidadPagina.push(i);
-            // }
-            //
-            // if(this.carteras.length>(this.carterasPorPagina-1)){
-            //   for(let i=0;i<=(this.carterasPorPagina-1);i++)
-            //   {
-            //     this.carterasActuales.push(this.carteras[i]);
-            //   }
-            // }else{
-            //   for(let i=0;i<this.carteras.length;i++)
-            //   {
-            //     this.carterasActuales.push(this.carteras[i]);
-            //   }
-            // }
-
-
 
 
           })

@@ -2,7 +2,7 @@
 <div class="container-fluid">
   <div class="row ">
       <main role="main" class="col-sm-12 ml-sm-auto col-md-12 pt-3">
-        <h1><span class="icon-crown"></span>Expediente <small>{{expediente.nombreExpediente}}</small></h1>
+        <h1><span class="icon-crown"></span>Evento <small>{{expediente.nombreExpediente}}</small></h1>
         <div class="container" *ngIf="errorActualizarItem === true">
             <div class="jumbotron">
                 <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
@@ -23,7 +23,7 @@
         <form (ngSubmit)="guardarCambiosExp()" #forma="ngForm">
           <div class="row">
             <div class="col-sm-3">
-              <label>Nombre expediente</label>
+              <label>Nombre evento</label>
               <input [(ngModel)]="expediente.nombreExpediente" name="nombreExp" class="form-control" placeholder="Nombre del expediente" required type="text">
             </div>
             <div class="col-sm-3">
