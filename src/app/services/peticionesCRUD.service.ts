@@ -92,6 +92,10 @@ export class PeticionesCrudService {
           //Insertar o eliminar a un id rol un permiso id2, utiliza put (actualizar)
           url += `DeCartera/${id}/expedientes`;
           break;
+      case 107:
+          //Todas las tareas de un usuario
+          url += `misTareas`;
+          break;
       case 201:
           //Insertar imagen en expediente
           url += `expediente/${id}/?imagen`;

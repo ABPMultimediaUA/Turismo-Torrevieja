@@ -24,6 +24,8 @@ import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angula
 
 import { Usuario}  from "../../interfaces/usuario.interface";
 import { Tarea}  from "../../interfaces/tarea.interface";
+import { TareaInterface}  from "../../interfaces/tareas.interface";
+
 
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
@@ -50,6 +52,7 @@ export class PerfilComponent implements OnInit {
   rol:number =0;
   fechaCreacion:string = "";
   id:string;
+  // public tareas:TareaInterface[];
 
 
   // INterfaz tarea
@@ -61,8 +64,9 @@ export class PerfilComponent implements OnInit {
   // created_at:string;
   // updated_at:string;
   // deleted_at:string;
-      ELEMENT_DATA: Tarea[];
-      tareas:any[] = [];
+      ELEMENT_DATA: TareaInterface[];
+    public  tareas:TareaInterface[];
+      // tareas:any[] = [];
       displayedColumns = ['select','id', 'expediente_id', 'nombre', 'user_id','terminado','created_at','updated_at'];
       dataSource = new MatTableDataSource(this.ELEMENT_DATA);
       selection = new SelectionModel<Tarea>(true, []);
@@ -140,55 +144,39 @@ export class PerfilComponent implements OnInit {
 
 
 
-              this._tareasService.getTareas()
-                .subscribe( data =>{
-                  console.log(data);//la data del getHeroes
+        //COGEMOS LAS TAREAS
+        this._peticionescrudservice.getItem(107,-1,-1,-1).then(
+          res => {
+            this.tareas = res as TareaInterface[];
+            this.ELEMENT_DATA = this.tareas;
+            this.displayedColumns = ['select','identificador', 'expediente', 'nombreTarea', 'usuario','finalizado','fechaCreacion','fechaActualizacion'];
+            this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+            this.selection = new SelectionModel<Tarea>(true, []);
+            this.dataSource.sort = this.sort;
+            this.dataSource.paginator = this.paginator;
+          }
+        );
 
-                  this.tareas= data.data;
-                  console.log("array de tareas:");
-                  console.log(this.tareas);
-                  // interfaz tarea
-                  // identificador:number;
-                  // expediente:number;
-                  // nombreTarea:string;
-                  // usuario:number;
-                  // finalizado:boolean;
-                  // fechaCreacion:string;
-                  // fechaActualizacion:string;
-                  // fechaEliminacion:string;
-                  //megapis
-                  this.ELEMENT_DATA = this.tareas;
-                  this.displayedColumns = ['select','identificador', 'expediente', 'nombreTarea', 'usuario','finalizado','fechaCreacion','fechaActualizacion'];
-                  this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-                  this.selection = new SelectionModel<Tarea>(true, []);
-                  this.dataSource.sort = this.sort;
-                  this.dataSource.paginator = this.paginator;
-                  // // finalmegapis
-                  //
-                  //
-                  //
-                  // this.loading=false;
-                  //
-                  //
-                  //
-                  // for(let i=0;i<this.totalPaginas;i++)
-                  // {
-                  //   this.cantidadPagina.push(i);
-                  // }
-                  //
-                  // if(this.eventos.length>(this.eventosPorPagina-1)){
-                  //   for(let i=0;i<=(this.eventosPorPagina-1);i++)
-                  //   {
-                  //     this.eventosActuales.push(this.eventos[i]);
-                  //   }
-                  // }else{
-                  //   for(let i=0;i<this.eventos.length;i++)
-                  //   {
-                  //     this.eventosActuales.push(this.eventos[i]);
-                  //   }
-                  // }
 
-                })
+
+              // this._tareasService.getTareas()
+              //   .subscribe( data =>{
+              //     console.log(data);//la data del getHeroes
+              //
+              //     this.tareas= data.data;
+              //     console.log("array de tareas:");
+              //     console.log(this.tareas);
+              //     //megapis
+              //     this.ELEMENT_DATA = this.tareas;
+              //     this.displayedColumns = ['select','identificador', 'expediente', 'nombreTarea', 'usuario','finalizado','fechaCreacion','fechaActualizacion'];
+              //     this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+              //     this.selection = new SelectionModel<Tarea>(true, []);
+              //     this.dataSource.sort = this.sort;
+              //     this.dataSource.paginator = this.paginator;
+              //     // // finalmegapis
+              //
+              //
+              //   })
 
 
 
@@ -269,12 +257,12 @@ CompletarTarea(row){
 
     // console.log("isAllSelected() "+this.selection);
   }
-  masterToggle() {
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
-        console.log("masterToggle() "+this.selection);
-  }
+  // masterToggle() {
+  //   this.isAllSelected() ?
+  //       this.selection.clear() :
+  //       this.dataSource.data.forEach(row => this.selection.select(row));
+  //       console.log("masterToggle() "+this.selection);
+  // }
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches

@@ -38,7 +38,7 @@ export class TareasService {
      console.log("tarea.finalizado antes",tarea.finalizado);
 
      // tarea.finalizado=tarea.finalizado.replace(/["]+/g, '');
-       tarea.finalizado=parseInt(tarea.finalizado);
+       // tarea.finalizado=parseInt(tarea.finalizado);
     console.log("tarea.finalizado despues",tarea.finalizado);
     console.log("Tarea que le mando",tarea);
     let body = JSON.stringify( tarea ); //pasarlo a string
