@@ -1,0 +1,77 @@
+<!--
+<h1 *ngIf="editando==false;" mat-dialog-title style="text-align:center">Editar Usuario: {{row.nombreUsuario}}</h1>
+<ul style="width:90%" *ngIf="editando==false;">
+  <li>
+    <mat-form-field>
+    Nombre: <br><br> <input matInput [(ngModel)]="row.nombreUsuario" >
+    </mat-form-field>
+  </li>
+  <li>
+    <mat-form-field>
+      Apodo: <br><br> <input matInput [(ngModel)]="row.apodo" >
+    </mat-form-field>
+  </li>
+  <li >
+    <mat-form-field style="width:90%" >
+      Correo: <br><br> <input matInput [(ngModel)]="row.correo" >
+    </mat-form-field>
+  </li>
+  <li>
+    <mat-form-field>
+      Rol: <br><br> <input matInput [(ngModel)]="row.rol" >
+    </mat-form-field>
+  </li>
+</ul>
+   <mat-dialog-actions *ngIf="editando==false;" style="display:block; text-align:center;">
+      <button  mat-raised-button (click)="editarUsuario()" color="primary" >Guardar</button>
+      <button  mat-raised-button (click)="cancelar()" color="warn">Cancelar</button>
+  </mat-dialog-actions>
+
+  <h1 *ngIf="editando==true;" mat-dialog-title style="text-align:center">Guardando cambios</h1>
+  <div *ngIf="editando==true;" style="margin-left:150px;">
+      <mat-spinner color="primary"></mat-spinner>
+  </div> -->
+
+
+<!-- CREANDO UN NUEVA CARTERA -->
+<h1 *ngIf="creando==false;" mat-dialog-title style="text-align:center">Crear Cartera: </h1>
+  <form *ngIf="creando==false;" style="margin-left:60px" (ngSubmit)="crearCartera()">
+    <mat-form-field  hintLabel="Max 20 caracteres">
+    <input  matInput   name="nombreCartera"  [(ngModel)]="cartera.nombreCartera" placeholder="Nombre">
+    </mat-form-field>
+    <th>
+
+    <mat-form-field  hintLabel="Introduce el año de la cartera">
+    <input  matInput   name="year"  [(ngModel)]="cartera.year" placeholder="Año">
+    </mat-form-field>
+    <!-- <tr>
+    <mat-form-field   hintLabel="Introduce un trimestre valido">
+    <input  matInput   name="trimestre"  [(ngModel)]="cartera.trimestre" placeholder="Trimestre">
+    </mat-form-field>
+    <tr> -->
+    <!-- <mat-form-field   hintLabel="Numeros y letras">
+    <input  matInput   name="password"  [(ngModel)]="cartera.estado" placeholder="Contraseña">
+    </mat-form-field>
+    <tr> -->
+
+    <tr>
+     <mat-form-field>
+      <mat-select placeholder="Trimestre" [(ngModel)]="cartera.trimestre"  name="trimestre"  >
+        <mat-option *ngFor="let trimestre of trimestres" [value]="trimestre.value">
+          {{ trimestre.viewValue }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <br><br>
+    <mat-dialog-actions *ngIf="creando==false;" style="display:block; text-align:center;">
+      <button type="submit" color="primary" mat-raised-button>Crear</button>
+    <button  mat-raised-button (click)="cancelar()" color="warn">Cancelar</button>
+   </mat-dialog-actions>
+
+  </form>
+
+  <h1 *ngIf="creando==true;"  mat-dialog-title style="text-align:center">Creando Cartera</h1>
+  <div *ngIf="creando==true;" style="margin-left:150px;">
+      <mat-spinner color="primary"></mat-spinner>
+  </div>

@@ -9,6 +9,7 @@ import { MatIcon } from '@angular/material';
 import { MatPaginatorModule } from '@angular/material';
 import {MatMenuModule} from '@angular/material/menu';
 
+import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import {Component, ViewChild} from '@angular/core';
 import {MatTableDataSource, MatSort, MatSortModule, MatTableModule} from '@angular/material';
@@ -21,6 +22,9 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
 import {MatToolbarModule} from '@angular/material/toolbar';
+
+import {EliminarCarteraDialog} from "./components/carteras/eliminar-cartera-dialog.component";
+import {EditarCarteraDialog} from "./components/carteras/editar-cartera-dialog.component";
 
 import {EliminarUsuarioDialog} from "./components/usuarios/eliminar-usuario-dialog.component";
 import {EditarUsuarioDialog} from "./components/usuarios/editar-usuario-dialog.component";
@@ -93,7 +97,9 @@ import { FileUploadModule } from 'ng2-file-upload';
     EditarDialog,
     EliminarUsuarioDialog,
     EditarUsuarioDialog,
-    EditarPerfilDialog
+    EliminarCarteraDialog,
+    EditarPerfilDialog,
+    EditarCarteraDialog
   ],
   declarations: [
     AppComponent,
@@ -128,7 +134,9 @@ import { FileUploadModule } from 'ng2-file-upload';
     EditarDialog,
     EliminarUsuarioDialog,
     EditarUsuarioDialog,
-    EditarPerfilDialog
+    EditarPerfilDialog,
+    EliminarCarteraDialog,
+    EditarCarteraDialog
   ],
   imports: [
     HttpClientModule,
@@ -152,6 +160,7 @@ import { FileUploadModule } from 'ng2-file-upload';
     MatMenuModule,
     MatProgressBarModule,
     MatSelectModule,
+    MatTooltipModule,
     MatProgressSpinnerModule,
     // FacebookModule.forRoot(),
     // FacebookModule,

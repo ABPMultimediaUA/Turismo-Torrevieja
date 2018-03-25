@@ -46,18 +46,21 @@ const app_routes: Routes = [
 
   { path: 'chatbots', loadChildren: 'app/chatbots/chatbots.module#ChatbotsModule' },
 
-  //rutas usuarios
-  { path: 'usuarios', component: UsuariosComponent },
+
   { path: 'roles', component: RolesComponent },
   { path: 'nuevo-rol', component: NuevoRolComponent },
   { path: 'rol/:id', component: RolComponent },
   { path: 'mensajes/:parame', component: MensajesComponent },
   //{ path: 'usuariosReloaded', component: UsuariosComponent },
+  //rutas usuarios
+  { path: 'usuarios', component: UsuariosComponent },
+  { path: 'usuarios/:id', component: UsuariosComponent },
   { path: 'nuevo-usuario', component: NuevoUsuarioComponent },
   { path: 'usuario/:id', component: UsuarioComponent },
 
   //rutas carteras
   { path: 'carteras', component: CarterasComponent },
+  { path: 'carteras/:id', component: CarterasComponent },
   { path: 'nueva-cartera', component: NuevaCarteraComponent },
   { path: 'cartera/:id', component: CarteraComponent },
 

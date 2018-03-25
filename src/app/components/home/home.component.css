@@ -23,6 +23,57 @@ anchors are inline so you need ot make them block to go full width
   width:100%;
 }
 
+div>section#home{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+  width: 100%;
+  position: relative;
+  height: auto;
+
+}
+div>section#home:nth-child(2n+1){
+    background-color: #F7F7F7;
+}
+div>section#home:nth-child(2n){
+    background-color: #FFFFFF;
+}
+
+    div>section#home>article{
+        width: 40%;
+        margin: 1em;
+        padding: .5em;
+        /*border: .05em solid #234;
+        border-radius: .1em;
+        border-color: #A2A2A2;
+        background-color: #fff;
+        box-shadow: 0 2px 2px 0 rgba(0,0,0,0.16), 0 0 0 1px rgba(0,0,0,0.08);*/
+        position: relative;
+        min-width: 350px;
+        overflow: hidden;
+
+    }
+        div>section#home>article>h3{
+            font-family: 'Roboto', sans-serif;
+            font-size: 2em;
+        }
+        div>section#home>article>img{
+            margin: 0 auto;
+            width:  100%;
+            max-height: 400px;
+            max-width: 400px;
+        }
+        div>section#home>article>p{
+            font-family: 'Roboto', sans-serif;
+            line-height: 1.8;
+            font-size: .9em;
+        }
+        div>section#home>article>a{
+            text-decoration: none;
+            color: #3A349A;
+            font-family: 'Roboto', sans-serif;
+        }
 
 
 

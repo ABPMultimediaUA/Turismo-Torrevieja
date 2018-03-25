@@ -1,7 +1,7 @@
 <br><br><br><br><br>
 <div class="container-fluid">
   <div class="row ">
-      <main role="main" class="col-sm-9 ml-sm-auto col-md-10 pt-3">
+      <main role="main" class="col-sm-12 ml-sm-auto col-md-12 pt-3">
         <h1><span class="icon-crown"></span>Expediente <small>{{expediente.nombreExpediente}}</small></h1>
         <div class="container" *ngIf="errorActualizarItem === true">
             <div class="jumbotron">
@@ -62,9 +62,9 @@
         <br>
         <!-- ***************** EMPIEZAN ACTIVIDADES ***************** -->
         <div id="DivActividades">
-          <h3>ACTIVIDADES</h3>
-          <div>
-            <div *ngFor="let a of actividades; let i = index">
+          <h3 style="text-align:center">ACTIVIDADES</h3>
+          <div style="width:100%;display: flex; flex-wrap: wrap;  justify-content: center;" >
+            <div style="width: 45%; min-width: 700px;margin:0px;display:flex" *ngFor="let a of actividades; let i = index">
               <form (ngSubmit)="crearModificarActConTar(1,a,i)" #forma="ngForm">
                 <div class="row CuadroActividad">
                   <div class="col-sm-3">
@@ -207,8 +207,8 @@
                   </div>
                   <div class="col-sm-3">
                     <label>Usuario responsable</label>
-                    <select class="form-control" name=Tarea_usuario{{i}} [(ngModel)]="a.usuario">
-                      <option [ngValue]="u.identificador" *ngFor="let u of users">{{u.nombreUsuario}}</option>
+                    <select class="form-control" name=Tarea_usuario{{i}} [(ngModel)]="a.usuario" required>
+                      <option [ngValue]="u.identificador" *ngFor="let u of users" >{{u.nombreUsuario}}</option>
                     </select>
                   </div>
                   <!-- <div class="col-sm-3">

@@ -97,7 +97,10 @@ export class CarteraComponent implements OnInit {
 
   puedeEditar(){
     console.log("1.puedeEditar? =",this.permisoEditar);
-    this.permisoEditar = true;
+  
+      this.permisoEditar = true;
+
+
     console.log("2.puedeEditar? =",this.permisoEditar);
     return this.permisoEditar;
   }

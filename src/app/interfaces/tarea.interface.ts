@@ -4,7 +4,7 @@ export interface Tarea
     expediente:number;
     nombreTarea:string;
     usuario:number;
-    finalizado:boolean;
+    finalizado:string;
     fechaCreacion:string;
     fechaActualizacion:string;
     fechaEliminacion:string;

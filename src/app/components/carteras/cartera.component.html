@@ -3,7 +3,7 @@
       <div style="width:100%">
         <h1 style="margin:auto;"><span class="icon-folder-open"></span> Cartera
           <small>{{cartera.nombreCartera}}</small>
-          <button *ngIf="!permisoEditar" (click)="puedeEditar()"
+          <button *ngIf="this.cartera.estado<5 && !permisoEditar" (click)="puedeEditar()"
           type="button" class="btn btn-outline-success">
             <span class="icon-pencil"></span>Editar
           </button>

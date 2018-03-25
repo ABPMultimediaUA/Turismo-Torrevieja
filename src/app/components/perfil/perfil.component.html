@@ -75,145 +75,54 @@
 
 
     	<div class="col-sm-8">
-        <h4>Actividad reciente</h4>
-        <div class="table-responsive">
-          <table class="table table-hover">
-            <tbody>
-              <tr>
-                <td> Hoy, 1:00 - Creaste el evento taltaltal.</td>
-              </tr>
-              <tr>
-                <td> Hoy, 12:23 - posteaste en facebook la publicacion del evento tal.</td>
-              </tr>
-              <tr>
-                <td> Hoy, 12:20 - Actualizaste la cartera del primer cuatrimeste de 2020.</td>
-              </tr>
-              <tr>
-                <td> Ayer - Añadiste una actividad al evento de las flores.</td>
-              </tr>
 
-            </tbody>
-          </table>
-        </div>
         <h4>Tareas pendientes</h4>
-
-        <!-- <div class="table-responsive">
-          <table class="table table-hover">
-            <tbody>
-              <tr>
-                <td><i class="pull-right fa fa-edit"></i> Contratar servicio de musica para la actividad taltal.</td>
-              </tr>
-              <tr>
-                <td><i class="pull-right fa fa-edit"></i> Crear publicacion instagram para el evento concierto de shakira.</td>
-              </tr>
-              <tr>
-                <td><i class="pull-right fa fa-edit"></i> Llevar a aprobar la cartera del cuatrimestre 3 de 2019 </td>
-
-              </tr>
-
-            </tbody>
-          </table>
-        </div> -->
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         <mat-table style="margin-left:30px; margin-right:30px;" #table [dataSource]="dataSource" matSort>
 
-             <ng-container  matColumnDef="select">
-               <mat-header-cell color="primary" *matHeaderCellDef>
-                 <mat-checkbox color="primary"
-                  (change)="$event ? masterToggle() : null"
-
-                               [checked]="selection.hasValue() && isAllSelected()"
-                               [indeterminate]="selection.hasValue() && !isAllSelected()">
-                 </mat-checkbox>
-
-                 <button *ngIf="isAllSelected()" (click)="borrarTarea(tarea.id)" style="min-width:10px;" class="botonMat"  mat-button><mat-icon style="color:#dc3545">delete</mat-icon></button>
-
-               </mat-header-cell>
-               <mat-cell  color="primary" *matCellDef="let row">
-                 <mat-checkbox class="noAnim" color="primary"
-                              (click)="$event.stopPropagation()"
-                               (change)="$event ? selection.toggle(row) : null"
-                               [checked]="selection.isSelected(row)">
-                               <button (click)="openDialogEliminar(row)"  class="botonMat" mat-icon-button color="warn">
-                                   <mat-icon color="warn" >delete</mat-icon>
-                              </button>
-
-                 </mat-checkbox>
-
-               </mat-cell>
-             </ng-container>
-
-          <ng-container matColumnDef="identificador">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>identificador </mat-header-cell>
-            <mat-cell   *matCellDef="let tarea">{{tarea.identificador}}</mat-cell>
-          </ng-container>
 
 
-          <ng-container matColumnDef="expediente">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> expediente </mat-header-cell>
-            <mat-cell  *matCellDef="let tarea">{{tarea.expediente}}</mat-cell>
-          </ng-container>
+           <ng-container matColumnDef="prueba">
+             <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+             <mat-cell   *matCellDef="let tarea">
+
+               <button *ngIf="tarea.finalizado ==0" (click)="CompletarTarea(tarea)"  class="botonMat" mat-icon-button color="primary">
+                   <mat-icon color="primary" >done</mat-icon>
+              </button>
+
+              <button *ngIf="tarea.finalizado ==1" (click)="CompletarTarea(tarea)"  class="botonMat" mat-icon-button color="warn">
+                  <mat-icon color="warn" >autorenew</mat-icon>
+             </button>
+
+            </mat-cell>
+           </ng-container>
 
           <ng-container matColumnDef="nombreTarea">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> nombreTarea </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Tarea </mat-header-cell>
             <mat-cell   *matCellDef="let tarea"> {{tarea.nombreTarea}} </mat-cell>
           </ng-container>
 
-          <ng-container matColumnDef="usuario">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> usuario </mat-header-cell>
-            <mat-cell   *matCellDef="let tarea"> {{tarea.usuario}} </mat-cell>
-          </ng-container>
-
-          <!-- <ng-container matColumnDef="terminado">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> terminado </mat-header-cell>
-            <mat-cell   *matCellDef="let tarea"> {{tarea.terminado}} </mat-cell>
-          </ng-container> -->
-
           <ng-container matColumnDef="finalizado">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> finalizado </mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header> finalizada </mat-header-cell>
             <!-- <mat-cell *matCellDef="let usuario"> <div *ngIf="usuario.esVerificado ==0">No</div> </mat-cell> -->
             <mat-cell *matCellDef="let tarea">
-              <div *ngIf="!tarea.finalizado ==0">Si</div>
-              <div *ngIf="tarea.finalizado ==0">No</div>
+              <div *ngIf="tarea.finalizado ==1">Si </div>
+              <div *ngIf="tarea.finalizado ==0">No
+                  <!-- <mat-icon color="warn" >warning</mat-icon> -->
+              </div>
             </mat-cell>
 
-            <!-- <mat-cell *ngIf="!usuario.esVerificado ==0" matCellDef="let usuario"> Si </mat-cell> -->
-            <!-- <mat-cell *ngIf="usuario.esVerificado ==0" matCellDef="let usuario"> No </mat-cell> -->
-          </ng-container>
-
-          <ng-container matColumnDef="fechaCreacion">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> fechaCreacion </mat-header-cell>
-            <mat-cell   *matCellDef="let tarea"> {{tarea.fechaCreacion}} </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="fechaActualizacion">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> fechaActualizacion </mat-header-cell>
-            <mat-cell   *matCellDef="let tarea"> {{tarea.fechaActualizacion}} </mat-cell>
           </ng-container>
 
 
 
-
-
-
-          <mat-header-row *matHeaderRowDef="['select','identificador', 'expediente', 'nombreTarea', 'usuario','finalizado','fechaCreacion','fechaActualizacion']"></mat-header-row>
-          <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','identificador', 'expediente', 'nombreTarea', 'usuario','finalizado','fechaCreacion','fechaActualizacion']" ></mat-row>
+          <mat-header-row *matHeaderRowDef="['prueba', 'nombreTarea', 'finalizado']"></mat-header-row>
+          <mat-row class="elementoTabla" *matRowDef="let row; columns: ['prueba',  'nombreTarea', 'finalizado']" ></mat-row>
         </mat-table>
 
-          </div>
+
+
+
 
         </div>
     </div>

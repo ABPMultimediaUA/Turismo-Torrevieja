@@ -3,6 +3,20 @@ import { Component, OnInit } from '@angular/core';
 import {LoginComponent} from '../login/login.component';
 
 import { Cartera }  from "../../interfaces/cartera.interface";
+
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { ViewChild} from '@angular/core';
+import {MatTableDataSource, MatSort} from '@angular/material';
+import { MatFormFieldModule } from '@angular/material';
+import {MatInputModule} from '@angular/material';
+import {SelectionModel} from '@angular/cdk/collections';
+import { MatPaginatorModule, MatPaginator } from '@angular/material';
+import { MatIcon} from '@angular/material';
+import {MatCheckboxModule} from '@angular/material/checkbox';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatIconRegistry, MatIconModule, MatButtonModule } from '@angular/material';
+import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
+import {MatDialogModule} from '@angular/material/dialog';
 import {HomeComponent} from "../home/home.component";
 import { Router, ActivatedRoute } from '@angular/router';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';//ramoon
@@ -10,18 +24,18 @@ import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angula
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-// import { AuthenticationService } from '../../services/authentication.service';
-// import {AlertService } from '../../services/alert.service';
+
 import { AlertService, AuthenticationService, CarterasService, LogueadoService } from '../../services/index';
-// import { AlertComponent } from '../../../_directives/index';
-// import { AuthGuard } from '../../../_guards/index';
+
+import {EliminarCarteraDialog} from "./eliminar-cartera-dialog.component";
+import {EditarCarteraDialog} from "./editar-cartera-dialog.component";
 
 @Component({
   selector: 'app-carteras',
   templateUrl: './carteras.component.html'
 })
 export class CarterasComponent implements OnInit {
-  carteras:any[] = [];
+  // carteras:any[] = [];
   loading:boolean = true;
   //pagination
   paginacion:any = [];
@@ -32,10 +46,31 @@ export class CarterasComponent implements OnInit {
   totalPaginas:number;
   currentPage:number = 1;
   // k:number;
+
+  //megacaca
+    ELEMENT_DATA: Cartera[];
+    carteras:any[] = [];
+    displayedColumns = ['select','identificador', 'nombreCartera', 'year', 'trimestre','estado', 'fechaCreacion', 'fechaActualizacion'];
+    dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+    selection = new SelectionModel<Cartera>(true, []);
+
+    @ViewChild(MatSort) sort: MatSort;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+
+      ngAfterViewInit() {
+          console.log("entra en el sort ese");
+
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.selection = new SelectionModel<Cartera>(true, []);
+        console.log(this.dataSource.sort);
+      }
+  //finalmegacaca
   constructor(private _carterasService:CarterasService,
               private router:Router,
               private route:ActivatedRoute,
-              public  logueadoService: LogueadoService
+              public  logueadoService: LogueadoService,
+              public dialog: MatDialog
             ) {
               this.logueadoService.comprobarLogueado();
 
@@ -43,22 +78,36 @@ export class CarterasComponent implements OnInit {
               console.log(this.logueadoService.estaLogueado);
         this._carterasService.getCarteras("1")
           .subscribe( data =>{
-            console.log(data);//la data del getHeroes
+            console.log(data);
 
             this.carteras= data.data;
             console.log("array de carteras:");
             console.log(this.carteras);
-            console.log("carteras[3]:");
-            console.log(this.carteras[3]);
+            // console.log("carteras[3]:");
+            // console.log(this.carteras[3]);
 
-            this.ItemsPorPagina = localStorage.getItem("ItemsPorPagina");
-            console.log("cojo Items por pagina de localstorage:",this.ItemsPorPagina );
-            this.carterasPorPagina = parseInt(this.ItemsPorPagina);
-            console.log("paso itemspor pagina a number y lo meto en carteras por pagina:",this.carterasPorPagina);
-            this.totalPaginas = Math.ceil(this.carteras.length/this.carterasPorPagina);
-            console.log("this.totalPaginas:");
-            console.log(this.totalPaginas);
-            this.loading=false;
+
+
+            //megapis
+            this.ELEMENT_DATA = this.carteras;
+            this.displayedColumns = ['select','identificador', 'nombreCartera', 'year', 'trimestre','estado', 'fechaCreacion', 'fechaActualizacion'];
+            this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+            this.selection = new SelectionModel<Cartera>(true, []);
+            this.dataSource.sort = this.sort;
+            this.dataSource.paginator = this.paginator;
+            //finalmegapis
+
+
+
+            //
+            // this.ItemsPorPagina = localStorage.getItem("ItemsPorPagina");
+            // console.log("cojo Items por pagina de localstorage:",this.ItemsPorPagina );
+            // this.carterasPorPagina = parseInt(this.ItemsPorPagina);
+            // console.log("paso itemspor pagina a number y lo meto en carteras por pagina:",this.carterasPorPagina);
+            // this.totalPaginas = Math.ceil(this.carteras.length/this.carterasPorPagina);
+            // console.log("this.totalPaginas:");
+            // console.log(this.totalPaginas);
+            // this.loading=false;
           //  this.paginacion = data.meta.pagination;
             //let paginaActual= data.meta.pagination.current_page;
 
@@ -66,43 +115,80 @@ export class CarterasComponent implements OnInit {
             // console.log(paginaActual);
             // console.log("totalPaginas");
             // console.log(this.paginacion.total_pages);
-
-            for(let i=0;i<this.totalPaginas;i++)
-            {
-              this.cantidadPagina.push(i);
-            }
-
-            if(this.carteras.length>(this.carterasPorPagina-1)){
-              for(let i=0;i<=(this.carterasPorPagina-1);i++)
-              {
-                this.carterasActuales.push(this.carteras[i]);
-              }
-            }else{
-              for(let i=0;i<this.carteras.length;i++)
-              {
-                this.carterasActuales.push(this.carteras[i]);
-              }
-            }
-
-
-
-            // this.k=this.usuarios[0].identificador;
-            // console.log(k)
-            // para retrasar esto
-            // //this.loading=false;
-            // setTimeout(()=> {
-            //   this.loading = false;
-            //   this.heroes= data
-            // }, 3000);
-
-
-            // for(let key$ in data){
-            //   console.log( data[key$]);//separo la data
-            //   this.heroes.push(data[key$]);
+            //
+            // for(let i=0;i<this.totalPaginas;i++)
+            // {
+            //   this.cantidadPagina.push(i);
             // }
+            //
+            // if(this.carteras.length>(this.carterasPorPagina-1)){
+            //   for(let i=0;i<=(this.carterasPorPagina-1);i++)
+            //   {
+            //     this.carterasActuales.push(this.carteras[i]);
+            //   }
+            // }else{
+            //   for(let i=0;i<this.carteras.length;i++)
+            //   {
+            //     this.carterasActuales.push(this.carteras[i]);
+            //   }
+            // }
+
+
+
+
           })
   }
   ngOnInit() {
+  }
+
+  editar(cartera){
+    // this.router.navigate(['carteras']);
+    this.router.navigate(['/cartera', cartera.identificador]);
+
+     // [routerLink]="['/cartera', cartera.identificador]"
+  }
+  openDialogEditar(row){
+
+     console.log(row);
+     const dialogRef = this.dialog.open(EditarCarteraDialog, {
+       height: '400px',
+       width: '350px',
+       data: { row: row }
+     });
+  }
+  openDialogEliminar(row) {
+
+
+  console.log(row);
+
+    const dialogRef = this.dialog.open(EliminarCarteraDialog, {
+      height: '200px',
+      width: '450px',
+      data: { row: row }
+    });
+  }
+  selectRow(row) {
+   console.log(row);
+   this.router.navigate(['/evento', row.identificador]);
+ }
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+
+    return numSelected === numRows;
+
+    // console.log("isAllSelected() "+this.selection);
+  }
+  masterToggle() {
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
+        console.log("masterToggle() "+this.selection);
+  }
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
   }
   cambiarNumCarterasPorPagina(){
     this.carterasPorPagina=this.carterasPorPagina;
@@ -153,15 +239,7 @@ export class CarterasComponent implements OnInit {
             }else{
               //todo bien
               delete this.carteras[id];
-            //   console.log( "borrausuario y ahora va a pedir todos los usuarios de nuevo" );
-            // this._usuariosService.getUsuarios();
-            // console.log( "aqui los ha pedido ya todos de nuevo" );
-            // this.refresh();
-
-
             }
-
           })
-
     }
   }

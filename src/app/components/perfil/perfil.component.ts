@@ -30,7 +30,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 // import { AuthenticationService } from '../../services/authentication.service';
 // import {AlertService } from '../../services/alert.service';
-import { AlertService, AuthenticationService, LogueadoService, UsuariosService, DatosUsuarioService, TareasService} from '../../services/index';
+import { AlertService, AuthenticationService,PeticionesCrudService, LogueadoService, UsuariosService, DatosUsuarioService, TareasService} from '../../services/index';
 // import { AlertComponent } from '../../../_directives/index';
 // import { AuthGuard } from '../../../_guards/index';
 
@@ -79,7 +79,17 @@ export class PerfilComponent implements OnInit {
           console.log(this.dataSource.sort);
         }
 
+    public tarea:Tarea={
+      identificador:0,
+      expediente:0,
+      nombreTarea:"",
+      usuario:0,
+      finalizado:"",
+      fechaCreacion:"",
+      fechaActualizacion:"",
+      fechaEliminacion:""
 
+    };
 
 
   public usuario:Usuario={
@@ -105,10 +115,12 @@ export class PerfilComponent implements OnInit {
       private authenticationService: AuthenticationService,
       private alertService: AlertService,
       private home:HomeComponent,
+
       public  logueadoService: LogueadoService,
         public dialog: MatDialog,
         private _usuariosService:UsuariosService,
-        private _tareasService:TareasService
+        private _tareasService:TareasService,
+        private _peticionescrudservice:PeticionesCrudService
       ) {
         this.logueadoService.comprobarLogueado();
         this.id= localStorage.identificador;
@@ -200,7 +212,28 @@ export class PerfilComponent implements OnInit {
        data: { usuario: this.usuario , identificador:this.idNumber}
      });
   }
+CompletarTarea(row){
+     console.log(row);
+     this.tarea=row;
+     let idTarea:number = this.tarea.identificador;
+     if(this.tarea.finalizado=="0"){
+       this.tarea.finalizado="1";
+     }else{
+       this.tarea.finalizado="0";
+     }
 
+     this._peticionescrudservice.actualizarItem(2,idTarea,this.tarea,-1)
+     // .then( res=> { })
+     .catch( (err) => { console.log( err.toString() ); });
+
+     // this._tareasService.actualizarTarea(this.tarea,idTarea)
+     // .subscribe(data=>{
+     //   console.log("data que queremos actualizar"+data);
+     //     this.router.navigate(['perfil']);
+     //  //  location.reload(true);
+     // } ,
+     // );
+}
 
   // openDialogEliminar(row) {
   //   console.log(row);

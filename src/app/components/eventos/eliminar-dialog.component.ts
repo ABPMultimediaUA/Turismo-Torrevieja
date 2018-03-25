@@ -46,7 +46,7 @@ export class EliminarDialog {
               this.row=data.row;
               console.log(this.row);
 
-              
+
                this.id=this.row.identificador;
 
                console.log(this.row.identificador);

@@ -1,3 +1,4 @@
+<br><br>
 <div class="container-fluid">
   <div class="row ">
       <div  class="table-responsive">
@@ -30,7 +31,7 @@
 
 
             <!-- Checkbox Column -->
-               <ng-container  matColumnDef="select">
+               <!-- <ng-container  matColumnDef="select">
                  <mat-header-cell color="primary" *matHeaderCellDef>
                    <mat-checkbox color="primary" (change)="$event ? masterToggle() : null"
                                  [checked]="selection.hasValue() && isAllSelected()"
@@ -52,23 +53,32 @@
                    </mat-checkbox>
 
                  </mat-cell>
-               </ng-container>
+               </ng-container> -->
+             <ng-container matColumnDef="eliminar">
+               <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+               <mat-cell   *matCellDef="let usuario">
+                 <button (click)="openDialogEliminar(usuario)"  class="botonMat" mat-icon-button color="warn">
+                     <mat-icon color="warn" >delete</mat-icon>
+                </button>
+
+               </mat-cell>
+             </ng-container>
 
             <ng-container matColumnDef="identificador">
               <mat-header-cell *matHeaderCellDef mat-sort-header>Id </mat-header-cell>
-              <mat-cell   *matCellDef="let usuario">{{usuario.identificador}}</mat-cell>
+              <mat-cell (click)="openDialogEditar(usuario)"  *matCellDef="let usuario">{{usuario.identificador}}</mat-cell>
             </ng-container>
 
 
             <ng-container matColumnDef="nombreUsuario">
               <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
-              <mat-cell  *matCellDef="let usuario">{{usuario.nombreUsuario}}</mat-cell>
+              <mat-cell (click)="openDialogEditar(usuario)" *matCellDef="let usuario">{{usuario.nombreUsuario}}</mat-cell>
             </ng-container>
 
             <!-- Weight Column -->
             <ng-container matColumnDef="apodo">
               <mat-header-cell *matHeaderCellDef mat-sort-header> Apodo </mat-header-cell>
-              <mat-cell   *matCellDef="let usuario"> {{usuario.apodo}} </mat-cell>
+              <mat-cell  (click)="openDialogEditar(usuario)" *matCellDef="let usuario"> {{usuario.apodo}} </mat-cell>
             </ng-container>
 
             <!-- Symbol Column -->
@@ -80,7 +90,7 @@
             <ng-container matColumnDef="esVerificado">
               <mat-header-cell *matHeaderCellDef mat-sort-header> Verificado </mat-header-cell>
               <!-- <mat-cell *matCellDef="let usuario"> <div *ngIf="usuario.esVerificado ==0">No</div> </mat-cell> -->
-              <mat-cell *matCellDef="let usuario">
+              <mat-cell (click)="openDialogEditar(usuario)" *matCellDef="let usuario">
                 <div *ngIf="!usuario.esVerificado ==0">Si</div>
                 <div *ngIf="usuario.esVerificado ==0">No</div>
               </mat-cell>
@@ -91,15 +101,15 @@
 
             <ng-container matColumnDef="rol">
               <mat-header-cell *matHeaderCellDef mat-sort-header> Rol </mat-header-cell>
-              <mat-cell *matCellDef="let usuario">
+              <mat-cell (click)="openDialogEditar(usuario)" *matCellDef="let usuario">
                 <div *ngIf="usuario.rol ==1">Administrador</div>
                 <div *ngIf="usuario.rol ==2">TRabajador</div>
                 <div *ngIf="usuario.rol !=1 && usuario.rol !=2">Otros roles</div>
               </mat-cell>
             </ng-container>
 
-            <mat-header-row *matHeaderRowDef="['select','identificador', 'nombreUsuario', 'apodo', 'esVerificado','rol']"></mat-header-row>
-            <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','identificador', 'nombreUsuario', 'apodo', 'esVerificado','rol']" (click)="openDialogEditar(row)"></mat-row>
+            <mat-header-row *matHeaderRowDef="['eliminar', 'identificador', 'nombreUsuario', 'apodo', 'esVerificado','rol']"></mat-header-row>
+            <mat-row class="elementoTabla" *matRowDef="let row; columns: ['eliminar','identificador', 'nombreUsuario', 'apodo', 'esVerificado','rol']" ></mat-row>
           </mat-table>
 <br><br><br>
         </div>

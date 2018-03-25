@@ -22,11 +22,9 @@ import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angula
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-// import { AuthenticationService } from '../../services/authentication.service';
-// import {AlertService } from '../../services/alert.service';
+
 import { AlertService, AuthenticationService, UsuariosService, LogueadoService } from '../../services/index';
-// import { AlertComponent } from '../../../_directives/index';
-// import { AuthGuard } from '../../../_guards/index';
+
 import {EliminarUsuarioDialog} from "./eliminar-usuario-dialog.component";
 import {EditarUsuarioDialog} from "./editar-usuario-dialog.component";
 
@@ -129,6 +127,10 @@ export class UsuariosComponent implements OnInit {
   }
   ngOnInit() {
   }
+  eliminar(row){
+    console.log(row);
+
+  }
   openDialogEliminar(row) {
 
 
@@ -139,14 +141,10 @@ export class UsuariosComponent implements OnInit {
         width: '450px',
         data: { row: row }
       });
-
-      // dialogRef.afterClosed().subscribe(result => {
-      //   console.log(`Dialog result: ${result}`);
-      // });
     }
 
 openDialogEditar(row){
-   
+
    console.log(row);
    const dialogRef = this.dialog.open(EditarUsuarioDialog, {
      height: '600px',

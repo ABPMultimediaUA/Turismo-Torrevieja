@@ -14,7 +14,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatProgressBarModule, MatProgr
 import {MatDialogModule} from '@angular/material/dialog';
 
 import { Element }  from "../../interfaces/element.interface";
-import { Usuario }  from "../../interfaces/usuario.interface";
+import { Cartera }  from "../../interfaces/cartera.interface";
 import {HomeComponent} from "../home/home.component";
 import { Router, ActivatedRoute } from '@angular/router';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';//ramoon
@@ -24,23 +24,23 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 // import { AuthenticationService } from '../../services/authentication.service';
 // import {AlertService } from '../../services/alert.service';
-import { AlertService, AuthenticationService, UsuariosService, LogueadoService } from '../../services/index';
+import { AlertService, AuthenticationService, CarterasService, LogueadoService } from '../../services/index';
 // import { AlertComponent } from '../../../_directives/index';
 // import { AuthGuard } from '../../../_guards/index';
 @Component({
-  selector: 'eliminar-usuario-dialog',
-  templateUrl: 'eliminar-usuario-dialog.html',
+  selector: 'eliminar-cartera-dialog',
+  templateUrl: 'eliminar-cartera-dialog.html',
 })
-export class EliminarUsuarioDialog {
-  row:Usuario;
+export class EliminarCarteraDialog {
+  row:Cartera;
   id:string;
   eliminando:boolean =false;
-  constructor(private _usuariosService:UsuariosService,
+  constructor(private _carterasService:CarterasService,
               private router:Router,
               private route:ActivatedRoute,
               public  logueadoService: LogueadoService,
               public dialog: MatDialog,
-              public dialogRef: MatDialogRef<EliminarUsuarioDialog>,
+              public dialogRef: MatDialogRef<EliminarCarteraDialog>,
               @Inject(MAT_DIALOG_DATA) public data: any
             ) {
               this.row=data.row;
@@ -54,25 +54,26 @@ export class EliminarUsuarioDialog {
 
                   this.eliminando=false;
  }
-
- borrarUsuario(){
+ borrarCartera(){
 
    this.eliminando=true;
+   // var rand = Math.floor(Math.random() * 10);
+   // console.log(rand);
    setTimeout(()=>{
 
         this.dialogRef.close();
-          this.router.navigate(['/usuarios', 0]);
-   location.reload(true);
+          // this.router.navigate(['/carteras']);
+      location.reload(true);
    },2000);
 
-     this._usuariosService.borrarUsuario( this.id)
+     this._carterasService.borrarCartera( this.id)
          .subscribe(respuesta=>{
            if(respuesta){
              console.log("caracola");
              console.log(respuesta);
-             console.log( "borrausuario y ahora va a pedir todos los usuarios de nuevo" );
-           this._usuariosService.getUsuarios("1");
-           console.log( "aqui los ha pedido ya todos de nuevo y voy a hacer el router navigate a usuarios" );
+             console.log( "borra cartera y ahora va a pedir todos las carteras de nuevo" );
+           this._carterasService.getCarteras("1");
+           console.log( "aqui los ha pedido ya todos de nuevo y voy a hacer el router navigate a carteras" );
 
             // this.dialogRef.close();
 
@@ -92,6 +93,7 @@ export class EliminarUsuarioDialog {
          })
 
    }
+
    cancelar(){
      this.dialogRef.close();
    }

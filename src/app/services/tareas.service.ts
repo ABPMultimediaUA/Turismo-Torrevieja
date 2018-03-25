@@ -33,13 +33,14 @@ export class TareasService {
       })
   }
 
-  actualizarTarea ( tarea:Tarea, id:string){
-    // if(tarea.password=="" ){
-    //   delete tarea.password;
-    //   delete tarea.password_confirmation;
-    //
-    // }
-    console.log(tarea);
+  actualizarTarea ( tarea:Tarea, id:number){
+
+     console.log("tarea.finalizado antes",tarea.finalizado);
+
+     // tarea.finalizado=tarea.finalizado.replace(/["]+/g, '');
+       tarea.finalizado=parseInt(tarea.finalizado);
+    console.log("tarea.finalizado despues",tarea.finalizado);
+    console.log("Tarea que le mando",tarea);
     let body = JSON.stringify( tarea ); //pasarlo a string
 
     let headers = new Headers ({
@@ -51,12 +52,14 @@ export class TareasService {
       //'X-XSRF-TOKEN':this.First_accessToken+this.Secound_accessToken
     });
 
-  let url = `${this.tareaURL}/${id}`;
+  let url = `${"https://gvent.ovh/Prueba2_1/public/tarea"}/${id}`;
+  console.log("url a la que mando la tarea a actulizar:",url);
+
 
   return this.http.put (url,body, { headers })//estoes lo quemandas
       .map( res=>{ //transformar la data que viene
-        console.log(res.json());
-        return res.json();
+        console.log("lo que me devuelve:",res.json().data);
+        return res.json().data;
     })
   }
 

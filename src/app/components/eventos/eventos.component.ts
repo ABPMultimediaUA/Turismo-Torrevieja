@@ -116,7 +116,8 @@ export class EventosComponent implements OnInit {
             // localStorage.setItem("eventos", this.eventos.toString());
             //
             // console.log("eventosString=", this.eventosString);
-            //megapis
+            //megapis+
+            console.log("cargo todos los eventos");
             this.ELEMENT_DATA = this.eventos;
             this.displayedColumns = ['select','identificador', 'nombreEvento', 'usuario', 'fechaCreacion','fechaActualizacion'];
             this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
@@ -156,8 +157,64 @@ export class EventosComponent implements OnInit {
   }
 
   ngOnInit() {
+      this.ELEMENT_DATA = this.eventos;
   }
+ngOnChange(){
+  this._eventosService.getEventos("1")
+    .subscribe( data =>{
+      console.log(data);//la data del getHeroes
 
+      this.eventos= data.data;
+      console.log("array de eventos:");
+      console.log(this.eventos);
+      console.log("eventos[3]:");
+      console.log(this.eventos[3]);
+      console.log("this.eventos222:");
+      console.log(this.eventos);
+
+      //
+      // localStorage.setItem("eventos", this.eventos.toString());
+      //
+      // console.log("eventosString=", this.eventosString);
+      //megapis+
+      console.log("cargo todos los eventos");
+      this.ELEMENT_DATA = this.eventos;
+      this.displayedColumns = ['select','identificador', 'nombreEvento', 'usuario', 'fechaCreacion','fechaActualizacion'];
+      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+      this.selection = new SelectionModel<Evento>(true, []);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      //finalmegapis
+      this.ItemsPorPagina = localStorage.getItem("ItemsPorPagina");
+      console.log("cojo Items por pagina de localstorage:",this.ItemsPorPagina );
+      this.eventosPorPagina = parseInt(this.ItemsPorPagina);
+      console.log("paso itemspor pagina a number y lo meto en eventos por pagina:",this.eventosPorPagina);
+      this.totalPaginas = Math.ceil(this.eventos.length/this.eventosPorPagina);
+      console.log("this.totalPaginas:");
+      console.log(this.totalPaginas);
+      this.loading=false;
+
+
+
+      for(let i=0;i<this.totalPaginas;i++)
+      {
+        this.cantidadPagina.push(i);
+      }
+
+      if(this.eventos.length>(this.eventosPorPagina-1)){
+        for(let i=0;i<=(this.eventosPorPagina-1);i++)
+        {
+          this.eventosActuales.push(this.eventos[i]);
+        }
+      }else{
+        for(let i=0;i<this.eventos.length;i++)
+        {
+          this.eventosActuales.push(this.eventos[i]);
+        }
+      }
+
+    })
+}
   openDialogEliminar(row) {
 
 
