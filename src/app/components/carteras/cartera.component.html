@@ -72,12 +72,9 @@
             </div>
             <div *ngIf="!permisoEditar" class="form-group col-sm-3">
               <label>Estado</label>
-              <input [(ngModel)]="cartera.estado"
-                name="estado"
-                class="form-control"
-                placeholder="Estado de la cartera"
-                readonly
-                type="text">
+              <select readonly class="form-control" name=cartera_estado [(ngModel)]="cartera.estado">
+                <option [ngValue]=i *ngFor="let e of estados, let i = index">{{e}}</option>
+              </select>
             </div>
               <!-- *ngIf="permisoEditar" -->
             <div *ngIf="permisoEditar" class="form-group col-sm-3">
@@ -109,12 +106,9 @@
             </div>
             <div *ngIf="permisoEditar" class="form-group col-sm-3">
               <label>Estado</label>
-              <input [(ngModel)]="cartera.estado"
-                name="estado"
-                class="form-control"
-                placeholder="Estado de la cartera"
-                required
-                type="text">
+              <select class="form-control" name=cartera_estado [(ngModel)]="cartera.estado">
+                <option [ngValue]=i *ngFor="let e of estados, let i = index">{{e}}</option>
+              </select>
             </div>
         </div>
 

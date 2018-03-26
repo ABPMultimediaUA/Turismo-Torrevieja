@@ -65,6 +65,8 @@ export class CarteraComponent implements OnInit {
     titulo:"",
   };
 
+  estados:string[]=["Nueva","En planificación", "En trámite", "Aprobada", "Gestión","Cerrada"];
+
   nuevo:boolean = false;
   id:string;
 
