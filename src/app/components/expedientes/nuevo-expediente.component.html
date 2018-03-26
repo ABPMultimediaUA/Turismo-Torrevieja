@@ -1,66 +1,49 @@
 <br><br><br><br><br>
 <div class="container-fluid">
-
-
-
-
-        <h1><span class="icon-folder-add"></span> Nuevo Evento <small>{{evento.nombreEvento}}</small></h1>
-        <!-- mensajes -->
-        <div class="container" *ngIf="errorEvento === true">
-            <div class="jumbotron">
-                <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
-                <h1 class="text-center">¡Ups! <p> </p>
-                  <p><small class="text-center"> Ha habido un error creando un evento.</small></p></h1>
-                  <p class="text-center text-danger" *ngFor="let mensaje of errorMensaje">
-                        {{mensaje}}
-                </p>
-            </div>
-        </div>
-        <div class="container" *ngIf="errorEventoActualizar === true">
-            <div class="jumbotron">
-                <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
-                <h1 class="text-center">¡Ups! <p> </p>
-                  <p><small class="text-center"> Ha habido un error actualizando un evento.</small></p></h1>
-                  <p class="text-center text-danger" *ngFor="let mensaje of errorMensaje">
-                        {{mensaje}}
-                </p>
-            </div>
-        </div>
-
-        <div class="container" *ngIf="rgstrEvento === true">
-            <div class="jumbotron">
-                <div class="text-center"><i class="fa fa-5x fa-smile-o" style="color:#28a745;"></i></div>
-                <h1 class="text-center">¡Usuario creado! <p> </p>
-                  <p><small class="text-center text-success"> Se ha enviado un email de confirmación a {{usuario.correo}}.</small></p></h1>
-
-            </div>
-        </div>
-        <!-- fin mensajes -->
-
-
-
-
+        <h1><span class="icon-folder-add"></span> Nuevo Evento <small>{{expediente.nombreExpediente}}</small></h1>
         <form class="animated fadeIn fast"(ngSubmit)="guardar()" #forma="ngForm">
-          <div class="form-group">
-            <label>Nombre</label>
-            <input [(ngModel)]="evento.nombreEvento"
-              name="nombreEvento"
-              class="form-control"
-              placeholder="Nombre del Evento"
-              required
-              type="text">
+          <div class="row">
+            <div class="col-sm-3">
+              <label>Nombre del evento</label>
+              <input [(ngModel)]="expediente.nombreExpediente" name="nombreExp" class="form-control" placeholder="Nombre del expediente" required type="text">
+            </div>
+            <div class="col-sm-3">
+              <label>Título</label>
+              <input [(ngModel)]="expediente.titulo" name="nombreTit" class="form-control" placeholder="Título del evento" required type="text">
+            </div>
+            <div class="col-sm-3">
+              <label>Cartera</label>
+              <select class="form-control" name=expediente_cartera{{i}} [(ngModel)]="expediente.cartera" required>
+                <option [ngValue]="c.identificador" *ngFor="let c of cartera" >{{c.nombreCartera}}</option>
+              </select>
+            </div>
+            <div class="col-sm-3">
+              <label>Fecha inicio</label>
+              <input [(ngModel)]="expediente.fechaInicio" name="fechaInicio" class="form-control" required type="date">
+            </div>
+            <div class="col-sm-3">
+              <label>Fecha fin</label>
+              <input [(ngModel)]="expediente.fechaFin" name="fechaFin" class="form-control" required type="date">
+            </div>
+            <div class="col-sm-3">
+              <label>Coordinador</label>
+              <select class="form-control" name=expediente_coordinador{{i}} [(ngModel)]="expediente.coordinador" required>
+                <option [ngValue]="u.identificador" *ngFor="let u of users" >{{u.nombreUsuario}}</option>
+              </select>
+            </div>
+            <div class="col-sm-3">
+              <label>Detalles</label>
+              <input [(ngModel)]="expediente.detalle" name="detalle" class="form-control" type="text">
+            </div>
+            <div class="col-sm-9">
+              <label for="imagenForm">Imagen evento</label>
+              <img src=""  alt="Imagen del evento" width="200px" #etiquetaImgExp>
+              <input type="file" id="imagenForm" (change)="cargarImg($event.target.files)" accept="image/*">
+            </div>
           </div>
-
           <div class="form-group">
-            <button [disabled]="!forma.valid"
-               type="submit" class="btn btn-outline-primary">
-              Guardar cambios
-            </button>
-            <button
-              [routerLink]="['/carteras']"
-               class="btn btn-danger">
-              Cancelar
-            </button>
+            <button type="submit" class="btn btn-outline-primary">Guardar cambios</button>
+            <button (click)="borrarFormExp()" class="btn btn-danger">Limpiar campos</button>
           </div>
 
         </form>

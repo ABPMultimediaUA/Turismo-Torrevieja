@@ -72,13 +72,4 @@ export class ExpedientesComponent implements OnInit {
     }
   }
 
-  // borrarItem(id:string){
-  //   this._ItemService.eliminarItem(0,id).then(
-  //     res => {
-  //         location.reload(true);
-  //         this.router.navigate(['expedientes']);
-  //     }
-  //   );
-  // }
-
 }
