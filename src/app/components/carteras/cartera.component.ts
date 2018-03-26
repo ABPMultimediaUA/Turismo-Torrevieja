@@ -54,9 +54,9 @@ export class CarteraComponent implements OnInit {
   public users:Usuario[];
   public expN:ExpedienteInterfaz={
     identificador:null,
-    avance:"",
+    avance:0,
     cartera:0,
-    coordinador:"",
+    coordinador:0,
     detalle:"",
     fechaFin:null,
     fechaInicio:null,
@@ -185,8 +185,6 @@ export class CarteraComponent implements OnInit {
   }
 
   crearNuevoExp(){
-    this.expN.cartera = +this.id;
-    this.expN.avance += 0;
     this._carterasService.crearItem(0,this.expN)
       .then( res=> {
         alert("Expediente creado correctamente.");
@@ -207,9 +205,9 @@ export class CarteraComponent implements OnInit {
   borrarFormExp(){
     this.expN={
       identificador:null,
-      avance:"",
+      avance:0,
       cartera:0,
-      coordinador:"",
+      coordinador:0,
       detalle:"",
       fechaFin:null,
       fechaInicio:null,

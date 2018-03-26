@@ -6,20 +6,25 @@ import { ActividadInterface }  from "../../interfaces/actividad.interface";
 import { TareaInterface }  from "../../interfaces/tareas.interface";
 import { ContratoInterface }  from "../../interfaces/contrato.interface";
 import { Usuario }  from "../../interfaces/usuario.interface";
+import { Cartera }  from "../../interfaces/cartera.interface";
 import { EspacioInterface }  from "../../interfaces/espacio.interface";
 import { ProveedorInterface }  from "../../interfaces/proveedor.interface";
 import { AlertService, AuthenticationService,PeticionesCrudService,LogueadoService } from '../../services/index';
+
 @Component({
   selector: 'app-expediente',
   templateUrl: './expediente.component.html',
   styleUrls: ['./expediente.component.css']
 })
+
 export class ExpedienteComponent implements OnInit {
 
   First_accessToken:string="Bearer ";
   Secound_accessToken:string=localStorage.accesToken;
 
   id:string;
+  modificable:boolean = false;
+  eliminable:boolean = false;
   errorActualizarItem = false;
   errorMensaje:string[] = [];
   itemActualizado = false;
@@ -28,11 +33,14 @@ export class ExpedienteComponent implements OnInit {
   // permisosCambiados:string[]=[];
   // auxPermisos:string[]=[];
 
+  //TODO Arreglar Coordinador
+  coordinador:number;
+
   public expediente:ExpedienteInterfaz={
     identificador:0,
-    avance:"",
+    avance:0,
     cartera:0,
-    coordinador:"",
+    coordinador:0,
     detalle:"",
     fechaFin:null,
     fechaInicio:null,
@@ -41,12 +49,24 @@ export class ExpedienteComponent implements OnInit {
     titulo:"",
   };
 
+  public cartera:Cartera={
+    identificador:"",
+    nombreCartera:"",
+    year:0,
+    trimestre:0,
+    estado:0,
+    fechaCreacion:"",
+    fechaActualizacion:"",
+    fechaEliminacion:"",
+  };
+
   public actividades:ActividadInterface[];
   public tareas:TareaInterface[];
   public contratos:ContratoInterface[];
   public users:Usuario[];
   public espacio:EspacioInterface[];
   public proveedor:ProveedorInterface[];
+
 
   constructor(  private _ItemService: PeticionesCrudService,
                 private router:Router,
@@ -66,6 +86,16 @@ export class ExpedienteComponent implements OnInit {
                 // this.expediente["_metodo"] = "put";
                 // this.expediente.image=null;
                 console.log(this.expediente);
+                this.coordinador = +this.expediente.coordinador;
+
+                //COGEMOS LA CARTERA
+                this._ItemService.getItem(8,this.expediente.cartera,-1,-1).then(
+                  res => {
+                    this.cartera = res as Cartera;
+                    if(this.cartera.estado < 3) this.eliminable = true;
+                    else this.modificable = true;
+                  }
+                );
               }
             );
 
@@ -93,6 +123,9 @@ export class ExpedienteComponent implements OnInit {
             //COGEMOS LOS USUARIOS
             this._ItemService.getItem(5,-1,-1,-1).then(
               res => {
+                //TODO Cambiar select para recoger solamente los usuarios que
+                //tengan permiso para "coordinar" un evento
+                //y permiso para realizar tareas, etc.
                 this.users = res as Usuario[];
               }
             );
@@ -246,4 +279,17 @@ export class ExpedienteComponent implements OnInit {
     }
     r.readAsDataURL(files[0]);
   }
+
+  borrarItem(){
+    if(confirm("Si aceptas el expediente será eliminado.\n¿Continuar?")){
+      this._ItemService.eliminarItem(0,this.id,-1).then(
+        res => {
+            location.reload(true);
+            this.router.navigate(['expedientes']);
+        }
+      );
+    }
+  }
+
+
 }

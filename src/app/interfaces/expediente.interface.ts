@@ -1,9 +1,9 @@
 export interface ExpedienteInterfaz
 {
     identificador:number;
-    avance:string;
+    avance:number;
     cartera:number;
-    coordinador:string;
+    coordinador:number;
     detalle:string;
     fechaFin:Date;
     fechaInicio:Date;

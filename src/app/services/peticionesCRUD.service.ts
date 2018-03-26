@@ -100,6 +100,14 @@ export class PeticionesCrudService {
           //Insertar imagen en expediente
           url += `expediente/${id}/?imagen`;
           break;
+      case 301:
+          //Todas las carteras con estado 1 y 2 (pueden crear eventos)
+          url += `cartera?estado=1`;
+          break;
+      case 302:
+          //Todas las carteras con estado 1 y 2 (pueden crear eventos)
+          url += `cartera?estado=2`;
+          break;
       default:
           console.log("No se ha especificado correctamente una URL.");
     }
