@@ -149,6 +149,7 @@ export class EditarCarteraDialog {
              this._carterasService.nuevaCartera( this.cartera )
                .subscribe( data=>{
                  //this.router.navigate(['/heroe',data.name])
+                 console.log("HHHHHHHHHHHHHHHHHHHHHHH");
                  console.log(data);
                  // this.errorEvento = false;
                  // this.rgstrEvento = true;

@@ -63,6 +63,11 @@ export class ExpedienteComponent implements OnInit {
             this._ItemService.getItem(0,this.id,-1,-1).then(
               res => {
                 this.expediente = res as ExpedienteInterfaz;
+                if(this.expediente.image){
+                  this.expediente.image = "https://gvent.ovh/Prueba2_1/public/img/" + this.expediente.image;
+                  let o = this.etiqueta.nativeElement as HTMLImageElement;
+                  o.src = this.expediente.image;
+                }
                 // this.expediente["_metodo"] = "put";
                 // this.expediente.image=null;
                 console.log(this.expediente);
@@ -194,22 +199,24 @@ export class ExpedienteComponent implements OnInit {
   //ACTUALIZAR Y GUARDAR NUEVOS ITEMS
   guardarCambiosExp(){
     var expBody = this.expediente;
-    delete expBody.image;
-    this._ItemService.actualizarItem(0,this.id,expBody,-1)
-    .then( res=> {
-      // if(this.archivoImg){ //ACTUALIZAMOS IMG
-      //   this._ItemService.subirFile(0,this.id,this.archivoImg)
-      //     .then( res=>{ alert("Actualizado correctamente."); console.log(res);})
-      //     .catch( (er) => { alert("Expediente actualizado correctamente, a excepción de la imagen.");
-      //                       console.log( er.toString()) })
-      // }
-      // else{
-         alert("Actualizado correctamente." + "SIN IMAGEN");
-      // }
-    })
-    .catch( (err) => { alert("Se ha producido un error inesperado.\nNo se ha podido actualizar el expediente.");
-                       console.log( err.toString()) })
+    // delete expBody.image;
+    // this._ItemService.actualizarItem(0,this.id,expBody,-1)
+    // .then( res=> {
+      if(this.archivoImg){ //ACTUALIZAMOS IMG
+        this._ItemService.subirFile(0,15,this.archivoImg)
+          .then( res=>{ alert("Actualizado correctamente."); console.log(res);})
+          .catch( (er) => { alert("Expediente actualizado correctamente, a excepción de la imagen.");
+                            console.log( er.toString()) })
+    //   }
+    //   else{
+    //      alert("Actualizado correctamente." + "SIN IMAGEN");
+    //   }
+    // })
+    // .catch( (err) => { alert("Se ha producido un error inesperado.\nNo se ha podido actualizar el expediente.");
+    //                    console.log( err.toString()) })
   }
+
+}
 
   crearModificarActConTar(i,a,index){
     if(a.identificador != null){
@@ -246,4 +253,5 @@ export class ExpedienteComponent implements OnInit {
     }
     r.readAsDataURL(files[0]);
   }
+
 }
