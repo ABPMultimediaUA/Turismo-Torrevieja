@@ -55,11 +55,10 @@
             <div class="col-sm-9">
               <label for="imagenForm">Imagen evento</label>
               <img src=""  alt="Imagen del evento" width="200px" #etiquetaImgExp>
-              <input type="file" id="imagenForm" (change)="cargarImg($event.target.files)" accept="image/*">
+              <input *ngIf="modificable" type="file" id="imagenForm" (change)="cargarImg($event.target.files)" accept="image/*">
             </div>
           </div>
-          <!-- <input name="_method" type="hidden" value="PUT"> -->
-          <div class="form-group">
+          <div class="form-group" *ngIf="modificable">
             <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
               Guardar cambios
             </button>

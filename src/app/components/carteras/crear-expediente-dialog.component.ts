@@ -65,9 +65,9 @@ export class CrearExpedienteDialog {
 
   public expediente:ExpedienteInterfaz={
     identificador:null,
-    avance:"",
+    avance:0,
     cartera:0,
-    coordinador:"",
+    coordinador:0,
     detalle:"",
     fechaFin:null,
     fechaInicio:null,
@@ -132,8 +132,7 @@ export class CrearExpedienteDialog {
      console.log(id);
      console.log("voy a crear nuevo expediente",this.expediente);
      this.expediente.cartera = +this.id;
-     this.expediente.avance += 0;
-       this.expediente.coordinador = id;
+     this.expediente.coordinador = +id;
 
      console.log("expediente premandar",this.expediente);
      this._carterasService.crearItem(0,this.expediente)

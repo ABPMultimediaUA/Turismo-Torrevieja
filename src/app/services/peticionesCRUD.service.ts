@@ -173,22 +173,18 @@ export class PeticionesCrudService {
       let formData: FormData = new FormData();
       formData.append('image', file);
       formData.append('_method','put');
-      // console.log("cartera", formData.get('cartera_id'),url);
 
       let headers = new Headers ({
-        // 'Content-Type': 'application/x-www-form-urlencoded',
-        // 'Cache-Control':'no-cache',
-        // 'Accept':'image/*',
-        // // 'Content-Type': 'image/jpeg',
-        // 'Content-Type':'multipart/form-data',
         'Access-Control-Allow-Origin':'https://gvent.ovh/Prueba2_1/public',
         'Authorization': this.First_accessToken+this.Secound_accessToken,
       });
-      // headers.append('Accept','image/*');
       this.http.post(url, formData, { headers })
         .toPromise()
           .then( res => { resolve( res.json().data ); })
-          .catch((err) => { console.log( err.toString() ); })
+          .catch((err) => {
+            //TODO ARREGLAR ESTO, es una chapuza
+            alert("Modificado correctamente.");
+            console.log( err.toString() ); })
     });
     return promise;
   }
