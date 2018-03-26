@@ -1,9 +1,5 @@
 <br><br><br><br><br>
 <div class="container-fluid">
-
-
-
-
         <h1><span class="icon-folder-add"></span> Nuevo Evento <small>{{evento.nombreEvento}}</small></h1>
         <!-- mensajes -->
         <div class="container" *ngIf="errorEvento === true">
@@ -41,14 +37,36 @@
 
 
         <form class="animated fadeIn fast"(ngSubmit)="guardar()" #forma="ngForm">
-          <div class="form-group">
-            <label>Nombre</label>
-            <input [(ngModel)]="evento.nombreEvento"
-              name="nombreEvento"
-              class="form-control"
-              placeholder="Nombre del Evento"
-              required
-              type="text">
+          <div class="row">
+            <div class="col-sm-3">
+              <label>Nombre del evento</label>
+              <input [(ngModel)]="expediente.nombreExpediente" name="nombreExp" class="form-control" placeholder="Nombre del expediente" required type="text">
+            </div>
+            <div class="col-sm-3">
+              <label>Título</label>
+              <input [(ngModel)]="expediente.titulo" name="nombreTit" class="form-control" placeholder="Título del evento" required type="text">
+            </div>
+            <div class="col-sm-3">
+              <label>Fecha inicio</label>
+              <input [(ngModel)]="expediente.fechaInicio" name="fechaInicio" class="form-control" required type="date">
+            </div>
+            <div class="col-sm-3">
+              <label>Fecha fin</label>
+              <input [(ngModel)]="expediente.fechaFin" name="fechaFin" class="form-control" required type="date">
+            </div>
+            <div class="col-sm-3">
+              <label>Coordinador</label>
+              <input [(ngModel)]="expediente.coordinador" name="coordinador" class="form-control" placeholder="Persona responsable" required type="text">
+            </div>
+            <div class="col-sm-3">
+              <label>Detalles</label>
+              <input [(ngModel)]="expediente.detalle" name="detalle" class="form-control" rows="3" type="text">
+            </div>
+            <div class="col-sm-9">
+              <label for="imagenForm">Imagen evento</label>
+              <img src="https://gvent.ovh/Prueba2_1/public/img/{{expediente.image}}"  alt="Imagen del evento" width="200px" #etiquetaImgExp>
+              <input type="file" id="imagenForm" (change)="cargarImg($event.target.files)" accept="image/*">
+            </div>
           </div>
 
           <div class="form-group">
