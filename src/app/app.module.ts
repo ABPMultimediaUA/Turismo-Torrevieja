@@ -87,10 +87,16 @@ import { NuevoRolComponent } from './components/roles/nuevo-rol.component';
 import { RolComponent } from './components/roles/rol.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 
+import { ProveedorService }  from "./services/proveedor.service";
 
 
 
 import { FileUploadModule } from 'ng2-file-upload';
+
+import { ProveedoresComponent } from './components/proveedores/proveedores.component';
+import { ProveedorComponent } from './components/proveedores/proveedor.component';
+import { ProveedorEditarComponent } from './components/proveedores/proveedor-editar.component';
+import { NuevoProveedorComponent } from './components/proveedores/nuevo-proveedor.component';
 
 
 @NgModule({
@@ -142,7 +148,11 @@ import { FileUploadModule } from 'ng2-file-upload';
     EliminarCarteraDialog,
     EditarCarteraDialog,
     CrearExpedienteDialog,
-    EliminarExpedienteDialog
+    EliminarExpedienteDialog,
+    ProveedoresComponent,
+    ProveedorComponent,
+    ProveedorEditarComponent,
+    NuevoProveedorComponent
   ],
   imports: [
     HttpClientModule,
@@ -192,7 +202,7 @@ import { FileUploadModule } from 'ng2-file-upload';
     ExpedientesService,
     EliminarDialog,
     MatDatepickerModule,
-
+    ProveedorService
   ],
   bootstrap: [AppComponent]
 })

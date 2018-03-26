@@ -32,6 +32,10 @@ import { NuevoRolComponent } from "./components/roles/nuevo-rol.component";
 import { RolComponent } from "./components/roles/rol.component";
 import { ChatbotsComponent } from './chatbots/chatbots.component';
 
+import { ProveedoresComponent } from './components/proveedores/proveedores.component';
+import { ProveedorComponent } from './components/proveedores/proveedor.component';
+import { ProveedorEditarComponent } from './components/proveedores/proveedor-editar.component';
+import { NuevoProveedorComponent } from './components/proveedores/nuevo-proveedor.component';
 
 // import { NuevoExpedienteComponent } from './components/carteras/nueva-cartera.component';
 
@@ -74,6 +78,10 @@ const app_routes: Routes = [
   { path: 'nuevo-expediente', component: NuevoExpedienteComponent },
   { path: 'expediente/:id', component: ExpedienteComponent },
 
+  { path: 'nuevo-proveedor', component: NuevoProveedorComponent },
+  { path: 'proveedor/:id', component: ProveedorComponent },
+  { path: 'proveedores', component: ProveedoresComponent },
+  { path: 'proveedoredit/:id', component: ProveedorEditarComponent },
 
   { path: 'mensajes/:parame', component: MensajesComponent },
   //{ path: 'usuariosReloaded', component: UsuariosComponent },
