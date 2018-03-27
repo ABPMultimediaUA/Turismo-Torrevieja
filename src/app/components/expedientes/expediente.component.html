@@ -73,10 +73,12 @@
         </div>
         <br>
         <div *ngIf="modificable">
+          <button type="button" name="buttonAct" class="btn btn-secondary inicio" (click)="cambiarPestanya(1)" #btnAct>Actividades</button>
+          <button type="button" name="buttonCon" class="btn btn-secondary" (click)="cambiarPestanya(2)" #btnCon>Contratos</button>
+          <button type="button" name="buttonTar" class="btn btn-secondary" (click)="cambiarPestanya(3)" #btnTar>Tareas</button>
           <!-- ***************** EMPIEZAN ACTIVIDADES ***************** -->
-          <div id="DivActividades">
-            <h3>ACTIVIDADES</h3>
-            <div>
+          <div id="DivActividades" *ngIf="mostrarActividades">
+            <div class="fondoComponentes">
               <div *ngFor="let a of actividades; let i = index">
                 <form (ngSubmit)="crearModificarActConTar(1,a,i)" #forma="ngForm">
                   <div class="row CuadroActividad">
@@ -141,14 +143,13 @@
                 </form>
               </div>
             </div>
-            <button type="button" class="btn btn-outline-success" (click)="crearPlantillaAct()">
+            <button type="button" class="btn btn-outline-success btnMargen" (click)="crearPlantillaAct()">
               <span class=""></span>Nueva actividad
             </button>
           </div>
           <!-- ***************** EMPIEZAN CONTRATOS ***************** -->
-          <div id="DivContratos">
-            <h3>CONTRATOS</h3>
-            <div>
+          <div id="DivContratos" *ngIf="mostrarContratos">
+            <div class="fondoComponentes">
               <div *ngFor="let a of contratos; let i = index">
                 <form (ngSubmit)="crearModificarActConTar(3,a,i)" #forma="ngForm">
                   <div class="row CuadroContrato">
@@ -203,14 +204,13 @@
                 </form>
               </div>
             </div>
-            <button type="button" class="btn btn-outline-success" (click)="crearPlantillaCon()">
+            <button type="button" class="btn btn-outline-success btnMargen" (click)="crearPlantillaCon()">
               <span class=""></span>Nuevo contrato
             </button>
           </div>
           <!-- ***************** EMPIEZAN TAREAS ***************** -->
-          <div id="DivTareas">
-            <h3>TAREAS</h3>
-            <div>
+          <div id="DivTareas" *ngIf="mostrarTareas">
+            <div class="fondoComponentes">
               <div *ngFor="let a of tareas; let i = index">
                 <form (ngSubmit)="crearModificarActConTar(2,a,i)" #forma="ngForm">
                   <div class="row CuadroTarea">
@@ -252,7 +252,7 @@
                 </form>
               </div>
             </div>
-            <button type="button" class="btn btn-outline-success" (click)="crearPlantillaTar()">
+            <button type="button" class="btn btn-outline-success btnMargen" (click)="crearPlantillaTar()">
               <span class=""></span>Nueva tarea
             </button>
           </div>

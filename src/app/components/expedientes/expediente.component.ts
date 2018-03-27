@@ -29,9 +29,14 @@ export class ExpedienteComponent implements OnInit {
   errorMensaje:string[] = [];
   itemActualizado = false;
   @ViewChild("etiquetaImgExp") etiqueta;
+  @ViewChild("btnAct") btnAct;
+  @ViewChild("btnCon") btnCon;
+  @ViewChild("btnTar") btnTar;
+  mostrarActividades:boolean = true;
+  mostrarContratos:boolean = false;
+  mostrarTareas:boolean = false;
   archivoImg:File = null;
-  // permisosCambiados:string[]=[];
-  // auxPermisos:string[]=[];
+  pestanya:number[]=[0,1,2];
 
   //TODO Arreglar Coordinador
   coordinador:number;
@@ -149,7 +154,7 @@ export class ExpedienteComponent implements OnInit {
               }
             );
       });
-    }
+  }
 
   ngOnInit() {
   }
@@ -298,5 +303,39 @@ export class ExpedienteComponent implements OnInit {
     }
   }
 
+  cambiarPestanya(e){
+    if(e == 1){
+      this.mostrarActividades = true;
+      this.mostrarContratos = false;
+      this.mostrarTareas = false;
+    }
+    else if(e == 2){
+      this.mostrarActividades = false;
+      this.mostrarContratos = true;
+      this.mostrarTareas = false;
+    }
+    else {
+      this.mostrarActividades = false;
+      this.mostrarContratos = false;
+      this.mostrarTareas = true;
+    }
+    let b1 = this.btnAct.nativeElement as HTMLButtonElement;
+    let b2 = this.btnCon.nativeElement as HTMLButtonElement;
+    let b3 = this.btnTar.nativeElement as HTMLButtonElement;
+    this.cambiarColorBtn(b1,this.mostrarActividades);
+    this.cambiarColorBtn(b2,this.mostrarContratos);
+    this.cambiarColorBtn(b3,this.mostrarTareas);
+  }
+
+  cambiarColorBtn(b,m){
+    if(m){
+      b.style.backgroundColor= "white";
+      b.style.color = "grey";
+    }
+    else{
+      b.style.backgroundColor = "grey";
+      b.style.color = "white";
+    }
+  }
 
 }
