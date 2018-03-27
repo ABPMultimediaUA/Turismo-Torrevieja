@@ -39,6 +39,10 @@ import { NuevoProveedorComponent } from './components/proveedores/nuevo-proveedo
 
 // import { NuevoExpedienteComponent } from './components/carteras/nueva-cartera.component';
 
+import { EspaciosComponent } from './components/espacios/espacios.component';
+import { EspacioComponent } from './components/espacios/espacio.component';
+import { NuevoEspacioComponent } from './components/espacios/nuevo-espacio.component';
+
 
 const app_routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -82,6 +86,10 @@ const app_routes: Routes = [
   { path: 'proveedor/:id', component: ProveedorComponent },
   { path: 'proveedores', component: ProveedoresComponent },
   { path: 'proveedoredit/:id', component: ProveedorEditarComponent },
+
+  { path: 'nuevo-espacio', component: NuevoEspacioComponent },
+  { path: 'espacio/:id', component: EspacioComponent },
+  { path: 'espacios', component: EspaciosComponent },
 
   { path: 'mensajes/:parame', component: MensajesComponent },
   //{ path: 'usuariosReloaded', component: UsuariosComponent },

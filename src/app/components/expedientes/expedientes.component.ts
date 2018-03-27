@@ -14,7 +14,6 @@ import { AlertService, AuthenticationService, PeticionesCrudService, LogueadoSer
   styleUrls: ['./expedientes.component.css']
 })
 export class ExpedientesComponent implements OnInit {
-
   item:any[] = [];
   loading:boolean = true;
   //pagination

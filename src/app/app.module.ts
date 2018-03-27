@@ -98,6 +98,10 @@ import { ProveedorComponent } from './components/proveedores/proveedor.component
 import { ProveedorEditarComponent } from './components/proveedores/proveedor-editar.component';
 import { NuevoProveedorComponent } from './components/proveedores/nuevo-proveedor.component';
 
+import { EspaciosComponent } from './components/espacios/espacios.component';
+import { EspacioComponent } from './components/espacios/espacio.component';
+import { NuevoEspacioComponent } from './components/espacios/nuevo-espacio.component';
+
 
 @NgModule({
   entryComponents: [
@@ -152,7 +156,10 @@ import { NuevoProveedorComponent } from './components/proveedores/nuevo-proveedo
     ProveedoresComponent,
     ProveedorComponent,
     ProveedorEditarComponent,
-    NuevoProveedorComponent
+    NuevoProveedorComponent,
+    EspaciosComponent,
+    EspacioComponent,
+    NuevoEspacioComponent
   ],
   imports: [
     HttpClientModule,
