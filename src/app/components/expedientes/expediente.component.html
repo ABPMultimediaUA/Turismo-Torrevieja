@@ -44,7 +44,7 @@
             </div>
             <div class="col-sm-3">
               <label>Coordinador</label>
-              <select class="form-control" name=expediente_coordinador{{i}} [(ngModel)]="coordinador" required>
+              <select class="form-control" name=expediente_coordinador [(ngModel)]="coordinador" required>
                 <option [ngValue]="u.identificador" *ngFor="let u of users" >{{u.nombreUsuario}}</option>
               </select>
             </div>
