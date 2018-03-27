@@ -204,6 +204,13 @@ export class CarteraComponent implements OnInit {
 // [routerLink]="['/expediente', e.identificador]"
 
   }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
+  
   borrarFormExp(){
     this.expN={
       identificador:null,
