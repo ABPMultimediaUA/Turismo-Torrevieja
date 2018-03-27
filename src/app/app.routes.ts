@@ -15,11 +15,6 @@ import { CarterasComponent } from './components/carteras/carteras.component';
 import { CarteraComponent } from './components/carteras/cartera.component';
 import { NuevaCarteraComponent } from './components/carteras/nueva-cartera.component';
 
-import { EventosComponent } from './components/eventos/eventos.component';
-import { EventoComponent } from './components/eventos/evento.component';
-import { NuevoEventoComponent } from './components/eventos/nuevo-evento.component';
-
-
 import { ExpedientesComponent } from './components/expedientes/expedientes.component';
 import { ExpedienteComponent } from './components/expedientes/expediente.component';
 import { NuevoExpedienteComponent } from './components/expedientes/nuevo-expediente.component';
@@ -72,11 +67,6 @@ const app_routes: Routes = [
   { path: 'nueva-cartera', component: NuevaCarteraComponent },
   { path: 'cartera/:id', component: CarteraComponent },
 
-  //rutas eventos
-  { path: 'eventos', component: EventosComponent },
-  { path: 'eventos/:id', component: EventosComponent },
-  { path: 'nuevo-evento', component: NuevoEventoComponent },
-  { path: 'evento/:id', component: EventoComponent },
   //rutas expedientes
   { path: 'expedientes', component: ExpedientesComponent },
   { path: 'nuevo-expediente', component: NuevoExpedienteComponent },

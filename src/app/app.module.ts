@@ -16,8 +16,6 @@ import {MatTableDataSource, MatSort, MatSortModule, MatTableModule} from '@angul
 import { MatFormFieldModule,MatNativeDateModule } from '@angular/material';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatProgressBarModule,MatProgressSpinnerModule} from '@angular/material';
 import {MatDialogModule} from '@angular/material/dialog';
-import {EliminarDialog} from "./components/eventos/eliminar-dialog.component";
-import {EditarDialog} from "./components/eventos/editar-dialog.component";
 import {MatSelectModule} from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
@@ -46,8 +44,7 @@ import { PeticionesCrudService }  from "./services/peticionesCRUD.service";
 // import { AlertComponent } from './_directives/index';
 // import { AuthGuard } from './_guards/index';
 import { AlertService, AuthenticationService,
- TokenService, DatosUsuarioService,
-EventosService,  LogueadoService, ExpedientesService,
+ TokenService, DatosUsuarioService,  LogueadoService, ExpedientesService,
  TareasService } from './services/index';
 
 import { AppComponent } from './app.component';
@@ -74,9 +71,6 @@ import { CarterasComponent } from './components/carteras/carteras.component';
 import { CarteraComponent } from './components/carteras/cartera.component';
 import { NuevaCarteraComponent } from './components/carteras/nueva-cartera.component';
 
-import { EventosComponent } from './components/eventos/eventos.component';
-import { EventoComponent } from './components/eventos/evento.component';
-import { NuevoEventoComponent } from './components/eventos/nuevo-evento.component';
 
 import { ExpedientesComponent } from './components/expedientes/expedientes.component';
 import { ExpedienteComponent } from './components/expedientes/expediente.component';
@@ -105,8 +99,6 @@ import { NuevoEspacioComponent } from './components/espacios/nuevo-espacio.compo
 
 @NgModule({
   entryComponents: [
-    EliminarDialog,
-    EditarDialog,
     EliminarUsuarioDialog,
     EditarUsuarioDialog,
     EliminarCarteraDialog,
@@ -138,14 +130,9 @@ import { NuevoEspacioComponent } from './components/espacios/nuevo-espacio.compo
     RolComponent,
     NuevoRolComponent,
     PerfilComponent,
-    EventosComponent,
-    EventoComponent,
-    NuevoEventoComponent,
     ExpedientesComponent,
     ExpedienteComponent,
     NuevoExpedienteComponent,
-    EliminarDialog,
-    EditarDialog,
     EliminarUsuarioDialog,
     EditarUsuarioDialog,
     EditarPerfilDialog,
@@ -204,10 +191,8 @@ import { NuevoEspacioComponent } from './components/espacios/nuevo-espacio.compo
     NavbarComponent,
     HomeComponent,
     LogueadoService,
-    EventosService,
     TareasService,
     ExpedientesService,
-    EliminarDialog,
     MatDatepickerModule,
     ProveedorService
   ],
