@@ -3,6 +3,18 @@
   <div class="row ">
         <h1><span class="icon-town-hall"></span> Espacios</h1>
         <div class="table-responsive">
+          <mat-table style="margin-left:30px; margin-right:30px;" #table [dataSource]="dataSource" matSort>
+            <ng-container matColumnDef="identificador">
+              <mat-header-cell *matHeaderCellDef mat-sort-header>Id </mat-header-cell>
+              <mat-cell (click)="openDialogEditar(espacio)"  *matCellDef="let usuario">{{espacio.identificador}}</mat-cell>
+            </ng-container>
+            <ng-container matColumnDef="eliminar">
+              <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+              <mat-cell *matCellDef="let espacio">
+                <button (click)="openDialogEliminar(espacio)"  class="botonMat" mat-icon-button color="warn"><mat-icon color="warn" >delete</mat-icon></button>
+              </mat-cell>
+            </ng-container>
+          </mat-table>
           <table class="table table-striped">
             <thead class="thead-dark">
               <tr>
@@ -14,7 +26,6 @@
               </tr>
             </thead>
             <tbody>
-               <!-- el pipe keys es para pasar un objeto a un array-->
               <tr *ngFor="let it of itemsActuales, let i = index">
                 <td>{{ it.identificador }}</td>
                 <td>{{ it.nombreEspacio }}</td>
@@ -31,17 +42,12 @@
                   </button>
                 </td>
               </tr>
-
             </tbody>
-
           </table>
-
-          <!-- si no hay items muestra esto -->
           <div *ngIf="(item).length === 0 && !loading"
           class="alert alert-info" role="alert">
               <strong>No hay </strong> items que mostrar
           </div>
-
         </div>
         <br>
         <nav aria-label="Page navigation example">
@@ -66,3 +72,65 @@
         </nav>
     </div>
 </div>
+<!-- <br><br><br><br><br>
+<div class="container-fluid">
+  <div class="row ">
+        <h1><span class="icon-town-hall"></span> Espacios</h1>
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Nombre espacio</th>
+                <th scope="col">Dirección</th>
+                <th scope="col">Aforo</th>
+                <th class="text-right">Opciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let it of itemsActuales, let i = index">
+                <td>{{ it.identificador }}</td>
+                <td>{{ it.nombreEspacio }}</td>
+                <td>{{ it.sitio }}</td>
+                <td>{{ it.aforo }}</td>
+                <td class="text-right w20">
+                  <button  [routerLink]="['/espacio', it.identificador]"
+                  type="button" class="btn btn-outline-success">
+                    <span class="icon-pencil"></span>
+                  </button>
+                  <button  (click)="borrarItem(it.identificador)"
+                  type="button" class="btn btn-outline-danger">
+                    <span class="icon-trash"></span>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+          <div *ngIf="(item).length === 0 && !loading"
+          class="alert alert-info" role="alert">
+              <strong>No hay </strong> items que mostrar
+          </div>
+        </div>
+        <br>
+        <nav aria-label="Page navigation example">
+          <ul class="pagination justify-content-center">
+            <li *ngIf="currentPage > 1 " class="page-item" >
+              <a class="page-link" (click)="nuevaPagina(currentPage-1)" aria-label="Previous">
+                <span aria-hidden="true">&laquo;</span>
+                <span class="sr-only">Previous</span>
+              </a>
+            </li>
+            <li class="page-item" *ngFor="let i of cantidadPagina" >
+              <a class="page-link" (click)="nuevaPagina(i+1)" >{{ i+1 }}</a>
+            </li>
+
+            <li *ngIf="currentPage!=totalPaginas" class="page-item" routerLinkActive="active">
+              <a class="page-link" (click)="nuevaPagina(currentPage+1)" aria-label="Next">
+                <span aria-hidden="true">&raquo;</span>
+                <span class="sr-only">Next</span>
+              </a>
+            </li>
+          </ul>
+        </nav>
+    </div>
+</div> -->

@@ -1,16 +1,3 @@
-
-<!-- <div class="nomargin jumbotron  text-center bg-blue-no-imp">
-  <img src="../assets/logo.png" alt="" style="max-width:100%; height:auto">
-
-  <br><br>
-  <h2>Herramienta online de gestión y difusión de eventos</h2>
-
-<p class="text-left" >GVENT es una herramienta online que permite gestionar y administr
-  ar eventos de forma sencilla y cómoda. Además, permite realizar la
-   publicación y difusión de los eventos creados con un solo click.</p>
-
-
-</div> -->
 <div style="margin-top:64px"  id="sectionContainer">
 		<section id="home">
 			<article>
@@ -19,45 +6,25 @@
         <br>
       	<p>GVENT es una herramienta online que permite gestionar y administrar eventos de forma sencilla y cómoda. Además, podrás realizar la publicación y difusión de los eventos creados con un solo click.</p>
         <br>
-
-        <button   mat-raised-button
-           class="botonMat"  type="submit"  color="primary"  [routerLink]="['/contact']">
-        Más información
-        </button>
+        <button   mat-raised-button class="botonMat"  type="submit"  color="primary"  [routerLink]="['/contact']">Más información</button>
 			</article>
 			<article style="padding:.5em;text-align:center;">
-				<img src="../assets/logo.png" alt="GVENT - Gestión de eventos">
+				<img src="../assets/ImgHome/logo.png" alt="GVENT - Gestión de eventos">
 			</article>
 		</section>
 		<section id="home">
 			<article style="text-align:center;">
-				<img src="../assets/RRSS.png" alt="GVENT - Gestión de eventos">
+				<img src="../assets/ImgHome/RRSS.png" alt="GVENT - Gestión de eventos">
 			</article>
 			<article>
         <br><br>
 				<h3>Publica automáticamente en tus redes sociales</h3>
         <br>
 				<p>Integra tu cuenta con tus redes sociales y publica con un solo click en todas ellas. De esta forma puedes compartir los eventos que desees para que puedan ser vistos en tus redes sociales.</p>
-
-
-        <button mat-button
-           class="botonMat"  type="submit"  onclick="location.href='https://gvent.ovh/wordpress/'"   color="primary" >
-        Ver más
-        </button>
+        <button mat-button class="botonMat"  type="submit"  onclick="location.href='https://gvent.ovh/wordpress/'" color="primary">Ver más</button>
 			</article>
 		</section>
 	</div>
-
-<!-- <link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'> -->
-
-
-
-
-
-
-
-
-
 <!--
 ####################################################
 C A R O U S E L
@@ -71,76 +38,52 @@ C A R O U S E L
   </ol>
   <div class="carousel-inner" role="listbox">
       <div class="carousel-item active">
-
-              <!--
-              If you need more browser support use https://scottjehl.github.io/picturefill/
-              If a picture looks blurry on a retina device you can add a high resolution like this
-              <source srcset="img/blog-post-1000x600-2.jpg, blog-post-1000x600-2@2x.jpg 2x" media="(min-width: 768px)">
-
-              What image sizes should you use? This can help - https://codepen.io/JacobLett/pen/NjramL
-               -->
                <picture>
-                <source srcset="../assets/img1.jpg" media="(min-width: 1400px)">
-                <source srcset="../assets/img1.jpg" media="(min-width: 769px)">
-                 <source srcset="../assets/img1.jpg" media="(min-width: 577px)">
-                <img srcset="../assets/img1.jpg" alt="responsive image" class="d-block img-fluid">
+                <source srcset="../assets/ImgHome/img1.jpg" media="(min-width: 1400px)">
+                <source srcset="../assets/ImgHome/img1.jpg" media="(min-width: 769px)">
+                 <source srcset="../assets/ImgHome/img1.jpg" media="(min-width: 577px)">
+                <img srcset="../assets/ImgHome/img1.jpg" alt="responsive image" class="d-block img-fluid">
               </picture>
-
               <div class="carousel-caption">
                   <div class="fondo-gris">
                       <h2>Gestión de eventos</h2>
                       <p>GVENT es una herramienta online para organizar y gestionar eventos de forma profesional. <br>
                       Además podrás publicar los eventos en tus redes sociales de forma automática.</p>
-                      <a class="btn btn-sm btn-secondary"
-                          role="button"
-                          [routerLink]="['../about']">Acerca de GVENT</a>
-
+                      <a class="btn btn-sm btn-secondary" role="button" [routerLink]="['../about']">Acerca de GVENT</a>
                   </div>
               </div>
-
       </div>
       <!-- /.carousel-item -->
       <div class="carousel-item">
-
                <picture>
-                <source srcset="../assets/img2.jpg" media="(min-width: 1400px)">
-                <source srcset="../assets/img2.jpg" media="(min-width: 769px)">
-                 <source srcset="../assets/img2.jpg" media="(min-width: 577px)">
-                <img srcset="../assets/img2.jpg" alt="responsive image" class="d-block img-fluid">
+                <source srcset="../assets/ImgHome/img2.jpg" media="(min-width: 1400px)">
+                <source srcset="../assets/ImgHome/img2.jpg" media="(min-width: 769px)">
+                 <source srcset="../assets/ImgHome/img2.jpg" media="(min-width: 577px)">
+                <img srcset="../assets/ImgHome/img2.jpg" alt="responsive image" class="d-block img-fluid">
               </picture>
-
               <div class="carousel-caption justify-content-center align-items-center">
                   <div class="fondo-gris">
                       <h2>Inicia sesión</h2>
                       <p>Si ya tienes una cuenta de GVENT accede a tu espacio de trabajo.</p>
-                      <a class="btn btn-sm btn-secondary"
-                          role="button"
-                          [routerLink]="['../login']">Iniciar sesión</a>
+                      <a class="btn btn-sm btn-secondary" role="button" [routerLink]="['../login']">Iniciar sesión</a>
                   </div>
               </div>
-
       </div>
       <!-- /.carousel-item -->
       <div class="carousel-item">
-
                <picture>
-                <source srcset="../assets/img3.jpg" media="(min-width: 1400px)">
-                <source srcset="../assets/img3.jpg" media="(min-width: 769px)">
-                 <source srcset="../assets/img3.jpg" media="(min-width: 577px)">
-                <img srcset="../assets/img3.jpg" alt="responsive image" class="d-block img-fluid">
+                <source srcset="../assets/ImgHome/img3.jpg" media="(min-width: 1400px)">
+                <source srcset="../assets/ImgHome/img3.jpg" media="(min-width: 769px)">
+                 <source srcset="../assets/ImgHome/img3.jpg" media="(min-width: 577px)">
+                <img srcset="../assets/ImgHome/img3.jpg" alt="responsive image" class="d-block img-fluid">
               </picture>
-
               <div class="carousel-caption justify-content-center align-items-center">
                   <div class="fondo-gris">
                       <h2>Contrata GVENT</h2>
-                      <p>Para contratar GVENT contacta con nosotros. <br>
-                        Te asesoraremos de forma personalizada según tus necesidades.</p>
-                        <a class="btn btn-sm btn-secondary"
-                            role="button"
-                            [routerLink]="['../about']">Contactar</a>
+                      <p>Para contratar GVENT contacta con nosotros.<br>Te asesoraremos de forma personalizada según tus necesidades.</p>
+                      <a class="btn btn-sm btn-secondary" role="button" [routerLink]="['../about']">Contactar</a>
                   </div>
               </div>
-
       </div>
       <!-- /.carousel-item -->
   </div>
@@ -155,8 +98,6 @@ C A R O U S E L
   </a>
 </div>
 <!-- /.carousel -->
-
-
 <br><br>
 <!-- Begin MailChimp Signup Form -->
 <link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
@@ -166,8 +107,6 @@ C A R O U S E L
 	   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
 </style>
 <div class="container">
-
-
 <div id="mc_embed_signup">
 <form action="https://ovh.us17.list-manage.com/subscribe/post?u=3e33ed5574a45143cc619713e&amp;id=28a02cacfb" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
     <div id="mc_embed_signup_scroll">
@@ -212,14 +151,6 @@ $.extend($.validator.messages, {
   min: $.validator.format("Por favor, escribe un valor mayor o igual a {0}.")
 });}(jQuery));var $mcj = jQuery.noConflict(true);</script>
 <!--End mc_embed_signup-->
-
-
-
-
-
-
-
-
 <br><br><br>
 <!-- Plans -->
 <div class="jumbotron">
@@ -228,10 +159,8 @@ $.extend($.validator.messages, {
       <h2 class="text-center">Tarifas</h2> <br>
       <p class="text-center">GVENT se adapta a las necesidades de tu empresa, por eso ofrecemos distintas tarifas.</p>
         <div class="row">
-
             <!-- item -->
             <div class="col-md-4 text-center">
-
                 <div class="panel panel-danger panel-pricing">
                     <div class="panel-heading">
                         <i class="fa fa-desktop"></i>
@@ -245,7 +174,6 @@ $.extend($.validator.messages, {
                         <li class="list-group-item"><i class="fa fa-times"></i> Asistencia por email</li>
                         <li class="list-group-item"><i class="fa fa-times"></i> Web personalizada</li>
                         <li class="list-group-item"><i class="fa fa-times"></i> Mantenimiento web</li>
-
                     </ul>
                     <div class="panel-footer">
                         <a class="btn btn-lg btn-block btn-danger" href="http://eepurl.com/dmdrKn">Probar gratis</a>
@@ -253,7 +181,6 @@ $.extend($.validator.messages, {
                 </div>
             </div>
             <!-- /item -->
-
             <!-- item -->
             <div class="col-md-4 text-center">
                 <div class="panel panel-warning panel-pricing">
@@ -276,7 +203,6 @@ $.extend($.validator.messages, {
                 </div>
             </div>
             <!-- /item -->
-
             <!-- item -->
             <div class="col-md-4 text-center">
                 <div class="panel panel-success panel-pricing">
@@ -299,7 +225,6 @@ $.extend($.validator.messages, {
                 </div>
             </div>
             <!-- /item -->
-
         </div>
     </div>
 </section>
