@@ -1,0 +1,24 @@
+/*CSS comun a todos los componentes con tabla*/
+.divContenedorTabla{
+  margin-top:6em;
+  margin-bottom: 5em;
+}
+.tituloComponentes{
+  margin-left: 1.3em;
+  margin-bottom: .3em;
+}
+.botonNuevoItem{
+  margin-left: 3em;
+}
+.inputBuscarItem{
+    margin-left: 1.4em;
+}
+.paginacionComponente{
+  width: auto;
+  margin-right: 3em;
+}
+.tablaComponente{
+  margin-left: 1.5em;
+  margin-right: 1.5em;
+}
+/*FIN CSS comun a todos los componentes con tabla*/
