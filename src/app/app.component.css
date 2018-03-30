@@ -21,4 +21,20 @@
   margin-left: 1.5em;
   margin-right: 1.5em;
 }
+.botonEliminarItems{
+  margin-left: 3em;
+  margin-top: 2em;
+}
 /*FIN CSS comun a todos los componentes con tabla*/
+
+/*Tamanyo columnas comunes (id, eliminar)*/
+.mat-column-select{
+  flex:0 0 5%
+}
+.mat-column-identificador{
+  flex:0 0 7%
+}
+.mat-column-eliminar{
+  flex:0 0 5%
+}
+/*Fin tamanyo columnas comunes (id, eliminar)*/

@@ -7,7 +7,7 @@
           <button mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
             >Nuevo Espacio</button><!-- TODO ANYADIR FUNCION BUSQUEDA -->
           <mat-form-field class="inputBuscarItem">
-            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Búsqueda">
+            <input matInput (keyup)="realizarBusqueda($event.target.value)" placeholder="Búsqueda">
           </mat-form-field>
           <mat-paginator class="paginacionComponente" #paginator
                 [pageSize]="10"
@@ -16,6 +16,22 @@
           </mat-paginator>
         </div>
         <mat-table class="tablaComponente" #table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="select">
+            <mat-header-cell *matHeaderCellDef>
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()"
+                            (change)="activarEliminarMultiplesItems(selection.selected)">
+              </mat-checkbox>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null"
+                            [checked]="selection.isSelected(row)"
+                            (change)="activarEliminarMultiplesItems(selection.selected)">
+              </mat-checkbox>
+            </mat-cell>
+          </ng-container>
           <ng-container matColumnDef="identificador">
             <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
             <mat-cell (click)="openDialogEditar(items)"  *matCellDef="let items">{{items.identificador}}</mat-cell>
@@ -34,15 +50,17 @@
           </ng-container>
           <ng-container matColumnDef="eliminar">
             <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
-              <mat-cell *matCellDef="let usuario">
-                <button (click)="openDialogEliminar(usuario)" class="botonMat" mat-icon-button color="warn">
+              <mat-cell *matCellDef="let items">
+                <button (click)="botonEliminarItem(items)" class="botonMat" mat-icon-button color="warn">
                   <mat-icon color="warn" >delete</mat-icon>
                 </button>
               </mat-cell>
           </ng-container>
-          <mat-header-row *matHeaderRowDef="['identificador', 'nombreEspacio', 'sitio', 'aforo','eliminar']"></mat-header-row>
-          <mat-row class="elementoTabla" *matRowDef="let row; columns: ['identificador', 'nombreEspacio', 'sitio', 'aforo', 'eliminar']" ></mat-row>
+          <mat-header-row *matHeaderRowDef="['select','identificador', 'nombreEspacio', 'sitio', 'aforo','eliminar']"></mat-header-row>
+          <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','identificador', 'nombreEspacio', 'sitio', 'aforo', 'eliminar']" ></mat-row>
         </mat-table>
+        <button mat-raised-button type="submit" class="botonMat botonEliminarItems" disabled color="warn" id="btnEliminarItems"
+          (click)="botonEliminarItem(selection.selected)">Eliminar espacios</button>
       </div>
     </div>
   </div>

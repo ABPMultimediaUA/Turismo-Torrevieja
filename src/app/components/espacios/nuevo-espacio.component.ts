@@ -11,10 +11,13 @@ import { Router } from '@angular/router';
 export class NuevoEspacioComponent implements OnInit {
 
   espacio:EspacioInterface={
-    aforo:0,
     identificador:0,
+    sitio:"",
     nombreEspacio:"",
-    sitio:""
+    aforo:0,
+    fechaCreacion:"",
+    fechaActualizacion:"",
+    fechaEliminacion:""
   };
 
   constructor(  private _ItemService:PeticionesCrudService,
@@ -39,10 +42,13 @@ export class NuevoEspacioComponent implements OnInit {
 
   borrarForm(){
     this.espacio={
-      aforo:0,
       identificador:0,
+      sitio:"",
       nombreEspacio:"",
-      sitio:""
+      aforo:0,
+      fechaCreacion:"",
+      fechaActualizacion:"",
+      fechaEliminacion:""
     }
   }
 }

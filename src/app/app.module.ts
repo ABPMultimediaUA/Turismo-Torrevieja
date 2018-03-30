@@ -85,8 +85,6 @@ import { ProveedorService }  from "./services/proveedor.service";
 
 
 
-import { FileUploadModule } from 'ng2-file-upload';
-
 import { ProveedoresComponent } from './components/proveedores/proveedores.component';
 import { ProveedorComponent } from './components/proveedores/proveedor.component';
 import { ProveedorEditarComponent } from './components/proveedores/proveedor-editar.component';
@@ -95,18 +93,10 @@ import { NuevoProveedorComponent } from './components/proveedores/nuevo-proveedo
 import { EspaciosComponent } from './components/espacios/espacios.component';
 import { EspacioComponent } from './components/espacios/espacio.component';
 import { NuevoEspacioComponent } from './components/espacios/nuevo-espacio.component';
+import { EliminarEspacioComponent } from './components/espacios/eliminar-espacio.component';
 
 
 @NgModule({
-  entryComponents: [
-    EliminarUsuarioDialog,
-    EditarUsuarioDialog,
-    EliminarCarteraDialog,
-    EditarPerfilDialog,
-    EditarCarteraDialog,
-    CrearExpedienteDialog,
-    EliminarExpedienteDialog
-  ],
   declarations: [
     AppComponent,
     NavbarComponent,
@@ -146,7 +136,8 @@ import { NuevoEspacioComponent } from './components/espacios/nuevo-espacio.compo
     NuevoProveedorComponent,
     EspaciosComponent,
     EspacioComponent,
-    NuevoEspacioComponent
+    NuevoEspacioComponent,
+    EliminarEspacioComponent
   ],
   imports: [
     HttpClientModule,
@@ -178,7 +169,6 @@ import { NuevoEspacioComponent } from './components/espacios/nuevo-espacio.compo
     // FacebookModule,
 
     APP_ROUTING,
-    FileUploadModule
   ],
   providers: [
     UsuariosService,
@@ -195,6 +185,17 @@ import { NuevoEspacioComponent } from './components/espacios/nuevo-espacio.compo
     ExpedientesService,
     MatDatepickerModule,
     ProveedorService
+  ],
+  entryComponents: [
+    EliminarUsuarioDialog,
+    EditarUsuarioDialog,
+    EliminarCarteraDialog,
+    EditarPerfilDialog,
+    EditarCarteraDialog,
+    CrearExpedienteDialog,
+    EliminarExpedienteDialog,
+
+    EliminarEspacioComponent
   ],
   bootstrap: [AppComponent]
 })

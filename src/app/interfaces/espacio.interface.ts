@@ -1,7 +1,10 @@
 export interface EspacioInterface
 {
-  aforo:number;
   identificador:number;
-  nombreEspacio:string;
   sitio:string;
+  nombreEspacio:string;
+  aforo:number;
+  fechaCreacion:string;
+  fechaActualizacion:string;  
+  fechaEliminacion:string;
 }

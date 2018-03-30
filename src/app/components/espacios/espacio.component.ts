@@ -11,10 +11,13 @@ import { ActivatedRoute } from "@angular/router";
 export class EspacioComponent implements OnInit {
 
   espacio:EspacioInterface={
-    aforo:0,
     identificador:0,
-    nombreEspacio:"",
     sitio:"",
+    nombreEspacio:"",
+    aforo:0,
+    fechaCreacion:"",
+    fechaActualizacion:"",
+    fechaEliminacion:""
   };
 
   id:number;

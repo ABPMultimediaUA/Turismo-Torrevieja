@@ -101,12 +101,16 @@ export class PeticionesCrudService {
           url += `expediente/${id}/?imagen`;
           break;
       case 301:
-          //Todas las carteras con estado 1 y 2 (pueden crear eventos)
+          //Todas las carteras con estado 1 (pueden crear eventos)
           url += `cartera?estado=1`;
           break;
       case 302:
-          //Todas las carteras con estado 1 y 2 (pueden crear eventos)
+          //Todas las carteras con estado 2 (pueden crear eventos)
           url += `cartera?estado=2`;
+          break;
+      case 303:
+          //Realiza busqueda teniendo en cuenta todos sus campos, en id se pasa lo escrito
+          url += `BusquedaEspacio/${id}`;
           break;
       default:
           console.log("No se ha especificado correctamente una URL.");
