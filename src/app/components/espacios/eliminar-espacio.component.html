@@ -1,0 +1,33 @@
+<h1 class="mat-display-1 tituloComponentes"><span class="icon-town-hall"></span> Eliminar espacios</h1>
+<h1 class="VentanaEmergenteEliminarEliminando" *ngIf="eliminando==true;" mat-dialog-title>Eliminando</h1>
+<div class="VentanaEmergenteEliminarSpinner1">
+  <div class="VentanaEmergenteEliminarSpinner2" *ngIf="eliminando==true;">
+      <mat-spinner color="warn"></mat-spinner>
+  </div>
+</div>
+<h1 class="VentanaEmergenteEliminarPregunta" *ngIf="eliminando==false;" mat-dialog-title>¿Estás seguro de que deseas eliminar las siguientes filas?</h1>
+<p class="VentanaEmergenteEliminarInfo" *ngIf="eliminando==false;">Una vez hecho no podrás recuperarlas.</p>
+<mat-table class="tablaComponenteVEEliminar" #table [dataSource]="dataSource">
+  <ng-container matColumnDef="identificador">
+    <mat-header-cell *matHeaderCellDef >Id</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.identificador}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="nombreEspacio">
+    <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.nombreEspacio}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="sitio">
+    <mat-header-cell *matHeaderCellDef>Dirección</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.sitio}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="aforo">
+    <mat-header-cell *matHeaderCellDef>Aforo</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.aforo}}</mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="['identificador', 'nombreEspacio', 'sitio', 'aforo']"></mat-header-row>
+  <mat-row class="elementoTabla" *matRowDef="let row; columns: ['identificador', 'nombreEspacio', 'sitio', 'aforo']" ></mat-row>
+</mat-table>
+<mat-dialog-actions class="VentanaEmergenteEliminarBtns" *ngIf="eliminando==false;">
+    <button mat-raised-button (click)="eliminarItem()" color="warn">Eliminar</button>
+    <a mat-raised-button (click)="cerrarDialogo(false)" color="primary">Cancelar</a>
+</mat-dialog-actions>

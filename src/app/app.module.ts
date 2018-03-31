@@ -94,6 +94,8 @@ import { EspaciosComponent } from './components/espacios/espacios.component';
 import { EspacioComponent } from './components/espacios/espacio.component';
 import { NuevoEspacioComponent } from './components/espacios/nuevo-espacio.component';
 import { EliminarEspacioComponent } from './components/espacios/eliminar-espacio.component';
+import { VentanaEmergenteComponent } from './components/ventana-emergente/ventana-emergente.component';
+
 
 
 @NgModule({
@@ -137,7 +139,8 @@ import { EliminarEspacioComponent } from './components/espacios/eliminar-espacio
     EspaciosComponent,
     EspacioComponent,
     NuevoEspacioComponent,
-    EliminarEspacioComponent
+    EliminarEspacioComponent,
+    VentanaEmergenteComponent,
   ],
   imports: [
     HttpClientModule,
@@ -195,7 +198,12 @@ import { EliminarEspacioComponent } from './components/espacios/eliminar-espacio
     CrearExpedienteDialog,
     EliminarExpedienteDialog,
 
-    EliminarEspacioComponent
+    //Ventanas emergentes espacio
+    EliminarEspacioComponent,
+    NuevoEspacioComponent,
+
+    //Mensaje emergente
+    VentanaEmergenteComponent
   ],
   bootstrap: [AppComponent]
 })

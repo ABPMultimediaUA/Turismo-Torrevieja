@@ -1,11 +1,11 @@
 <div class="container-fluid divContenedorTabla">
-  <div class="row ">
+  <div class="row">
     <div  class="table-responsive">
       <div class="example-container mat-elevation-z8">
         <div class="example-header">
           <h1 class="mat-display-1 tituloComponentes"><span class="icon-town-hall"></span> Espacios</h1>
           <button mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
-            >Nuevo Espacio</button><!-- TODO ANYADIR FUNCION BUSQUEDA -->
+            (click)="botonAnyadirItem()">Nuevo Espacio</button>
           <mat-form-field class="inputBuscarItem">
             <input matInput (keyup)="realizarBusqueda($event.target.value)" placeholder="Búsqueda">
           </mat-form-field>

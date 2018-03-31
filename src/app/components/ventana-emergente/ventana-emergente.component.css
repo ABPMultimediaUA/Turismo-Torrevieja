@@ -1,0 +1,23 @@
+.iconVentEmerg{
+  display:block;
+  text-align:center;
+  margin-top: 1em;
+}
+.iconBien{
+  color:green;
+}
+.iconErr{
+  color:red;
+}
+.material-icons.md-48{
+  font-size: 48px;
+}
+.ventEmerg{
+  text-align: center;
+  margin-top: 1em;
+  margin-bottom: 1.5em;
+}
+.divBtnVentEmerg{
+  display:block;
+  text-align:center;
+}

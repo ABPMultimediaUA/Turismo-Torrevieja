@@ -1,24 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { PeticionesCrudService, LogueadoService } from '../../services/index';
-
+import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatDialog } from '@angular/material';
+import { VentanaEmergenteComponent } from '../ventana-emergente/ventana-emergente.component'
 import { EspacioInterface } from '../../interfaces/espacio.interface';
-import { Router } from '@angular/router';
-import { MatTableDataSource, MatSort, MatPaginator } from '@angular/material';
-import { MatButtonModule } from '@angular/material/button';
-import { SelectionModel } from '@angular/cdk/collections';
-
-// import { MatFormFieldModule } from '@angular/material';
-// import {MatInputModule} from '@angular/material';
-// import { MatPaginatorModule } from '@angular/material';
-// import { MatIcon} from '@angular/material';
-// import {MatCheckboxModule} from '@angular/material/checkbox';
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { MatIconRegistry, MatIconModule, MatButtonModule } from '@angular/material';
-// import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-// import {MatDialogModule} from '@angular/material/dialog';
-// import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-// import {EliminarUsuarioDialog} from "../usuarios/eliminar-usuario-dialog.component";
-// import {EditarUsuarioDialog} from "../usuarios/editar-usuario-dialog.component";
 
 @Component({
   selector: 'app-eliminar-espacio',
@@ -28,16 +12,90 @@ import { SelectionModel } from '@angular/cdk/collections';
 
 export class EliminarEspacioComponent implements OnInit {
 
+  items:EspacioInterface[]=[];
+  eliminando:boolean;
+  eliminandoItem:boolean[]=[];
+
+  dataSource = new MatTableDataSource(this.items);
+
   constructor(  private _itemService: PeticionesCrudService,
                 public  logueadoService: LogueadoService,
-                private router:Router
+                public dialogRef: MatDialogRef<EliminarEspacioComponent>,
+                public dialog: MatDialog,
+                @Inject(MAT_DIALOG_DATA) public data
              )
   {
     this.logueadoService.comprobarLogueado();
 
+    if(data.item){
+      if(data.item.length) this.items=data.item;
+      else this.items.push(data.item);
+    }
+
+    this.eliminando=false;
+    for(var i = 0; i < this.items.length; i++) this.eliminandoItem.push(true);
+  }
+
+  //Cargar tabla
+  ngAfterViewInit() {
+    this.dataSource = new MatTableDataSource(this.items);
   }
 
   ngOnInit() {
+  }
+
+  //Elimina array items
+  eliminarItem(){
+    this.eliminando=true;
+
+    for(var i = 0; i < this.items.length; i++){
+      this._itemService.eliminarItem(6,this.items[i].identificador,-1)
+        .then( res => {
+          this.eliminandoItem[i] = false;
+          this.comprobarEliminado();
+        })
+        .catch( (err) => {
+          i = this.items.length;
+          let sms:string = "Se ha producido un error inesperado.";
+          let icono:number = 1;
+          const dialogRef = this.dialog.open(VentanaEmergenteComponent,{
+            height: '17em',
+            width: '32em',
+            data: { item: sms, item2: icono }
+          });
+          dialogRef.afterClosed().subscribe( res => {
+            this.cerrarDialogo(true);
+          });
+        })
+    }
+  }
+
+  //Comprueba que se hayan eliminado todos los items y de forma correcta
+  comprobarEliminado(){
+    let res:boolean = false;
+    for(var i = 0; i < this.items.length; i++){
+      if(this.eliminandoItem[i]) {
+        res = true;
+        i = this.items.length;
+      }
+    }
+    if(res) {
+      let sms:string = "Acción realizada correctamente";
+      let icono:number = 0;
+      const dialogRef = this.dialog.open(VentanaEmergenteComponent,{
+        height: '17em',
+        width: '32em',
+        data: { item: sms, item2: icono }
+      });
+      dialogRef.afterClosed().subscribe( res => {
+        this.cerrarDialogo(true);
+      });
+    }
+  }
+
+  //Cerrar ventana emergente
+  cerrarDialogo(i:boolean){
+    this.dialogRef.close(i);
   }
 
 }

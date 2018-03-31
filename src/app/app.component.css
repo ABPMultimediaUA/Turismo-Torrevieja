@@ -1,3 +1,4 @@
+
 /*CSS comun a todos los componentes con tabla*/
 .divContenedorTabla{
   margin-top:6em;
@@ -34,7 +35,60 @@
 .mat-column-identificador{
   flex:0 0 7%
 }
+.mat-column-nombreEspacio{
+  flex:0 0 20%
+}
 .mat-column-eliminar{
   flex:0 0 5%
 }
 /*Fin tamanyo columnas comunes (id, eliminar)*/
+
+/*Ventana emergente eliminar*/
+.VentanaEmergenteEliminarEliminando{
+  text-align:center;
+}
+.VentanaEmergenteEliminarSpinner1{
+  text-align:center;
+}
+.VentanaEmergenteEliminarSpinner2{
+  display:inline-block;
+}
+.VentanaEmergenteEliminarPregunta{
+  text-align:center;
+  margin-top: 1.3em;
+}
+.VentanaEmergenteEliminarInfo{
+  text-align:center;
+  margin-top: .5em;
+  margin-bottom:.5em;
+}
+.tablaComponenteVEEliminar{
+  max-height: 50%;
+  margin-top: 1.5em;
+  margin-bottom: 1em;
+}
+.VentanaEmergenteEliminarBtns{
+  display:block;
+  text-align:center;
+  margin-bottom: 1em;
+}
+/*Fin ventana emergente eliminar*/
+
+/*Ventana emergente editar*/
+.contenedorEditar{
+  position: relative;
+}
+.btnCerrar{
+  position: absolute;
+  right:1.8em;
+  top:.5em;
+  text-align: center;
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+.iconoCerrar{
+  float:center;
+  font-size: 30px;
+}
+/*Fin ventana emergente editar*/
