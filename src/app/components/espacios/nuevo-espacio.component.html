@@ -1,23 +1,53 @@
 <div class="contenedorEditar">
   <h1 class="mat-display-1 tituloComponentes"><span class="icon-town-hall"></span> Nuevo espacio</h1>
   <a class="btnCerrar" (click)="cerrarDialogo()"><i class="material-icons iconoCerrar">close</i></a>
-  <div class="row">
-    <mat-form-field>
-    Nombre: <br> <input matInput [(ngModel)]="items.nombreEspacio">
-    </mat-form-field>
-  </div>
-  <div class="row">
-    <mat-form-field>
-    Dirección: <br> <input matInput [(ngModel)]="items.sitio">
-    </mat-form-field>
-  </div>
-  <div class="row">
-    <mat-form-field>
-    Aforo: <br> <input matInput [(ngModel)]="items.aforo">
-    </mat-form-field>
-  </div>
+  <form (ngSubmit)="anyadirItem()">
+    <div class="row">
+      <div class="col-sm-3 contenedorFormNuevoItem">
+        <mat-form-field hintLabel="Max 20 caracteres">
+          <input matInput name="nombreUsuario" [(ngModel)]="items.nombreEspacio" placeholder="Nombre">
+        </mat-form-field>
+        <mat-form-field hintLabel="Dirección completa">
+          <input matInput name="sitio" [(ngModel)]="items.sitio" placeholder="Dirección">
+        </mat-form-field>
+        <mat-form-field hintLabel="Capacidad máxima de personas del espacio">
+          <input matInput type="number" name="aforo" [(ngModel)]="items.aforo" placeholder="Aforo">
+        </mat-form-field>
+      </div>
+      <div class="col-sm">
+
+      </div>
+    </div>
+    <div class="row">
+      <div class="btnsEditarAnyadir">
+        <div *ngIf="!editar" class="btnsEditarAnyadir">
+          <mat-dialog-actions class="btnsEditarAnyadir">
+            <button type="submit" color="primary" mat-raised-button>Crear</button>
+            <a mat-raised-button (click)="limpiarCampos()" color="warn">Limpiar campos</a>
+          </mat-dialog-actions>
+        </div>
+        <div *ngIf="editar" class="btnsEditarAnyadir">
+          <div *ngIf="!editarInit" class="btnsEditarAnyadir">
+            <a mat-raised-button color="primary" (click)="estadoEditarInit()">Editar</a>
+          </div>
+          <div *ngIf="editarInit" class="btnsEditarAnyadir">
+            <mat-dialog-actions class="btnsEditarAnyadir">
+              <button type="submit" color="primary" mat-raised-button>Guardar cambios</button>
+              <a mat-raised-button (click)="limpiarCampos()" color="warn">Restaurar valores</a>
+              <a mat-raised-button (click)="estadoEditarInit()" color="warn">Cancelar</a>
+            </mat-dialog-actions>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>
 
+
+  <h1 *ngIf="creando==true;"  mat-dialog-title style="text-align:center">Creando Usuario</h1>
+  <div *ngIf="creando==true;" style="margin-left:150px;">
+      <mat-spinner color="primary"></mat-spinner>
+  </div>
 
 
 

@@ -1,9 +1,10 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PeticionesCrudService, LogueadoService } from '../../services/index';
-import { EspacioInterface } from '../../interfaces/espacio.interface';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource, MatSort, MatPaginator, MatDialog } from '@angular/material';
+import { MatTableDataSource, MatSort, MatDialog } from '@angular/material';
 import { EliminarEspacioComponent } from './eliminar-espacio.component';
+import { PaginacionInterface } from '../../interfaces/paginacion.interface';
+import { EspacioInterface } from '../../interfaces/espacio.interface';
 import { NuevoEspacioComponent } from './nuevo-espacio.component';
 
 @Component({
@@ -15,9 +16,20 @@ import { NuevoEspacioComponent } from './nuevo-espacio.component';
 export class EspaciosComponent implements OnInit {
 
   items:EspacioInterface[]=[];
+  option_Items_Pgn='10';
+  paginacion:PaginacionInterface={
+    count:null,
+    current_page:1,
+    links:{
+      previous:null,
+      next:null,
+    },
+    per_page:null,
+    total:null,
+    total_pages:1
+  };
   row:EspacioInterface;
   @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
 
   dataSource = new MatTableDataSource(this.items);
   selection = new SelectionModel<EspacioInterface>(true, []);
@@ -28,21 +40,23 @@ export class EspaciosComponent implements OnInit {
              )
   {
     this.logueadoService.comprobarLogueado();
-    this.cargarItems(6);
+    this.cargarItems(6,+this.option_Items_Pgn,1);
   }
 
   ngOnInit() {
   }
 
   //Cargar items
-  cargarItems(i:number){
+  cargarItems(peticion:number, per_pgn:number, pgn:number){
     this.logueadoService.comprobarLogueado();
 
-    this._itemService.getItem(i,-1,-1,-1).then(
+    this._itemService.getItem(peticion,-1,per_pgn,pgn).then(
       res => {
-        this.items = res as EspacioInterface[]
+        console.log(res);
+        this.items = res["data"] as EspacioInterface[]
+        this.paginacion = res["meta"].pagination as PaginacionInterface
         this.ngAfterViewInit()
-      }
+      },
     );
   }
 
@@ -51,7 +65,6 @@ export class EspaciosComponent implements OnInit {
     this.dataSource = new MatTableDataSource(this.items);
     this.selection = new SelectionModel<EspacioInterface>(true, []);
     this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
   }
 
   //Marcar checkbox
@@ -73,7 +86,7 @@ export class EspaciosComponent implements OnInit {
   realizarBusqueda(b){
     console.log("busqueda");
     console.log(b);
-    this.cargarItems(303);
+    // this.cargarItems(303,1);
   }
 
   //Habilita o deshabilita el boton eliminar lista de items
@@ -95,25 +108,31 @@ export class EspaciosComponent implements OnInit {
         if(res){
           var b1 = <HTMLInputElement> document.getElementById("btnEliminarItems");
           b1.disabled = true;
-          this.cargarItems(6);
+          // this.cargarItems(6,1);
         }
       });
     }
   }
 
-  //Funcion abrir formulario nuevo item
-  botonAnyadirItem(){
+  //Funcion abrir formulario crear / editar item
+  editarAnyadirItem(row){
     const dialogRef = this.dialog.open(NuevoEspacioComponent,{
       height: '90%',
       width: '90%',
+      data: { item: row }
     });
     dialogRef.afterClosed().subscribe( res => {
       if(res){
         var b1 = <HTMLInputElement> document.getElementById("btnEliminarItems");
         b1.disabled = true;
-        this.cargarItems(6);
+        // this.cargarItems(6,1);
       }
     });
+  }
+
+  actualizarPaginacion(){
+    this.paginacion.per_page = +this.option_Items_Pgn;
+    this.cargarItems(6,+this.option_Items_Pgn,1);
   }
 
 }

@@ -15,11 +15,14 @@ export class PeticionesCrudService {
     'Access-Control-Allow-Origin':'https://gvent.ovh/Prueba2_1/public',
     'Authorization': this.First_accessToken+this.Secound_accessToken,
   });
-
+r
 
   constructor( private http:Http ) { }
 
   //FUNCION QUE CREA LAS URL
+  //tipo --> la tabla / peticion que se quiere realizar
+  //id --> id de item a buscar
+  //id2 --> segundo id para tablas combinadas / cantidad de elementos por pgn (cuando id = -1)
   crearURL (tipo,id,id2,pgn){
     let url = "https://gvent.ovh/Prueba2_1/public/";
     switch(tipo) {
@@ -116,7 +119,7 @@ export class PeticionesCrudService {
           console.log("No se ha especificado correctamente una URL.");
     }
     if(id>-1 && tipo <101) url+=`/${id}`;
-    if(pgn>-1) url+= `/?page=${pgn}`;
+    if(id<0 && id2>-1 && pgn>-1) url+= `?per_page=${id2}&page=${pgn}`;
     return url;
   }
 
@@ -124,7 +127,6 @@ export class PeticionesCrudService {
     let promise = new Promise((resolve, reject) => {
       let url = this.crearURL(tipo,-1,-1,-1);
       let body = JSON.stringify( _body );
-      console.log(body);
       let headers = this.header;
       this.http.post(url, body, { headers })
         .toPromise()
@@ -138,9 +140,22 @@ export class PeticionesCrudService {
     let promise = new Promise((resolve, reject) => {
       let url = this.crearURL(tipo,id,id2,pgn);
       let headers = this.header;
+      console.log(url);
       this.http.get(url, { headers })
         .toPromise()
-          .then( res => { resolve( res.json().data ); })
+          .then( res => { resolve( res.json() )})
+          .catch((err) => { console.log( err.toString() ); })
+    });
+    return promise;
+  }
+
+  paginacionItems (url){
+    let promise = new Promise((resolve, reject) => {
+      let headers = this.header;
+      console.log(url);
+      this.http.get(url, { headers })
+        .toPromise()
+          .then( res => { resolve( res.json() )})
           .catch((err) => { console.log( err.toString() ); })
     });
     return promise;

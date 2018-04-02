@@ -14,7 +14,7 @@ export class EliminarEspacioComponent implements OnInit {
 
   items:EspacioInterface[]=[];
   eliminando:boolean;
-  eliminandoItem:boolean[]=[];
+  aux:number; //Items a eliminar, recursividad
 
   dataSource = new MatTableDataSource(this.items);
 
@@ -33,7 +33,7 @@ export class EliminarEspacioComponent implements OnInit {
     }
 
     this.eliminando=false;
-    for(var i = 0; i < this.items.length; i++) this.eliminandoItem.push(true);
+    this.aux = this.items.length;
   }
 
   //Cargar tabla
@@ -47,55 +47,52 @@ export class EliminarEspacioComponent implements OnInit {
   //Elimina array items
   eliminarItem(){
     this.eliminando=true;
-
-    for(var i = 0; i < this.items.length; i++){
-      this._itemService.eliminarItem(6,this.items[i].identificador,-1)
-        .then( res => {
-          this.eliminandoItem[i] = false;
-          this.comprobarEliminado();
-        })
-        .catch( (err) => {
-          i = this.items.length;
-          let sms:string = "Se ha producido un error inesperado.";
-          let icono:number = 1;
-          const dialogRef = this.dialog.open(VentanaEmergenteComponent,{
-            height: '17em',
-            width: '32em',
-            data: { item: sms, item2: icono }
-          });
-          dialogRef.afterClosed().subscribe( res => {
-            this.cerrarDialogo(true);
-          });
-        })
+    if(this.aux>0){
+      this.aux=this.aux-1;
+      this._itemService.eliminarItem(6,this.items[this.aux].identificador,-1)
+          .then( res => {
+            this.eliminarItem();
+          })
+          .catch( (err) => {
+            this.alertaNoOk();
+          })
     }
-  }
-
-  //Comprueba que se hayan eliminado todos los items y de forma correcta
-  comprobarEliminado(){
-    let res:boolean = false;
-    for(var i = 0; i < this.items.length; i++){
-      if(this.eliminandoItem[i]) {
-        res = true;
-        i = this.items.length;
-      }
-    }
-    if(res) {
-      let sms:string = "Acción realizada correctamente";
-      let icono:number = 0;
-      const dialogRef = this.dialog.open(VentanaEmergenteComponent,{
-        height: '17em',
-        width: '32em',
-        data: { item: sms, item2: icono }
-      });
-      dialogRef.afterClosed().subscribe( res => {
-        this.cerrarDialogo(true);
-      });
+    else{
+      this.alertaOk();
     }
   }
 
   //Cerrar ventana emergente
-  cerrarDialogo(i:boolean){
-    this.dialogRef.close(i);
+  cerrarDialogo(){
+    this.dialogRef.close(false);
+  }
+
+  //Ventana emergente si todo ha ido bien
+  alertaOk(){
+    let sms:string = "Acción realizada correctamente.";
+    let icono:number = 0;
+    const dialogRef = this.dialog.open(VentanaEmergenteComponent,{
+      height: '17em',
+      width: '32em',
+      data: { item: sms, item2: icono }
+    });
+    dialogRef.afterClosed().subscribe( res => {
+      this.dialogRef.close(true);
+    });
+  }
+
+  //Ventana emergente si ha habido error
+  alertaNoOk(){
+    let sms:string = "Se ha producido un error inesperado.";
+    let icono:number = 1;
+    const dialogRef = this.dialog.open(VentanaEmergenteComponent,{
+      height: '17em',
+      width: '32em',
+      data: { item: sms, item2: icono }
+    });
+    dialogRef.afterClosed().subscribe( res => {
+      this.dialogRef.close(true);
+    });
   }
 
 }
