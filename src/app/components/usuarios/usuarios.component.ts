@@ -44,7 +44,7 @@ export class UsuariosComponent implements OnInit {
   totalPaginas:number;
   currentPage:number = 1;
   // k:number;
- row:Usuario;
+ // row:Usuario;
 
 
 //megacaca

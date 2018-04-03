@@ -44,7 +44,7 @@ export class EventosComponent implements OnInit {
   hasBuscado:boolean = false
 
   nombreBusqueda:string = "";
-  // filterargs = {title: 'hello'}; 
+  // filterargs = {title: 'hello'};
   // items = [{title: 'hello world'}, {title: 'hello kitty'}, {title: 'foo bar'}];
   filterargs = {nombreEvento: this.nombreBusqueda};
   public resultado:Evento={
@@ -65,7 +65,7 @@ export class EventosComponent implements OnInit {
   totalPaginas:number;
   currentPage:number = 1;
 
-  row:Evento;
+  // row:Evento;
 
 
     ELEMENT_DATA: Evento[];
