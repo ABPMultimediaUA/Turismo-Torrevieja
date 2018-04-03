@@ -65,7 +65,7 @@ export class EventosComponent implements OnInit {
   totalPaginas:number;
   currentPage:number = 1;
 
-
+  row:Evento;
 
 
     ELEMENT_DATA: Evento[];

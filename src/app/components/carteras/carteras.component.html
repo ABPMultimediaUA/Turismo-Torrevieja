@@ -73,18 +73,18 @@
 
             <ng-container matColumnDef="estado">
               <mat-header-cell *matHeaderCellDef mat-sort-header>
-                <span matTooltip="Nueva: Se puede editar y añadir expedientes,
-                                  Planificacion:No aprobada. Se puede añadir expediente
-                                  En tramite:No aprobada. Se puede añadir expediente
-                                  Aprobada:Aprobada. No se puede añadir expediente
-                                  Gestion:Aprobada. Gestion de expedientes. No se puede añadir expediente
-                                  Cerrada: No se puede editar
+                <span matTooltip="Nueva: Se puede editar y añadir expedientes.
+                                  Planificación: No aprobada. Se puede añadir expediente.
+                                  En trámite: No aprobada. Se puede añadir expediente.
+                                  Aprobada: Aprobada. No se puede añadir expediente.
+                                  Gestión: Aprobada. Gestión de expedientes. No se puede añadir expediente.
+                                  Cerrada: No se puede editar.
                        ">Estado</span>
               </mat-header-cell>
               <mat-cell (click)="editar(cartera)" *matCellDef="let cartera">
                 <div *ngIf="cartera.estado ==0"><span matTooltip="Se puede editar y añadir expedientes">Nueva</span></div>
-                <div *ngIf="cartera.estado ==1"><span matTooltip="No aprobada. Se puede añadir expediente">Planificacion</span></div>
-                <div *ngIf="cartera.estado ==2"><span matTooltip="No aprobada. Se puede añadir expediente">En tramite</span></div>
+                <div *ngIf="cartera.estado ==1"><span matTooltip="No aprobada. Se puede añadir expediente">Planificación</span></div>
+                <div *ngIf="cartera.estado ==2"><span matTooltip="No aprobada. Se puede añadir expediente">En trámite</span></div>
                 <div *ngIf="cartera.estado ==3"><span matTooltip="Aprobada. No se puede añadir expediente">Aprobada</span></div>
                 <div *ngIf="cartera.estado ==4"><span matTooltip="Aprobada. Gestion de expedientes. No se puede añadir expediente">Gestion</span></div>
                 <div *ngIf="cartera.estado ==5"><span matTooltip="No se puede editar">Cerrada</span></div>
@@ -95,12 +95,12 @@
 
 
             <ng-container matColumnDef="fechaCreacion">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Creacion </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Creación </mat-header-cell>
               <mat-cell  (click)="editar(cartera)" *matCellDef="let cartera"> {{cartera.fechaCreacion}} </mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="fechaActualizacion">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Actualizacion </mat-header-cell>
+              <mat-header-cell *matHeaderCellDef mat-sort-header> Actualización </mat-header-cell>
               <mat-cell  (click)="editar(cartera)" *matCellDef="let cartera"> {{cartera.fechaActualizacion}} </mat-cell>
             </ng-container>
 

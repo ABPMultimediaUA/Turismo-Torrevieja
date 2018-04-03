@@ -6,33 +6,46 @@ import { ActividadInterface }  from "../../interfaces/actividad.interface";
 import { TareaInterface }  from "../../interfaces/tareas.interface";
 import { ContratoInterface }  from "../../interfaces/contrato.interface";
 import { Usuario }  from "../../interfaces/usuario.interface";
+import { Cartera }  from "../../interfaces/cartera.interface";
 import { EspacioInterface }  from "../../interfaces/espacio.interface";
 import { ProveedorInterface }  from "../../interfaces/proveedor.interface";
 import { AlertService, AuthenticationService,PeticionesCrudService,LogueadoService } from '../../services/index';
+
 @Component({
   selector: 'app-expediente',
   templateUrl: './expediente.component.html',
   styleUrls: ['./expediente.component.css']
 })
+
 export class ExpedienteComponent implements OnInit {
 
   First_accessToken:string="Bearer ";
   Secound_accessToken:string=localStorage.accesToken;
 
   id:string;
+  modificable:boolean = false;
+  eliminable:boolean = false;
   errorActualizarItem = false;
   errorMensaje:string[] = [];
   itemActualizado = false;
   @ViewChild("etiquetaImgExp") etiqueta;
+  @ViewChild("btnAct") btnAct;
+  @ViewChild("btnCon") btnCon;
+  @ViewChild("btnTar") btnTar;
+  mostrarActividades:boolean = true;
+  mostrarContratos:boolean = false;
+  mostrarTareas:boolean = false;
   archivoImg:File = null;
-  // permisosCambiados:string[]=[];
-  // auxPermisos:string[]=[];
+  pestanya:number[]=[0,1,2];
+
+  //TODO Arreglar Coordinador
+  coordinador:number;
 
   public expediente:ExpedienteInterfaz={
     identificador:0,
-    avance:"",
+    avance:0,
     cartera:0,
-    coordinador:"",
+    coordinador:0,
     detalle:"",
     fechaFin:null,
     fechaInicio:null,
@@ -41,12 +54,24 @@ export class ExpedienteComponent implements OnInit {
     titulo:"",
   };
 
+  public cartera:Cartera={
+    identificador:"",
+    nombreCartera:"",
+    year:0,
+    trimestre:0,
+    estado:0,
+    fechaCreacion:"",
+    fechaActualizacion:"",
+    fechaEliminacion:"",
+  };
+
   public actividades:ActividadInterface[];
   public tareas:TareaInterface[];
   public contratos:ContratoInterface[];
   public users:Usuario[];
   public espacio:EspacioInterface[];
   public proveedor:ProveedorInterface[];
+
 
   constructor(  private _ItemService: PeticionesCrudService,
                 private router:Router,
@@ -63,9 +88,24 @@ export class ExpedienteComponent implements OnInit {
             this._ItemService.getItem(0,this.id,-1,-1).then(
               res => {
                 this.expediente = res as ExpedienteInterfaz;
-                // this.expediente["_metodo"] = "put";
-                // this.expediente.image=null;
-                console.log(this.expediente);
+
+                //cargamos imagen
+                if(this.expediente.image){
+                  this.expediente.image = "https://gvent.ovh/Prueba2_1/public/img/" + this.expediente.image;
+                  let o = this.etiqueta.nativeElement as HTMLImageElement;
+                  o.src = this.expediente.image;
+                }
+
+                this.coordinador = +this.expediente.coordinador;
+
+                //cogemos cartera
+                this._ItemService.getItem(8,this.expediente.cartera,-1,-1).then(
+                  res => {
+                    this.cartera = res as Cartera;
+                    if(this.cartera.estado < 3) this.eliminable = true;
+                    else this.modificable = true;
+                  }
+                );
               }
             );
 
@@ -93,6 +133,9 @@ export class ExpedienteComponent implements OnInit {
             //COGEMOS LOS USUARIOS
             this._ItemService.getItem(5,-1,-1,-1).then(
               res => {
+                //TODO Cambiar select para recoger solamente los usuarios que
+                //tengan permiso para "coordinar" un evento
+                //y permiso para realizar tareas, etc.
                 this.users = res as Usuario[];
               }
             );
@@ -111,7 +154,7 @@ export class ExpedienteComponent implements OnInit {
               }
             );
       });
-    }
+  }
 
   ngOnInit() {
   }
@@ -197,19 +240,21 @@ export class ExpedienteComponent implements OnInit {
     delete expBody.image;
     this._ItemService.actualizarItem(0,this.id,expBody,-1)
     .then( res=> {
-      // if(this.archivoImg){ //ACTUALIZAMOS IMG
-      //   this._ItemService.subirFile(0,this.id,this.archivoImg)
-      //     .then( res=>{ alert("Actualizado correctamente."); console.log(res);})
-      //     .catch( (er) => { alert("Expediente actualizado correctamente, a excepción de la imagen.");
-      //                       console.log( er.toString()) })
-      // }
-      // else{
-         alert("Actualizado correctamente." + "SIN IMAGEN");
-      // }
+      if(this.archivoImg){ //ACTUALIZAMOS IMG
+        this._ItemService.subirFile(0,15,this.archivoImg)
+          .then( res=>{ alert("Actualizado correctamente."); console.log(res);})
+          .catch( (er) => { alert("Expediente actualizado correctamente, a excepción de la imagen.");
+                            console.log( er.toString()) })
+      }
+      else{
+         alert("Actualizado correctamente.");
+      }
     })
     .catch( (err) => { alert("Se ha producido un error inesperado.\nNo se ha podido actualizar el expediente.");
                        console.log( err.toString()) })
   }
+
+
 
   crearModificarActConTar(i,a,index){
     if(a.identificador != null){
@@ -246,4 +291,51 @@ export class ExpedienteComponent implements OnInit {
     }
     r.readAsDataURL(files[0]);
   }
+
+  borrarItem(){
+    if(confirm("Si aceptas el expediente será eliminado.\n¿Continuar?")){
+      this._ItemService.eliminarItem(0,this.id,-1).then(
+        res => {
+            location.reload(true);
+            this.router.navigate(['expedientes']);
+        }
+      );
+    }
+  }
+
+  cambiarPestanya(e){
+    if(e == 1){
+      this.mostrarActividades = true;
+      this.mostrarContratos = false;
+      this.mostrarTareas = false;
+    }
+    else if(e == 2){
+      this.mostrarActividades = false;
+      this.mostrarContratos = true;
+      this.mostrarTareas = false;
+    }
+    else {
+      this.mostrarActividades = false;
+      this.mostrarContratos = false;
+      this.mostrarTareas = true;
+    }
+    let b1 = this.btnAct.nativeElement as HTMLButtonElement;
+    let b2 = this.btnCon.nativeElement as HTMLButtonElement;
+    let b3 = this.btnTar.nativeElement as HTMLButtonElement;
+    this.cambiarColorBtn(b1,this.mostrarActividades);
+    this.cambiarColorBtn(b2,this.mostrarContratos);
+    this.cambiarColorBtn(b3,this.mostrarTareas);
+  }
+
+  cambiarColorBtn(b,m){
+    if(m){
+      b.style.backgroundColor= "white";
+      b.style.color = "grey";
+    }
+    else{
+      b.style.backgroundColor = "grey";
+      b.style.color = "white";
+    }
+  }
+
 }

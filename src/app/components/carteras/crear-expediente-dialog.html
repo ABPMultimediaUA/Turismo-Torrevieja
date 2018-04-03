@@ -54,7 +54,7 @@
 
      <mat-form-field>
       <mat-select placeholder="Coordinador" [(ngModel)]="expediente.usuario"  name="usuario"  >
-        <mat-option *ngFor="let u of users" [value]="u.nombreUsuario">
+        <mat-option [value]="u.identificador" *ngFor="let u of users">
           {{ u.nombreUsuario }}
         </mat-option>
       </mat-select>
@@ -85,7 +85,7 @@
     <br><br>
     <mat-dialog-actions *ngIf="creando==false;" style="display:block; text-align:center;">
       <button type="submit" color="primary" mat-raised-button>Crear</button>
-    <button  mat-raised-button (click)="cancelar()" color="warn">Cancelar</button>
+      <a [routerLink]="['/cartera', id]" mat-raised-button (click)="cancelar()" color="warn">Cancelar</a>
    </mat-dialog-actions>
 
   </form>

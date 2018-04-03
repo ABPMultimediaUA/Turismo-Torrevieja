@@ -14,7 +14,6 @@ import { AlertService, AuthenticationService, PeticionesCrudService, LogueadoSer
   styleUrls: ['./expedientes.component.css']
 })
 export class ExpedientesComponent implements OnInit {
-
   item:any[] = [];
   loading:boolean = true;
   //pagination
@@ -71,14 +70,5 @@ export class ExpedientesComponent implements OnInit {
       }
     }
   }
-
-  // borrarItem(id:string){
-  //   this._ItemService.eliminarItem(0,id).then(
-  //     res => {
-  //         location.reload(true);
-  //         this.router.navigate(['expedientes']);
-  //     }
-  //   );
-  // }
 
 }

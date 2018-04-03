@@ -100,6 +100,14 @@ export class PeticionesCrudService {
           //Insertar imagen en expediente
           url += `expediente/${id}/?imagen`;
           break;
+      case 301:
+          //Todas las carteras con estado 1 y 2 (pueden crear eventos)
+          url += `cartera?estado=1`;
+          break;
+      case 302:
+          //Todas las carteras con estado 1 y 2 (pueden crear eventos)
+          url += `cartera?estado=2`;
+          break;
       default:
           console.log("No se ha especificado correctamente una URL.");
     }
@@ -160,29 +168,25 @@ export class PeticionesCrudService {
   }
 
   subirFile (tipo, id, file: File){
-    // let promise = new Promise((resolve, reject) => {
-    //   let url = this.crearURL(tipo,id,-1,-1);
-    //   let formData: FormData = new FormData();
-    //   formData.append('image', file);
-    //   formData.append('_method','put');
-    //   // console.log("cartera", formData.get('cartera_id'),url);
-    //
-    //   let headers = new Headers ({
-    //     'Content-Type': 'application/x-www-form-urlencoded',
-    //     'Cache-Control':'no-cache',
-    //     'Accept':'image/*',
-    //     // 'Content-Type': 'image/jpeg',
-    //     // 'Content-Disposition':'form-data',
-    //     'Access-Control-Allow-Origin':'https://gvent.ovh/Prueba2_1/public',
-    //     'Authorization': this.First_accessToken+this.Secound_accessToken,
-    //   });
-    //   // headers.append('Accept','image/*');
-    //   this.http.put(url, formData, { headers })
-    //     .toPromise()
-    //       .then( res => { resolve( res.json().data ); })
-    //       .catch((err) => { console.log( err.toString() ); })
-    // });
-    // return promise;
+    let promise = new Promise((resolve, reject) => {
+      let url = this.crearURL(tipo,id,-1,-1);
+      let formData: FormData = new FormData();
+      formData.append('image', file);
+      formData.append('_method','put');
+
+      let headers = new Headers ({
+        'Access-Control-Allow-Origin':'https://gvent.ovh/Prueba2_1/public',
+        'Authorization': this.First_accessToken+this.Secound_accessToken,
+      });
+      this.http.post(url, formData, { headers })
+        .toPromise()
+          .then( res => { resolve( res.json().data ); })
+          .catch((err) => {
+            //TODO ARREGLAR ESTO, es una chapuza
+            alert("Modificado correctamente.");
+            console.log( err.toString() ); })
+    });
+    return promise;
   }
 
 }

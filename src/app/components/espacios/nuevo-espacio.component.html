@@ -1,0 +1,32 @@
+<br><br><br><br><br>
+<div class="container-fluid">
+  <div class="row ">
+    <main role="main" class="col-sm-12 ml-sm-auto col-md-12 pt-3">
+      <h1><span class="icon-town-hall"></span> Nuevo espacio <small>{{espacio.nombreEspacio}}</small></h1>
+      <br>
+      <form (ngSubmit)="guardar()" #forma="ngForm">
+        <div class="row">
+          <div class="form-group col-sm-3">
+            <label>Nombre espacio</label>
+            <input [(ngModel)]="espacio.nombreEspacio" name="espacioNombre" class="form-control" placeholder="" required type="text">
+          </div>
+          <div class="form-group col-sm-3">
+            <label>Dirección</label>
+            <input [(ngModel)]="espacio.sitio" name="espacioDir" class="form-control" placeholder="" required type="text">
+          </div>
+          <div class="form-group col-sm-3">
+            <label>Aforo</label>
+            <input [(ngModel)]="espacio.aforo" name="espacioAforo" class="form-control" placeholder="" required type="number">
+          </div>
+          <div class="form-group">
+            <br>
+            <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
+              Guardar cambios
+            </button>
+          </div>
+        </div>
+      </form>
+      <br>
+    </main>
+  </div>
+</div>

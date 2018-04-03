@@ -1,40 +1,34 @@
 <br><br><br><br><br>
 <div class="container-fluid">
   <div class="row ">
-        <h1><span class="icon-folder-add"></span> Eventos</h1>
+        <h1><span class="icon-town-hall"></span> Espacios</h1>
         <div class="table-responsive">
           <table class="table table-striped">
             <thead class="thead-dark">
               <tr>
-                <th scope="col">#</th>
                 <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Título</th>
-                <th scope="col">Coordinador</th>
-                <th scope="col">Fecha Inicio</th>
-                <th scope="col">Fecha Fin</th>
+                <th scope="col">Nombre espacio</th>
+                <th scope="col">Dirección</th>
+                <th scope="col">Aforo</th>
                 <th class="text-right">Opciones</th>
               </tr>
             </thead>
             <tbody>
                <!-- el pipe keys es para pasar un objeto a un array-->
-              <tr *ngFor="let item of  itemsActuales  ; let i = index">
-                <td>{{ i + 1 }}</td>
-                <td>{{ item.identificador }}</td>
-                <td>{{ item.nombreExpediente }}</td>
-                <td>{{ item.titulo }}</td>
-                <td>{{ item.coordinador }}</td>
-                <td>{{ item.fechaInicio }}</td>
-                <td>{{ item.fechaFin }}</td>
+              <tr *ngFor="let it of itemsActuales, let i = index">
+                <td>{{ it.identificador }}</td>
+                <td>{{ it.nombreEspacio }}</td>
+                <td>{{ it.sitio }}</td>
+                <td>{{ it.aforo }}</td>
                 <td class="text-right w20">
-                  <button  [routerLink]="['/expediente', item.identificador]"
+                  <button  [routerLink]="['/espacio', it.identificador]"
                   type="button" class="btn btn-outline-success">
                     <span class="icon-pencil"></span>
                   </button>
-                  <!-- <button  (click)="borrarItem(item.identificador)"
+                  <button  (click)="borrarItem(it.identificador)"
                   type="button" class="btn btn-outline-danger">
                     <span class="icon-trash"></span>
-                  </button> -->
+                  </button>
                 </td>
               </tr>
 

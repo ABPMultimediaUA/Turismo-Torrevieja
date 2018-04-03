@@ -103,7 +103,7 @@
               <mat-header-cell *matHeaderCellDef mat-sort-header> Rol </mat-header-cell>
               <mat-cell (click)="openDialogEditar(usuario)" *matCellDef="let usuario">
                 <div *ngIf="usuario.rol ==1">Administrador</div>
-                <div *ngIf="usuario.rol ==2">TRabajador</div>
+                <div *ngIf="usuario.rol ==2">Trabajador</div>
                 <div *ngIf="usuario.rol !=1 && usuario.rol !=2">Otros roles</div>
               </mat-cell>
             </ng-container>

@@ -1,5 +1,5 @@
 <!-- EDITANDO UN  EVENTO -->
-<h1 *ngIf="editando==false;" mat-dialog-title style="text-align:center">Editar Usuario: {{row.nombreUsuario}}</h1>
+<h1 *ngIf="editando==false;" mat-dialog-title style="text-align:center">Editar usuario: {{row.nombreUsuario}}</h1>
 <ul style="width:90%" *ngIf="editando==false;">
   <li>
     <mat-form-field>
@@ -53,12 +53,12 @@
     <input  matInput   name="correo"  [(ngModel)]="usuario.correo" placeholder="Correo">
     </mat-form-field>
     <tr>
-    <mat-form-field   hintLabel="Numeros y letras">
+    <mat-form-field   hintLabel="Números y letras">
     <input  matInput   name="password"  [(ngModel)]="usuario.password" placeholder="Contraseña">
     </mat-form-field>
     <tr>
     <mat-form-field   hintLabel="Repite la contraseña">
-    <input  matInput   name="password_confirmation"  [(ngModel)]="usuario.password_confirmation" placeholder="Confirmacion">
+    <input  matInput   name="password_confirmation"  [(ngModel)]="usuario.password_confirmation" placeholder="Confirmación">
     </mat-form-field>
     <tr>
 
@@ -76,7 +76,7 @@
     <br><br>
     <mat-dialog-actions *ngIf="creando==false;" style="display:block; text-align:center;">
       <button type="submit" color="primary" mat-raised-button>Crear</button>
-    <button  mat-raised-button (click)="cancelar()" color="warn">Cancelar</button>
+      <a [routerLink]="['/usuarios']" mat-raised-button (click)="cancelar()" color="warn">Cancelar</a>
    </mat-dialog-actions>
 
   </form>

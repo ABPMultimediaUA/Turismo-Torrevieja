@@ -1,140 +1,119 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
-import { Evento }  from "../../interfaces/evento.interface";
-
-import { AlertService, AuthenticationService, EventosService, ExpedientesService, LogueadoService } from '../../services/index';
+import { Usuario }  from "../../interfaces/usuario.interface";
+import { Cartera }  from "../../interfaces/cartera.interface";
+import { AlertService, AuthenticationService, PeticionesCrudService, LogueadoService } from '../../services/index';
 
 @Component({
   selector: 'app-nuevo-expediente',
   templateUrl: './nuevo-expediente.component.html'
 })
 export class NuevoExpedienteComponent implements OnInit {
-errorEvento = false;
-rgstrEvento = false;
-errorEventoActualizar = false;
-errorMensaje:string[]=[];
-public evento:Evento={
-  identificador:"",
-  nombreEvento:"",
-  usuario:"", //usuario que ha creado el evento
-  fechaCreacion:"",
-  fechaActualizacion:"",
-  fechaEliminacion:""
-};
 
-nuevo:boolean = false;
-//id:string;
+  public expediente:ExpedienteInterfaz={
+    identificador:0,
+    avance:0,
+    cartera:0,
+    coordinador:0,
+    detalle:"",
+    fechaFin:null,
+    fechaInicio:null,
+    image:"",
+    nombreExpediente:"",
+    titulo:"",
+  };
 
-//
+  public users:Usuario[];
+  public cartera:Cartera[];
 
+  @ViewChild("etiquetaImgExp") etiqueta;
+  archivoImg:File = null;
 
-constructor( private _eventosService: EventosService,
-                private router:Router,
-                private route:ActivatedRoute,//esto es para pasar como parametro
-                public  logueadoService: LogueadoService
-              ) {
-                this.logueadoService.comprobarLogueado();
-                this.evento.usuario= localStorage.identificador;
-          this.route.params.subscribe(parametros=>{
-                console.log(parametros);
+  constructor( private _crudService: PeticionesCrudService,
+                  private router:Router,
+                  private route:ActivatedRoute,//esto es para pasar como parametro
+                  public  logueadoService: LogueadoService
+                )
+    {
+      this.logueadoService.comprobarLogueado();
+      // this.evento.usuario= localStorage.identificador;
 
-          });
-  }
+      //COGEMOS LOS USUARIOS
+      this._crudService.getItem(5,-1,-1,-1).then(
+        res => {
+          //TODO Cambiar select para recoger solamente los usuarios que
+          //tengan permiso para "coordinar" un evento
+          this.users = res as Usuario[];
+        }
+      );
 
-  ngOnInit() {
-  }
+      //COGEMOS LAS CARTERAS CUYO ESTADO PERMITEN ANYADIR NUEVOS EXPEDIENTES (1 y 2)
+      this._crudService.getItem(301,-1,-1,-1).then(
+        res => {
+          this.cartera = res as Cartera[];
+          //TODO Eliminar cuando se arregle la select
+          this._crudService.getItem(302,-1,-1,-1).then(
+            res => {
+              this.cartera = this.cartera.concat(res as Cartera[]);
+            }
+          );
+        }
+      );
 
+    }
 
+    ngOnInit() {
+    }
 
-  guardar()
+    guardar(){
+      var expBody = this.expediente;
+      delete expBody.image;
+      this._crudService.crearItem(0,expBody)
+      .then( res=> {
+        // if(this.archivoImg){ //ACTUALIZAMOS IMG
+        //   this._crudService.subirFile(0,this.id,this.archivoImg)
+        //     .then( res=>{ alert("Actualizado correctamente."); console.log(res);})
+        //     .catch( (er) => { alert("Expediente actualizado correctamente, a excepción de la imagen.");
+        //                       console.log( er.toString()) })
+        // }
+        // else{
+           alert("Creado correctamente.");
+           this.borrarFormExp();
 
-  {
+        // }
+      })
+      .catch( (err) => { alert("Error interno, no pudo crearse el expediente.");
+                         console.log( err.toString()) })
+    }
 
-          console.log(this.evento);
-          console.log("hola");
-            this._eventosService.nuevoEvento( this.evento )
-              .subscribe( data=>{
-                //this.router.navigate(['/heroe',data.name])
-                console.log(data);
-                this.errorEvento = false;
-                this.rgstrEvento = true;
-            //    this.ngForm.reset();
+    cargarImg(files: FileList){
+      this.archivoImg = files.item(0);
+      var exp = this.expediente;
+      var etiqueta = this.etiqueta;
+      var r = new FileReader();
+      r.onload = function(e){
+        let o = etiqueta.nativeElement as HTMLImageElement;
+        o.src = r.result;
+        exp.image = o.alt = files[0].name;
+      }
+      r.readAsDataURL(files[0]);
+    }
 
-
-
-              },
-              error=> {
-                //this.router.navigate(['/heroe',data.name])
-                //console.log(error);
-                let mensaje=JSON.parse(error._body);//Cambiar mensaje devuelto a JSON
-                console.log(mensaje.error);
-
-                this.errorMensaje=[];
-
-                            if(mensaje.error=="No posee permisos para ejecutar esta acción")
-                            {
-                              this.errorMensaje.push("No posee permisos para ejecutar esta acción");
-                            }
-
-                            if(mensaje.error=="No estás verificado")
-                            {
-                              this.errorMensaje.push("No estás verificado");
-                            }
-
-
-
-
-
-                if (typeof(mensaje.error.nombreEvento) != "undefined")
-                {
-                  for(let i=0;i<mensaje.error.nombreEvento.length;i++)
-                  {
-                    this.errorMensaje.push(mensaje.error.nombreEvento[i]);
-                  }
-                }
-                 if (typeof(mensaje.error.correo) != "undefined")
-                 {
-                   for(let i=0;i<mensaje.error.correo.length;i++)
-                   {
-                     this.errorMensaje.push(mensaje.error.correo[i]);
-                   }
-                 }
-                 if (typeof(mensaje.error.apodo) != "undefined")
-                 {
-                   for(let i=0;i<mensaje.error.apodo.length;i++)
-                   {
-                     this.errorMensaje.push(mensaje.error.apodo[i]);
-                   }
-                 }
-                 if (typeof(mensaje.error.password) != "undefined")
-                 {
-                   for(let i=0;i<mensaje.error.password.length;i++)
-                   {
-                     this.errorMensaje.push(mensaje.error.password[i]);
-                   }
-                 }
-
-                console.log(this.errorMensaje);
-
-
-
-                /*
-                for(let i=0; i<mensaje.error.length;i++)
-                {
-                  console.log("Entrar2");
-                  console.log(mensaje.error[i]);
-                }
-                */
-
-                this.errorEvento = true;
-                this.rgstrEvento = false;
-              },);
-
-
-
-
+    borrarFormExp(){
+      this.expediente={
+        identificador:null,
+        avance:0,
+        cartera:0,
+        coordinador:0,
+        detalle:"",
+        fechaFin:null,
+        fechaInicio:null,
+        image:"",
+        nombreExpediente:"",
+        titulo:"",
+      }
     }
 
 }

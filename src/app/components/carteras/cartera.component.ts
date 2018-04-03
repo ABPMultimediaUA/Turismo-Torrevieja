@@ -54,9 +54,9 @@ export class CarteraComponent implements OnInit {
   public users:Usuario[];
   public expN:ExpedienteInterfaz={
     identificador:null,
-    avance:"",
+    avance:0,
     cartera:0,
-    coordinador:"",
+    coordinador:0,
     detalle:"",
     fechaFin:null,
     fechaInicio:null,
@@ -64,6 +64,8 @@ export class CarteraComponent implements OnInit {
     nombreExpediente:"",
     titulo:"",
   };
+
+  estados:string[]=["Nueva","En planificación", "En trámite", "Aprobada", "Gestión","Cerrada"];
 
   nuevo:boolean = false;
   id:string;
@@ -190,8 +192,6 @@ export class CarteraComponent implements OnInit {
   }
 
   crearNuevoExp(){
-    this.expN.cartera = +this.id;
-    this.expN.avance += 0;
     this._carterasService.crearItem(0,this.expN)
       .then( res=> {
         alert("Expediente creado correctamente.");
@@ -209,12 +209,19 @@ export class CarteraComponent implements OnInit {
 // [routerLink]="['/expediente', e.identificador]"
 
   }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
+  
   borrarFormExp(){
     this.expN={
       identificador:null,
-      avance:"",
+      avance:0,
       cartera:0,
-      coordinador:"",
+      coordinador:0,
       detalle:"",
       fechaFin:null,
       fechaInicio:null,

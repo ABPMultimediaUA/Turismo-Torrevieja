@@ -47,6 +47,7 @@ export class CarterasComponent implements OnInit {
   totalPaginas:number;
   currentPage:number = 1;
   // k:number;
+  row:Cartera;
 
   //megacaca
     ELEMENT_DATA: Cartera[];

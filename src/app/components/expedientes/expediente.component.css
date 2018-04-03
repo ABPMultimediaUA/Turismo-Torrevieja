@@ -3,10 +3,21 @@ input{
   width:90%;
 }
 #DivActividades, #DivContratos, #DivTareas{
-  margin:2em auto;
+  margin:1em auto;
 }
 .CuadroActividad, .CuadroContrato, .CuadroTarea{
-    background-color: #D3D3D3;
+    background-color: #e3e3e3;
     margin:1em;
     padding: .5em;
+}
+.inicio{
+  background-color:white;
+  color:grey;
+}
+.fondoComponentes{
+
+}
+.btnMargen{
+  margin-top: 1em;
+  margin-bottom: 2em;
 }
