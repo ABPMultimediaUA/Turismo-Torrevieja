@@ -38,13 +38,13 @@ import {EditarDialog} from "./editar-dialog.component";
 })
 
 export class EventosComponent implements OnInit {
-
+  row:Evento;
   resultados:any[] = [];
   loading:boolean = true;
   hasBuscado:boolean = false
 
   nombreBusqueda:string = "";
-  // filterargs = {title: 'hello'};
+  // filterargs = {title: 'hello'}; 
   // items = [{title: 'hello world'}, {title: 'hello kitty'}, {title: 'foo bar'}];
   filterargs = {nombreEvento: this.nombreBusqueda};
   public resultado:Evento={

@@ -34,7 +34,7 @@ import {EditarUsuarioDialog} from "./editar-usuario-dialog.component";
 })
 export class UsuariosComponent implements OnInit {
 
-
+  row:Usuario;
   loading:boolean = true;
   //pagination
   paginacion:any = [];
@@ -134,14 +134,14 @@ export class UsuariosComponent implements OnInit {
   openDialogEliminar(row) {
 
 
-    console.log(row);
+  console.log(row);
 
-      const dialogRef = this.dialog.open(EliminarUsuarioDialog, {
-        height: '200px',
-        width: '450px',
-        data: { row: row }
-      });
-    }
+    const dialogRef = this.dialog.open(EliminarUsuarioDialog, {
+      height: '200px',
+      width: '450px',
+      data: { row: row }
+    });
+  }
 
 openDialogEditar(row){
 

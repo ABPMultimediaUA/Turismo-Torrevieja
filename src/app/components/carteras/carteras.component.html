@@ -15,7 +15,7 @@
                 type="submit"
                 color="primary"
 
-                (click)="openDialogEditar()"> Nueva Cartera
+                (click)="openDialogEditar(row)"> Nueva Cartera
               </button>
               <mat-form-field style="margin-left:30px;">
                 <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">

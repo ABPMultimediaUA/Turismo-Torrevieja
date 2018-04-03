@@ -35,6 +35,7 @@ import {EditarCarteraDialog} from "./editar-cartera-dialog.component";
   templateUrl: './carteras.component.html'
 })
 export class CarterasComponent implements OnInit {
+  row:Cartera;
   // carteras:any[] = [];
   loading:boolean = true;
   //pagination

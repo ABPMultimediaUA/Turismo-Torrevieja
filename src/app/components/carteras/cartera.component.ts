@@ -154,6 +154,11 @@ export class CarteraComponent implements OnInit {
        data: { carteraId: this.id  }
      });
   }
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.trim(); // Remove whitespace
+    filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
+    this.dataSource.filter = filterValue;
+  }
   openDialogEliminar(row) {
 
 
