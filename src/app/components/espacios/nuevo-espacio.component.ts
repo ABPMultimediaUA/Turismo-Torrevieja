@@ -50,7 +50,7 @@ export class NuevoEspacioComponent implements OnInit {
         })
     }
     else{
-      this._itemService.actualizarItem(6,this.items,-1,-1)
+      this._itemService.actualizarItem(6,this.items.identificador,this.items,-1)
         .then( res => {
           this.alertaOk();
         })
@@ -114,22 +114,3 @@ export class NuevoEspacioComponent implements OnInit {
   }
 
 }
-
-
-
-
-
-// import { Component, OnInit } from '@angular/core';
-// import { PeticionesCrudService, LogueadoService } from '../../services/index';
-// import { EspacioInterface } from '../../interfaces/espacio.interface';
-// import { Router } from '@angular/router';
-//
-//
-// export class NuevoEspacioComponent implements OnInit {
-//
-//   constructor(  private _ItemService:PeticionesCrudService,
-//                 public  logueadoService:LogueadoService,
-//                 private router:Router,
-//              )
-//
-// }

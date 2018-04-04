@@ -29,11 +29,11 @@
             <div class="elementosPaginacion">
               <p>Pág. {{paginacion.current_page}} de {{paginacion.total_pages}}</p>
             </div>
-            <div class="elementosPaginacion btnsPaginacion">
-              <a><i class="material-icons">first_page</i></a>
-              <a><i class="material-icons">navigate_before</i></a>
-              <a><i class="material-icons">navigate_next</i></a>
-              <a><i class="material-icons">last_page</i></a>
+            <div class="elementosPaginacion btnsPaginacion" #btnsPag>
+              <a class="btnsPaginacionOff" (click)="cambiarPgn(1)"><i class="material-icons">first_page</i></a>
+              <a class="btnsPaginacionOff" (click)="cambiarPgn(2)"><i class="material-icons">navigate_before</i></a>
+              <a class="btnsPaginacionOff" (click)="cambiarPgn(3)"><i class="material-icons">navigate_next</i></a>
+              <a class="btnsPaginacionOff" (click)="cambiarPgn(4)"><i class="material-icons">last_page</i></a>
             </div>
           </div>
         </div>

@@ -91,7 +91,6 @@ import { ProveedorEditarComponent } from './components/proveedores/proveedor-edi
 import { NuevoProveedorComponent } from './components/proveedores/nuevo-proveedor.component';
 
 import { EspaciosComponent } from './components/espacios/espacios.component';
-import { EspacioComponent } from './components/espacios/espacio.component';
 import { NuevoEspacioComponent } from './components/espacios/nuevo-espacio.component';
 import { EliminarEspacioComponent } from './components/espacios/eliminar-espacio.component';
 import { VentanaEmergenteComponent } from './components/ventana-emergente/ventana-emergente.component';
@@ -137,7 +136,6 @@ import { VentanaEmergenteComponent } from './components/ventana-emergente/ventan
     ProveedorEditarComponent,
     NuevoProveedorComponent,
     EspaciosComponent,
-    EspacioComponent,
     NuevoEspacioComponent,
     EliminarEspacioComponent,
     VentanaEmergenteComponent,

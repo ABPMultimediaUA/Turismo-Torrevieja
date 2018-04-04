@@ -31,12 +31,12 @@
   color:grey;
   text-align: right;
 }
+.selectNumPgns{
+  max-width: 8em;
+}
 .elementosPaginacion{
   display:inline-block;
   margin-right: 2em;
-}
-.selectNumPgns{
-  max-width: 8em;  
 }
 .btnsPaginacion>a{
   position: relative;
@@ -45,6 +45,10 @@
 }
 .btnsPaginacion>a:hover{
   color:blue;
+}
+.btnsPaginacionOff>*{
+  color:#dddddd;
+  cursor:context-menu;
 }
 /*FIN CSS comun a todos los componentes con tabla*/
 
