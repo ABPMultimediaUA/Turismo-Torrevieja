@@ -7,7 +7,7 @@
           <button mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
             (click)="editarAnyadirItem(null)">Nuevo Espacio</button>
           <mat-form-field class="inputBuscarItem">
-            <input matInput (keyup)="realizarBusqueda($event.target.value)" placeholder="Búsqueda">
+            <input matInput (keyup)="realizarBusqueda($event)" placeholder="Búsqueda">
           </mat-form-field>
           <div class="divPaginacion">
             <!-- <p>Elementos por página</p> -->
@@ -55,19 +55,19 @@
             </mat-cell>
           </ng-container>
           <ng-container matColumnDef="identificador">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Id</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(0)">Id</mat-header-cell>
             <mat-cell *matCellDef="let items">{{items.identificador}}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="nombreEspacio">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(1)">Nombre</mat-header-cell>
             <mat-cell *matCellDef="let items">{{items.nombreEspacio}}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="sitio">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Dirección</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(2)">Dirección</mat-header-cell>
             <mat-cell *matCellDef="let items">{{items.sitio}}</mat-cell>
           </ng-container>
           <ng-container matColumnDef="aforo">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>Aforo</mat-header-cell>
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(3)">Aforo</mat-header-cell>
             <mat-cell *matCellDef="let items">{{items.aforo}}</mat-cell>
           </ng-container>
           <mat-header-row *matHeaderRowDef="['select','identificador', 'nombreEspacio', 'sitio', 'aforo']"></mat-header-row>

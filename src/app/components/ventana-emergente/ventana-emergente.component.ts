@@ -16,6 +16,7 @@ export class VentanaEmergenteComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data
             )
   {
+    dialogRef.disableClose = true;
     if(data.item) this.mensaje = data.item;
     if(data.item2 == 0) this.iconoBien = true;
     else if(data.item2 ==1 ) this.iconoError = true;

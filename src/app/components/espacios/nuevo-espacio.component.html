@@ -1,14 +1,19 @@
 <div class="contenedorEditar">
   <h1 class="mat-display-1 tituloComponentes"><span class="icon-town-hall"></span> Nuevo espacio</h1>
+  <div class="VentanaEmergenteSpinner1">
+    <div class="VentanaEmergenteSpinner2" *ngIf="creando">
+        <mat-spinner color="warn"></mat-spinner>
+    </div>
+  </div>
   <a class="btnCerrar" (click)="cerrarDialogo()"><i class="material-icons iconoCerrar">close</i></a>
-  <form (ngSubmit)="anyadirItem()">
+  <form (ngSubmit)="anyadirItem()" stopPropagation="true">
     <div class="row">
       <div class="col-sm-3 contenedorFormNuevoItem">
         <mat-form-field hintLabel="Max 20 caracteres">
-          <input matInput name="nombreUsuario" [(ngModel)]="items.nombreEspacio" placeholder="Nombre">
+          <input matInput name="nombreEspacio" [(ngModel)]="items.nombreEspacio" placeholder="Nombre" required>
         </mat-form-field>
         <mat-form-field hintLabel="Dirección completa">
-          <input matInput name="sitio" [(ngModel)]="items.sitio" placeholder="Dirección">
+          <input matInput name="sitio" [(ngModel)]="items.sitio" placeholder="Dirección" required>
         </mat-form-field>
         <mat-form-field hintLabel="Capacidad máxima de personas del espacio">
           <input matInput type="number" name="aforo" [(ngModel)]="items.aforo" placeholder="Aforo">
@@ -33,8 +38,8 @@
           <div *ngIf="editarInit" class="btnsEditarAnyadir">
             <mat-dialog-actions class="btnsEditarAnyadir">
               <button type="submit" color="primary" mat-raised-button>Guardar cambios</button>
-              <a mat-raised-button (click)="limpiarCampos()" color="warn">Restaurar valores</a>
-              <a mat-raised-button (click)="estadoEditarInit()" color="warn">Cancelar</a>
+              <a mat-raised-button (click)="restaurarValores($event)" color="warn">Restaurar valores</a>
+              <a mat-raised-button (click)="estadoEditarInit($event)" color="warn">Cancelar</a>
             </mat-dialog-actions>
           </div>
         </div>
@@ -42,44 +47,3 @@
     </div>
   </form>
 </div>
-
-
-  <h1 *ngIf="creando==true;"  mat-dialog-title style="text-align:center">Creando Usuario</h1>
-  <div *ngIf="creando==true;" style="margin-left:150px;">
-      <mat-spinner color="primary"></mat-spinner>
-  </div>
-
-
-
-<!-- <br><br><br><br><br>
-<div class="container-fluid">
-  <div class="row ">
-    <main role="main" class="col-sm-12 ml-sm-auto col-md-12 pt-3">
-      <h1><span class="icon-town-hall"></span> Nuevo espacio <small>{{espacio.nombreEspacio}}</small></h1>
-      <br>
-      <form (ngSubmit)="guardar()" #forma="ngForm">
-        <div class="row">
-          <div class="form-group col-sm-3">
-            <label>Nombre espacio</label>
-            <input [(ngModel)]="espacio.nombreEspacio" name="espacioNombre" class="form-control" placeholder="" required type="text">
-          </div>
-          <div class="form-group col-sm-3">
-            <label>Dirección</label>
-            <input [(ngModel)]="espacio.sitio" name="espacioDir" class="form-control" placeholder="" required type="text">
-          </div>
-          <div class="form-group col-sm-3">
-            <label>Aforo</label>
-            <input [(ngModel)]="espacio.aforo" name="espacioAforo" class="form-control" placeholder="" required type="number">
-          </div>
-          <div class="form-group">
-            <br>
-            <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
-              Guardar cambios
-            </button>
-          </div>
-        </div>
-      </form>
-      <br>
-    </main>
-  </div>
-</div> -->

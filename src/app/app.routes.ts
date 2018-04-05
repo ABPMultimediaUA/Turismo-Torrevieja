@@ -35,7 +35,6 @@ import { NuevoProveedorComponent } from './components/proveedores/nuevo-proveedo
 // import { NuevoExpedienteComponent } from './components/carteras/nueva-cartera.component';
 
 import { EspaciosComponent } from './components/espacios/espacios.component';
-import { NuevoEspacioComponent } from './components/espacios/nuevo-espacio.component';
 
 
 const app_routes: Routes = [
@@ -76,7 +75,7 @@ const app_routes: Routes = [
   { path: 'proveedores', component: ProveedoresComponent },
   { path: 'proveedoredit/:id', component: ProveedorEditarComponent },
 
-  { path: 'nuevo-espacio', component: NuevoEspacioComponent },
+  //Ruta espacios
   { path: 'espacios', component: EspaciosComponent },
 
   { path: 'mensajes/:parame', component: MensajesComponent },

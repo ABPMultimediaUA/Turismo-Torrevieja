@@ -36,7 +36,7 @@
           <span class="icon-mail"></span>Contacto</a>
       </li>
       <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
-        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          Info
         </button>
         <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
@@ -60,7 +60,7 @@
       </div>
 
       <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
-        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          <span class="icon-user-outline"></span> Usuarios y Roles
         </button>
         <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
@@ -104,7 +104,7 @@
       </div>
 
       <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
-        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          <span class="icon-folder"></span> Gestión Eventos
         </button>
         <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
@@ -149,26 +149,15 @@
         </div>
       </div>
 
+      <!-- ENLACE MENU ESPACIOS -->
       <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
-        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button [routerLink]="['/espacios']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
          <span class="icon-town-hall"></span> Espacios
         </button>
-        <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
-          <a
-          role="button"
-          [routerLink]="['/espacios']"
-          class="nav-link elemento-navbar d9d9d9" >
-          <span class="icon-town-hall"></span> Listado</a>
-          <a
-          role="button"
-          [routerLink]="['/nuevo-espacio']"
-          class="nav-link elemento-navbar d9d9d9 " >
-          <span class="icon-plus-circled"></span> Nuevo Espacio</a>
-        </div>
       </div>
 
       <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
-        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          <span class="icon-handshake-o"></span> Proveedores
         </button>
         <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
@@ -193,7 +182,7 @@
       </div> -->
     </ul>
     <div  *ngIf="logueadoService.estaLogueado" class="dropdown ">
-      <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
        <span class="icon-vcard"></span>  {{nombreUsuario}}
       </button>
       <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">

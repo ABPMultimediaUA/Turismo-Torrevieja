@@ -25,6 +25,7 @@ import { AlertService, AuthenticationService, LogueadoService, DatosUsuarioServi
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
+  styleUrls: ['../../../app.component.css']
 })
 export class NavbarComponent implements OnInit {
 destino: string;
@@ -157,7 +158,7 @@ fechaCreacion:string = "";
 
     // document.getElementById("logout").style.display="none";
     // document.getElementById("login").style.display="inline";
-}
-
+  }
+  
 
 }

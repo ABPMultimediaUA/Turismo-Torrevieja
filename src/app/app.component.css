@@ -65,13 +65,10 @@
 /*Fin tamanyo columnas comunes (id, eliminar)*/
 
 /*Ventana emergente eliminar*/
-.VentanaEmergenteEliminarEliminando{
+.VentanaEmergenteSpinner1{
   text-align:center;
 }
-.VentanaEmergenteEliminarSpinner1{
-  text-align:center;
-}
-.VentanaEmergenteEliminarSpinner2{
+.VentanaEmergenteSpinner2{
   display:inline-block;
 }
 .VentanaEmergenteEliminarPregunta{
@@ -129,3 +126,9 @@
   margin-bottom: 1em;
 }
 /*Fin ventana emergente editar*/
+
+/*Navegador*/
+.navBtnNoDesplegable{
+  cursor:pointer;
+}
+/*Fin navegador*/
