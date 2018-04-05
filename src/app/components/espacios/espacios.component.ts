@@ -16,27 +16,17 @@ import { NuevoEspacioComponent } from './nuevo-espacio.component';
 export class EspaciosComponent implements OnInit {
 
   items:EspacioInterface[]=[];
-  option_Items_Pgn='10';
+  option_Items_Pgn='10'; //Cantidad de items por pagina al cargar el componente
   selectUrl:number = 6; //Selecciona la url para las peticiones getItem
   busqueda = -1; //Si se ha rellenado el campo de busqueda
   selectASC_DESC:number=-1; //Saber si el usuario quiere ordenar los items: -1 nada seleccionado, 0 ASC, 1 DES
   valorEscogidoForOrder:number = -1; //Para saber el elemento seleccionado, -1 valor neutro
-  paginacion:PaginacionInterface={
-    count:0,
-    current_page:1,
-    links:{
-      previous:null,
-      next:null,
-    },
-    per_page:0,
-    total:0,
-    total_pages:1
-  };
-  row:EspacioInterface;
-  @ViewChild("btnsPag") BtnsPagOff;
+  paginacion:PaginacionInterface; //Guardar todos los datos de paginacion
+  row:EspacioInterface; //Devuelve la fila que se seleccione en la tabla
+  @ViewChild("btnsPag") BtnsPagOff; //Div que contiene los botones de paginacion
 
-  dataSource = new MatTableDataSource(this.items);
-  selection = new SelectionModel<EspacioInterface>(true, []);
+  dataSource = new MatTableDataSource(this.items); //Datos de la tabla
+  selection = new SelectionModel<EspacioInterface>(true, []); //Filas seleccionadas
 
   constructor(  private _itemService: PeticionesCrudService,
                 public  logueadoService: LogueadoService,
@@ -44,6 +34,7 @@ export class EspaciosComponent implements OnInit {
              )
   {
     this.logueadoService.comprobarLogueado();
+    this.cargarPaginacionInicial();
     this.cargarItems(this.selectUrl,+this.option_Items_Pgn,1);
   }
 
@@ -70,6 +61,20 @@ export class EspaciosComponent implements OnInit {
   ngAfterViewInit() {
     this.dataSource = new MatTableDataSource(this.items);
     this.selection = new SelectionModel<EspacioInterface>(true, []);
+  }
+
+  cargarPaginacionInicial(){
+    this.paginacion={
+      count:0,
+      current_page:1,
+      links:{
+        previous:null,
+        next:null,
+      },
+      per_page:0,
+      total:0,
+      total_pages:1
+    };
   }
 
   //Marcar checkbox

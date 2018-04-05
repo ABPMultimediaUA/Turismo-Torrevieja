@@ -1,5 +1,4 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { PeticionesCrudService, LogueadoService } from '../../services/index';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { VentanaEmergenteComponent } from '../ventana-emergente/ventana-emergente.component'
@@ -14,35 +13,32 @@ import { EspacioInterface } from '../../interfaces/espacio.interface';
 export class NuevoEspacioComponent implements OnInit {
 
   items:EspacioInterface;
-  itemSinModif:EspacioInterface;
-  accion:string;
-  creando:boolean = false;
-  camposAnyadidos:boolean;
-  editar:boolean = false;
-  editarInit:boolean = false;
+  itemSinModif:EspacioInterface; //Guardar la copia para restaurar
+  realizandoAccion:boolean = false; //Para saber si mostrar o no el spinner
+  camposAnyadidos:boolean; //Feedback que devuelve a la ventana anterior cuando esta se cierra
+  editar:boolean = false;  //Saber si el form es para crear o para editar
+  editarInit:boolean = false; //Activar o desactivar el modo edicion
 
   constructor(  private _itemService: PeticionesCrudService,
                 public  logueadoService: LogueadoService,
                 public dialogRef: MatDialogRef<NuevoEspacioComponent>,
                 public dialog: MatDialog,
-                @Inject(MAT_DIALOG_DATA) public data
+                @Inject(MAT_DIALOG_DATA) public data,
              )
   {
     this.logueadoService.comprobarLogueado();
     dialogRef.disableClose = true;
     if(data.item) {
-      this.accion = "Editando.";
       this.editar = true;
       this.items = data.item as EspacioInterface;
       this.itemSinModif = data.item as EspacioInterface;
-      const ctrlEdit = new FormControl({value: 'n/a', disabled: true});
     }
     else{
-      this.accion = "Creando.";
       this.limpiarCampos();
-      const ctrlNew = new FormControl({value: this.items, disabled: true});
+      this.habilitarCamposForm();
     }
     this.camposAnyadidos=false;
+
   }
 
   ngOnInit() {
@@ -50,7 +46,7 @@ export class NuevoEspacioComponent implements OnInit {
 
   //Crear un nuevo item
   anyadirItem(){
-  this.creando = true;
+  this.realizandoAccion = true;
     if(!this.editar){
       this._itemService.crearItem(6,this.items)
         .then( res => {
@@ -84,16 +80,16 @@ export class NuevoEspacioComponent implements OnInit {
   }
 
   restaurarValores(e){
-    e.preventDefault();
+
     this.items={
-      identificador:this.itemSinModif.identificador,
-      sitio:this.itemSinModif.sitio,
-      nombreEspacio:this.itemSinModif.nombreEspacio,
-      aforo:this.itemSinModif.aforo,
-      fechaCreacion:this.itemSinModif.fechaCreacion,
-      fechaActualizacion:this.itemSinModif.fechaActualizacion,
-      fechaEliminacion:this.itemSinModif.fechaEliminacion
-    }
+         identificador:this.itemSinModif.identificador,
+         sitio:this.itemSinModif.sitio,
+         nombreEspacio:this.itemSinModif.nombreEspacio,
+         aforo:this.itemSinModif.aforo,
+         fechaCreacion:this.itemSinModif.fechaCreacion,
+         fechaActualizacion:this.itemSinModif.fechaActualizacion,
+         fechaEliminacion:this.itemSinModif.fechaEliminacion
+       }
   }
 
   //Cerrar ventana emergente
@@ -119,7 +115,7 @@ export class NuevoEspacioComponent implements OnInit {
       data: { item: sms, item2: icono }
     });
     dialogRef.afterClosed().subscribe( res => {
-      this.creando = false;
+      this.realizandoAccion = false;
       this.camposAnyadidos = true;
       this.limpiarCampos();
     });
@@ -135,10 +131,20 @@ export class NuevoEspacioComponent implements OnInit {
       data: { item: sms, item2: icono }
     });
     dialogRef.afterClosed().subscribe( res => {
-      this.creando = false;
+      this.realizandoAccion = false;
       this.camposAnyadidos = true;
       this.limpiarCampos();
     });
+  }
+
+  habilitarCamposForm(){
+    var input1 = <HTMLInputElement> document.getElementById("input1");
+    var input2 = <HTMLInputElement> document.getElementById("input2");
+    var input3 = <HTMLInputElement> document.getElementById("input3");
+    console.log(input1)
+    // input1.disabled = false;
+    // input2.disabled = false;
+    // input3.disabled = false;
   }
 
 }
