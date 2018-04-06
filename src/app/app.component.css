@@ -93,6 +93,13 @@
 /*Fin ventana emergente eliminar*/
 
 /*Ventana emergente editar*/
+.contenedorFormCamposDestacados{
+  margin-top: 2em;
+  margin-left: 2.5em;
+  margin-right: 2.5em;
+  justify-content: space-between;
+  width:90%
+}
 .contenedorEditar{
   position: relative;
 }
@@ -109,39 +116,27 @@
   float:center;
   font-size: 30px;
 }
-.contenedorFormNuevoItem{
+.contenedorFormCampos{
   display: flex;
   flex-direction: column;
-  margin-top: 2em;
   margin-left: 2.5em;
 }
-.contenedorFormNuevoItem>*{
+.contenedorFormCampos>*{
   width: 100%;
 }
 .btnsEditarAnyadir{
   display:block;
   text-align:center;
   width: 100%;
-  margin-top: 2em;
+  margin-top: .5em;
   margin-bottom: 1em;
 }
-.alertaCampoInvalido{
-  background: #f2edda;
-  padding:7px;
-  font-size: .9em;
-  margin-bottom:20px;
-  display:inline-block;
-  animation:2s alertAnim forwards;
+.contenedorFormObservaciones{
+  margin-left: 2.5em;
+  margin-right: 2.5em;
 }
-@@keyframes alertAnim {
-  from{
-    opacity: 0;
-    transform: translateY(-20px);
-  }
-  to{
-    opacity: 1;
-    transform: translateY(0);
-  }
+.campoObservaciones{
+  width:100%;
 }
 /*Fin ventana emergente editar*/
 

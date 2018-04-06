@@ -13,11 +13,11 @@ import { EspacioInterface } from '../../interfaces/espacio.interface';
 export class NuevoEspacioComponent implements OnInit {
 
   items:EspacioInterface;
-  itemSinModif:EspacioInterface; //Guardar la copia para restaurar
-  realizandoAccion:boolean = false; //Para saber si mostrar o no el spinner
-  camposAnyadidos:boolean; //Feedback que devuelve a la ventana anterior cuando esta se cierra
-  editar:boolean = false;  //Saber si el form es para crear o para editar
-  editarInit:boolean = false; //Activar o desactivar el modo edicion
+  itemSinModif:EspacioInterface;      //Guardar la copia para restaurar
+  realizandoAccion:boolean = false;   //Para saber si mostrar o no el spinner
+  camposAnyadidos:boolean;            //Feedback que devuelve a la ventana anterior cuando esta se cierra
+  editar:boolean = false;             //Saber si el form es para crear o para editar
+  bloqCampos:boolean = true;          //Habilitar o deshabilitar campos del form (avtivar desactivar modo edicion)
 
   constructor(  private _itemService: PeticionesCrudService,
                 public  logueadoService: LogueadoService,
@@ -28,15 +28,19 @@ export class NuevoEspacioComponent implements OnInit {
   {
     this.logueadoService.comprobarLogueado();
     dialogRef.disableClose = true;
+
+    //Si se pasa un item por parametro se inicializa todo para editar
     if(data.item) {
       this.editar = true;
-      this.items = data.item as EspacioInterface;
-      this.itemSinModif = data.item as EspacioInterface;
+      this.items = Object.assign({}, data.item as EspacioInterface);
+      this.itemSinModif = Object.assign({}, data.item as EspacioInterface);
     }
+    //Si no lo hay se prepara todo para crear
     else{
       this.limpiarCampos();
-      this.habilitarCamposForm();
+      this.bloqCampos = false;
     }
+
     this.camposAnyadidos=false;
 
   }
@@ -44,68 +48,89 @@ export class NuevoEspacioComponent implements OnInit {
   ngOnInit() {
   }
 
-  //Crear un nuevo item
+  //BOTON - Crear un nuevo item o lo edita si ya existe
   anyadirItem(){
-  this.realizandoAccion = true;
+    this.realizandoAccion = true;
+
     if(!this.editar){
       this._itemService.crearItem(6,this.items)
-        .then( res => {
-          this.alertaOk();
-        })
-        .catch( (err) => {
-          this.alertaNoOk();
-        })
+        .then( res => { this.alertaOk(); })
+        .catch( (err) => { this.alertaNoOk(); })
     }
     else{
       this._itemService.actualizarItem(6,this.items.identificador,this.items,-1)
-        .then( res => {
-          this.alertaOk();
-        })
-        .catch( (err) => {
-          this.alertaNoOk();
-        })
+        .then( res => { this.alertaOk(); })
+        .catch( (err) => { this.alertaNoOk(); })
     }
   }
 
+  //BOTON - Cuando se esta en la opcion de crear vacia los campos del form
   limpiarCampos(){
     this.items={
-      identificador:null,
-      sitio:"",
-      nombreEspacio:"",
+      // identificador:null,
+      // sitio:"",
+      // nombreEspacio:"",
+      // aforo:null,
+      // fechaCreacion:"",
+      // fechaActualizacion:"",
+      // fechaEliminacion:""
+      CP:null,
       aforo:null,
-      fechaCreacion:"",
-      fechaActualizacion:"",
-      fechaEliminacion:""
+      calle:null,
+      descripcion:null,
+      fechaActualizacion:null,
+      fechaCreacion:null,
+      fechaEliminacion:null,
+      identificador:null,
+      latitudX:null,
+      latitudY:null,
+      localidad:null,
+      nombreEspacio:null,
+      numero:null,
+      planta:null,
+      provincia:null,
+      puerta:null,
+      telefono1:null,
+      telefono2:null,
     }
   }
 
+  //BOTON - Cuando se esta en la opcion de editar, devuelve los campos del form a su valor original
   restaurarValores(e){
-
     this.items={
-         identificador:this.itemSinModif.identificador,
-         sitio:this.itemSinModif.sitio,
-         nombreEspacio:this.itemSinModif.nombreEspacio,
-         aforo:this.itemSinModif.aforo,
-         fechaCreacion:this.itemSinModif.fechaCreacion,
-         fechaActualizacion:this.itemSinModif.fechaActualizacion,
-         fechaEliminacion:this.itemSinModif.fechaEliminacion
-       }
+      CP:this.itemSinModif.CP,
+      aforo:this.itemSinModif.aforo,
+      calle:this.itemSinModif.calle,
+      descripcion:this.itemSinModif.descripcion,
+      fechaActualizacion:this.itemSinModif.fechaActualizacion,
+      fechaCreacion:this.itemSinModif.fechaCreacion,
+      fechaEliminacion:this.itemSinModif.fechaEliminacion,
+      identificador:this.itemSinModif.identificador,
+      latitudX:this.itemSinModif.latitudX,
+      latitudY:this.itemSinModif.latitudY,
+      localidad:this.itemSinModif.localidad,
+      nombreEspacio:this.itemSinModif.nombreEspacio,
+      numero:this.itemSinModif.numero,
+      planta:this.itemSinModif.planta,
+      provincia:this.itemSinModif.provincia,
+      puerta:this.itemSinModif.puerta,
+      telefono1:this.itemSinModif.telefono1,
+      telefono2:this.itemSinModif.telefono2,
+    }
   }
 
-  //Cerrar ventana emergente
+  //BOTON - Cerrar ventana emergente volviendo a la anterior
   cerrarDialogo(){
     this.dialogRef.close(this.camposAnyadidos);
   }
 
-  //Cambiar estado editarInit
-  estadoEditarInit(){
-    if(!this.editarInit) this.editarInit = true;
-    else {
-      this.editarInit = false;
-    }
+  //Bloquea y desbloquea los campos del form al pulsar los btn EDITAR o CANCELAR
+  disable_enable_campos(){
+    if(this.bloqCampos) this.bloqCampos = false;
+    else this.bloqCampos = true;
   }
 
-  //Ventana emergente si todo ha ido bien
+  //Ventana emergente si se ha realizado una peticion y todo ha ido bien
   alertaOk(){
     let sms:string = "Acción realizada correctamente.";
     let icono:number = 0;
@@ -117,11 +142,12 @@ export class NuevoEspacioComponent implements OnInit {
     dialogRef.afterClosed().subscribe( res => {
       this.realizandoAccion = false;
       this.camposAnyadidos = true;
-      this.limpiarCampos();
+      if(!this.editar) this.limpiarCampos();
+      else this.bloqCampos = true;
     });
   }
 
-  //Ventana emergente si ha habido error
+  //Ventana emergente si se ha realizado una peticion y ha habido algun error
   alertaNoOk(){
     let sms:string = "Se ha producido un error inesperado.";
     let icono:number = 1;
@@ -133,18 +159,8 @@ export class NuevoEspacioComponent implements OnInit {
     dialogRef.afterClosed().subscribe( res => {
       this.realizandoAccion = false;
       this.camposAnyadidos = true;
-      this.limpiarCampos();
+      if(!this.editar) this.limpiarCampos();
+      else this.bloqCampos = true;
     });
   }
-
-  habilitarCamposForm(){
-    var input1 = <HTMLInputElement> document.getElementById("input1");
-    var input2 = <HTMLInputElement> document.getElementById("input2");
-    var input3 = <HTMLInputElement> document.getElementById("input3");
-    console.log(input1)
-    // input1.disabled = false;
-    // input2.disabled = false;
-    // input3.disabled = false;
-  }
-
 }

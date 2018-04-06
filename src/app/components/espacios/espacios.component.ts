@@ -16,16 +16,17 @@ import { NuevoEspacioComponent } from './nuevo-espacio.component';
 export class EspaciosComponent implements OnInit {
 
   items:EspacioInterface[]=[];
-  option_Items_Pgn='10'; //Cantidad de items por pagina al cargar el componente
-  selectUrl:number = 6; //Selecciona la url para las peticiones getItem
-  busqueda = -1; //Si se ha rellenado el campo de busqueda
-  selectASC_DESC:number=-1; //Saber si el usuario quiere ordenar los items: -1 nada seleccionado, 0 ASC, 1 DES
-  valorEscogidoForOrder:number = -1; //Para saber el elemento seleccionado, -1 valor neutro
-  paginacion:PaginacionInterface; //Guardar todos los datos de paginacion
-  row:EspacioInterface; //Devuelve la fila que se seleccione en la tabla
-  @ViewChild("btnsPag") BtnsPagOff; //Div que contiene los botones de paginacion
+  row:EspacioInterface;               //Devuelve la fila que se seleccione en la tabla
+  paginacion:PaginacionInterface;     //Guardar todos los datos de paginacion
+  option_Items_Pgn='10';              //Cantidad de items por pagina al cargar el componente
+  selectUrl:number = 6;               //Selecciona la url para las peticiones getItem
+  busqueda = -1;                      //Si se ha rellenado el campo de busqueda
+  selectASC_DESC:number=-1;           //Saber si el usuario quiere ordenar los items: -1 nada seleccionado, 0 ASC, 1 DES
+  valorEscogidoForOrder:number = -1;  //Para saber el elemento seleccionado, -1 valor neutro
+  btnEliminar:boolean = true;         //Activar / desactivar boton de eliminar item/s
+  @ViewChild("btnsPag") BtnsPagOff;   //Div que contiene los botones de paginacion
 
-  dataSource = new MatTableDataSource(this.items); //Datos de la tabla
+  dataSource = new MatTableDataSource(this.items);            //Datos de la tabla
   selection = new SelectionModel<EspacioInterface>(true, []); //Filas seleccionadas
 
   constructor(  private _itemService: PeticionesCrudService,
@@ -41,7 +42,7 @@ export class EspaciosComponent implements OnInit {
   ngOnInit() {
   }
 
-  //Cargar items
+  //Realiza la peticion GetItems a la BD y actualiza las variables
   cargarItems(peticion:number, per_pgn:number, pgn:number){
     this.logueadoService.comprobarLogueado();
 
@@ -63,6 +64,7 @@ export class EspaciosComponent implements OnInit {
     this.selection = new SelectionModel<EspacioInterface>(true, []);
   }
 
+  //Inicializa variables paginacion
   cargarPaginacionInicial(){
     this.paginacion={
       count:0,
@@ -91,6 +93,12 @@ export class EspaciosComponent implements OnInit {
     return numSelected === numRows;
   }
 
+  //CHECKBOX ROW TABLA - Habilita o deshabilita el boton eliminar item/s
+  activarDesBtnEliminar(i){
+    if(i.length>0) this.btnEliminar = false;
+    else this.btnEliminar = true;
+  }
+
   //Buscador
   //TODO por hacer, da error
   realizarBusqueda(e){
@@ -109,14 +117,7 @@ export class EspaciosComponent implements OnInit {
     }
   }
 
-  //Habilita o deshabilita el boton eliminar lista de items
-  activarEliminarMultiplesItems(i){
-    var b1 = <HTMLInputElement> document.getElementById("btnEliminarItems");
-    if(i.length>0) b1.disabled = false;
-    else b1.disabled = true;
-  }
-
-  //Funcion eliminar item o items
+  //BOTON - Funcion eliminar item/s
   botonEliminarItem(i){
     console.log(i.length);
     if(i){
@@ -127,9 +128,8 @@ export class EspaciosComponent implements OnInit {
       });
       dialogRef.afterClosed().subscribe( res => {
         if(res){
-          var b1 = <HTMLInputElement> document.getElementById("btnEliminarItems");
           var pag:number;
-          b1.disabled = true;
+          this.btnEliminar = true;
           if(i.length < this.paginacion.count) pag = this.paginacion.current_page;
           else if(i.length == this.paginacion.count && this.paginacion.current_page > 1) pag = this.paginacion.current_page - 1;
           else pag = 1;
@@ -139,7 +139,7 @@ export class EspaciosComponent implements OnInit {
     }
   }
 
-  //Funcion abrir formulario crear / editar item
+  //BOTON - ROW - Se activacon el boton nuevo item o pinchando una fila, abre el formulario crear / editar item
   editarAnyadirItem(row){
     const dialogRef = this.dialog.open(NuevoEspacioComponent,{
       height: '90%',
@@ -148,20 +148,19 @@ export class EspaciosComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe( res => {
       if(res){
-        var b1 = <HTMLInputElement> document.getElementById("btnEliminarItems");
-        b1.disabled = true;
+        this.btnEliminar = true;
         this.cargarItems(this.selectUrl,this.paginacion.per_page,this.paginacion.current_page)
       }
     });
   }
 
-  //Funcion que se llama cada vez que se cambia el numero de items por pgn
+  //OPTION Elementos por Pgn- Funcion que se llama cada vez que se cambia el numero de items por pgn
   actualizarPaginacion(){
     this.paginacion.per_page = +this.option_Items_Pgn;
     this.cargarItems(this.selectUrl,+this.option_Items_Pgn,1);
   }
 
-  //Botones  para cambiar de pagina
+  //BOTONES - Botones para cambiar de pagina
   cambiarPgn(i:number){
     if(i == 1){
       if(this.paginacion.current_page != 1){
@@ -185,7 +184,7 @@ export class EspaciosComponent implements OnInit {
     }
   }
 
-  //Activa o desactiva los botones de paginacion
+  //Activa o desactiva los botones de paginacion dependiendo de si puede ser utilizado o no
   activarDesactvarBtnsPag(){
     var div = this.BtnsPagOff.nativeElement.children;
     if(this.paginacion.current_page > 1){
@@ -206,7 +205,7 @@ export class EspaciosComponent implements OnInit {
     }
   }
 
-  //Para hacer selects ORDER BY
+  //CABECERA TABLA - Para hacer selects ORDER BY, cada vez que se pinche en una cabecera de la tabla
   cambiarOrden(i:number){
     //Primero se comprueba que el parametro sea correcto, luego comprueba si se activa o desactiva y si es ASC o DES
     if(i>-1 && i<4){

@@ -7,39 +7,85 @@
   </div>
   <a class="btnCerrar" (click)="cerrarDialogo()"><i class="material-icons iconoCerrar">close</i></a>
   <form (ngSubmit)="anyadirItem()">
+    <div class="row contenedorFormCamposDestacados">
+
+      <mat-form-field hintLabel="">
+        <input matInput name="nombreEspacio" [(ngModel)]="items.nombreEspacio" placeholder="Nombre" required [disabled]="bloqCampos">
+      </mat-form-field>
+
+      <mat-form-field hintLabel="">
+        <input matInput name="CP" [(ngModel)]="items.CP" placeholder="Código Postal" [disabled]="bloqCampos">
+      </mat-form-field>
+
+      <mat-form-field hintLabel="">
+        <input matInput name="provincia" [(ngModel)]="items.provincia" placeholder="Provincia" [disabled]="bloqCampos">
+      </mat-form-field>
+
+      <mat-form-field hintLabel="">
+        <input matInput name="localidad" [(ngModel)]="items.localidad" placeholder="Localidad" [disabled]="bloqCampos">
+      </mat-form-field>
+
+    </div>
     <div class="row">
-      <div class="col-sm-3 contenedorFormNuevoItem">
-        <mat-form-field hintLabel="Max 20 caracteres">
-          <input id="input1" matInput name="nombreEspacio" [(ngModel)]="items.nombreEspacio" placeholder="Nombre" required >
+      <div class="col-sm-3 contenedorFormCampos">
+
+        <mat-form-field hintLabel="">
+          <input matInput name="calle" [(ngModel)]="items.calle" placeholder="Calle" [disabled]="bloqCampos">
         </mat-form-field>
-        <mat-form-field hintLabel="Dirección completa">
-          <input id="input2" matInput name="sitio" [(ngModel)]="items.sitio" placeholder="Dirección" required >
+
+        <mat-form-field hintLabel="">
+          <input matInput name="numero" [(ngModel)]="items.numero" placeholder="Número" [disabled]="bloqCampos">
         </mat-form-field>
-        <mat-form-field hintLabel="Capacidad máxima de personas del espacio">
-          <input id="input3" matInput type="number" name="aforo" [(ngModel)]="items.aforo" placeholder="Aforo" >
+
+        <mat-form-field hintLabel="">
+          <input matInput name="planta" [(ngModel)]="items.planta" placeholder="Planta" [disabled]="bloqCampos">
         </mat-form-field>
-      </div>
-      <div class="col-sm">
+
+        <mat-form-field hintLabel="">
+          <input matInput name="puerta" [(ngModel)]="items.puerta" placeholder="Puerta" [disabled]="bloqCampos">
+        </mat-form-field>
+
+        <mat-form-field hintLabel="">
+          <input matInput name="telefono1" [(ngModel)]="items.telefono1" placeholder="Teléfono 1" [disabled]="bloqCampos">
+        </mat-form-field>
+
+        <mat-form-field hintLabel="">
+          <input matInput name="telefono2" [(ngModel)]="items.telefono2" placeholder="Teléfono 2" [disabled]="bloqCampos">
+        </mat-form-field>
+
+        <mat-form-field hintLabel="">
+          <input matInput type="number" name="aforo" [(ngModel)]="items.aforo" placeholder="Aforo" [disabled]="bloqCampos">
+        </mat-form-field>
 
       </div>
+      <div class="col-sm">
+        <!-- GOOGLE MAPS -->
+
+        <!-- FIN GOOGLE MAPS -->
+      </div>
+    </div>
+    <div class="row contenedorFormObservaciones">
+      <mat-form-field hintLabel="" class="campoObservaciones">
+        <textarea matInput name="descripcion" [(ngModel)]="items.descripcion" placeholder="Observaciones" [disabled]="bloqCampos"></textarea>
+      </mat-form-field>
     </div>
     <div class="row" *ngIf="!realizandoAccion">
       <div class="btnsEditarAnyadir">
         <div *ngIf="!editar" class="btnsEditarAnyadir">
           <mat-dialog-actions class="btnsEditarAnyadir">
             <button type="submit" color="primary" mat-raised-button>Crear</button>
-            <a mat-raised-button (click)="limpiarCampos()" color="warn">Limpiar campos</a>
+            <button type="button" mat-raised-button (click)="limpiarCampos()" color="warn">Limpiar campos</button>
           </mat-dialog-actions>
         </div>
         <div *ngIf="editar" class="btnsEditarAnyadir">
-          <div *ngIf="!editarInit" class="btnsEditarAnyadir">
-            <a mat-raised-button color="primary" (click)="estadoEditarInit()">Editar</a>
+          <div *ngIf="bloqCampos" class="btnsEditarAnyadir">
+            <button type="button" mat-raised-button color="primary" (click)="disable_enable_campos()">Editar</button>
           </div>
-          <div *ngIf="editarInit" class="btnsEditarAnyadir">
+          <div *ngIf="!bloqCampos" class="btnsEditarAnyadir">
             <mat-dialog-actions class="btnsEditarAnyadir">
               <button type="submit" color="primary" mat-raised-button>Guardar cambios</button>
-              <a mat-raised-button (click)="restaurarValores($event)" color="warn">Restaurar valores</a>
-              <a mat-raised-button (click)="estadoEditarInit($event)" color="warn">Cancelar</a>
+              <button type="button" mat-raised-button (click)="restaurarValores($event)" color="warn">Restaurar valores</button>
+              <button type="button" mat-raised-button (click)="disable_enable_campos($event)" color="warn">Cancelar</button>
             </mat-dialog-actions>
           </div>
         </div>
@@ -47,45 +93,3 @@
     </div>
   </form>
 </div>
-
-
-<!-- <div *ngIf="!nombreEspacio; else forminfo">
-  <form [formGroup]="rForm" (ngSubmit)="anyadirItem(rForm.value)">
-    <div class="">
-      <div class="">
-
-        <h1>Formulario test</h1>
-
-        <label for="">Nombre
-          <input type="text" formControlName="nombreEspacio">
-        </label>
-        <div class="alertaCampoInvalido" *ngIf="!rForm.controls['nombreEspacio'].valid && rForm.controls['nombreEspacio'].touched">
-          Campo obligatorio. x caracteres máximo.
-        </div>
-
-        <label for="">Dirección
-          <input type="text" formControlName="sitio">
-        </label>
-        <div class="alertaCampoInvalido" *ngIf="!rForm.controls['sitio'].valid && rForm.controls['sitio'].touched">
-          Campo obligatorio. x caracteres máximo.
-        </div>
-
-        <label for="">Aforo
-          <input type="text" formControlName="aforo">
-        </label>
-        <div class="alertaCampoInvalido" *ngIf="!rForm.controls['aforo'].valid && rForm.controls['aforo'].touched">
-          Sólo se admiten números.
-        </div>
-
-        <input type="submit" value="Submit Form" [disabled]="!rForm.valid">
-      </div>
-    </div>
-  </form>
-</div>
-
-<ng-template #forminfo>
-  <div class="">
-    <h1>{{ nombreEspacio }}</h1>
-    <p>{{ sitio }}</p>
-  </div>
-</ng-template> -->
