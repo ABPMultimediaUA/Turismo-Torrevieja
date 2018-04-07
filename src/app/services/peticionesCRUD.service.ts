@@ -119,7 +119,7 @@ r
           console.log("No se ha especificado correctamente una URL.");
     }
     if(id>-1 && tipo <101) url+=`/${id}`;
-    if(id<0 && id2>-1 && pgn>-1) url+= `?per_page=${id2}&page=${pgn}`;
+    if(id2>-1 && pgn>-1) url+= `?per_page=${id2}&page=${pgn}`;
     return url;
   }
 

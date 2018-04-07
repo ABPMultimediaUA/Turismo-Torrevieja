@@ -67,13 +67,6 @@ export class NuevoEspacioComponent implements OnInit {
   //BOTON - Cuando se esta en la opcion de crear vacia los campos del form
   limpiarCampos(){
     this.items={
-      // identificador:null,
-      // sitio:"",
-      // nombreEspacio:"",
-      // aforo:null,
-      // fechaCreacion:"",
-      // fechaActualizacion:"",
-      // fechaEliminacion:""
       CP:null,
       aforo:null,
       calle:null,
