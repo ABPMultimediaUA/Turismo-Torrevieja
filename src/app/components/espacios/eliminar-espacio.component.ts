@@ -26,6 +26,7 @@ export class EliminarEspacioComponent implements OnInit {
              )
   {
     this.logueadoService.comprobarLogueado();
+    dialogRef.disableClose = true;
 
     if(data.item){
       if(data.item.length) this.items=data.item;

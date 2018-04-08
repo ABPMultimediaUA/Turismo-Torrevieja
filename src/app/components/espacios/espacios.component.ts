@@ -49,15 +49,25 @@ export class EspaciosComponent implements OnInit {
     this._itemService.getItem(peticion,this.busqueda,per_pgn,pgn).then(
       res => {
         console.log(res); //TODO Eliminar
-        if(res && res["data"] && res["meta"]){
-          this.items = res["data"] as EspacioInterface[];
-          this.paginacion = res["meta"].pagination as PaginacionInterface;
-          this.ngAfterViewInit();
-          this.activarDesactvarBtnsPag();
-          for(var x = 0; x < this.items.length; x++) {
-            if( this.items[x].CP <= 0 ) this.items[x].CP = null;
-            if( this.items[x].aforo <= 0 ) this.items[x].aforo = null;
+        if(typeof res != "string"){
+          if(res && res["data"] && res["meta"]){
+            this.items = res["data"] as EspacioInterface[];
+            this.paginacion = res["meta"].pagination as PaginacionInterface;
+            this.ngAfterViewInit();
+            this.activarDesactvarBtnsPag();
+            for(var x = 0; x < this.items.length; x++) {
+              if( this.items[x].CP <= 0 ) this.items[x].CP = null;
+              if( this.items[x].aforo <= 0 ) this.items[x].aforo = null;
+            }
           }
+          else{
+            this.items = [];
+            this.ngAfterViewInit();
+          }
+        }
+        else{
+          this.items = [];
+          this.ngAfterViewInit();
         }
       });
   }
@@ -105,19 +115,20 @@ export class EspaciosComponent implements OnInit {
 
   //Buscador
   //TODO por hacer, da error
-  realizarBusqueda(e){
-    console.log(e.target.value);
-    if(e.target.value == ""){
+  realizarBusqueda(e,u){
+    if(e.target.value == "" || u){
       this.busqueda = -1;
       this.selectUrl = 6;
+      e.target.value = "";
     }
-    if(e.keyCode == 13){
+    if(e.keyCode == 13 || u){
       if(e.target.value != ""){
         this.selectUrl = 303;
         this.busqueda = e.target.value.toString();
       }
       this.cargarItems(this.selectUrl,+this.option_Items_Pgn,1);
     }
+
   }
 
   //BOTON - Funcion eliminar item/s

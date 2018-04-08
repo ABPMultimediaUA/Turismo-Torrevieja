@@ -15,7 +15,6 @@ export class PeticionesCrudService {
     'Access-Control-Allow-Origin':'https://gvent.ovh/Prueba2_1/public',
     'Authorization': this.First_accessToken+this.Secound_accessToken,
   });
-r
 
   constructor( private http:Http ) { }
 
@@ -130,8 +129,10 @@ r
       let headers = this.header;
       this.http.post(url, body, { headers })
         .toPromise()
-          .then( res => { resolve( res.json().data ); })
-          .catch((err) => { console.log( err.toString() ); })
+          .then(  (res) => { resolve( res.json().data ); },
+                  (err) => { resolve( err.toString() )}
+          )
+          // .catch((err) => { console.log(err.toString()); console.error(err); })
     });
     return promise;
   }
@@ -143,8 +144,10 @@ r
       console.log(url);
       this.http.get(url, { headers })
         .toPromise()
-          .then( res => { resolve( res.json() )})
-          .catch((err) => { console.log( err.toString() ); })
+          .then(  (res) => { resolve( res.json() ); },
+                  (err) => { resolve( err.toString() )}
+          )
+          // .catch((err) => { console.log(err.toString()); console.error(err); })
     });
     return promise;
   }
@@ -155,8 +158,10 @@ r
       console.log(url);
       this.http.get(url, { headers })
         .toPromise()
-          .then( res => { resolve( res.json() )})
-          .catch((err) => { console.log( err.toString() ); })
+          .then(  (res) => { resolve( res.json() ); },
+                  (err) => { resolve( err.toString() )}
+          )
+          // .catch((err) => { console.log(err.toString()); console.error(err); })
     });
     return promise;
   }
@@ -168,8 +173,10 @@ r
       let headers = this.header;
       this.http.put(url, body, { headers })
         .toPromise()
-          .then( res => { resolve( res.json().data ); })
-          .catch((err) => { console.log( err.toString() ); })
+          .then(  (res) => { resolve( res.json().data ); },
+                  (err) => { resolve( err.toString() )}
+          )
+          // .catch((err) => { console.log(err.toString()); console.error(err); })
     });
     return promise;
   }
@@ -180,8 +187,10 @@ r
       let headers = this.header;
       this.http.delete(url, { headers })
         .toPromise()
-          .then( res => { resolve( res.json().data ); })
-          .catch((err) => { console.log( err.toString() ); })
+          .then(  (res) => { resolve( res.json().data ); },
+                  (err) => { resolve( err.toString() )}
+          )
+          // .catch((err) => { console.log(err.toString()); console.error(err); })
     });
     return promise;
   }
@@ -203,7 +212,7 @@ r
           .catch((err) => {
             //TODO ARREGLAR ESTO, es una chapuza
             alert("Modificado correctamente.");
-            console.log( err.toString() ); })
+            console.log(err.toString()); console.error(err); })
     });
     return promise;
   }

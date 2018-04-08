@@ -1,5 +1,5 @@
 <div class="contenedorEditar">
-  <h1 class="mat-display-1 tituloComponentes"><span class="icon-town-hall"></span> Nuevo espacio</h1>
+  <h1 class="mat-display-1 tituloComponentes"><span class="icon-town-hall"></span> {{titulo}} {{items.nombreEspacio}}</h1>
   <div class="VentanaEmergenteSpinner1">
     <div class="VentanaEmergenteSpinner2" *ngIf="realizandoAccion">
         <mat-spinner color="warn"></mat-spinner>
@@ -10,19 +10,19 @@
     <div class="row contenedorFormCamposDestacados">
 
       <mat-form-field hintLabel="">
-        <input matInput name="nombreEspacio" [(ngModel)]="items.nombreEspacio" placeholder="Nombre" required [disabled]="bloqCampos">
+        <input matInput name="nombreEspacio" [(ngModel)]="items.nombreEspacio" placeholder="Nombre" required [readonly]="bloqCampos">
       </mat-form-field>
 
       <mat-form-field hintLabel="">
-        <input matInput type="number" name="CP" [(ngModel)]="items.CP" placeholder="Código Postal" [disabled]="bloqCampos">
+        <input matInput name="CP" [(ngModel)]="items.CP" placeholder="Código Postal" [readonly]="bloqCampos">
       </mat-form-field>
 
       <mat-form-field hintLabel="">
-        <input matInput name="provincia" [(ngModel)]="items.provincia" placeholder="Provincia" [disabled]="bloqCampos">
+        <input matInput name="provincia" [(ngModel)]="items.provincia" placeholder="Provincia" [readonly]="bloqCampos">
       </mat-form-field>
 
       <mat-form-field hintLabel="">
-        <input matInput name="localidad" [(ngModel)]="items.localidad" placeholder="Localidad" [disabled]="bloqCampos">
+        <input matInput name="localidad" [(ngModel)]="items.localidad" placeholder="Localidad" [readonly]="bloqCampos">
       </mat-form-field>
 
     </div>
@@ -30,31 +30,31 @@
       <div class="col-sm-3 contenedorFormCampos">
 
         <mat-form-field hintLabel="">
-          <input matInput name="calle" [(ngModel)]="items.calle" placeholder="Calle" [disabled]="bloqCampos">
+          <input matInput name="calle" [(ngModel)]="items.calle" placeholder="Calle" [readonly]="bloqCampos">
         </mat-form-field>
 
         <mat-form-field hintLabel="">
-          <input matInput name="numero" [(ngModel)]="items.numero" placeholder="Número" [disabled]="bloqCampos">
+          <input matInput name="numero" [(ngModel)]="items.numero" placeholder="Número" [readonly]="bloqCampos">
         </mat-form-field>
 
         <mat-form-field hintLabel="">
-          <input matInput name="planta" [(ngModel)]="items.planta" placeholder="Planta" [disabled]="bloqCampos">
+          <input matInput name="planta" [(ngModel)]="items.planta" placeholder="Planta" [readonly]="bloqCampos">
         </mat-form-field>
 
         <mat-form-field hintLabel="">
-          <input matInput name="puerta" [(ngModel)]="items.puerta" placeholder="Puerta" [disabled]="bloqCampos">
+          <input matInput name="puerta" [(ngModel)]="items.puerta" placeholder="Puerta" [readonly]="bloqCampos">
         </mat-form-field>
 
         <mat-form-field hintLabel="">
-          <input matInput name="telefono1" [(ngModel)]="items.telefono1" placeholder="Teléfono 1" [disabled]="bloqCampos">
+          <input matInput name="telefono1" [(ngModel)]="items.telefono1" placeholder="Teléfono 1" [readonly]="bloqCampos">
         </mat-form-field>
 
         <mat-form-field hintLabel="">
-          <input matInput name="telefono2" [(ngModel)]="items.telefono2" placeholder="Teléfono 2" [disabled]="bloqCampos">
+          <input matInput name="telefono2" [(ngModel)]="items.telefono2" placeholder="Teléfono 2" [readonly]="bloqCampos">
         </mat-form-field>
 
         <mat-form-field hintLabel="">
-          <input matInput type="number" name="aforo" [(ngModel)]="items.aforo" placeholder="Aforo" [disabled]="bloqCampos">
+          <input matInput type="number" name="aforo" [(ngModel)]="items.aforo" placeholder="Aforo" [readonly]="bloqCampos">
         </mat-form-field>
 
       </div>
@@ -66,7 +66,7 @@
     </div>
     <div class="row contenedorFormObservaciones">
       <mat-form-field hintLabel="" class="campoObservaciones">
-        <textarea matInput name="descripcion" [(ngModel)]="items.descripcion" placeholder="Observaciones" [disabled]="bloqCampos"></textarea>
+        <textarea matInput name="descripcion" [(ngModel)]="items.descripcion" placeholder="Observaciones" [readonly]="bloqCampos"></textarea>
       </mat-form-field>
     </div>
     <div class="row" *ngIf="!realizandoAccion">
@@ -84,8 +84,8 @@
           <div *ngIf="!bloqCampos" class="btnsEditarAnyadir">
             <mat-dialog-actions class="btnsEditarAnyadir">
               <button type="submit" color="primary" mat-raised-button>Guardar cambios</button>
-              <button type="button" mat-raised-button (click)="restaurarValores($event)" color="warn">Restaurar valores</button>
-              <button type="button" mat-raised-button (click)="disable_enable_campos($event)" color="warn">Cancelar</button>
+              <button type="button" mat-raised-button (click)="restaurarValores()" color="warn">Restaurar valores</button>
+              <button type="button" mat-raised-button (click)="disable_enable_campos()" color="warn">Cancelar</button>
             </mat-dialog-actions>
           </div>
         </div>

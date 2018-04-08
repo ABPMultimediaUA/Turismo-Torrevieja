@@ -7,7 +7,10 @@
           <button mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
             (click)="editarAnyadirItem(null)">Nuevo Espacio</button>
           <mat-form-field class="inputBuscarItem">
-            <input matInput (keyup)="realizarBusqueda($event)" placeholder="Búsqueda">
+            <input matInput (keyup)="realizarBusqueda($event)" placeholder="Búsqueda" [(ngModel)]="value">
+            <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)='realizarBusqueda($event, true);value=""'>
+              <mat-icon>close</mat-icon>
+            </button>
           </mat-form-field>
           <div class="divPaginacion">
             <!-- <p>Elementos por página</p> -->

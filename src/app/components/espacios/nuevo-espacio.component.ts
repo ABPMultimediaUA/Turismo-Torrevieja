@@ -4,6 +4,10 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { VentanaEmergenteComponent } from '../ventana-emergente/ventana-emergente.component'
 import { EspacioInterface } from '../../interfaces/espacio.interface';
 
+
+import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
+import {ErrorStateMatcher} from '@angular/material/core';
+
 @Component({
   selector: 'app-nuevo-espacio',
   templateUrl: './nuevo-espacio.component.html',
@@ -14,6 +18,7 @@ export class NuevoEspacioComponent implements OnInit {
 
   items:EspacioInterface;
   itemSinModif:EspacioInterface;      //Guardar la copia para restaurar
+  titulo:string;                      //El titulo de la ventana emergente
   realizandoAccion:boolean = false;   //Para saber si mostrar o no el spinner
   camposAnyadidos:boolean;            //Feedback que devuelve a la ventana anterior cuando esta se cierra
   editar:boolean = false;             //Saber si el form es para crear o para editar
@@ -32,6 +37,7 @@ export class NuevoEspacioComponent implements OnInit {
     //Si se pasa un item por parametro se inicializa todo para editar
     if(data.item) {
       this.editar = true;
+      this.titulo = "Espacio";
       this.items = Object.assign({}, data.item as EspacioInterface);
       this.itemSinModif = Object.assign({}, data.item as EspacioInterface);
     }
@@ -39,6 +45,7 @@ export class NuevoEspacioComponent implements OnInit {
     else{
       this.limpiarCampos();
       this.bloqCampos = false;
+      this.titulo = "Nuevo espacio";
     }
 
     this.camposAnyadidos=false;
@@ -54,13 +61,17 @@ export class NuevoEspacioComponent implements OnInit {
 
     if(!this.editar){
       this._itemService.crearItem(6,this.items)
-        .then( res => { this.alertaOk(); })
-        .catch( (err) => { this.alertaNoOk(); })
+        .then( res => {
+          if(typeof res != "string") this.alertaOk();
+          else this.alertaNoOk();
+        })
     }
     else{
       this._itemService.actualizarItem(6,this.items.identificador,this.items,-1)
-        .then( res => { this.alertaOk(); })
-        .catch( (err) => { this.alertaNoOk(); })
+        .then( res => {
+          if(typeof res != "string") this.alertaOk();
+          else this.alertaNoOk();
+        })
     }
   }
 
@@ -89,7 +100,7 @@ export class NuevoEspacioComponent implements OnInit {
   }
 
   //BOTON - Cuando se esta en la opcion de editar, devuelve los campos del form a su valor original
-  restaurarValores(e){
+  restaurarValores(){
     this.items={
       CP:this.itemSinModif.CP,
       aforo:this.itemSinModif.aforo,
@@ -153,7 +164,10 @@ export class NuevoEspacioComponent implements OnInit {
       this.realizandoAccion = false;
       this.camposAnyadidos = true;
       if(!this.editar) this.limpiarCampos();
-      else this.bloqCampos = true;
+      else {
+        this.bloqCampos = true;
+        this.restaurarValores();
+      }
     });
   }
 }
