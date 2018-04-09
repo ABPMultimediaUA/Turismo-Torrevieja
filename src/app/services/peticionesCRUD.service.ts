@@ -1,16 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from "@angular/http";
-import { environment } from "../../environments/environment";
+// import { environment } from "../../environments/environment";
 
 @Injectable()
 export class PeticionesCrudService {
 
   //TOKEN
-  First_accessToken:string="Bearer ";
-  Secound_accessToken:string=localStorage.accesToken;
+  private First_accessToken:string="Bearer ";
+  private Secound_accessToken:string=localStorage.accesToken;
 
   //CABECERA
-  header = new Headers ({
+  private header = new Headers ({
     'Content-Type':'application/json',
     'Access-Control-Allow-Origin':'https://gvent.ovh/Prueba2_1/public',
     'Authorization': this.First_accessToken+this.Secound_accessToken,
@@ -22,7 +22,7 @@ export class PeticionesCrudService {
   //tipo --> la tabla / peticion que se quiere realizar
   //id --> id de item a buscar
   //id2 --> segundo id para tablas combinadas / cantidad de elementos por pgn (cuando id = -1)
-  crearURL (tipo,id,id2,pgn){
+  private crearURL (tipo,id,id2,pgn){
     let url = "https://gvent.ovh/Prueba2_1/public/";
     switch(tipo) {
       case 0:

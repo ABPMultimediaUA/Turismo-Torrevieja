@@ -9,10 +9,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 // import { AuthenticationService } from '../../services/authentication.service';
 // import {AlertService } from '../../services/alert.service';
-import { AuthenticationService, TokenService, LogueadoService, DatosUsuarioService} from '../../services/index';
 // import { AlertComponent } from '../../_directives/index';
 // import { AuthGuard } from '../../_guards/index';
 
+import { AuthenticationService, TokenService, DatosUsuarioService} from '../../services/index';
+// import { AuthenticationService, TokenService, LogueadoService, DatosUsuarioService} from '../../services/index';
 @Component({
     moduleId: module.id.toString(),
     templateUrl: 'login.component.html'
@@ -25,7 +26,6 @@ export class LoginComponent implements OnInit {
     returnUrl: string;
     loginError = false;
 
-    model2: any = {};
     logueando:boolean=false;
 
 
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
         private datosUsu:DatosUsuarioService,
         private navbar:NavbarComponent,
         private home:HomeComponent,
-        private logueadoService: LogueadoService
+        // private logueadoService: LogueadoService
       ) {
       this.logueando=false;
       }
@@ -53,9 +53,7 @@ export class LoginComponent implements OnInit {
 
     login() {
         this.logueando=true;
-        console.log(this.logueando);
         this.loading = true;
-        console.log("antes de this.authen");
         this.authenticationService.login(this.model)
             .subscribe(
                 data => {
@@ -89,7 +87,7 @@ export class LoginComponent implements OnInit {
 
 
 
-                      this.logueadoService.logueando();
+                      // this.logueadoService.logueando();
                       //location.reload(true);
                       console.log("ddatosusuariooooooooooooooooo:"+ localStorage.datosUsuario);
                     }
@@ -106,7 +104,7 @@ export class LoginComponent implements OnInit {
 
 
                   console.log("despues de set logueado");
-                  
+
 
                   // setTimeout(()=>{
                   //   console.log("timeoutlogin");
@@ -122,11 +120,11 @@ export class LoginComponent implements OnInit {
                     // this.router.navigate(['perfil']);
 
                     // location.reload(true);
-                    this.logueadoService.logueando();
+                    // this.logueadoService.logueando();
 
 
                     console.log("estaLogueado:");
-                    console.log(this.logueadoService.estaLogueado);
+                    // console.log(this.logueadoService.estaLogueado);
 
                   // }else{
                   //   this.router.navigate(['home']);

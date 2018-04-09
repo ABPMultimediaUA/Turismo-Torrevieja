@@ -6,23 +6,30 @@
     </div>
   </div>
   <a class="btnCerrar" (click)="cerrarDialogo()"><i class="material-icons iconoCerrar">close</i></a>
-  <form (ngSubmit)="anyadirItem()">
+
+  <form (ngSubmit)="anyadirItem()" #formulario="ngForm">
     <div class="row contenedorFormCamposDestacados">
 
-      <mat-form-field hintLabel="">
-        <input matInput name="nombreEspacio" [(ngModel)]="items.nombreEspacio" placeholder="Nombre" required [readonly]="bloqCampos">
+      <mat-form-field>
+        <input matInput name="nombreEspacio" [(ngModel)]="items.nombreEspacio" placeholder="Nombre" [readonly]="bloqCampos"
+               maxLength="200" required>
+        <mat-error>Campo requerido</mat-error>
       </mat-form-field>
 
-      <mat-form-field hintLabel="">
-        <input matInput name="CP" [(ngModel)]="items.CP" placeholder="Código Postal" [readonly]="bloqCampos">
+      <mat-form-field>
+        <input matInput name="CP" [(ngModel)]="items.CP" placeholder="Código Postal" [readonly]="bloqCampos"
+               pattern="[0-9]{5}" minLength="5" maxLength="5">
+        <mat-error>Han de ser cinco números</mat-error>
       </mat-form-field>
 
-      <mat-form-field hintLabel="">
-        <input matInput name="provincia" [(ngModel)]="items.provincia" placeholder="Provincia" [readonly]="bloqCampos">
+      <mat-form-field>
+        <input matInput name="provincia" [(ngModel)]="items.provincia" placeholder="Provincia" [readonly]="bloqCampos"
+               maxLength="50">
       </mat-form-field>
 
-      <mat-form-field hintLabel="">
-        <input matInput name="localidad" [(ngModel)]="items.localidad" placeholder="Localidad" [readonly]="bloqCampos">
+      <mat-form-field>
+        <input matInput name="localidad" [(ngModel)]="items.localidad" placeholder="Localidad" [readonly]="bloqCampos"
+               maxLength="50">
       </mat-form-field>
 
     </div>
@@ -30,31 +37,38 @@
       <div class="col-sm-3 contenedorFormCampos">
 
         <mat-form-field hintLabel="">
-          <input matInput name="calle" [(ngModel)]="items.calle" placeholder="Calle" [readonly]="bloqCampos">
+          <input matInput name="calle" [(ngModel)]="items.calle" placeholder="Calle" [readonly]="bloqCampos"
+                 maxLength="200">
         </mat-form-field>
 
         <mat-form-field hintLabel="">
-          <input matInput name="numero" [(ngModel)]="items.numero" placeholder="Número" [readonly]="bloqCampos">
+          <input matInput name="numero" [(ngModel)]="items.numero" placeholder="Número" [readonly]="bloqCampos"
+                 maxLength="50">
         </mat-form-field>
 
         <mat-form-field hintLabel="">
-          <input matInput name="planta" [(ngModel)]="items.planta" placeholder="Planta" [readonly]="bloqCampos">
+          <input matInput name="planta" [(ngModel)]="items.planta" placeholder="Planta" [readonly]="bloqCampos"
+                 maxLength="20">
         </mat-form-field>
 
         <mat-form-field hintLabel="">
-          <input matInput name="puerta" [(ngModel)]="items.puerta" placeholder="Puerta" [readonly]="bloqCampos">
+          <input matInput name="puerta" [(ngModel)]="items.puerta" placeholder="Puerta" [readonly]="bloqCampos"
+                 maxLength="20">
         </mat-form-field>
 
         <mat-form-field hintLabel="">
-          <input matInput name="telefono1" [(ngModel)]="items.telefono1" placeholder="Teléfono 1" [readonly]="bloqCampos">
+          <input matInput name="telefono1" [(ngModel)]="items.telefono1" placeholder="Teléfono 1" [readonly]="bloqCampos"
+                 maxLength="40">
         </mat-form-field>
 
         <mat-form-field hintLabel="">
-          <input matInput name="telefono2" [(ngModel)]="items.telefono2" placeholder="Teléfono 2" [readonly]="bloqCampos">
+          <input matInput name="telefono2" [(ngModel)]="items.telefono2" placeholder="Teléfono 2" [readonly]="bloqCampos"
+                 maxLength="40">
         </mat-form-field>
 
         <mat-form-field hintLabel="">
-          <input matInput type="number" name="aforo" [(ngModel)]="items.aforo" placeholder="Aforo" [readonly]="bloqCampos">
+          <input matInput type="number" name="aforo" [(ngModel)]="items.aforo" placeholder="Aforo" [readonly]="bloqCampos"
+                 maxLength="11">
         </mat-form-field>
 
       </div>
@@ -66,14 +80,16 @@
     </div>
     <div class="row contenedorFormObservaciones">
       <mat-form-field hintLabel="" class="campoObservaciones">
-        <textarea matInput name="descripcion" [(ngModel)]="items.descripcion" placeholder="Observaciones" [readonly]="bloqCampos"></textarea>
+        <textarea matInput name="descripcion" [(ngModel)]="items.descripcion" placeholder="Observaciones" [readonly]="bloqCampos"
+               maxLength="500"></textarea>
       </mat-form-field>
     </div>
     <div class="row" *ngIf="!realizandoAccion">
       <div class="btnsEditarAnyadir">
         <div *ngIf="!editar" class="btnsEditarAnyadir">
           <mat-dialog-actions class="btnsEditarAnyadir">
-            <button type="submit" color="primary" mat-raised-button>Crear</button>
+            <!-- <button type="submit" color="primary" mat-raised-button [disabled]="!formulario.valid">Crear</button> -->
+              <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid">Crear</button>
             <button type="button" mat-raised-button (click)="limpiarCampos()" color="warn">Limpiar campos</button>
           </mat-dialog-actions>
         </div>
@@ -83,7 +99,7 @@
           </div>
           <div *ngIf="!bloqCampos" class="btnsEditarAnyadir">
             <mat-dialog-actions class="btnsEditarAnyadir">
-              <button type="submit" color="primary" mat-raised-button>Guardar cambios</button>
+              <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid">Guardar cambios</button>
               <button type="button" mat-raised-button (click)="restaurarValores()" color="warn">Restaurar valores</button>
               <button type="button" mat-raised-button (click)="disable_enable_campos()" color="warn">Cancelar</button>
             </mat-dialog-actions>

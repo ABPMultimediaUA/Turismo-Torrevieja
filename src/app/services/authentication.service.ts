@@ -18,6 +18,8 @@ export class AuthenticationService {
   loginURL:string="https://gvent.ovh/Prueba2_1/public/login";
   logueado:boolean = false;
 
+  estaLogueado:boolean;//******************
+
     constructor(private http: HttpClient,
                 private router: Router
                 ) {
@@ -71,5 +73,23 @@ export class AuthenticationService {
         this.logueado = false ;
         console.log(this.logueado);
         localStorage.removeItem('currentUser');
+    }
+
+
+
+
+
+
+
+
+    /***************/
+    comprobarLogueado(){
+      if(localStorage.getItem('loggedIn') != null){
+          this.estaLogueado=true;
+      }
+      else{
+        this.estaLogueado=false;
+      }
+      return this.estaLogueado;
     }
 }

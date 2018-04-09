@@ -4,10 +4,6 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { VentanaEmergenteComponent } from '../ventana-emergente/ventana-emergente.component'
 import { EspacioInterface } from '../../interfaces/espacio.interface';
 
-
-import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-import {ErrorStateMatcher} from '@angular/material/core';
-
 @Component({
   selector: 'app-nuevo-espacio',
   templateUrl: './nuevo-espacio.component.html',
@@ -20,9 +16,9 @@ export class NuevoEspacioComponent implements OnInit {
   itemSinModif:EspacioInterface;      //Guardar la copia para restaurar
   titulo:string;                      //El titulo de la ventana emergente
   realizandoAccion:boolean = false;   //Para saber si mostrar o no el spinner
-  camposAnyadidos:boolean;            //Feedback que devuelve a la ventana anterior cuando esta se cierra
   editar:boolean = false;             //Saber si el form es para crear o para editar
   bloqCampos:boolean = true;          //Habilitar o deshabilitar campos del form (avtivar desactivar modo edicion)
+  camposAnyadidos:boolean;            //Feedback que devuelve a la ventana anterior cuando esta se cierra
 
   constructor(  private _itemService: PeticionesCrudService,
                 public  logueadoService: LogueadoService,
@@ -170,4 +166,5 @@ export class NuevoEspacioComponent implements OnInit {
       }
     });
   }
+
 }
