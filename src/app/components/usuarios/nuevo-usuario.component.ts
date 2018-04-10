@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Usuario }  from "../../interfaces/usuario.interface";
-import { AlertService, AuthenticationService, UsuariosService, LogueadoService } from '../../services/index';
+import { AlertService, AuthenticationService, UsuariosService } from '../../services/index';
 
 @Component({
   selector: 'app-usuario',
@@ -34,9 +34,7 @@ nuevo:boolean = false;
 constructor( private _usuariosService: UsuariosService,
                 private router:Router,
                 private route:ActivatedRoute,//esto es para pasar como parametro
-                public  logueadoService: LogueadoService
               ) {
-                this.logueadoService.comprobarLogueado();
 
           this.route.params.subscribe(parametros=>{
                 console.log(parametros);

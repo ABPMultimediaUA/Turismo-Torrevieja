@@ -3,7 +3,7 @@ import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Proveedor }  from "../../interfaces/proveedorJ.interface";
 import { ProveedorService } from '../../services/proveedor.service';
-import { AlertService, AuthenticationService, LogueadoService } from '../../services/index';
+import { AlertService, AuthenticationService } from '../../services/index';
 
 @Component({
   selector: 'app-proveedores',
@@ -16,7 +16,7 @@ proveedores:any[] = [];
   constructor(private _proveedorService:ProveedorService,
               private router:Router,
               private route:ActivatedRoute,
-              public  logueadoService: LogueadoService) {
+            ) {
 
     this._proveedorService.getProveedores()
       .subscribe( data =>{

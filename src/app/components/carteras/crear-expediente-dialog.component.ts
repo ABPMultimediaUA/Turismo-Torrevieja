@@ -32,7 +32,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 // import { AuthenticationService } from '../../services/authentication.service';
 // import {AlertService } from '../../services/alert.service';
-import { AlertService, AuthenticationService, PeticionesCrudService,ExpedientesService, LogueadoService } from '../../services/index';
+import { AlertService, AuthenticationService, PeticionesCrudService,ExpedientesService } from '../../services/index';
 // import { AlertComponent } from '../../../_directives/index';
 // import { AuthGuard } from '../../../_guards/index';
 @Component({
@@ -80,7 +80,6 @@ export class CrearExpedienteDialog {
               private _carterasService: PeticionesCrudService,
               private router:Router,
               private route:ActivatedRoute,
-              public  logueadoService: LogueadoService,
               public dialog: MatDialog,
               public dialogRef: MatDialogRef<CrearExpedienteDialog>,
               @Inject(MAT_DIALOG_DATA) public data: any
@@ -101,7 +100,6 @@ export class CrearExpedienteDialog {
                 console.log("this.creando",this.creando);
                 this.creando=false;
                 // this.evento = [];
-                this.logueadoService.comprobarLogueado();
                 // this.cartera= localStorage.identificador;
                 this.route.params.subscribe(parametros=>{
                   console.log(parametros);

@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { Cartera }  from "../../interfaces/cartera.interface";
 import { Usuario }  from "../../interfaces/usuario.interface";
 import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
-import { AlertService, AuthenticationService, PeticionesCrudService, LogueadoService } from '../../services/index';
+import { AlertService, AuthenticationService, PeticionesCrudService } from '../../services/index';
 
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { ViewChild} from '@angular/core';
@@ -95,11 +95,9 @@ export class CarteraComponent implements OnInit {
   constructor( private _carterasService: PeticionesCrudService,
                   private router:Router,
                   private route:ActivatedRoute,//esto es para pasar como parametro
-                  public  logueadoService: LogueadoService,
                   public dialog: MatDialog
                 )
   {
-    this.logueadoService.comprobarLogueado();
 
     this.route.params.subscribe(parametros=>{
       this.id = parametros['id'];
@@ -210,7 +208,7 @@ export class CarteraComponent implements OnInit {
     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
     this.dataSource.filter = filterValue;
   }
-  
+
   borrarFormExp(){
     this.expN={
       identificador:null,

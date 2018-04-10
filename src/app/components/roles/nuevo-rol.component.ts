@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { RolesInterface }  from "../../interfaces/roles.interface";
-import { AlertService, AuthenticationService, PeticionesCrudService, LogueadoService } from '../../services/index';
+import { AlertService, AuthenticationService, PeticionesCrudService } from '../../services/index';
 
 @Component({
   selector: 'app-rol',
@@ -26,10 +26,8 @@ export class NuevoRolComponent implements OnInit {
   constructor(  private _rolesService: PeticionesCrudService,
                 private router:Router,
                 private route:ActivatedRoute,//esto es para pasar como parametro
-                public  logueadoService: LogueadoService
                 )
   {
-    this.logueadoService.comprobarLogueado();
     this.route.params.subscribe(parametros=>{ });
   }
 

@@ -26,7 +26,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 // import { AuthenticationService } from '../../services/authentication.service';
 // import {AlertService } from '../../services/alert.service';
-import { AlertService, AuthenticationService, UsuariosService, LogueadoService } from '../../services/index';
+import { AlertService, AuthenticationService, UsuariosService } from '../../services/index';
 // import { AlertComponent } from '../../../_directives/index';
 // import { AuthGuard } from '../../../_guards/index';
 @Component({
@@ -59,7 +59,6 @@ export class EditarUsuarioDialog {
   constructor(private _usuariosService:UsuariosService,
               private router:Router,
               private route:ActivatedRoute,
-              public  logueadoService: LogueadoService,
               public dialog: MatDialog,
               public dialogRef: MatDialogRef<EditarUsuarioDialog>,
               @Inject(MAT_DIALOG_DATA) public data: any
@@ -83,7 +82,6 @@ export class EditarUsuarioDialog {
                 console.log("this.creando",this.creando);
                 this.creando=false;
                 // this.evento = [];
-                this.logueadoService.comprobarLogueado();
                 // this.usuario= localStorage.identificador;
                 this.route.params.subscribe(parametros=>{
                   console.log(parametros);

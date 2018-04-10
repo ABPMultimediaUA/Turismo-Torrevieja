@@ -3,7 +3,7 @@ import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Proveedor }  from "../../interfaces/proveedorJ.interface";
 import { ProveedorService } from '../../services/proveedor.service';
-import { AlertService, AuthenticationService, LogueadoService } from '../../services/index';
+import { AlertService, AuthenticationService } from '../../services/index';
 
 @Component({
   selector: 'app-proveedor.component',
@@ -25,7 +25,7 @@ export class ProveedorComponent implements OnInit {
   constructor(private _proveedorService:ProveedorService,
               private router:Router,
               private route:ActivatedRoute,
-              public  logueadoService: LogueadoService) {
+            ) {
 
     this.route.params.subscribe(parametros=>{this.id = parametros['id']
 

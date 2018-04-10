@@ -44,7 +44,7 @@ import { PeticionesCrudService }  from "./services/peticionesCRUD.service";
 // import { AlertComponent } from './_directives/index';
 // import { AuthGuard } from './_guards/index';
 import { AlertService, AuthenticationService,
- TokenService, DatosUsuarioService,  LogueadoService, ExpedientesService,
+ TokenService, DatosUsuarioService, ExpedientesService,
  TareasService } from './services/index';
 
 import { AppComponent } from './app.component';
@@ -181,7 +181,6 @@ import { VentanaEmergenteComponent } from './components/ventana-emergente/ventan
     DatosUsuarioService,
     NavbarComponent,
     HomeComponent,
-    LogueadoService,
     TareasService,
     ExpedientesService,
     MatDatepickerModule,

@@ -1,15 +1,4 @@
-<!-- <mat-toolbar>
-  <span>My Application</span>
-  <button mat-button [matMenuTriggerFor]="menu">Menu</button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item>Item 1</button>
-    <button mat-menu-item>Item 2</button>
-  </mat-menu>
-
-</mat-toolbar> -->
-
-
-<mat-toolbar   class="navbar shadow navbar-expand-lg navbar-dark bg-blue ">
+<mat-toolbar class="navbar shadow navbar-expand-lg navbar-dark bg-blue ">
   <a class="navbar-brand" [routerLink]="['home']">GVENT</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -17,207 +6,197 @@
 
   <div class="collapse navbar-collapse d9d9d9 "id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto d9d9d9">
-      <li *ngIf="!logueadoService.estaLogueado"class="nav-item" routerLinkActive="active">
+      <li *ngIf="!sesionIniciada" class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['home']">
-          <span class="icon-home-outline"></span> Inicio <span class="sr-only">(current)</span></a>
+          <span class="icon-home-outline"></span> Inicio <span class="sr-only">(current)</span>
+        </a>
       </li>
-      <li *ngIf="!logueadoService.estaLogueado"class="nav-item" routerLinkActive="active">
+        <li *ngIf="!sesionIniciada" class="nav-item" routerLinkActive="active">
         <!-- <a class="nav-link" [routerLink]="['chatbots']"> -->
         <a class="nav-link" href="https://gvent.ovh/chatbot/">
-          <span class="icon-id-badge"></span> Chatbots</a>
+          <span class="icon-id-badge"></span> Chatbots
+        </a>
       </li>
-      <li *ngIf="!logueadoService.estaLogueado" class="nav-item" routerLinkActive="active">
+        <li *ngIf="!sesionIniciada" class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['about']">
-          <span class="icon-info-circled"></span> Acerca de GVENT</a>
+          <span class="icon-info-circled"></span> Acerca de GVENT
+        </a>
       </li>
 
-      <li *ngIf="!logueadoService.estaLogueado" class="nav-item" routerLinkActive="active">
+      <li *ngIf="!sesionIniciada" class="nav-item" routerLinkActive="active">
         <a class="nav-link" [routerLink]="['contact']">
-          <span class="icon-mail"></span>Contacto</a>
+          <span class="icon-mail"></span>Contacto
+        </a>
       </li>
-      <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
+      <div *ngIf="sesionIniciada" class="dropdown mr-auto">
         <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          Info
         </button>
         <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
           <a
-          role="button"
-          [routerLink]="['/home']"
-          class="nav-link elemento-navbar d9d9d9" >
-          <span class="icon-home-outline"></span> Inicio</a>
-
+            role="button"
+            [routerLink]="['/home']"
+            class="nav-link elemento-navbar d9d9d9" >
+            <span class="icon-home-outline"></span> Inicio
+          </a>
           <a
-          role="button"
-          [routerLink]="['/about']"
-          class="nav-link elemento-navbar d9d9d9 " >
-          <span class="icon-info-circled"></span> Acerca de Gvent</a>
+            role="button"
+            [routerLink]="['/about']"
+            class="nav-link elemento-navbar d9d9d9 " >
+            <span class="icon-info-circled"></span> Acerca de Gvent
+          </a>
           <a
-          role="button"
-          [routerLink]="['/contact']"
-          class="nav-link elemento-navbar d9d9d9 " >
-          <span class="icon-mail"></span> Contacto</a>
+            role="button"
+            [routerLink]="['/contact']"
+            class="nav-link elemento-navbar d9d9d9 " >
+            <span class="icon-mail"></span> Contacto
+          </a>
         </div>
       </div>
 
-      <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
+      <div *ngIf="sesionIniciada" class="dropdown mr-auto">
         <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          <span class="icon-user-outline"></span> Usuarios y Roles
         </button>
         <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
           <a
-          role="button"
-          [routerLink]="['/usuarios']"
-          class="nav-link elemento-navbar d9d9d9" >
-          <span class="icon-users-outline"></span> Listado</a>
+            role="button"
+            [routerLink]="['/usuarios']"
+            class="nav-link elemento-navbar d9d9d9" >
+            <span class="icon-users-outline"></span> Listado
+          </a>
           <a
-          role="button"
-          [routerLink]="['/nuevo-usuario']"
-          class="nav-link elemento-navbar d9d9d9 " >
-          <span class="icon-user-add-outline"></span> Nuevo Usuario</a>
+            role="button"
+            [routerLink]="['/nuevo-usuario']"
+            class="nav-link elemento-navbar d9d9d9 " >
+            <span class="icon-user-add-outline"></span> Nuevo Usuario
+          </a>
 
           <div class="dropdown-divider"></div>
 
           <a
-          role="button"
-          [routerLink]="['/roles']"
-          class="nav-link elemento-navbar d9d9d9" >
-          <span class="icon-crown"></span> Roles</a>
+            role="button"
+            [routerLink]="['/roles']"
+            class="nav-link elemento-navbar d9d9d9" >
+            <span class="icon-crown"></span> Roles
+          </a>
           <a
-          role="button"
-          [routerLink]="['/nuevo-rol']"
-          class="nav-link elemento-navbar d9d9d9 " >
-          <span class="icon-crown-plus"></span> Nuevo Rol</a>
+            role="button"
+            [routerLink]="['/nuevo-rol']"
+            class="nav-link elemento-navbar d9d9d9 " >
+            <span class="icon-crown-plus"></span> Nuevo Rol
+          </a>
 
-          <!-- <div class="dropdown-divider"></div>
-
-          <a
-          role="button"
-          [routerLink]="['/carteras']"
-          class="nav-link elemento-navbar d9d9d9" >
-          <span class="icon-lock-open"></span> Permisos</a>
-          <a
-          role="button"
-          [routerLink]="['/nueva-cartera']"
-          class="nav-link elemento-navbar d9d9d9 " >
-          <span class="icon-plus-circled"></span> Nuevo Permiso</a> -->
         </div>
       </div>
 
-      <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
+      <div *ngIf="sesionIniciada" class="dropdown mr-auto">
         <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          <span class="icon-folder"></span> Gestión Eventos
         </button>
         <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
-          <!-- <a
-          role="button"
-          [routerLink]="['/eventos']"
-          class="nav-link elemento-navbar d9d9d9" >
-          <span class="icon-doc"></span> Eventos</a>
-          <a
-          role="button"
-          [routerLink]="['/nuevo-evento']"
-          class="nav-link elemento-navbar d9d9d9 " >
-          <span class="icon-doc-add"></span> Nuevo Evento</a>
-
-
-          <div class="dropdown-divider"></div> -->
 
           <a
-          role="button"
-          [routerLink]="['/carteras']"
-          class="nav-link elemento-navbar d9d9d9" >
-          <span class="icon-archive-1"></span> Carteras</a>
+            role="button"
+            [routerLink]="['/carteras']"
+            class="nav-link elemento-navbar d9d9d9" >
+            <span class="icon-archive-1"></span> Carteras
+          </a>
           <a
-          role="button"
-          [routerLink]="['/nueva-cartera']"
-          class="nav-link elemento-navbar d9d9d9 " >
-          <span class="icon-folder-add"></span> Nueva Cartera</a>
+            role="button"
+            [routerLink]="['/nueva-cartera']"
+            class="nav-link elemento-navbar d9d9d9 " >
+            <span class="icon-folder-add"></span> Nueva Cartera
+          </a>
 
           <div class="dropdown-divider"></div>
 
           <a
-          role="button"
-          [routerLink]="['/expedientes']"
-          class="nav-link elemento-navbar d9d9d9" >
-          <span class="icon-doc"></span> Eventos</a>
+            role="button"
+            [routerLink]="['/expedientes']"
+            class="nav-link elemento-navbar d9d9d9" >
+            <span class="icon-doc"></span> Eventos
+          </a>
           <a
-          role="button"
-          [routerLink]="['/nuevo-expediente']"
-          class="nav-link elemento-navbar d9d9d9 " >
-          <span class="icon-doc-add"></span> Nuevo Evento</a>
+            role="button"
+            [routerLink]="['/nuevo-expediente']"
+            class="nav-link elemento-navbar d9d9d9 " >
+            <span class="icon-doc-add"></span> Nuevo Evento
+          </a>
 
         </div>
       </div>
 
       <!-- ENLACE MENU ESPACIOS -->
-      <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
+      <div *ngIf="sesionIniciada" class="dropdown mr-auto">
         <button [routerLink]="['/espacios']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
          <span class="icon-town-hall"></span> Espacios
         </button>
       </div>
 
-      <div *ngIf="logueadoService.estaLogueado" class="dropdown mr-auto">
+      <div *ngIf="sesionIniciada" class="dropdown mr-auto">
         <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
          <span class="icon-handshake-o"></span> Proveedores
         </button>
         <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
           <a
-          role="button"
-          [routerLink]="['/proveedores']"
-          class="nav-link elemento-navbar d9d9d9" >
-          <span class="icon-handshake-o"></span> Listado</a>
+            role="button"
+            [routerLink]="['/proveedores']"
+            class="nav-link elemento-navbar d9d9d9" >
+            <span class="icon-handshake-o"></span> Listado
+          </a>
           <a style="width:180px"
-          role="button"
-          [routerLink]="['/nuevo-proveedor']"
-          class="nav-link elemento-navbar d9d9d9 " >
-          <span class="icon-plus-circled"></span> Nuevo Proveedor</a>
+            role="button"
+            [routerLink]="['/nuevo-proveedor']"
+            class="nav-link elemento-navbar d9d9d9 " >
+            <span class="icon-plus-circled"></span> Nuevo Proveedor
+          </a>
         </div>
       </div>
-      <!-- <div  *ngIf="logueadoService.estaLogueado" >
-        <a
-        role="button"
-        [routerLink]="['/expedientes']"
-        class="nav-link elemento-navbar d9d9d9 " >
-        <span class="icon-comment"></span> Expedientes</a>
-      </div> -->
     </ul>
-    <div  *ngIf="logueadoService.estaLogueado" class="dropdown ">
+    <div  *ngIf="sesionIniciada" class="dropdown ">
       <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
        <span class="icon-vcard"></span>  {{nombreUsuario}}
       </button>
       <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
         <a
-        role="button"
-        [routerLink]="['/perfil']"
-        class="nav-link elemento-navbar d9d9d9" >
-        <span class="icon-user"></span> Perfil</a>
+          role="button"
+          [routerLink]="['/perfil']"
+          class="nav-link elemento-navbar d9d9d9" >
+          <span class="icon-user"></span> Perfil
+        </a>
         <a style="width:180px"
-        role="button"
-        [routerLink]="['/login']"
-        (click)="cerrarSesion()"
-        class="nav-link elemento-navbar d9d9d9 " >
-        <span class="icon-users"></span> Cambiar cuenta</a>
+          role="button"
+          [routerLink]="['/login']"
+          (click)="cerrarSesion()"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-users"></span> Cambiar cuenta
+        </a>
         <a
-        role="button"
-        (click)="logout()"
-        [routerLink]="['/home']"
-        class="nav-link elemento-navbar d9d9d9 " >
-        <span class="icon-logout"></span> Cerrar Sesion</a>
+          role="button"
+          (click)="logout()"
+          [routerLink]="['/home']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-logout"></span> Cerrar Sesion
+        </a>
         <a
-        role="button"
-        [routerLink]="['/ajustes']"
-        class="nav-link elemento-navbar d9d9d9 " >
-        <span class="icon-cog"></span> Ajustes</a>
+          role="button"
+          [routerLink]="['/ajustes']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-cog"></span> Ajustes
+        </a>
         <a
-        role="button"
-        [routerLink]="['/contact']"
-        class="nav-link elemento-navbar d9d9d9 " >
-        <span class="icon-help"></span> Ayuda</a>
+          role="button"
+          [routerLink]="['/contact']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-help"></span> Ayuda
+        </a>
         <a
-        role="button"
-        [routerLink]="['/contact']"
-        class="nav-link elemento-navbar d9d9d9 " >
-        <span class="icon-comment"></span> Sugerencias</a>
+          role="button"
+          [routerLink]="['/contact']"
+          class="nav-link elemento-navbar d9d9d9 " >
+          <span class="icon-comment"></span> Sugerencias
+        </a>
 
       </div>
     </div>
@@ -230,11 +209,11 @@
 
 
         <button style="margin-left:30px;"  mat-raised-button
-          *ngIf="!logueadoService.estaLogueado"  class="botonMat"  type="submit"  color="primary"  [routerLink]="['login']">
+          *ngIf="!sesionIniciada"  class="botonMat"  type="submit"  color="primary"  [routerLink]="['login']">
           <span class="icon-login"></span>Login
         </button>
         <button style="margin-left:30px;"  mat-raised-button
-          *ngIf="logueadoService.estaLogueado"   class="botonMat"  type="submit"  color="warn"  (click)="logout()">
+          *ngIf="sesionIniciada"   class="botonMat"  type="submit"  color="warn"  (click)="logout()">
           <span class="icon-logout"></span>Logout
         </button>
   </div>

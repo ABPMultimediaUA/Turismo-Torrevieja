@@ -25,7 +25,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 
-import { AlertService, AuthenticationService, CarterasService, LogueadoService } from '../../services/index';
+import { AlertService, AuthenticationService, CarterasService } from '../../services/index';
 
 import {EliminarCarteraDialog} from "./eliminar-cartera-dialog.component";
 import {EditarCarteraDialog} from "./editar-cartera-dialog.component";
@@ -70,13 +70,8 @@ export class CarterasComponent implements OnInit {
   constructor(private _carterasService:CarterasService,
               private router:Router,
               private route:ActivatedRoute,
-              public  logueadoService: LogueadoService,
               public dialog: MatDialog
             ) {
-              this.logueadoService.comprobarLogueado();
-
-              console.log("estaLogueado:");
-              console.log(this.logueadoService.estaLogueado);
         this._carterasService.getCarteras("1")
           .subscribe( data =>{
             console.log(data);

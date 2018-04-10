@@ -32,7 +32,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 // import { AuthenticationService } from '../../services/authentication.service';
 // import {AlertService } from '../../services/alert.service';
-import { AlertService, AuthenticationService,PeticionesCrudService, LogueadoService, UsuariosService, DatosUsuarioService, TareasService} from '../../services/index';
+import { AlertService, AuthenticationService,PeticionesCrudService, UsuariosService, DatosUsuarioService, TareasService} from '../../services/index';
 // import { AlertComponent } from '../../../_directives/index';
 // import { AuthGuard } from '../../../_guards/index';
 
@@ -120,13 +120,11 @@ export class PerfilComponent implements OnInit {
       private alertService: AlertService,
       private home:HomeComponent,
 
-      public  logueadoService: LogueadoService,
         public dialog: MatDialog,
         private _usuariosService:UsuariosService,
         private _tareasService:TareasService,
         private _peticionescrudservice:PeticionesCrudService
       ) {
-        this.logueadoService.comprobarLogueado();
         this.id= localStorage.identificador;
 
         //recoger las tareas del usuario

@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
 import { Usuario }  from "../../interfaces/usuario.interface";
 import { Cartera }  from "../../interfaces/cartera.interface";
-import { AlertService, AuthenticationService, PeticionesCrudService, LogueadoService } from '../../services/index';
+import { AlertService, AuthenticationService, PeticionesCrudService } from '../../services/index';
 
 @Component({
   selector: 'app-nuevo-expediente',
@@ -34,10 +34,8 @@ export class NuevoExpedienteComponent implements OnInit {
   constructor( private _crudService: PeticionesCrudService,
                   private router:Router,
                   private route:ActivatedRoute,//esto es para pasar como parametro
-                  public  logueadoService: LogueadoService
                 )
     {
-      this.logueadoService.comprobarLogueado();
       // this.evento.usuario= localStorage.identificador;
 
       //COGEMOS LOS USUARIOS

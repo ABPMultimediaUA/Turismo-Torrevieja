@@ -3,7 +3,7 @@ import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { RolesInterface }  from "../../interfaces/roles.interface";
 import { PermisosInterface }  from "../../interfaces/permisos.interface";
-import { AlertService, AuthenticationService, PeticionesCrudService, LogueadoService } from '../../services/index';
+import { AlertService, AuthenticationService, PeticionesCrudService } from '../../services/index';
 @Component({
   selector: 'app-rol',
   templateUrl: './rol.component.html'
@@ -26,10 +26,8 @@ export class RolComponent implements OnInit {
 constructor(  private _rolService: PeticionesCrudService,
               private router:Router,
               private route:ActivatedRoute,//esto es para pasar como parametro
-              public  logueadoService: LogueadoService
             )
   {
-    this.logueadoService.comprobarLogueado();
 
     this.route.params.subscribe(parametros=>{
       this.id = parametros['id'];

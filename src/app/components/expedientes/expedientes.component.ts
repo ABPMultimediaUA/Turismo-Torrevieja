@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { HttpModule } from '@angular/http';
-import { AlertService, AuthenticationService, PeticionesCrudService, LogueadoService } from '../../services/index';
+import { AlertService, AuthenticationService, PeticionesCrudService } from '../../services/index';
 
 @Component({
   selector: 'app-expedientes',
@@ -27,10 +27,8 @@ export class ExpedientesComponent implements OnInit {
   constructor(  private _ItemService: PeticionesCrudService,
                 private router:Router,
                 private route:ActivatedRoute,//esto es para pasar como parametro
-                public  logueadoService: LogueadoService
               )
   {
-    this.logueadoService.comprobarLogueado();
     this._ItemService.getItem(0,-1,-1,-1).then(
       res => {
         this.item = res as any;

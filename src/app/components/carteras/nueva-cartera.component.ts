@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Cartera }  from "../../interfaces/cartera.interface";
-import { AlertService, AuthenticationService, CarterasService, LogueadoService } from '../../services/index';
+import { AlertService, AuthenticationService, CarterasService } from '../../services/index';
 
 @Component({
   selector: 'app-nueva-cartera',
@@ -35,9 +35,7 @@ nuevo:boolean = false;
 constructor( private _carterasService: CarterasService,
                 private router:Router,
                 private route:ActivatedRoute,//esto es para pasar como parametro
-                public  logueadoService: LogueadoService
               ) {
-                this.logueadoService.comprobarLogueado();
 
           this.route.params.subscribe(parametros=>{
                 console.log(parametros);

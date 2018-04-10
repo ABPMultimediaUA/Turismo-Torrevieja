@@ -23,7 +23,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 
-import { AlertService, AuthenticationService, UsuariosService, LogueadoService } from '../../services/index';
+import { AlertService, AuthenticationService, UsuariosService } from '../../services/index';
 
 import {EliminarUsuarioDialog} from "./eliminar-usuario-dialog.component";
 import {EditarUsuarioDialog} from "./editar-usuario-dialog.component";
@@ -71,13 +71,8 @@ export class UsuariosComponent implements OnInit {
   constructor(private _usuariosService:UsuariosService,
               private router:Router,
               private route:ActivatedRoute,
-              public  logueadoService: LogueadoService,
                 public dialog: MatDialog
             ) {
-              this.logueadoService.comprobarLogueado();
-
-              console.log("estaLogueado:");
-              console.log(this.logueadoService.estaLogueado);
         this._usuariosService.getUsuarios("1")
           .subscribe( data =>{
             console.log(data);//la data del getHeroes

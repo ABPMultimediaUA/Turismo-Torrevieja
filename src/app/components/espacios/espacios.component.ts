@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PeticionesCrudService, LogueadoService } from '../../services/index';
+import { PeticionesCrudService } from '../../services/index';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { EliminarEspacioComponent } from './eliminar-espacio.component';
@@ -30,11 +30,10 @@ export class EspaciosComponent implements OnInit {
   selection = new SelectionModel<EspacioInterface>(true, []); //Filas seleccionadas
 
   constructor(  private _itemService: PeticionesCrudService,
-                public  logueadoService: LogueadoService,
                 public dialog: MatDialog
              )
   {
-    this.logueadoService.comprobarLogueado();
+    // localStorage.getItem('loggedIn') != null
     this.cargarPaginacionInicial();
     this.cargarItems(this.selectUrl,+this.option_Items_Pgn,1);
   }
@@ -44,8 +43,6 @@ export class EspaciosComponent implements OnInit {
 
   //Realiza la peticion GetItems a la BD y actualiza las variables
   cargarItems(peticion:number, per_pgn:number, pgn:number){
-    this.logueadoService.comprobarLogueado();
-
     this._itemService.getItem(peticion,this.busqueda,per_pgn,pgn).then(
       res => {
         console.log(res); //TODO Eliminar

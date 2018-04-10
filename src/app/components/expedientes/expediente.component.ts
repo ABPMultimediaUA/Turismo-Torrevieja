@@ -9,7 +9,7 @@ import { Usuario }  from "../../interfaces/usuario.interface";
 import { Cartera }  from "../../interfaces/cartera.interface";
 import { EspacioInterface }  from "../../interfaces/espacio.interface";
 import { ProveedorInterface }  from "../../interfaces/proveedor.interface";
-import { AlertService, AuthenticationService,PeticionesCrudService,LogueadoService } from '../../services/index';
+import { AlertService, AuthenticationService,PeticionesCrudService } from '../../services/index';
 
 @Component({
   selector: 'app-expediente',
@@ -76,10 +76,8 @@ export class ExpedienteComponent implements OnInit {
   constructor(  private _ItemService: PeticionesCrudService,
                 private router:Router,
                 private route:ActivatedRoute,//esto es para pasar como parametro
-                public  logueadoService: LogueadoService
               )
   {
-      this.logueadoService.comprobarLogueado();
 
       this.route.params.subscribe(parametros=>{
             this.id = parametros['id'];

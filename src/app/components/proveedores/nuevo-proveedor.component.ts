@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Proveedor }  from "../../interfaces/proveedorJ.interface";
-import { AlertService, AuthenticationService, LogueadoService } from '../../services/index';
+import { AlertService, AuthenticationService } from '../../services/index';
 import { ProveedorService } from '../../services/proveedor.service';
 
 @Component({
@@ -30,9 +30,8 @@ export class NuevoProveedorComponent implements OnInit {
   constructor(private _proveedorService:ProveedorService,
               private router:Router,
               private route:ActivatedRoute,
-              public  logueadoService: LogueadoService) {
+            ) {
 
-    this.logueadoService.comprobarLogueado();
 
     this.route.params.subscribe(parametros=>{
           console.log(parametros);
