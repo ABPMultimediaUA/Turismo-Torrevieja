@@ -30,9 +30,8 @@ import { TareaInterface}  from "../../interfaces/tareas.interface";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-// import { AuthenticationService } from '../../services/authentication.service';
 // import {AlertService } from '../../services/alert.service';
-import { AlertService, AuthenticationService,PeticionesCrudService, UsuariosService, DatosUsuarioService, TareasService} from '../../services/index';
+import { AlertService, PeticionesCrudService, UsuariosService, TareasService} from '../../services/index';
 // import { AlertComponent } from '../../../_directives/index';
 // import { AuthGuard } from '../../../_guards/index';
 
@@ -116,7 +115,6 @@ export class PerfilComponent implements OnInit {
   constructor(
       private route: ActivatedRoute,
       private router: Router,
-      private authenticationService: AuthenticationService,
       private alertService: AlertService,
       private home:HomeComponent,
 

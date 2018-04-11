@@ -25,7 +25,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 
-import { AlertService, AuthenticationService, CarterasService } from '../../services/index';
+import { AlertService, CarterasService } from '../../services/index';
 
 import {EliminarCarteraDialog} from "./eliminar-cartera-dialog.component";
 import {EditarCarteraDialog} from "./editar-cartera-dialog.component";

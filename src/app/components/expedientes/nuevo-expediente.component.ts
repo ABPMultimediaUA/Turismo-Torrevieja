@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
 import { Usuario }  from "../../interfaces/usuario.interface";
 import { Cartera }  from "../../interfaces/cartera.interface";
-import { AlertService, AuthenticationService, PeticionesCrudService } from '../../services/index';
+import { AlertService , PeticionesCrudService } from '../../services/index';
 
 @Component({
   selector: 'app-nuevo-expediente',

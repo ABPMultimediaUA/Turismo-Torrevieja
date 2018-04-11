@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Cartera }  from "../../interfaces/cartera.interface";
-import { AlertService, AuthenticationService, CarterasService } from '../../services/index';
+import { AlertService, CarterasService } from '../../services/index';
 
 @Component({
   selector: 'app-nueva-cartera',

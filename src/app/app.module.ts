@@ -43,8 +43,7 @@ import { CarterasService }  from "./services/carteras.service";
 import { PeticionesCrudService }  from "./services/peticionesCRUD.service";
 // import { AlertComponent } from './_directives/index';
 // import { AuthGuard } from './_guards/index';
-import { AlertService, AuthenticationService,
- TokenService, DatosUsuarioService, ExpedientesService,
+import { AlertService, ExpedientesService,
  TareasService } from './services/index';
 
 import { AppComponent } from './app.component';
@@ -94,6 +93,10 @@ import { EspaciosComponent } from './components/espacios/espacios.component';
 import { NuevoEspacioComponent } from './components/espacios/nuevo-espacio.component';
 import { EliminarEspacioComponent } from './components/espacios/eliminar-espacio.component';
 import { VentanaEmergenteComponent } from './components/ventana-emergente/ventana-emergente.component';
+
+
+
+import { LoginService }  from "./services/login.service";
 
 
 
@@ -176,15 +179,13 @@ import { VentanaEmergenteComponent } from './components/ventana-emergente/ventan
     CarterasService,
     PeticionesCrudService,
     AlertService,
-    AuthenticationService,
-    TokenService,
-    DatosUsuarioService,
     NavbarComponent,
     HomeComponent,
     TareasService,
     ExpedientesService,
     MatDatepickerModule,
-    ProveedorService
+    ProveedorService,
+    LoginService
   ],
   entryComponents: [
     EliminarUsuarioDialog,

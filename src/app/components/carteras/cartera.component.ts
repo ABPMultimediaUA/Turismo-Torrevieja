@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { Cartera }  from "../../interfaces/cartera.interface";
 import { Usuario }  from "../../interfaces/usuario.interface";
 import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
-import { AlertService, AuthenticationService, PeticionesCrudService } from '../../services/index';
+import { AlertService, PeticionesCrudService } from '../../services/index';
 
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { ViewChild} from '@angular/core';

@@ -7,9 +7,7 @@ import {NavbarComponent} from "../shared/navbar/navbar.component";
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-// import { AuthenticationService } from '../../services/authentication.service';
 // import {AlertService } from '../../services/alert.service';
-import { AuthenticationService, TokenService } from '../../services/index';
 // import { AlertComponent } from '../../_directives/index';
 // import { AuthGuard } from '../../_guards/index';
 
@@ -25,8 +23,6 @@ mensaje:string;
   constructor(
       private route: ActivatedRoute,
       private router: Router,
-      private authenticationService: AuthenticationService,
-      private token:TokenService,
       private navbar:NavbarComponent,
       private home:HomeComponent,
     ) {

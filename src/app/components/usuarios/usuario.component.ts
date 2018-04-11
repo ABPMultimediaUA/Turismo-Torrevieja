@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Usuario }  from "../../interfaces/usuario.interface";
-import { AlertService, AuthenticationService, UsuariosService } from '../../services/index';
+import { AlertService , UsuariosService } from '../../services/index';
 @Component({
   selector: 'app-usuario',
   templateUrl: './usuario.component.html'

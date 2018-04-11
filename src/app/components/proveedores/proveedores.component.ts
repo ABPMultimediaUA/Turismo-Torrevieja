@@ -3,7 +3,7 @@ import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Proveedor }  from "../../interfaces/proveedorJ.interface";
 import { ProveedorService } from '../../services/proveedor.service';
-import { AlertService, AuthenticationService } from '../../services/index';
+import { AlertService  } from '../../services/index';
 
 @Component({
   selector: 'app-proveedores',

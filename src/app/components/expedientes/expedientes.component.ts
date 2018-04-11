@@ -6,7 +6,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { HttpModule } from '@angular/http';
-import { AlertService, AuthenticationService, PeticionesCrudService } from '../../services/index';
+import { AlertService , PeticionesCrudService } from '../../services/index';
 
 @Component({
   selector: 'app-expedientes',

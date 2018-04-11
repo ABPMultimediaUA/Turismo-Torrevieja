@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Proveedor }  from "../../interfaces/proveedorJ.interface";
-import { AlertService, AuthenticationService } from '../../services/index';
+import { AlertService  } from '../../services/index';
 import { ProveedorService } from '../../services/proveedor.service';
 
 @Component({

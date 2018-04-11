@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { RolesInterface }  from "../../interfaces/roles.interface";
-import { AlertService, AuthenticationService, PeticionesCrudService } from '../../services/index';
+import { AlertService , PeticionesCrudService } from '../../services/index';
 
 @Component({
   selector: 'app-rol',

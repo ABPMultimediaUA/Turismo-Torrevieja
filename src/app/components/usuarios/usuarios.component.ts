@@ -23,7 +23,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 
-import { AlertService, AuthenticationService, UsuariosService } from '../../services/index';
+import { AlertService , UsuariosService } from '../../services/index';
 
 import {EliminarUsuarioDialog} from "./eliminar-usuario-dialog.component";
 import {EditarUsuarioDialog} from "./editar-usuario-dialog.component";
