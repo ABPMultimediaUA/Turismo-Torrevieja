@@ -1,20 +1,20 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Component, ViewChild } from '@angular/core';
 import { FormsModule, ReactiveFormsModule }  from '@angular/forms';
 import { HttpModule } from '@angular/http';
 
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { HttpClientModule } from '@angular/common/http';
-import { MatIcon } from '@angular/material';
-import { MatPaginatorModule } from '@angular/material';
+import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
+
+import { MatIcon, MatPaginatorModule, MatTableDataSource, MatSort,
+         MatSortModule, MatTableModule, MatFormFieldModule, MatNativeDateModule,
+         MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatProgressBarModule,
+         MatProgressSpinnerModule,MatIconRegistry, MatIconModule,MatButtonModule,MatInputModule
+        } from '@angular/material';
+
 import {MatMenuModule} from '@angular/material/menu';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import {MatCheckboxModule} from '@angular/material/checkbox';
-import {Component, ViewChild} from '@angular/core';
-import {MatTableDataSource, MatSort, MatSortModule, MatTableModule} from '@angular/material';
-import { MatFormFieldModule,MatNativeDateModule } from '@angular/material';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatProgressBarModule,MatProgressSpinnerModule} from '@angular/material';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
@@ -31,8 +31,6 @@ import {EditarUsuarioDialog} from "./components/usuarios/editar-usuario-dialog.c
 import {EditarPerfilDialog} from "./components/perfil/editar-perfil-dialog.component";
 
 
-import { MatIconRegistry, MatIconModule,MatButtonModule } from '@angular/material';
-import {MatInputModule} from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {SelectionModel} from '@angular/cdk/collections';
 import { APP_ROUTING } from "./app.routes"
@@ -41,10 +39,8 @@ import { APP_ROUTING } from "./app.routes"
 import { UsuariosService }  from "./services/usuarios.service";
 import { CarterasService }  from "./services/carteras.service";
 import { PeticionesCrudService }  from "./services/peticionesCRUD.service";
-// import { AlertComponent } from './_directives/index';
-// import { AuthGuard } from './_guards/index';
-import { AlertService, ExpedientesService,
- TareasService } from './services/index';
+
+import { AlertService, ExpedientesService, TareasService } from './services/index';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';

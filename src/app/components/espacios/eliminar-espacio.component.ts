@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { PeticionesCrudService } from '../../services/index';
+import { PeticionesCrudService, LoginService } from '../../services/index';
 import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatDialog } from '@angular/material';
 import { VentanaEmergenteComponent } from '../ventana-emergente/ventana-emergente.component'
 import { EspacioInterface } from '../../interfaces/espacio.interface';
@@ -19,11 +19,13 @@ export class EliminarEspacioComponent implements OnInit {
   dataSource = new MatTableDataSource(this.items);
 
   constructor(  private _itemService: PeticionesCrudService,
+                private _loginService:LoginService,
                 public dialogRef: MatDialogRef<EliminarEspacioComponent>,
                 public dialog: MatDialog,
                 @Inject(MAT_DIALOG_DATA) public data
              )
   {
+    this._loginService.comprobarEstadoLog();
     dialogRef.disableClose = true;
 
     if(data.item){

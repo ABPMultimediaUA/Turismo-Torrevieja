@@ -17,22 +17,35 @@ export class LoginService {
                private router:Router
              ) { }
 
+  //Conocer si esta logueado o no el usuario
+  public getEstadoLog() : Observable<boolean> {
+    return this.userLog.asObservable();
+  }
+
+  //Comprueba si se esta logueado, en caso de que no se este, devuelve a la pagina home
+  public comprobarEstadoLog() : void{
+    if(!this.userLog.getValue()){
+      this.router.navigate(['home']);
+    }
+  }
+
   //Inicializa la variable userLog dependiendo de si ha iniciado sesion o no
   private hasToken():boolean {
       return !!localStorage.getItem('accesToken');
   }
 
-  //Iniciar sesion
+  //Iniciar sesion, se le passa por parametro un email y una contrasenya
   public login(user_pass:any) : void {
 
+    //Se obtiene el token
     this.getToken(user_pass).then(
       res => {
         if(typeof res != "string"){
           let resultado: any = {};
           resultado = res;
-          // console.log(resultado.access_token);
           localStorage.setItem("accesToken", resultado.access_token );
 
+          //Con el token se obtiene el usuario, se guarda en localStorage y login pasa a true
           this.getUser(resultado.access_token).then(
             res => {
               if(typeof res != "string"){
@@ -55,6 +68,7 @@ export class LoginService {
       });
   }
 
+  //Vaciar localStorage y pasar login a false
   public logout() : void {
     localStorage.removeItem('accesToken');
     localStorage.removeItem('identificador');
@@ -67,11 +81,6 @@ export class LoginService {
     localStorage.removeItem('loggedIn');
 
     this.userLog.next(false);
-  }
-
-  //Conocer si esta logueado o no el usuario
-  public getEstadoLog() : Observable<boolean> {
-    return this.userLog.asObservable();
   }
 
   //Obtener el token con el email y el password del usuario
@@ -94,6 +103,7 @@ export class LoginService {
     return promise;
   }
 
+  //Se obtiene el usuario a partir del token
   private getUser(token){
     let promise = new Promise((resolve, reject) => {
       let url = this.datosUsuarioURL;

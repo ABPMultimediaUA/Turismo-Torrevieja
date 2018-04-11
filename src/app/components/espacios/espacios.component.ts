@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PeticionesCrudService } from '../../services/index';
+import { PeticionesCrudService, LoginService } from '../../services/index';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource, MatDialog } from '@angular/material';
 import { EliminarEspacioComponent } from './eliminar-espacio.component';
@@ -30,10 +30,11 @@ export class EspaciosComponent implements OnInit {
   selection = new SelectionModel<EspacioInterface>(true, []); //Filas seleccionadas
 
   constructor(  private _itemService: PeticionesCrudService,
+                private _loginService:LoginService,
                 public dialog: MatDialog
              )
   {
-    // localStorage.getItem('loggedIn') != null
+    this._loginService.comprobarEstadoLog();
     this.cargarPaginacionInicial();
     this.cargarItems(this.selectUrl,+this.option_Items_Pgn,1);
   }
