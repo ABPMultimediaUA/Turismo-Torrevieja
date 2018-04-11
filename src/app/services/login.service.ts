@@ -1,29 +1,28 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs/BehaviorSubject';
-import { Observable } from 'rxjs/Observable';
+import { Observable, BehaviorSubject } from 'rxjs/Rx';
 import { Http, Headers } from "@angular/http";
 import { Router } from '@angular/router';
 
 @Injectable()
-
 export class LoginService {
 
-  private userLog = new BehaviorSubject<boolean>(this.hasToken());
+  userLog = new BehaviorSubject<boolean>(this.hasToken());
 
-  private tokenURL:string="https://gvent.ovh/Prueba2_1/public/oauth/token";
-  private datosUsuarioURL:string="https://gvent.ovh/Prueba2_1/public/quiensoy";
+  tokenURL:string="https://gvent.ovh/Prueba2_1/public/oauth/token";
+  datosUsuarioURL:string="https://gvent.ovh/Prueba2_1/public/quiensoy";
 
   constructor( private http:Http,
                private router:Router
              ) { }
 
   //Conocer si esta logueado o no el usuario
-  public getEstadoLog() : Observable<boolean> {
+  getEstadoLog() : Observable<boolean> {
     return this.userLog.asObservable();
+    // return this.userLog;
   }
 
   //Comprueba si se esta logueado, en caso de que no se este, devuelve a la pagina home
-  public comprobarEstadoLog() : void{
+  comprobarEstadoLog() : void{
     if(!this.userLog.getValue()){
       this.router.navigate(['home']);
     }
@@ -31,11 +30,17 @@ export class LoginService {
 
   //Inicializa la variable userLog dependiendo de si ha iniciado sesion o no
   private hasToken():boolean {
-      return !!localStorage.getItem('accesToken');
+    return !!localStorage.getItem('accesToken');
+    //TODO Verificar el token y el usuario antes de devolver el booleano
+    // let res = false;
+    //   if(localStorage.getItem('accesToken') && localStorage.getItem('correo')){
+    //
+    //   }
+    // return res;
   }
 
   //Iniciar sesion, se le passa por parametro un email y una contrasenya
-  public login(user_pass:any) : void {
+  login(user_pass:any) : void {
 
     //Se obtiene el token
     this.getToken(user_pass).then(
@@ -58,7 +63,6 @@ export class LoginService {
                 localStorage.setItem("rol", resultado.data.rol);
                 localStorage.setItem("esVerificado", resultado.data.esVerificado);
                 localStorage.setItem("fechaCreacion", resultado.data.fechaCreacion);
-                localStorage.setItem("loggedIn", "true");
 
                 this.userLog.next(true);
                 this.router.navigate(['perfil']);
@@ -69,7 +73,7 @@ export class LoginService {
   }
 
   //Vaciar localStorage y pasar login a false
-  public logout() : void {
+  logout() : void {
     localStorage.removeItem('accesToken');
     localStorage.removeItem('identificador');
     localStorage.removeItem('nombreUsuario');
@@ -78,13 +82,13 @@ export class LoginService {
     localStorage.removeItem('rol');
     localStorage.removeItem('esVerificado');
     localStorage.removeItem('fechaCreacion');
-    localStorage.removeItem('loggedIn');
 
     this.userLog.next(false);
+    this.router.navigate(['home']);
   }
 
   //Obtener el token con el email y el password del usuario
-  private getToken(user_pass:any){
+  getToken(user_pass:any){
     let promise = new Promise((resolve, reject) => {
       let url = this.tokenURL;
       this.http.post(url,
@@ -104,7 +108,7 @@ export class LoginService {
   }
 
   //Se obtiene el usuario a partir del token
-  private getUser(token){
+  getUser(token){
     let promise = new Promise((resolve, reject) => {
       let url = this.datosUsuarioURL;
       let headers = new Headers ({

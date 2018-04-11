@@ -9,24 +9,17 @@ import { LoginService } from '../../services/index';
 export class LoginComponent implements OnInit {
 
   model: any = {};
-  loginError = false;
 
-  logueando:boolean=false;
-
-
-
-  constructor( private _loginService:LoginService,
-             ){  }
+  constructor( public _loginService:LoginService,
+             )
+ {
+ }
 
   ngOnInit() {
   }
 
   login() {
     this._loginService.login(this.model);
-  }
-
-  logout() {
-    this._loginService.logout();
   }
 
 }

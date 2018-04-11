@@ -24,6 +24,9 @@ export class EspaciosComponent implements OnInit {
   selectASC_DESC:number=-1;           //Saber si el usuario quiere ordenar los items: -1 nada seleccionado, 0 ASC, 1 DES
   valorEscogidoForOrder:number = -1;  //Para saber el elemento seleccionado, -1 valor neutro
   btnEliminar:boolean = true;         //Activar / desactivar boton de eliminar item/s
+  permisoEditar:boolean = false;      //Rol permiso editar
+  permisoEliminar:boolean = false;    //Rol permiso eliminar
+  permisoCrear:boolean = false;       //Rol permiso crear
   @ViewChild("btnsPag") BtnsPagOff;   //Div que contiene los botones de paginacion
 
   dataSource = new MatTableDataSource(this.items);            //Datos de la tabla

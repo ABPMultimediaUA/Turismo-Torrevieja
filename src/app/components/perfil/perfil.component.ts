@@ -74,12 +74,12 @@ export class PerfilComponent implements OnInit {
       @ViewChild(MatPaginator) paginator: MatPaginator;
 
         ngAfterViewInit() {
-            console.log("entra en el sort ese");
+            // console.log("entra en el sort ese");
 
           this.dataSource.sort = this.sort;
           this.dataSource.paginator = this.paginator;
           this.selection = new SelectionModel<Tarea>(true, []);
-          console.log(this.dataSource.sort);
+          // console.log(this.dataSource.sort);
         }
 
     public tarea:Tarea={
@@ -189,7 +189,7 @@ export class PerfilComponent implements OnInit {
   ngOnInit() {
   }
   openDialogEditarPerfil(){
-     console.log(this.usuario);
+     // console.log(this.usuario);
      const dialogRef = this.dialog.open(EditarPerfilDialog, {
        height: '500px',
        width: '450px',
@@ -197,7 +197,7 @@ export class PerfilComponent implements OnInit {
      });
   }
 CompletarTarea(row){
-     console.log(row);
+     // console.log(row);
      this.tarea=row;
      let idTarea:number = this.tarea.identificador;
      if(this.tarea.finalizado=="0"){
@@ -208,7 +208,7 @@ CompletarTarea(row){
 
      this._peticionescrudservice.actualizarItem(2,idTarea,this.tarea,-1)
      // .then( res=> { })
-     .catch( (err) => { console.log( err.toString() ); });
+     // .catch( (err) => { console.log( err.toString() ); });
 
      // this._tareasService.actualizarTarea(this.tarea,idTarea)
      // .subscribe(data=>{
@@ -242,7 +242,7 @@ CompletarTarea(row){
   //  });
   // }
   selectRow(row) {
-   console.log(row);
+   // console.log(row);
    this.router.navigate(['/evento', row.identificador]);
   }
   isAllSelected() {

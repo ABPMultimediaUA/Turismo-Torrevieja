@@ -1,11 +1,7 @@
-<br><br><br><br><br>
+<!-- <br><br><br><br><br>
 <div class="container">
-	<!-- <div class="row">
-  		<div class="col-sm-10"><h1>{{usuario.nombreUsuario}}</h1></div>
-    	<div class="col-sm-2"><img title="profile image" class="img-circle img-responsive" srcset="../assets/fotoPerfil.jpg" ></div>
-    </div> -->
     <div class="row">
-  		<div class="col-4"><!--left col-->
+  		<div class="col-4">
 				<mat-card>
 					<mat-card-header>
 				    <div mat-card-avatar class="example-header-image"
@@ -13,9 +9,6 @@
 				    </div>
 				    <mat-card-title>{{usuario.nombreUsuario}}</mat-card-title>
 				    <mat-card-subtitle>{{usuario.apodo}}</mat-card-subtitle>
-						<!-- <button   mat-raised-button style="max-width:10px"
-							class="botonMat "color="primary"	(click)="openDialogEditarPerfil()">	<span class="icon-pencil"></span>
-						</button> -->
 				  </mat-card-header>
 
 					<button mat-mini-fab 	class="botonMat pull-right" (click)="openDialogEditarPerfil()" color="primary"><span class="icon-pencil"></span></button>
@@ -40,36 +33,11 @@
 							 <p  *ngIf="usuario.rol ==4"mat-line> Otro</p>
 
 						 </mat-list-item>
-						 <!-- <mat-list-item class="padding-left:300px;">
-							 <div class="text-right">
-								 <button   mat-raised-button style="max-width:10px"
-	 								class="botonMat pull-right"color="primary"	(click)="openDialogEditarPerfil()">	<span class="icon-pencil"></span>
-	 							</button>
-							 </div>
-
-					 </mat-list-item> -->
 					</mat-list>
-					<!-- <mat-card-actions>
-				    <button mat-button></button>
-						<button   mat-raised-button style="max-width:10px"
-							class="botonMat "color="primary"	(click)="openDialogEditarPerfil()">	<span class="icon-pencil"></span>
-						</button>
-				  </mat-card-actions> -->
-
 				</mat-card><br><br>
 
 
-<!--
-          <ul class="list-group">
-            <li class="list-group-item d9d9d9 bg-blue">Actividad &nbsp;<i class="fa fa-line-chart"></i></li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Eventos</strong></span> 125</li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Actividades</strong></span> 13</li>
-            <li class="list-group-item text-right"><span class="pull-left"><strong>Social Posts</strong></span> 37</li>
-          </ul> -->
-
-
-
-        </div><!--/col-3-->
+        </div>
 
 
 
@@ -104,11 +72,9 @@
 
           <ng-container matColumnDef="finalizado">
             <mat-header-cell *matHeaderCellDef mat-sort-header> finalizada </mat-header-cell>
-            <!-- <mat-cell *matCellDef="let usuario"> <div *ngIf="usuario.esVerificado ==0">No</div> </mat-cell> -->
             <mat-cell *matCellDef="let tarea">
               <div *ngIf="tarea.finalizado ==1">Si </div>
               <div *ngIf="tarea.finalizado ==0">No
-                  <!-- <mat-icon color="warn" >warning</mat-icon> -->
               </div>
             </mat-cell>
 
@@ -125,4 +91,4 @@
 
 
         </div>
-    </div>
+    </div> -->

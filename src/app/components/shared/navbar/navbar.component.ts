@@ -1,21 +1,20 @@
-import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { LoginService } from '../../../services/index';
+import { Observable } from 'rxjs/Observable';
 
 @Component({
-  changeDetection: ChangeDetectionStrategy.Default,
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrls: ['../../../app.component.css']
+  styleUrls: ['../../../app.component.css'],
+  // providers:[ LoginService ]
 })
 
 export class NavbarComponent implements OnInit {
 
-  private cambiarEstadoSesion(b){
-    this.sesionIniciada = b;
-  }
-  private sesionIniciada:boolean;
+  isLogged:boolean;
 
   identificador:number = 0;
   nombreUsuario:string = "";
@@ -26,30 +25,32 @@ export class NavbarComponent implements OnInit {
   fechaCreacion:string = "";
   // permisos:string[] = [];
 
-  constructor( private router: Router,
-               public change_detector: ChangeDetectorRef,
+  constructor(  private router: Router,
+                public _loginService:LoginService,
              )
   {
-        if(localStorage.getItem('loggedIn') != null) this.sesionIniciada = true;
-        else this.sesionIniciada = false;
+    // this.isLogged = _loginService.getEstadoLog();
 
-        this.identificador=localStorage.identificador;
-        this.nombreUsuario=localStorage.nombreUsuario;
-        this.apodo=localStorage.apodo;
-        this.correo=localStorage.correo;
-        this.esVerificado=localStorage.esVerificado;
-        this.rol=localStorage.rol;
-        this.fechaCreacion=localStorage.fechaCreacion;
+
+    this.identificador=localStorage.identificador;
+    this.nombreUsuario=localStorage.nombreUsuario;
+    this.apodo=localStorage.apodo;
+    this.correo=localStorage.correo;
+    this.esVerificado=localStorage.esVerificado;
+    this.rol=localStorage.rol;
+    this.fechaCreacion=localStorage.fechaCreacion;
   }
 
   ngOnInit() {
-    if(localStorage.getItem('loggedIn') != null) this.sesionIniciada = true;
-    else this.sesionIniciada = false;
+    this._loginService.getEstadoLog().
+      subscribe(
+        res => {
+          this.isLogged = res;
+      });
   }
 
   logout(){
-    this.limpiarLocalStorage();
-    this.router.navigate(['/home']);
+    this._loginService.logout();
   }
 
   cerrarSesion(){
@@ -57,8 +58,9 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+
+  //TODO COMPROBAR SI ELIMINAR O NO
   limpiarLocalStorage(){
-    this.sesionIniciada = false;
     localStorage.loggedIn=false;
 
     delete localStorage.loggedIn;
@@ -81,8 +83,8 @@ export class NavbarComponent implements OnInit {
     }
   }
 
-  refresh(){
-    this.change_detector.detectChanges();
+  login(){
+    this._loginService.login(null);
   }
 
 }
