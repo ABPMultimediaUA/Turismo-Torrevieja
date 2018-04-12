@@ -6,3 +6,4 @@ export * from './expedientes.service';
 export * from './tareas.service';
 export * from './peticionesCRUD.service';
 export * from './login.service';
+export * from './auth.service';

@@ -9,7 +9,6 @@ import { Observable } from 'rxjs/Observable';
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['../../../app.component.css'],
-  // providers:[ LoginService ]
 })
 
 export class NavbarComponent implements OnInit {
@@ -29,7 +28,8 @@ export class NavbarComponent implements OnInit {
                 public _loginService:LoginService,
              )
   {
-    // this.isLogged = _loginService.getEstadoLog();
+    this._loginService.getEstadoLog().subscribe( res => { this.isLogged = res; });
+
 
 
     this.identificador=localStorage.identificador;
@@ -42,11 +42,6 @@ export class NavbarComponent implements OnInit {
   }
 
   ngOnInit() {
-    this._loginService.getEstadoLog().
-      subscribe(
-        res => {
-          this.isLogged = res;
-      });
   }
 
   logout(){
@@ -54,37 +49,7 @@ export class NavbarComponent implements OnInit {
   }
 
   cerrarSesion(){
-    this.limpiarLocalStorage();
     this.router.navigate(['/login']);
-  }
-
-
-  //TODO COMPROBAR SI ELIMINAR O NO
-  limpiarLocalStorage(){
-    localStorage.loggedIn=false;
-
-    delete localStorage.loggedIn;
-    delete localStorage.accesToken;
-    delete localStorage.identificador;
-    delete localStorage.nombreUsuario;
-    delete localStorage.apodo;
-    delete localStorage.correo;
-    delete localStorage.rol;
-    delete localStorage.esVerificado;
-
-    //Borrar cookie
-    var cookies = document.cookie.split(";");
-
-    for (var i = 0; i < cookies.length; i++) {
-        var cookie = cookies[i];
-        var eqPos = cookie.indexOf("=");
-        var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
-        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    }
-  }
-
-  login(){
-    this._loginService.login(null);
   }
 
 }

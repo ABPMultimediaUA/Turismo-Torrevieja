@@ -4,10 +4,6 @@ import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { VentanaEmergenteComponent } from '../ventana-emergente/ventana-emergente.component'
 import { EspacioInterface } from '../../interfaces/espacio.interface';
 
-
-// import {FormControl, FormGroupDirective, NgForm, Validators} from '@angular/forms';
-// import {ErrorStateMatcher} from '@angular/material/core';
-
 @Component({
   selector: 'app-nuevo-espacio',
   templateUrl: './nuevo-espacio.component.html',

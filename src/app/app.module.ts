@@ -40,7 +40,7 @@ import { UsuariosService }  from "./services/usuarios.service";
 import { CarterasService }  from "./services/carteras.service";
 import { PeticionesCrudService }  from "./services/peticionesCRUD.service";
 
-import { AlertService, ExpedientesService, TareasService } from './services/index';
+import { AlertService, ExpedientesService, TareasService, AuthService } from './services/index';
 
 import { AppComponent } from './app.component';
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
@@ -181,7 +181,8 @@ import { LoginService }  from "./services/login.service";
     ExpedientesService,
     MatDatepickerModule,
     ProveedorService,
-    LoginService
+    LoginService,
+    AuthService
   ],
   entryComponents: [
     EliminarUsuarioDialog,

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, BehaviorSubject } from 'rxjs/Rx';
 import { Http, Headers } from "@angular/http";
 import { Router } from '@angular/router';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class LoginService {
@@ -12,13 +13,13 @@ export class LoginService {
   datosUsuarioURL:string="https://gvent.ovh/Prueba2_1/public/quiensoy";
 
   constructor( private http:Http,
-               private router:Router
+               private router:Router,
+               private _authService:AuthService,
              ) { }
 
   //Conocer si esta logueado o no el usuario
   getEstadoLog() : Observable<boolean> {
     return this.userLog.asObservable();
-    // return this.userLog;
   }
 
   //Comprueba si se esta logueado, en caso de que no se este, devuelve a la pagina home
@@ -51,19 +52,9 @@ export class LoginService {
           localStorage.setItem("accesToken", resultado.access_token );
 
           //Con el token se obtiene el usuario, se guarda en localStorage y login pasa a true
-          this.getUser(resultado.access_token).then(
+          this._authService.getUser().then(
             res => {
               if(typeof res != "string"){
-                let resultado: any = {};
-                resultado = res;
-                localStorage.setItem("identificador", resultado.data.identificador);
-                localStorage.setItem("nombreUsuario", resultado.data.nombreUsuario);
-                localStorage.setItem("apodo", resultado.data.apodo);
-                localStorage.setItem("correo", resultado.data.correo);
-                localStorage.setItem("rol", resultado.data.rol);
-                localStorage.setItem("esVerificado", resultado.data.esVerificado);
-                localStorage.setItem("fechaCreacion", resultado.data.fechaCreacion);
-
                 this.userLog.next(true);
                 this.router.navigate(['perfil']);
               }
@@ -72,17 +63,9 @@ export class LoginService {
       });
   }
 
-  //Vaciar localStorage y pasar login a false
+  //Limpiar variables y pasar login a false
   logout() : void {
-    localStorage.removeItem('accesToken');
-    localStorage.removeItem('identificador');
-    localStorage.removeItem('nombreUsuario');
-    localStorage.removeItem('apodo');
-    localStorage.removeItem('correo');
-    localStorage.removeItem('rol');
-    localStorage.removeItem('esVerificado');
-    localStorage.removeItem('fechaCreacion');
-
+    this._authService.limpiarDatosUsuario();
     this.userLog.next(false);
     this.router.navigate(['home']);
   }
@@ -99,24 +82,6 @@ export class LoginService {
           "username":user_pass.email,
           "password":user_pass.password,
         })
-        .toPromise()
-          .then(  (res) => { resolve( res.json() ); },
-                  (err) => { resolve( err.toString() )}
-          )
-    });
-    return promise;
-  }
-
-  //Se obtiene el usuario a partir del token
-  getUser(token){
-    let promise = new Promise((resolve, reject) => {
-      let url = this.datosUsuarioURL;
-      let headers = new Headers ({
-        'Content-Type':'application/json',
-        'Access-Control-Allow-Origin':'https://gvent.ovh/Prueba2_1/public',
-        'Authorization': "Bearer "+token,
-      });
-      this.http.get(url, { headers })
         .toPromise()
           .then(  (res) => { resolve( res.json() ); },
                   (err) => { resolve( err.toString() )}
