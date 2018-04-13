@@ -4,6 +4,8 @@
     <span class="navbar-toggler-icon"></span>
   </button>
 
+<!-- MENU NO LOGIN -->
+
   <div class="collapse navbar-collapse d9d9d9 "id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto d9d9d9">
       <li *ngIf="!isLogged" class="nav-item" routerLinkActive="active">
@@ -28,31 +30,9 @@
           <span class="icon-mail"></span>Contacto
         </a>
       </li>
-      <div *ngIf="isLogged" class="dropdown mr-auto">
-        <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-         Info
-        </button>
-        <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
-          <a
-            role="button"
-            [routerLink]="['/home']"
-            class="nav-link elemento-navbar d9d9d9" >
-            <span class="icon-home-outline"></span> Inicio
-          </a>
-          <a
-            role="button"
-            [routerLink]="['/about']"
-            class="nav-link elemento-navbar d9d9d9 " >
-            <span class="icon-info-circled"></span> Acerca de Gvent
-          </a>
-          <a
-            role="button"
-            [routerLink]="['/contact']"
-            class="nav-link elemento-navbar d9d9d9 " >
-            <span class="icon-mail"></span> Contacto
-          </a>
-        </div>
-      </div>
+
+
+
 
       <div *ngIf="isLogged" class="dropdown mr-auto">
         <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -128,7 +108,7 @@
       </div>
 
       <!-- ENLACE MENU ESPACIOS -->
-      <div *ngIf="isLogged" class="dropdown mr-auto">
+      <div *ngIf="_authService.userLog.getValue()" class="dropdown mr-auto">
         <button [routerLink]="['/espacios']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
          <span class="icon-town-hall"></span> Espacios
         </button>

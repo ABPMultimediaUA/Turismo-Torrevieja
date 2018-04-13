@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LoginService } from '../../services/index';
+import { AuthService } from '../../services/index';
 
 @Component({
     moduleId: module.id.toString(),
@@ -10,7 +10,7 @@ export class LoginComponent implements OnInit {
 
   model: any = {};
 
-  constructor( public _loginService:LoginService,
+  constructor( public _authService:AuthService,
              )
  {
  }
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    this._loginService.login(this.model);
+    this._authService.login(this.model);
   }
 
 }

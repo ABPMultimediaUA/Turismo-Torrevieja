@@ -1,16 +1,18 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Component, ViewChild } from '@angular/core';
-import { FormsModule, ReactiveFormsModule }  from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
-
 import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
+import { AppComponent } from './app.component';
+import { APP_ROUTING } from './app.routes';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SelectionModel } from '@angular/cdk/collections';
 
-import { MatIcon, MatPaginatorModule, MatTableDataSource, MatSort,
-         MatSortModule, MatTableModule, MatFormFieldModule, MatNativeDateModule,
-         MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatProgressBarModule,
-         MatProgressSpinnerModule,MatIconRegistry, MatIconModule,MatButtonModule,MatInputModule
-        } from '@angular/material';
+// servicios
+import { AlertService, ExpedientesService, TareasService, AuthService, UsuariosService,
+CarterasService, PeticionesCrudService, ProveedorService, AuthGuardService } from './services/index';
 
+//Angular material
 import {MatMenuModule} from '@angular/material/menu';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 import {MatTooltipModule} from '@angular/material/tooltip';
@@ -20,44 +22,39 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import { MatIcon, MatPaginatorModule, MatTableDataSource, MatSort,
+         MatSortModule, MatTableModule, MatFormFieldModule, MatNativeDateModule,
+         MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatProgressBarModule,
+         MatProgressSpinnerModule,MatIconRegistry, MatIconModule,MatButtonModule,MatInputModule
+        } from '@angular/material';
 
-import {EliminarCarteraDialog} from "./components/carteras/eliminar-cartera-dialog.component";
-import {EditarCarteraDialog} from "./components/carteras/editar-cartera-dialog.component";
-import {CrearExpedienteDialog} from "./components/carteras/crear-expediente-dialog.component";
-import {EliminarExpedienteDialog} from "./components/carteras/eliminar-expediente-dialog.component";
-
-import {EliminarUsuarioDialog} from "./components/usuarios/eliminar-usuario-dialog.component";
-import {EditarUsuarioDialog} from "./components/usuarios/editar-usuario-dialog.component";
-import {EditarPerfilDialog} from "./components/perfil/editar-perfil-dialog.component";
-
-
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {SelectionModel} from '@angular/cdk/collections';
-import { APP_ROUTING } from "./app.routes"
-
-// servicios
-import { UsuariosService }  from "./services/usuarios.service";
-import { CarterasService }  from "./services/carteras.service";
-import { PeticionesCrudService }  from "./services/peticionesCRUD.service";
-
-import { AlertService, ExpedientesService, TareasService, AuthService } from './services/index';
-
-import { AppComponent } from './app.component';
+//Componentes no login
 import { NavbarComponent } from './components/shared/navbar/navbar.component';
 import { HomeComponent } from './components/home/home.component';
 import { AboutComponent } from './components/about/about.component';
 import { LoginComponent } from './components/login/login.component';
 import { FooterComponent } from './components/shared/footer/footer.component';
+import { ContactComponent } from './components/contact/contact.component';
+
+//Componentes Login
+import { EspaciosComponent } from './components/espacios/espacios.component';
+import { NuevoEspacioComponent } from './components/espacios/nuevo-espacio.component';
+import { EliminarEspacioComponent } from './components/espacios/eliminar-espacio.component';
+
+
+//Otros
+import { VentanaEmergenteComponent } from './components/ventana-emergente/ventana-emergente.component';
+
+
 
 import { UsuariosComponent } from './components/usuarios/usuarios.component';
 import { UsuarioComponent } from './components/usuarios/usuario.component';
 import { NuevoUsuarioComponent } from './components/usuarios/nuevo-usuario.component';
 
-import { ContactComponent } from './components/contact/contact.component';
-
-import {IdsPipe} from './components/pipes/ids.pipe';
+//TODO Para que?
+import { IdsPipe } from './components/pipes/ids.pipe';
 import { KeysPipe } from './components/pipes/keys.pipe';
-import {Filter1Pipe} from './components/pipes/filter1.pipe';
+import { Filter1Pipe } from './components/pipes/filter1.pipe';
 
 import { MensajeComponent } from './components/shared/mensaje/mensaje.component';
 import { MensajesComponent } from './components/mensajes/mensajes.component';
@@ -76,23 +73,20 @@ import { NuevoRolComponent } from './components/roles/nuevo-rol.component';
 import { RolComponent } from './components/roles/rol.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 
-import { ProveedorService }  from "./services/proveedor.service";
+import { EliminarCarteraDialog} from "./components/carteras/eliminar-cartera-dialog.component";
+import { EditarCarteraDialog} from "./components/carteras/editar-cartera-dialog.component";
+import { CrearExpedienteDialog} from "./components/carteras/crear-expediente-dialog.component";
+import { EliminarExpedienteDialog } from "./components/carteras/eliminar-expediente-dialog.component";
 
-
+import { EliminarUsuarioDialog } from "./components/usuarios/eliminar-usuario-dialog.component";
+import { EditarUsuarioDialog } from "./components/usuarios/editar-usuario-dialog.component";
+import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.component";
 
 import { ProveedoresComponent } from './components/proveedores/proveedores.component';
 import { ProveedorComponent } from './components/proveedores/proveedor.component';
 import { ProveedorEditarComponent } from './components/proveedores/proveedor-editar.component';
 import { NuevoProveedorComponent } from './components/proveedores/nuevo-proveedor.component';
 
-import { EspaciosComponent } from './components/espacios/espacios.component';
-import { NuevoEspacioComponent } from './components/espacios/nuevo-espacio.component';
-import { EliminarEspacioComponent } from './components/espacios/eliminar-espacio.component';
-import { VentanaEmergenteComponent } from './components/ventana-emergente/ventana-emergente.component';
-
-
-
-import { LoginService }  from "./services/login.service";
 
 
 
@@ -181,8 +175,8 @@ import { LoginService }  from "./services/login.service";
     ExpedientesService,
     MatDatepickerModule,
     ProveedorService,
-    LoginService,
-    AuthService
+    AuthService,
+    AuthGuardService
   ],
   entryComponents: [
     EliminarUsuarioDialog,

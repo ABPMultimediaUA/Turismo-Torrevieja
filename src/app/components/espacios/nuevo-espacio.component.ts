@@ -1,5 +1,5 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { PeticionesCrudService, LoginService } from '../../services/index';
+import { PeticionesCrudService, AuthService } from '../../services/index';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { VentanaEmergenteComponent } from '../ventana-emergente/ventana-emergente.component'
 import { EspacioInterface } from '../../interfaces/espacio.interface';
@@ -21,13 +21,13 @@ export class NuevoEspacioComponent implements OnInit {
   camposAnyadidos:boolean;            //Feedback que devuelve a la ventana anterior cuando esta se cierra
 
   constructor(  private _itemService: PeticionesCrudService,
-                private _loginService:LoginService,
+                private _authService:AuthService,
                 public dialogRef: MatDialogRef<NuevoEspacioComponent>,
                 public dialog: MatDialog,
                 @Inject(MAT_DIALOG_DATA) public data,
              )
   {
-    this._loginService.comprobarEstadoLog();
+    // this._authService.comprobarEstadoLog();
     dialogRef.disableClose = true;
 
     //Si se pasa un item por parametro se inicializa todo para editar
