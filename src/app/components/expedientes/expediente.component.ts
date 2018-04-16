@@ -3,9 +3,9 @@ import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
 import { ActividadInterface }  from "../../interfaces/actividad.interface";
-import { TareaInterface }  from "../../interfaces/tareas.interface";
+import { TareasInterface }  from "../../interfaces/tareas.interface";
 import { ContratoInterface }  from "../../interfaces/contrato.interface";
-import { Usuario }  from "../../interfaces/usuario.interface";
+import { UsuarioInterface }  from "../../interfaces/usuario.interface";
 import { Cartera }  from "../../interfaces/cartera.interface";
 import { EspacioInterface }  from "../../interfaces/espacio.interface";
 import { ProveedorInterface }  from "../../interfaces/proveedor.interface";
@@ -66,9 +66,9 @@ export class ExpedienteComponent implements OnInit {
   };
 
   public actividades:ActividadInterface[];
-  public tareas:TareaInterface[];
+  public tareas:TareasInterface[];
   public contratos:ContratoInterface[];
-  public users:Usuario[];
+  public users:UsuarioInterface[];
   public espacio:EspacioInterface[];
   public proveedor:ProveedorInterface[];
 
@@ -117,7 +117,7 @@ export class ExpedienteComponent implements OnInit {
             //COGEMOS LAS TAREAS
             this._ItemService.getItem(102,this.id,-1,-1).then(
               res => {
-                this.tareas = res as TareaInterface[];
+                this.tareas = res as TareasInterface[];
               }
             );
 
@@ -134,7 +134,7 @@ export class ExpedienteComponent implements OnInit {
                 //TODO Cambiar select para recoger solamente los usuarios que
                 //tengan permiso para "coordinar" un evento
                 //y permiso para realizar tareas, etc.
-                this.users = res as Usuario[];
+                this.users = res as UsuarioInterface[];
               }
             );
 
@@ -194,7 +194,7 @@ export class ExpedienteComponent implements OnInit {
   }
 
   crearPlantillaTar(){
-    var t:TareaInterface;
+    var t:TareasInterface;
     t={
       expediente:+this.id,
       finalizado:null,
@@ -270,7 +270,7 @@ export class ExpedienteComponent implements OnInit {
             this.contratos[index] = res as ContratoInterface;
           }
           else if(i==2){
-            this.tareas[index] = res as TareaInterface;
+            this.tareas[index] = res as TareasInterface;
           }
           alert("Creado correctamente."); })
         .catch( (err) => { console.log( err.toString() ); })

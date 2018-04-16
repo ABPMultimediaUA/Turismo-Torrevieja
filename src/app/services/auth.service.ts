@@ -1,36 +1,41 @@
-import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject } from 'rxjs/Rx';
-import { Http, Headers } from "@angular/http";
-import { Router } from '@angular/router';
+import { Injectable }                   from '@angular/core';
+import { Observable, BehaviorSubject }  from 'rxjs/Rx';
+import { Http, Headers }                from "@angular/http";
+import { Router }                       from '@angular/router';
+import { UsuarioInterface }             from '../interfaces/usuario.interface';
 
 @Injectable()
 export class AuthService {
 
-  userLog = new BehaviorSubject<boolean>(this.hasToken());
+  userLog = new BehaviorSubject<boolean>(this.estaLogueado());  //Usuario logueado o no
+  usuario:UsuarioInterface={                                    //Plantilla user para inicializar el BehaviorSubject
+    identificador:-1,
+    nombreUsuario:"",
+    apodo:"",
+    correo:"",
+    password:"",
+    password_confirmation:"",
+    esVerificado:0,
+    rol:-1
+  };
+  user = new BehaviorSubject<UsuarioInterface>(this.usuario);  //Datos del usuario
+  userPermisos = new BehaviorSubject<number[]>([]);            //Permisos del usuario para comprobar restricciones
 
-  //TOKEN
   First_accessToken:string="Bearer ";
   Second_accessToken:string;
-
   urlBase:string = 'https://gvent.ovh/Prueba2_1/public/';
 
-  //DATOS USUARIO
-  user = new BehaviorSubject<any>(undefined);
-  userPermisos:number[] = [];
 
+  constructor( private http:Http, private router:Router ){
+    //Si hay sesion, guardamos todos los datos de las localStorage en sus variables
+    if(localStorage.getItem('accesToken')) this.Second_accessToken = localStorage.getItem('accesToken');
+    if(localStorage.getItem('user')) this.user.next(JSON.parse(localStorage.getItem('user')));
+    if(localStorage.getItem('permisos')) this.userPermisos.next(JSON.parse(localStorage.getItem('permisos')));
+  }
 
-  constructor( private http:Http,private router:Router ){
-   if(localStorage.getItem('accesToken')) this.Second_accessToken = localStorage.getItem('accesToken');
-   if(localStorage.getItem('user')) this.user.next(localStorage.getItem('user'));
-   console.log("MOSTRANDO LOCAL STORAGE USER")
-   console.log(JSON.parse(localStorage.getItem('user')))
- }
-
-  //Confirma si se tiene dicho permiso
-  tienePermiso(i:number) : boolean{
-    let r = false;
-    if(this.userPermisos.indexOf(i) != -1) r = true;
-    return r;
+  //Inicializa la variable userLog dependiendo de si ha iniciado sesion o no
+  private estaLogueado():boolean {
+    return (!!localStorage.getItem('accesToken') && !!localStorage.getItem('user'));
   }
 
   //Conocer si esta logueado o no el usuario
@@ -38,22 +43,10 @@ export class AuthService {
     return this.userLog.asObservable();
   }
 
-  //TODO eliminar
-  //Comprueba si se esta logueado, en caso de que no se este, devuelve a la pagina home
-  // comprobarEstadoLog() : boolean{
-  //   if(this.userLog && this.userLog.getValue()){
-  //     this.getUser();
-  //     return true;
-  //   }
-  //   else{
-  //     this.logout(0);
-  //     return false;
-  //   }
-  // }
-
-  //Inicializa la variable userLog dependiendo de si ha iniciado sesion o no
-  private hasToken():boolean {
-    return (!!localStorage.getItem('accesToken') && !!localStorage.getItem('user'));
+  //Confirma si se tiene dicho permiso
+  tienePermiso(i:number) : boolean{
+    if(this.userPermisos && this.userPermisos.getValue())
+      return this.userPermisos.getValue().indexOf(i) != -1;
   }
 
   /*** FUNCIONES LOGIN ***/
@@ -109,7 +102,7 @@ export class AuthService {
         .toPromise()
           .then(
             (res) => {
-              let r = res.json().data;
+              let r = res.json().data as UsuarioInterface;
               delete r.password;
               localStorage.setItem('user', JSON.stringify(r));
               this.user.next(r);
@@ -134,11 +127,13 @@ export class AuthService {
         .toPromise()
           .then(
             (res) => {
-              this.userPermisos = res.json().data.map(function(obj){
+              let per = res.json().data.map(function(obj){
                 var rObj = {};
                 rObj = obj.identificador;
                 return rObj;
               });
+              localStorage.setItem('permisos', JSON.stringify(per));
+              this.userPermisos.next(per);
               resolve( res.json() );
             },
             (err) => { resolve( err.toString() )}
@@ -159,10 +154,11 @@ export class AuthService {
 
   //Cuando se cierre sesion
   limpiarDatosUsuario(){
-    this.user.next(undefined);
-    this.userPermisos = [];
+    this.user.next(this.usuario);
+    this.userPermisos.next([])
     localStorage.removeItem("accesToken");
     localStorage.removeItem("user");
+    localStorage.removeItem("permisos");
   }
   /*** FIN FUNCIONES LOGOUT ***/
 

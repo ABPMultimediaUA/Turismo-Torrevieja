@@ -4,7 +4,7 @@
       <div class="example-container mat-elevation-z8">
         <div class="example-header">
           <h1 class="mat-display-1 tituloComponentes"><span class="icon-town-hall"></span> Espacios</h1>
-          <button *ngIf="_authService.tienePermiso(1)" mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
+          <button *ngIf="_authService.tienePermiso(5)" mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
             (click)="editarAnyadirItem(null)">Nuevo Espacio</button>
           <mat-form-field class="inputBuscarItem">
             <input matInput (keyup)="realizarBusqueda($event)" placeholder="Búsqueda" [(ngModel)]="value">
@@ -96,7 +96,7 @@
           <mat-header-row *matHeaderRowDef="['select','identificador','nombreEspacio','CP','calle','numero','telefono1','aforo']"></mat-header-row>
           <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','identificador','nombreEspacio','CP','calle','numero','telefono1','aforo']" (click)="editarAnyadirItem(row)"></mat-row>
         </mat-table>
-        <button *ngIf="_authService.tienePermiso(1)" mat-raised-button type="submit" class="botonMat botonEliminarItems" [disabled]="btnEliminar" color="warn" (click)="botonEliminarItem(selection.selected)">Eliminar espacios</button>
+        <button *ngIf="_authService.tienePermiso(8)" mat-raised-button type="submit" class="botonMat botonEliminarItems" [disabled]="btnEliminar" color="warn" (click)="botonEliminarItem(selection.selected)">Eliminar espacios</button>
       </div>
     </div>
   </div>

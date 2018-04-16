@@ -18,7 +18,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { Element }  from "../../interfaces/element.interface";
 import { Cartera }  from "../../interfaces/cartera.interface";
-import { Usuario }  from "../../interfaces/usuario.interface";
+import { UsuarioInterface }  from "../../interfaces/usuario.interface";
 
 
 import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
@@ -60,7 +60,7 @@ export class CrearExpedienteDialog {
     {value: '3', viewValue: '3er Trimestre'},
     {value: '4', viewValue: '4to Trimestre'}
   ];
-  public users:Usuario[];
+  public users:UsuarioInterface[];
 
   public expediente:ExpedienteInterfaz={
     identificador:null,
@@ -106,7 +106,7 @@ export class CrearExpedienteDialog {
                 //COGEMOS LOS USUARIOS
                 this._carterasService.getItem(5,-1,-1,-1).then(
                   res => {
-                    this.users = res as Usuario[];
+                    this.users = res as UsuarioInterface[];
                 });
 
   }

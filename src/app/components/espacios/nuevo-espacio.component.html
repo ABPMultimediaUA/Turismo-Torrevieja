@@ -83,15 +83,15 @@
                   maxLength="500"></textarea>
       </mat-form-field>
     </div>
-    <div class="row" *ngIf="!realizandoAccion && _authService.tienePermiso(1)">
+    <div class="row" *ngIf="!realizandoAccion">
       <div class="btnsEditarAnyadir">
-        <div *ngIf="!editar" class="btnsEditarAnyadir">
+        <div *ngIf="!editar && _authService.tienePermiso(5)" class="btnsEditarAnyadir">
           <mat-dialog-actions class="btnsEditarAnyadir">
             <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid">Crear</button>
             <button type="button" mat-raised-button (click)="limpiarCampos()" color="warn">Limpiar campos</button>
           </mat-dialog-actions>
         </div>
-        <div *ngIf="editar" class="btnsEditarAnyadir">
+        <div *ngIf="editar && _authService.tienePermiso(6)" class="btnsEditarAnyadir">
           <div *ngIf="bloqCampos" class="btnsEditarAnyadir">
             <button type="button" mat-raised-button color="primary" (click)="disable_enable_campos()">Editar</button>
           </div>

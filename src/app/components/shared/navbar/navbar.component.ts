@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/index';
-import { Observable } from 'rxjs/Observable';
 
 @Component({
   selector: 'app-navbar',
@@ -10,21 +9,10 @@ import { Observable } from 'rxjs/Observable';
 
 export class NavbarComponent implements OnInit {
 
-  isLogged:boolean;
+  constructor(
+    public _authService:AuthService,
+  ) {}
 
-  constructor( public _authService:AuthService,) {
-    this._authService.getEstadoLog().subscribe( res => { this.isLogged = res; });
+  ngOnInit(){
   }
-
-  ngOnInit() {
-  }
-
-  logout(){
-    this._authService.logout(0);
-  }
-
-  cerrarSesion(){
-    this._authService.logout(1);
-  }
-
 }

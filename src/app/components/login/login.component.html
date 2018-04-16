@@ -8,7 +8,7 @@
       <br><br>
       <mat-card style="text-align:center;  padding-left: 0px;  padding-top: 0px; width:400px; margin:auto;">
         <mat-toolbar class=" text-center"  style="width:400px;color: white;padding-left: 140px;background-color:#05386B">
-          <a [routerLink]="['home']"><img alt="" src="../assets/ImgHome/logo.png" style="width:120px; height:auto;"></a>
+          <a [routerLink]="['/home']"><img alt="" src="../assets/ImgHome/logo.png" style="width:120px; height:auto;"></a>
         </mat-toolbar>
         <form name="form" (ngSubmit)="login()" #f="ngForm" novalidate>
             <mat-form-field  [ngClass]="{ 'has-error': f.submitted && !username.valid }" style="width:300px; padding-left:30px; padding-top:20px;" hintLabel="Introduce un correo válido">

@@ -1,4 +1,4 @@
-export interface TareaInterface
+export interface TareasInterface
 {
   expediente:number;
   finalizado:string;

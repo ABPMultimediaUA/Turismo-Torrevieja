@@ -14,7 +14,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatProgressBarModule, MatProgr
 import {MatDialogModule} from '@angular/material/dialog';
 
 import { Element }  from "../../interfaces/element.interface";
-import { Usuario }  from "../../interfaces/usuario.interface";
+import { UsuarioInterface }  from "../../interfaces/usuario.interface";
 import {HomeComponent} from "../home/home.component";
 import { Router, ActivatedRoute } from '@angular/router';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';//ramoon
@@ -23,7 +23,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 // import {AlertService } from '../../services/alert.service';
-import { AlertService , UsuariosService } from '../../services/index';
+import { AlertService } from '../../services/index';
 // import { AlertComponent } from '../../../_directives/index';
 // import { AuthGuard } from '../../../_guards/index';
 @Component({
@@ -31,10 +31,10 @@ import { AlertService , UsuariosService } from '../../services/index';
   templateUrl: 'eliminar-usuario-dialog.html',
 })
 export class EliminarUsuarioDialog {
-  row:Usuario;
-  id:string;
+  row:UsuarioInterface;
+  id:number;
   eliminando:boolean =false;
-  constructor(private _usuariosService:UsuariosService,
+  constructor(
               private router:Router,
               private route:ActivatedRoute,
               public dialog: MatDialog,
@@ -63,31 +63,31 @@ export class EliminarUsuarioDialog {
    location.reload(true);
    },2000);
 
-     this._usuariosService.borrarUsuario( this.id)
-         .subscribe(respuesta=>{
-           if(respuesta){
-             console.log("caracola");
-             console.log(respuesta);
-             console.log( "borrausuario y ahora va a pedir todos los usuarios de nuevo" );
-           this._usuariosService.getUsuarios("1");
-           console.log( "aqui los ha pedido ya todos de nuevo y voy a hacer el router navigate a usuarios" );
-
-            // this.dialogRef.close();
-
-           // this.router.navigate(['eventos']);
-           // this.refresh();
-           }else{
-             //todo bien
-             // delete this.eventos[id];
-           //   console.log( "borrausuario y ahora va a pedir todos los usuarios de nuevo" );
-           // this._usuariosService.getUsuarios();
-           // console.log( "aqui los ha pedido ya todos de nuevo" );
-           // this.refresh();
-
-
-           }
-
-         })
+     // this._usuariosService.borrarUsuario( this.id)
+     //     .subscribe(respuesta=>{
+     //       if(respuesta){
+     //         console.log("caracola");
+     //         console.log(respuesta);
+     //         console.log( "borrausuario y ahora va a pedir todos los usuarios de nuevo" );
+     //       this._usuariosService.getUsuarios("1");
+     //       console.log( "aqui los ha pedido ya todos de nuevo y voy a hacer el router navigate a usuarios" );
+     //
+     //        // this.dialogRef.close();
+     //
+     //       // this.router.navigate(['eventos']);
+     //       // this.refresh();
+     //       }else{
+     //         //todo bien
+     //         // delete this.eventos[id];
+     //       //   console.log( "borrausuario y ahora va a pedir todos los usuarios de nuevo" );
+     //       // this._usuariosService.getUsuarios();
+     //       // console.log( "aqui los ha pedido ya todos de nuevo" );
+     //       // this.refresh();
+     //
+     //
+     //       }
+     //
+     //     })
 
    }
    cancelar(){

@@ -1,66 +1,98 @@
-<br><br><br><br><br>
-<div class="container-fluid">
-  <div class="row ">
-        <h1 class="ml-1"> <span class="icon-handshake-o"> </span> Proveedores</h1>
-        <div class="table-responsive">
-          <table class="table table-striped">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">ID</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Tipo</th>
-                <th scope="col">Acceder</th>
-                <th scope="col">Eliminar</th>
-              </tr>
-            </thead>
-            <tbody>
-               <!-- el pipe keys es para pasar un objeto a un array -->
-              <tr *ngFor="let proveedor of  proveedores  ; let i = index">
-                <td>{{ i + 1 }}</td>
-                <td>{{ proveedor.nombreProveedor }}</td>
-                <td>{{ proveedor.clase }}</td>
-                <td><button  [routerLink]="['/proveedoredit', proveedor.identificador]"
-                type="button" class="btn btn-outline-success">
-                  Abrir
-                </button></td>
-                <td><button  (click)="borrarProveedor(proveedor.identificador)"
-                type="button" class="btn btn-outline-danger">
-                  Eliminar
-                </button></td>
-              </tr>
-
-            </tbody>
-
-          </table>
-
-          <!-- si no hay usuarios muestra esto -->
-          <div *ngIf="(proveedores).length === 0"
-          class="alert alert-info" role="alert">
-              <strong>No hay </strong> proveedores
+<div class="container-fluid divContenedorTabla">
+  <div class="row">
+    <div  class="table-responsive">
+      <div class="example-container mat-elevation-z8">
+        <div class="example-header">
+          <h1 class="mat-display-1 tituloComponentes"><span class="icon-town-hall"></span> Proveedores</h1>
+          <button *ngIf="_authService.tienePermiso(29)" mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
+            (click)="editarAnyadirItem(null)">Nuevo Proveedor</button>
+          <mat-form-field class="inputBuscarItem">
+            <input matInput (keyup)="realizarBusqueda($event)" placeholder="Búsqueda" [(ngModel)]="value">
+            <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)='realizarBusqueda($event, true);value=""'>
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <div class="divPaginacion">
+            <!-- <p>Elementos por página</p> -->
+            <div class="elementosPaginacion">
+              <mat-form-field class="selectNumPgns">
+                <mat-select [(value)]="option_Items_Pgn" placeholder="Elementos por página" (change)="actualizarPaginacion()">
+                  <mat-option value="5">5</mat-option>
+                  <mat-option value="10">10</mat-option>
+                  <mat-option value="15">15</mat-option>
+                  <mat-option value="20">20</mat-option>
+                  <mat-option value="30">30</mat-option>
+                  <mat-option value="40">40</mat-option>
+                  <mat-option value="50">50</mat-option>
+                  <mat-option value="75">75</mat-option>
+                  <mat-option value="100">100</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="elementosPaginacion">
+              <p>Pág. {{paginacion.current_page}} de {{paginacion.total_pages}}</p>
+            </div>
+            <div class="elementosPaginacion btnsPaginacion" #btnsPag>
+              <a class="btnsPaginacionOff" (click)="cambiarPgn(1)"><i class="material-icons">first_page</i></a>
+              <a class="btnsPaginacionOff" (click)="cambiarPgn(2)"><i class="material-icons">navigate_before</i></a>
+              <a class="btnsPaginacionOff" (click)="cambiarPgn(3)"><i class="material-icons">navigate_next</i></a>
+              <a class="btnsPaginacionOff" (click)="cambiarPgn(4)"><i class="material-icons">last_page</i></a>
+            </div>
           </div>
-
         </div>
-        <br>
-        <!-- <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-center">
-            <li *ngIf="currentPage > 1 " class="page-item" >
-              <a class="page-link" (click)="nuevaPagina(currentPage-1)" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-            <li class="page-item" *ngFor="let i of cantidadPagina" >
-              <a class="page-link" (click)="nuevaPagina(i+1)" >{{ i+1 }}</a>
-            </li>
+        <mat-table class="tablaComponente" #table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="select">
+            <mat-header-cell *matHeaderCellDef>
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()"
+                            (change)="activarDesBtnEliminar(selection.selected)">
+              </mat-checkbox>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null"
+                            [checked]="selection.isSelected(row)"
+                            (change)="activarDesBtnEliminar(selection.selected)">
+              </mat-checkbox>
+            </mat-cell>
+          </ng-container>
 
-            <li *ngIf="currentPage!=totalPaginas" class="page-item" routerLinkActive="active">
-              <a class="page-link" (click)="nuevaPagina(currentPage+1)" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-                <span class="sr-only">Next</span>
-              </a>
-            </li>
-          </ul>
-        </nav> -->
+          <ng-container matColumnDef="identificador">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(0)">Id</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.identificador}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="nombreProveedor">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(1)">Nombre</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.nombreProveedor}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="codigoPostal">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(3)">CP</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.codigoPostal}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="direccion">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(4)">Dirección</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.direccion}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="telefonoUno">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(5)">Teléfono</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.telefonoUno}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="correoUno">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(6)">Email</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.correoUno}}</mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="['select','identificador','nombreProveedor','codigoPostal','direccion','telefonoUno','correoUno']"></mat-header-row>
+          <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','identificador','nombreProveedor','codigoPostal','direccion','telefonoUno','correoUno']" (click)="editarAnyadirItem(row)"></mat-row>
+        </mat-table>
+        <button *ngIf="_authService.tienePermiso(32)" mat-raised-button type="submit" class="botonMat botonEliminarItems" [disabled]="btnEliminar" color="warn" (click)="botonEliminarItem(selection.selected)">Eliminar proveedores</button>
+      </div>
     </div>
-
+  </div>
 </div>

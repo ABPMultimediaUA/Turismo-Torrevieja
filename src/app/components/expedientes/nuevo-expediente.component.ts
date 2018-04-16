@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
-import { Usuario }  from "../../interfaces/usuario.interface";
+import { UsuarioInterface }  from "../../interfaces/usuario.interface";
 import { Cartera }  from "../../interfaces/cartera.interface";
 import { AlertService , PeticionesCrudService } from '../../services/index';
 
@@ -25,7 +25,7 @@ export class NuevoExpedienteComponent implements OnInit {
     titulo:"",
   };
 
-  public users:Usuario[];
+  public users:UsuarioInterface[];
   public cartera:Cartera[];
 
   @ViewChild("etiquetaImgExp") etiqueta;
@@ -43,7 +43,7 @@ export class NuevoExpedienteComponent implements OnInit {
         res => {
           //TODO Cambiar select para recoger solamente los usuarios que
           //tengan permiso para "coordinar" un evento
-          this.users = res as Usuario[];
+          this.users = res as UsuarioInterface[];
         }
       );
 

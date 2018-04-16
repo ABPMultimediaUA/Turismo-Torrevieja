@@ -1,6 +1,8 @@
-import { NgModule }             from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { AuthGuardService }     from './services/auth-guard.service';
+import { NgModule }                     from '@angular/core';
+import { RouterModule, Routes }         from '@angular/router';
+import { AuthGuardService, AuthGuardUsuariosService, AuthGuardRolesService,
+AuthGuardCarterasService, AuthGuardEventosService, AuthGuardEspaciosService,
+AuthGuardProveedoresService } from './services/auth-guard.service';
 
 //Menu no login
 import { HomeComponent }        from "./components/home/home.component";
@@ -23,7 +25,7 @@ import { MensajesComponent }    from "./components/mensajes/mensajes.component";
 
 
 
-
+//TODO eliminar
 import { NuevoUsuarioComponent } from "./components/usuarios/nuevo-usuario.component";
 import { UsuarioComponent } from "./components/usuarios/usuario.component";
 
@@ -36,10 +38,7 @@ import { NuevoExpedienteComponent } from './components/expedientes/nuevo-expedie
 
 import { NuevoRolComponent } from "./components/roles/nuevo-rol.component";
 import { RolComponent } from "./components/roles/rol.component";
-
-import { ProveedorComponent } from './components/proveedores/proveedor.component';
-import { ProveedorEditarComponent } from './components/proveedores/proveedor-editar.component';
-import { NuevoProveedorComponent } from './components/proveedores/nuevo-proveedor.component';
+//TODO Fin eliminar
 
 
 
@@ -54,12 +53,13 @@ const app_routes: Routes = [
   //Menu Login
   { path: 'perfil', canActivate:[AuthGuardService], component: PerfilComponent },
   { path: 'perfil/:id', canActivate:[AuthGuardService], component: PerfilComponent }, //TODO ver si es necesario
-  { path: 'usuarios', canActivate:[AuthGuardService], component: UsuariosComponent },
-  { path: 'roles', canActivate:[AuthGuardService], component: RolesComponent },
-  { path: 'carteras', canActivate:[AuthGuardService], component: CarterasComponent },
-  { path: 'expedientes', canActivate:[AuthGuardService], component: ExpedientesComponent },
-  { path: 'proveedores', canActivate:[AuthGuardService], component: ProveedoresComponent },
-  { path: 'espacios', canActivate:[AuthGuardService], component: EspaciosComponent },
+  { path: 'usuarios', canActivate:[AuthGuardService,AuthGuardUsuariosService], component: UsuariosComponent },
+  { path: 'roles', canActivate:[AuthGuardService,AuthGuardRolesService], component: RolesComponent },
+  { path: 'carteras', canActivate:[AuthGuardService,AuthGuardCarterasService], component: CarterasComponent },
+  { path: 'expedientes', canActivate:[AuthGuardService,AuthGuardEventosService], component: ExpedientesComponent },
+  { path: 'espacios', canActivate:[AuthGuardService,AuthGuardEspaciosService], component: EspaciosComponent },
+  { path: 'proveedores', canActivate:[AuthGuardService,AuthGuardProveedoresService], component: ProveedoresComponent },
+
 
   //Otros
   { path: 'mensajes/:parame', component: MensajesComponent },
@@ -75,23 +75,16 @@ const app_routes: Routes = [
   { path: 'usuarios/:id', component: UsuariosComponent },
   { path: 'nuevo-usuario', component: NuevoUsuarioComponent },
   { path: 'usuario/:id', component: UsuarioComponent },
-
   //rutas carteras
   { path: 'carteras/:id', component: CarterasComponent },
   { path: 'nueva-cartera', component: NuevaCarteraComponent },
   { path: 'cartera/:id', component: CarteraComponent },
-
   //rutas expedientes
   { path: 'nuevo-expediente', component: NuevoExpedienteComponent },
   { path: 'expediente/:id', component: ExpedienteComponent },
+  //TODO Fin eliminar
 
-  { path: 'nuevo-proveedor', component: NuevoProveedorComponent },
-  { path: 'proveedor/:id', component: ProveedorComponent },
-  { path: 'proveedoredit/:id', component: ProveedorEditarComponent },
-
-  //Ruta espacios
-
-  //{ path: 'usuariosReloaded', component: UsuariosComponent },
+  //{ path: 'usuariosReloaded', component: UsuariosComponent }, //TODO que es esto???
 ];
 
 export const APP_ROUTING = RouterModule.forRoot(app_routes);

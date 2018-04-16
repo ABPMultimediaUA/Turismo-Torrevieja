@@ -1,11 +1,11 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { PeticionesCrudService, AuthService } from '../../services/index';
-import { SelectionModel } from '@angular/cdk/collections';
-import { MatTableDataSource, MatDialog } from '@angular/material';
-import { EliminarEspacioComponent } from './eliminar-espacio.component';
-import { PaginacionInterface } from '../../interfaces/paginacion.interface';
-import { EspacioInterface } from '../../interfaces/espacio.interface';
-import { NuevoEspacioComponent } from './nuevo-espacio.component';
+import { Component, OnInit, ViewChild }         from '@angular/core';
+import { PeticionesCrudService, AuthService }   from '../../services/index';
+import { SelectionModel }                       from '@angular/cdk/collections';
+import { MatTableDataSource, MatDialog }        from '@angular/material';
+import { EliminarEspacioComponent }             from './eliminar-espacio.component';
+import { PaginacionInterface }                  from '../../interfaces/paginacion.interface';
+import { EspacioInterface }                     from '../../interfaces/espacio.interface';
+import { NuevoEspacioComponent }                from './nuevo-espacio.component';
 
 @Component({
   selector: 'app-espacios',
@@ -29,11 +29,11 @@ export class EspaciosComponent implements OnInit {
   dataSource = new MatTableDataSource(this.items);            //Datos de la tabla
   selection = new SelectionModel<EspacioInterface>(true, []); //Filas seleccionadas
 
-  constructor(  private _itemService: PeticionesCrudService,
-                private _authService:AuthService,
-                public dialog: MatDialog
-             )
-  {
+  constructor(
+    private _itemService: PeticionesCrudService,
+    private _authService:AuthService,
+    public dialog: MatDialog
+  ){
     this.cargarItems(this.selectUrl,+this.option_Items_Pgn,1);
     this.cargarPaginacionInicial();
   }

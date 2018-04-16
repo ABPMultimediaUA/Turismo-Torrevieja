@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { Cartera }  from "../../interfaces/cartera.interface";
-import { Usuario }  from "../../interfaces/usuario.interface";
+import { UsuarioInterface }  from "../../interfaces/usuario.interface";
 import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
 import { AlertService, PeticionesCrudService } from '../../services/index';
 
@@ -51,7 +51,7 @@ export class CarteraComponent implements OnInit {
   };
 
   // public expediente:ExpedienteInterfaz[];
-  public users:Usuario[];
+  public users:UsuarioInterface[];
   public expN:ExpedienteInterfaz={
     identificador:null,
     avance:0,
@@ -130,7 +130,7 @@ export class CarteraComponent implements OnInit {
       //COGEMOS LOS USUARIOS
       this._carterasService.getItem(5,-1,-1,-1).then(
         res => {
-          this.users = res as Usuario[];
+          this.users = res as UsuarioInterface[];
       });
     });
   }

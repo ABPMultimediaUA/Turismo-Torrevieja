@@ -1,7 +1,7 @@
 
-export interface Usuario
+export interface UsuarioInterface
 {
-    identificador:string;
+    identificador:number;
     nombreUsuario:string;
     apodo:string;
     correo:string;

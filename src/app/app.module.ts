@@ -1,16 +1,17 @@
-import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, Component, ViewChild } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpModule } from '@angular/http';
-import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
-import { AppComponent } from './app.component';
-import { APP_ROUTING } from './app.routes';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { SelectionModel } from '@angular/cdk/collections';
+import { BrowserModule }                              from '@angular/platform-browser';
+import { NgModule, Component, ViewChild }             from '@angular/core';
+import { FormsModule, ReactiveFormsModule }           from '@angular/forms';
+import { HttpModule }                                 from '@angular/http';
+import { HttpClient, HttpHeaders, HttpClientModule }  from '@angular/common/http';
+import { AppComponent }                               from './app.component';
+import { APP_ROUTING }                                from './app.routes';
+import { BrowserAnimationsModule }                    from '@angular/platform-browser/animations';
+import { SelectionModel }                             from '@angular/cdk/collections';
 
 // servicios
-import { AlertService, ExpedientesService, TareasService, AuthService, UsuariosService,
-CarterasService, PeticionesCrudService, ProveedorService, AuthGuardService } from './services/index';
+import { AlertService, ExpedientesService, AuthService, CarterasService, PeticionesCrudService,
+AuthGuardService, AuthGuardUsuariosService, AuthGuardRolesService, AuthGuardCarterasService,
+AuthGuardEventosService, AuthGuardEspaciosService, AuthGuardProveedoresService } from './services/index';
 
 //Angular material
 import {MatMenuModule} from '@angular/material/menu';
@@ -29,21 +30,24 @@ import { MatIcon, MatPaginatorModule, MatTableDataSource, MatSort,
         } from '@angular/material';
 
 //Componentes no login
-import { NavbarComponent } from './components/shared/navbar/navbar.component';
-import { HomeComponent } from './components/home/home.component';
-import { AboutComponent } from './components/about/about.component';
-import { LoginComponent } from './components/login/login.component';
-import { FooterComponent } from './components/shared/footer/footer.component';
-import { ContactComponent } from './components/contact/contact.component';
+import { NavbarComponent }            from './components/shared/navbar/navbar.component';
+import { HomeComponent }              from './components/home/home.component';
+import { AboutComponent }             from './components/about/about.component';
+import { LoginComponent }             from './components/login/login.component';
+import { FooterComponent }            from './components/shared/footer/footer.component';
+import { ContactComponent }           from './components/contact/contact.component';
 
 //Componentes Login
-import { EspaciosComponent } from './components/espacios/espacios.component';
-import { NuevoEspacioComponent } from './components/espacios/nuevo-espacio.component';
-import { EliminarEspacioComponent } from './components/espacios/eliminar-espacio.component';
+import { EspaciosComponent }          from './components/espacios/espacios.component';
+import { NuevoEspacioComponent }      from './components/espacios/nuevo-espacio.component';
+import { EliminarEspacioComponent }   from './components/espacios/eliminar-espacio.component';
 
+import { ProveedoresComponent }       from './components/proveedores/proveedores.component';
+import { NuevoProveedorComponent }    from './components/proveedores/nuevo-proveedor.component';
+import { EliminarProveedorComponent } from './components/proveedores/eliminar-proveedor.component';
 
 //Otros
-import { VentanaEmergenteComponent } from './components/ventana-emergente/ventana-emergente.component';
+import { VentanaEmergenteComponent }  from './components/ventana-emergente/ventana-emergente.component';
 
 
 
@@ -81,11 +85,6 @@ import { EliminarExpedienteDialog } from "./components/carteras/eliminar-expedie
 import { EliminarUsuarioDialog } from "./components/usuarios/eliminar-usuario-dialog.component";
 import { EditarUsuarioDialog } from "./components/usuarios/editar-usuario-dialog.component";
 import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.component";
-
-import { ProveedoresComponent } from './components/proveedores/proveedores.component';
-import { ProveedorComponent } from './components/proveedores/proveedor.component';
-import { ProveedorEditarComponent } from './components/proveedores/proveedor-editar.component';
-import { NuevoProveedorComponent } from './components/proveedores/nuevo-proveedor.component';
 
 
 
@@ -125,9 +124,8 @@ import { NuevoProveedorComponent } from './components/proveedores/nuevo-proveedo
     CrearExpedienteDialog,
     EliminarExpedienteDialog,
     ProveedoresComponent,
-    ProveedorComponent,
-    ProveedorEditarComponent,
     NuevoProveedorComponent,
+    EliminarProveedorComponent,
     EspaciosComponent,
     NuevoEspacioComponent,
     EliminarEspacioComponent,
@@ -165,18 +163,21 @@ import { NuevoProveedorComponent } from './components/proveedores/nuevo-proveedo
     APP_ROUTING,
   ],
   providers: [
-    UsuariosService,
     CarterasService,
     PeticionesCrudService,
     AlertService,
     NavbarComponent,
     HomeComponent,
-    TareasService,
     ExpedientesService,
     MatDatepickerModule,
-    ProveedorService,
     AuthService,
-    AuthGuardService
+    AuthGuardService,
+    AuthGuardUsuariosService,
+    AuthGuardRolesService,
+    AuthGuardCarterasService,
+    AuthGuardEventosService,
+    AuthGuardEspaciosService,
+    AuthGuardProveedoresService
   ],
   entryComponents: [
     EliminarUsuarioDialog,
@@ -190,6 +191,10 @@ import { NuevoProveedorComponent } from './components/proveedores/nuevo-proveedo
     //Ventanas emergentes espacio
     EliminarEspacioComponent,
     NuevoEspacioComponent,
+
+    //Ventanas emergentes proveedor
+    EliminarProveedorComponent,
+    NuevoProveedorComponent,
 
     //Mensaje emergente
     VentanaEmergenteComponent

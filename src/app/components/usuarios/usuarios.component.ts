@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import {LoginComponent} from '../login/login.component';
 
-import { Usuario }  from "../../interfaces/usuario.interface";
+import { UsuarioInterface }  from "../../interfaces/usuario.interface";
 import { ViewChild} from '@angular/core';
 import {MatTableDataSource, MatSort} from '@angular/material';
 import { MatFormFieldModule } from '@angular/material';
@@ -23,7 +23,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 
-import { AlertService , UsuariosService } from '../../services/index';
+import { AlertService } from '../../services/index';
 
 import {EliminarUsuarioDialog} from "./eliminar-usuario-dialog.component";
 import {EditarUsuarioDialog} from "./editar-usuario-dialog.component";
@@ -44,15 +44,15 @@ export class UsuariosComponent implements OnInit {
   totalPaginas:number;
   currentPage:number = 1;
   // k:number;
- row:Usuario;
+ row:UsuarioInterface;
 
 
 //megacaca
-  ELEMENT_DATA: Usuario[];
+  ELEMENT_DATA: UsuarioInterface[];
   usuarios:any[] = [];
   displayedColumns = ['select','identificador', 'nombreUsuario', 'apodo', 'esVerificado','rol'];
   dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-  selection = new SelectionModel<Usuario>(true, []);
+  selection = new SelectionModel<UsuarioInterface>(true, []);
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -62,63 +62,63 @@ export class UsuariosComponent implements OnInit {
 
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
-      this.selection = new SelectionModel<Usuario>(true, []);
+      this.selection = new SelectionModel<UsuarioInterface>(true, []);
       console.log(this.dataSource.sort);
     }
 //finalmegacaca
 
 
-  constructor(private _usuariosService:UsuariosService,
+  constructor(
               private router:Router,
               private route:ActivatedRoute,
                 public dialog: MatDialog
             ) {
-        this._usuariosService.getUsuarios("1")
-          .subscribe( data =>{
-            console.log(data);//la data del getHeroes
-
-            this.usuarios= data.data;
-            console.log("array de usuarios:");
-            console.log(this.usuarios);
-
-
-            //megapis
-            this.ELEMENT_DATA = this.usuarios;
-            this.displayedColumns = ['select','identificador', 'nombreUsuario', 'apodo', 'esVerificado','rol'];
-            this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-            this.selection = new SelectionModel<Usuario>(true, []);
-            this.dataSource.sort = this.sort;
-            this.dataSource.paginator = this.paginator;
-            //finalmegapis
-
-
-            this.totalPaginas = Math.ceil(this.usuarios.length/10);
-            console.log("this.totalPaginas:");
-            console.log(this.totalPaginas);
-            this.loading=false;
-
-
-            for(let i=0;i<this.totalPaginas;i++)
-            {
-              this.cantidadPagina.push(i);
-            }
-
-            if(this.usuarios.length>9){
-              for(let i=0;i<=9;i++)
-              {
-                this.usuariosActuales.push(this.usuarios[i]);
-              }
-            }else{
-              for(let i=0;i<=this.usuarios.length;i++)
-              {
-                this.usuariosActuales.push(this.usuarios[i]);
-              }
-            }
-
-
-
-
-          })
+        // this._usuariosService.getUsuarios("1")
+        //   .subscribe( data =>{
+        //     console.log(data);//la data del getHeroes
+        //
+        //     this.usuarios= data.data;
+        //     console.log("array de usuarios:");
+        //     console.log(this.usuarios);
+        //
+        //
+        //     //megapis
+        //     this.ELEMENT_DATA = this.usuarios;
+        //     this.displayedColumns = ['select','identificador', 'nombreUsuario', 'apodo', 'esVerificado','rol'];
+        //     this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+        //     this.selection = new SelectionModel<UsuarioInterface>(true, []);
+        //     this.dataSource.sort = this.sort;
+        //     this.dataSource.paginator = this.paginator;
+        //     //finalmegapis
+        //
+        //
+        //     this.totalPaginas = Math.ceil(this.usuarios.length/10);
+        //     console.log("this.totalPaginas:");
+        //     console.log(this.totalPaginas);
+        //     this.loading=false;
+        //
+        //
+        //     for(let i=0;i<this.totalPaginas;i++)
+        //     {
+        //       this.cantidadPagina.push(i);
+        //     }
+        //
+        //     if(this.usuarios.length>9){
+        //       for(let i=0;i<=9;i++)
+        //       {
+        //         this.usuariosActuales.push(this.usuarios[i]);
+        //       }
+        //     }else{
+        //       for(let i=0;i<=this.usuarios.length;i++)
+        //       {
+        //         this.usuariosActuales.push(this.usuarios[i]);
+        //       }
+        //     }
+        //
+        //
+        //
+        //
+        //   })
   }
   ngOnInit() {
   }

@@ -1,11 +1,19 @@
 export interface ProveedorInterface
 {
+  cifnif:string;
+  localidad:string;
+  provincia:string;
   clase:string;
   correoDos:string;
   correoUno:string;
   identificador:number;
   nombreProveedor:string;
-  telefonoDos:number;
-  telefonoTres:number;
-  telefonoUno:number;
+  telefonoDos:string;
+  telefonoTres:string;
+  telefonoUno:string;
+  codigoPostal:string;
+  direccion:string;
+  fechaActualizacion:string;
+  fechaCreacion:string;
+  fechaEliminacion:string;
 }
