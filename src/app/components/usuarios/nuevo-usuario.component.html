@@ -1,5 +1,8 @@
 <div class="contenedorEditar">
-  <h1 class="mat-display-1 tituloComponentes"><span class="icon-user-add-outline"></span><span class="icon-handshake-o"></span> {{titulo}} {{items.nombreEspacio}}</h1>
+  <h1 class="mat-display-1 tituloComponentes">
+    <span *ngIf="!editar" class="icon-user-add-outline"></span>
+    <span *ngIf="editar" class="icon-handshake-o"></span> {{titulo}} {{items.nombreUsuario}}
+  </h1>
   <div class="VentanaEmergenteSpinner1">
     <div class="VentanaEmergenteSpinner2" *ngIf="realizandoAccion">
         <mat-spinner color="warn"></mat-spinner>
@@ -10,35 +13,39 @@
     <div class="row contenedorFormCamposDestacados">
 
       <mat-form-field hintLabel="">
-        <input matInput name="nombreEspacio" [(ngModel)]="items.nombreProveedor" placeholder="Nombre" [readonly]="bloqCampos"
+        <input matInput name="nombreUsuario" [(ngModel)]="items.nombreUsuario" placeholder="Nombre" [readonly]="bloqCampos"
                maxLength="200" required>
         <mat-error>Campo requerido</mat-error>
       </mat-form-field>
 
       <mat-form-field hintLabel="">
-        <input matInput name="codigoPostal" [(ngModel)]="items.codigoPostal" placeholder="Código Postal" [readonly]="bloqCampos"
-               pattern="[0-9]{5}" minLength="5" maxLength="5">
-        <mat-error>Han de ser cinco números</mat-error>
-      </mat-form-field>
-
-      <mat-form-field hintLabel="">
-        <input matInput name="provincia" [(ngModel)]="items.provincia" placeholder="Provincia" [readonly]="bloqCampos"
+        <input matInput name="apodo" [(ngModel)]="items.apodo" placeholder="Apodo" [readonly]="bloqCampos"
                maxLength="50">
       </mat-form-field>
 
       <mat-form-field hintLabel="">
-        <input matInput name="localidad" [(ngModel)]="items.localidad" placeholder="Localidad" [readonly]="bloqCampos"
+        <input matInput type="email" name="correo" [(ngModel)]="items.correo" placeholder="Email" [readonly]="bloqCampos"
                maxLength="50">
+      </mat-form-field>
+
+      <mat-form-field hintLabel="">
+        <input matInput type="email" name="rol" [(ngModel)]="items.rol" placeholder="Rol" [readonly]="bloqCampos">
+      </mat-form-field>
+
+      <div class="">
+        <label>Verificado</label>
+        <mat-icon color="primary" *ngIf="items.esVerificado == 1">done</mat-icon>
+        <mat-icon color="primary" *ngIf="items.esVerificado == 0">highlight_off</mat-icon>
+      </div>
+
+
+      <mat-form-field hintLabel="" *ngIf="editar">
+        <input matInput name="fechaCreacion" [(ngModel)]="items.fechaCreacion" placeholder="Fecha de creación" readonly>
       </mat-form-field>
 
     </div>
     <div class="row">
       <div class="col-sm-3 contenedorFormCampos">
-
-        <mat-form-field hintLabel="">
-          <input matInput name="direccion" [(ngModel)]="items.direccion" placeholder="Dirección" [readonly]="bloqCampos"
-                 maxLength="200">
-        </mat-form-field>
 
         <!-- <mat-form-field hintLabel="">
           <input matInput name="calle" [(ngModel)]="items.calle" placeholder="Calle" [readonly]="bloqCampos"
@@ -60,43 +67,11 @@
                  maxLength="20">
         </mat-form-field> -->
 
-        <mat-form-field hintLabel="">
-          <input matInput name="cifnif" [(ngModel)]="items.cifnif" placeholder="CIF / NIF" [readonly]="bloqCampos"
-                 maxLength="40">
-        </mat-form-field>
 
-        <mat-form-field hintLabel="">
-          <input matInput name="clase" [(ngModel)]="items.clase" placeholder="Clase" [readonly]="bloqCampos"
-                 maxLength="40" required>
-        </mat-form-field>
-
-        <mat-form-field hintLabel="">
-          <input matInput type="email" name="correoUno" [(ngModel)]="items.correoUno" placeholder="Email 1" [readonly]="bloqCampos"
-                 maxLength="50">
-        </mat-form-field>
 
       </div>
       <div class="col-sm-3 contenedorFormCampos">
 
-        <mat-form-field hintLabel="">
-          <input matInput type="email" name="correoDos" [(ngModel)]="items.correoDos" placeholder="Email 2" [readonly]="bloqCampos"
-                 maxLength="50">
-        </mat-form-field>
-
-        <mat-form-field hintLabel="">
-          <input matInput name="telefonoUno" [(ngModel)]="items.telefonoUno" placeholder="Teléfono 1" [readonly]="bloqCampos"
-                 maxLength="11">
-        </mat-form-field>
-
-        <mat-form-field hintLabel="">
-          <input matInput name="telefonoDos" [(ngModel)]="items.telefonoDos" placeholder="Teléfono 3" [readonly]="bloqCampos"
-                 maxLength="11">
-        </mat-form-field>
-
-        <mat-form-field hintLabel="">
-          <input matInput name="telefonoTres" [(ngModel)]="items.telefonoTres" placeholder="Teléfono 3" [readonly]="bloqCampos"
-                 maxLength="11">
-        </mat-form-field>
 
       </div>
     </div>

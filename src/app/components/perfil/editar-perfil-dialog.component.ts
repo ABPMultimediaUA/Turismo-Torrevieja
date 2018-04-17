@@ -48,7 +48,10 @@ export class EditarPerfilDialog {
     password_confirmation:"",
     esVerificado:0,
     //key$?:string; identificador es la key
-    rol:0
+    rol:0,
+    fechaActualizacion:"",
+    fechaEliminacion:"",
+    fechaCreacion:"",
   };
 
   roles = [
