@@ -13,10 +13,13 @@ export class AuthService {
     nombreUsuario:"",
     apodo:"",
     correo:"",
-    password:"",
-    password_confirmation:"",
+    // password:"",
+    // password_confirmation:"",
     esVerificado:0,
-    rol:-1
+    rol:-1,
+    fechaActualizacion:"",
+    fechaEliminacion:"",
+    fechaCreacion:"",
   };
   user = new BehaviorSubject<UsuarioInterface>(this.usuario);  //Datos del usuario
   userPermisos = new BehaviorSubject<number[]>([]);            //Permisos del usuario para comprobar restricciones
@@ -103,7 +106,7 @@ export class AuthService {
           .then(
             (res) => {
               let r = res.json().data as UsuarioInterface;
-              delete r.password;
+              // delete r.password;
               localStorage.setItem('user', JSON.stringify(r));
               this.user.next(r);
               this.getPermisosUser(r.rol);

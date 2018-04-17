@@ -26,8 +26,6 @@ import { MensajesComponent }    from "./components/mensajes/mensajes.component";
 
 
 //TODO eliminar
-import { NuevoUsuarioComponent } from "./components/usuarios/nuevo-usuario.component";
-import { UsuarioComponent } from "./components/usuarios/usuario.component";
 
 import { CarteraComponent } from './components/carteras/cartera.component';
 import { NuevaCarteraComponent } from './components/carteras/nueva-cartera.component';
@@ -71,10 +69,6 @@ const app_routes: Routes = [
   { path: 'rol/:id', component: RolComponent },
   { path: 'mensajes/:parame', component: MensajesComponent },
   //{ path: 'usuariosReloaded', component: UsuariosComponent },
-  //rutas usuarios
-  { path: 'usuarios/:id', component: UsuariosComponent },
-  { path: 'nuevo-usuario', component: NuevoUsuarioComponent },
-  { path: 'usuario/:id', component: UsuarioComponent },
   //rutas carteras
   { path: 'carteras/:id', component: CarterasComponent },
   { path: 'nueva-cartera', component: NuevaCarteraComponent },

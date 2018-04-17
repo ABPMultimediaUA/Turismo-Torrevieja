@@ -3,6 +3,7 @@ import { PeticionesCrudService, AuthService }       from '../../services/index';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { VentanaEmergenteComponent }                from '../ventana-emergente/ventana-emergente.component'
 import { UsuarioInterface }                         from '../../interfaces/usuario.interface';
+import { RolesInterface }                           from '../../interfaces/roles.interface';
 
 @Component({
   selector: 'app-usuario',
@@ -19,6 +20,7 @@ export class NuevoUsuarioComponent implements OnInit {
   editar:boolean = false;             //Saber si el form es para crear o para editar
   bloqCampos:boolean = true;          //Habilitar o deshabilitar campos del form (avtivar desactivar modo edicion)
   camposAnyadidos:boolean;            //Feedback que devuelve a la ventana anterior cuando esta se cierra
+  roles:RolesInterface[]=[];
 
   constructor(  private _itemService: PeticionesCrudService,
                 private _authService:AuthService,
@@ -27,7 +29,6 @@ export class NuevoUsuarioComponent implements OnInit {
                 @Inject(MAT_DIALOG_DATA) public data,
              )
   {
-    // this._authService.comprobarEstadoLog();
     dialogRef.disableClose = true;
 
     //Si se pasa un item por parametro se inicializa todo para editar
@@ -43,6 +44,18 @@ export class NuevoUsuarioComponent implements OnInit {
       this.bloqCampos = false;
       this.titulo = "Nuevo usuario";
     }
+
+    //Obtenemos los roles
+    this._itemService.getItem(4,-1,-1,-1).then(
+      res => {
+        console.log(res);
+        if(typeof res != "string"){
+          if(res && res["data"] && res["meta"]){
+            this.roles = res["data"] as RolesInterface[];
+          }
+        }
+      }
+    );
 
     this.camposAnyadidos=false;
 
@@ -80,8 +93,8 @@ export class NuevoUsuarioComponent implements OnInit {
       esVerificado:null,
       apodo:null,
       correo:null,
-      password:null,
-      password_confirmation:null,
+      // password:null,
+      // password_confirmation:null,
       fechaActualizacion:null,
       fechaCreacion:null,
       fechaEliminacion:null,
@@ -97,8 +110,8 @@ export class NuevoUsuarioComponent implements OnInit {
       esVerificado:this.itemSinModif.esVerificado,
       apodo:this.itemSinModif.apodo,
       correo:this.itemSinModif.correo,
-      password:this.itemSinModif.password,
-      password_confirmation:this.itemSinModif.password_confirmation,
+      // password:this.itemSinModif.password,
+      // password_confirmation:this.itemSinModif.password_confirmation,
       fechaActualizacion:this.itemSinModif.fechaActualizacion,
       fechaCreacion:this.itemSinModif.fechaCreacion,
       fechaEliminacion:this.itemSinModif.fechaEliminacion,
@@ -153,118 +166,3 @@ export class NuevoUsuarioComponent implements OnInit {
     });
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { Component, OnInit } from '@angular/core';
-// import { NgForm }  from "@angular/forms";
-// import { Router, ActivatedRoute } from "@angular/router";
-// import { UsuarioInterface }  from "../../interfaces/usuario.interface";
-// import { AlertService } from '../../services/index';
-//
-// @Component({
-//   selector: 'app-usuario',
-//   templateUrl: './nuevo-usuario.component.html',
-// })
-// export class NuevoUsuarioComponent implements OnInit {
-// errorUsuario = false;
-// rgstrUsuario = false;
-// errorUsuarioActualizar = false;
-// errorMensaje:string[]=[];
-// public usuario:UsuarioInterface={
-//   identificador:-1,
-//   nombreUsuario:"",
-//   apodo:"",
-//   correo:"",
-//   password:"",
-//   password_confirmation:"",
-//   esVerificado:0,
-//   //key$?:string; identificador es la key
-//   rol:0
-// };
-//
-// nuevo:boolean = false;
-// //id:string;
-//
-// //
-//
-//
-// constructor(
-//                 private router:Router,
-//                 private route:ActivatedRoute,//esto es para pasar como parametro
-//               ) {
-//
-//           this.route.params.subscribe(parametros=>{
-//                 console.log(parametros);
-//                 //this.id = parametros['id']
-//                 // if(this.id !== "nuevo"){
-//
-//                   // this._usuariosService.getUsuario(this.id)
-//                   //     .subscribe( usuario => { this.usuario = usuario.data, console.log(usuario)})
-//                 // }
-//
-//                 // if(this.id == "nuevo"){
-//                 //   //insertando
-//                 // }else{
-//                 // //actualizando
-//                 // }
-//           });
-//   }
-//
-//   ngOnInit() {
-//   }
-//
-//
-//
-//   guardar()
-//
-//   {
-//         //console.log("ewfefe"+this.id);
-//         //if(this.id == "nuevo"){
-//           console.log(this.usuario);
-//           console.log("hola");
-//             // this._usuariosService.nuevoUsuario( this.usuario )
-//             //   .subscribe( data=>{
-//             //     //this.router.navigate(['/heroe',data.name])
-//             //     console.log(data);
-//             //     this.errorUsuario = false;
-//             //     this.rgstrUsuario = true;
-//             // //    this.ngForm.reset();
-//             //
-//             //
-//             //
-//             //   },
-//             //   error=> {
-//             //   },);
-//
-//
-//     }
-//
-// }

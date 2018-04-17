@@ -56,11 +56,21 @@
 .mat-column-select{
   flex:0 0 5%
 }
-.mat-column-identificador{
+.mat-column-identificador, .mat-column-codigoPostal{
   flex:0 0 7%
 }
 .mat-column-nombreEspacio{
   flex:0 0 20%
+}
+.mat-column-esVerificado{
+  flex:0 0 7%;
+  text-align: center;
+}
+.mat-column-telefonoUno{
+  flex:0 0 10%;
+}
+.mat-column-direccion{
+  flex:0 0 30%;
 }
 /*Fin tamanyo columnas comunes (id, eliminar)*/
 
@@ -137,6 +147,15 @@
 }
 .campoObservaciones{
   width:100%;
+}
+.tresCamposFila{
+  margin-top: 2em;
+  margin-left: 2.5em;
+  margin-right: 2.5em;
+  justify-content: space-between;
+}
+.tresCamposFila>*{
+  width: 30%;
 }
 /*Fin ventana emergente editar*/
 

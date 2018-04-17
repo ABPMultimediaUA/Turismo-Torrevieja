@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild }         from '@angular/core';
 import { PeticionesCrudService, AuthService }   from '../../services/index';
 import { SelectionModel }                       from '@angular/cdk/collections';
 import { MatTableDataSource, MatDialog }        from '@angular/material';
-// import { EliminarUsuarioComponent }             from './eliminar-usuario.component';
+import { EliminarUsuarioComponent }             from './eliminar-usuario.component';
 import { PaginacionInterface }                  from '../../interfaces/paginacion.interface';
 import { UsuarioInterface }                     from '../../interfaces/usuario.interface';
 import { NuevoUsuarioComponent }                from './nuevo-usuario.component';
@@ -126,23 +126,23 @@ export class UsuariosComponent implements OnInit {
 
   //BOTON - Funcion eliminar item/s
   botonEliminarItem(i){
-    // if(i){
-    //   const dialogRef = this.dialog.open(EliminarUsuarioComponent,{
-    //     height: '90%',
-    //     width: '90%',
-    //     data: { item: i }
-    //   });
-    //   dialogRef.afterClosed().subscribe( res => {
-    //     if(res){
-    //       var pag:number;
-    //       this.btnEliminar = true;
-    //       if(i.length < this.paginacion.count) pag = this.paginacion.current_page;
-    //       else if(i.length == this.paginacion.count && this.paginacion.current_page > 1) pag = this.paginacion.current_page - 1;
-    //       else pag = 1;
-    //       this.cargarItems(this.selectUrl,this.paginacion.per_page,pag)
-    //     }
-    //   });
-    // }
+    if(i){
+      const dialogRef = this.dialog.open(EliminarUsuarioComponent,{
+        height: '90%',
+        width: '90%',
+        data: { item: i }
+      });
+      dialogRef.afterClosed().subscribe( res => {
+        if(res){
+          var pag:number;
+          this.btnEliminar = true;
+          if(i.length < this.paginacion.count) pag = this.paginacion.current_page;
+          else if(i.length == this.paginacion.count && this.paginacion.current_page > 1) pag = this.paginacion.current_page - 1;
+          else pag = 1;
+          this.cargarItems(this.selectUrl,this.paginacion.per_page,pag)
+        }
+      });
+    }
   }
 
   //BOTON - ROW - Se activacon el boton nuevo item o pinchando una fila, abre el formulario crear / editar item

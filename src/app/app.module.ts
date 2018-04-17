@@ -46,14 +46,15 @@ import { ProveedoresComponent }       from './components/proveedores/proveedores
 import { NuevoProveedorComponent }    from './components/proveedores/nuevo-proveedor.component';
 import { EliminarProveedorComponent } from './components/proveedores/eliminar-proveedor.component';
 
+import { UsuariosComponent }          from './components/usuarios/usuarios.component';
+import { NuevoUsuarioComponent }      from './components/usuarios/nuevo-usuario.component';
+import { EliminarUsuarioComponent }   from './components/usuarios/eliminar-usuario.component';
+
 //Otros
 import { VentanaEmergenteComponent }  from './components/ventana-emergente/ventana-emergente.component';
 
 
 
-import { UsuariosComponent } from './components/usuarios/usuarios.component';
-import { UsuarioComponent } from './components/usuarios/usuario.component';
-import { NuevoUsuarioComponent } from './components/usuarios/nuevo-usuario.component';
 
 //TODO Para que?
 import { IdsPipe } from './components/pipes/ids.pipe';
@@ -82,8 +83,6 @@ import { EditarCarteraDialog} from "./components/carteras/editar-cartera-dialog.
 import { CrearExpedienteDialog} from "./components/carteras/crear-expediente-dialog.component";
 import { EliminarExpedienteDialog } from "./components/carteras/eliminar-expediente-dialog.component";
 
-import { EliminarUsuarioDialog } from "./components/usuarios/eliminar-usuario-dialog.component";
-import { EditarUsuarioDialog } from "./components/usuarios/editar-usuario-dialog.component";
 import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.component";
 
 
@@ -98,7 +97,7 @@ import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.com
     LoginComponent,
     FooterComponent,
     UsuariosComponent,
-    UsuarioComponent,
+    EliminarUsuarioComponent,
     ContactComponent,
     IdsPipe,
     KeysPipe,
@@ -116,8 +115,6 @@ import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.com
     ExpedientesComponent,
     ExpedienteComponent,
     NuevoExpedienteComponent,
-    EliminarUsuarioDialog,
-    EditarUsuarioDialog,
     EditarPerfilDialog,
     EliminarCarteraDialog,
     EditarCarteraDialog,
@@ -180,13 +177,9 @@ import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.com
     AuthGuardProveedoresService
   ],
   entryComponents: [
-    EliminarUsuarioDialog,
-    EditarUsuarioDialog,
-    EliminarCarteraDialog,
-    EditarPerfilDialog,
-    EditarCarteraDialog,
-    CrearExpedienteDialog,
-    EliminarExpedienteDialog,
+    //Ventanas emergentes usuarios
+    NuevoUsuarioComponent,
+    EliminarUsuarioComponent,
 
     //Ventanas emergentes espacio
     EliminarEspacioComponent,
@@ -197,7 +190,15 @@ import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.com
     NuevoProveedorComponent,
 
     //Mensaje emergente
-    VentanaEmergenteComponent
+    VentanaEmergenteComponent,
+
+
+      EliminarCarteraDialog,
+      EditarPerfilDialog,
+      EditarCarteraDialog,
+      CrearExpedienteDialog,
+      EliminarExpedienteDialog,
+
   ],
   bootstrap: [AppComponent]
 })
