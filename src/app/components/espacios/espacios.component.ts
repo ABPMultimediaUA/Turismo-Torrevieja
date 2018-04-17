@@ -45,7 +45,6 @@ export class EspaciosComponent implements OnInit {
   cargarItems(peticion:number, per_pgn:number, pgn:number){
     this._itemService.getItem(peticion,this.busqueda,per_pgn,pgn).then(
       res => {
-        console.log(res); //TODO Eliminar
         if(typeof res != "string"){
           if(res && res["data"] && res["meta"]){
             this.items = res["data"] as EspacioInterface[];
@@ -130,7 +129,6 @@ export class EspaciosComponent implements OnInit {
 
   //BOTON - Funcion eliminar item/s
   botonEliminarItem(i){
-    console.log(i.length);
     if(i){
       const dialogRef = this.dialog.open(EliminarEspacioComponent,{
         height: '90%',

@@ -1,8 +1,152 @@
-<br><br><br><br><br>
+<div class="contenedorEditar">
+  <h1 class="mat-display-1 tituloComponentes"><span class="icon-user-add-outline"></span><span class="icon-handshake-o"></span> {{titulo}} {{items.nombreEspacio}}</h1>
+  <div class="VentanaEmergenteSpinner1">
+    <div class="VentanaEmergenteSpinner2" *ngIf="realizandoAccion">
+        <mat-spinner color="warn"></mat-spinner>
+    </div>
+  </div>
+  <a class="btnCerrar" (click)="cerrarDialogo()"><i class="material-icons iconoCerrar">close</i></a>
+  <form (ngSubmit)="anyadirItem()" #formulario="ngForm">
+    <div class="row contenedorFormCamposDestacados">
+
+      <mat-form-field hintLabel="">
+        <input matInput name="nombreEspacio" [(ngModel)]="items.nombreProveedor" placeholder="Nombre" [readonly]="bloqCampos"
+               maxLength="200" required>
+        <mat-error>Campo requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field hintLabel="">
+        <input matInput name="codigoPostal" [(ngModel)]="items.codigoPostal" placeholder="Código Postal" [readonly]="bloqCampos"
+               pattern="[0-9]{5}" minLength="5" maxLength="5">
+        <mat-error>Han de ser cinco números</mat-error>
+      </mat-form-field>
+
+      <mat-form-field hintLabel="">
+        <input matInput name="provincia" [(ngModel)]="items.provincia" placeholder="Provincia" [readonly]="bloqCampos"
+               maxLength="50">
+      </mat-form-field>
+
+      <mat-form-field hintLabel="">
+        <input matInput name="localidad" [(ngModel)]="items.localidad" placeholder="Localidad" [readonly]="bloqCampos"
+               maxLength="50">
+      </mat-form-field>
+
+    </div>
+    <div class="row">
+      <div class="col-sm-3 contenedorFormCampos">
+
+        <mat-form-field hintLabel="">
+          <input matInput name="direccion" [(ngModel)]="items.direccion" placeholder="Dirección" [readonly]="bloqCampos"
+                 maxLength="200">
+        </mat-form-field>
+
+        <!-- <mat-form-field hintLabel="">
+          <input matInput name="calle" [(ngModel)]="items.calle" placeholder="Calle" [readonly]="bloqCampos"
+                 maxLength="200">
+        </mat-form-field>
+
+        <mat-form-field hintLabel="">
+          <input matInput name="numero" [(ngModel)]="items.numero" placeholder="Número" [readonly]="bloqCampos"
+                 maxLength="50">
+        </mat-form-field>
+
+        <mat-form-field hintLabel="">
+          <input matInput name="planta" [(ngModel)]="items.planta" placeholder="Planta" [readonly]="bloqCampos"
+                 maxLength="20">
+        </mat-form-field>
+
+        <mat-form-field hintLabel="">
+          <input matInput name="puerta" [(ngModel)]="items.puerta" placeholder="Puerta" [readonly]="bloqCampos"
+                 maxLength="20">
+        </mat-form-field> -->
+
+        <mat-form-field hintLabel="">
+          <input matInput name="cifnif" [(ngModel)]="items.cifnif" placeholder="CIF / NIF" [readonly]="bloqCampos"
+                 maxLength="40">
+        </mat-form-field>
+
+        <mat-form-field hintLabel="">
+          <input matInput name="clase" [(ngModel)]="items.clase" placeholder="Clase" [readonly]="bloqCampos"
+                 maxLength="40" required>
+        </mat-form-field>
+
+        <mat-form-field hintLabel="">
+          <input matInput type="email" name="correoUno" [(ngModel)]="items.correoUno" placeholder="Email 1" [readonly]="bloqCampos"
+                 maxLength="50">
+        </mat-form-field>
+
+      </div>
+      <div class="col-sm-3 contenedorFormCampos">
+
+        <mat-form-field hintLabel="">
+          <input matInput type="email" name="correoDos" [(ngModel)]="items.correoDos" placeholder="Email 2" [readonly]="bloqCampos"
+                 maxLength="50">
+        </mat-form-field>
+
+        <mat-form-field hintLabel="">
+          <input matInput name="telefonoUno" [(ngModel)]="items.telefonoUno" placeholder="Teléfono 1" [readonly]="bloqCampos"
+                 maxLength="11">
+        </mat-form-field>
+
+        <mat-form-field hintLabel="">
+          <input matInput name="telefonoDos" [(ngModel)]="items.telefonoDos" placeholder="Teléfono 3" [readonly]="bloqCampos"
+                 maxLength="11">
+        </mat-form-field>
+
+        <mat-form-field hintLabel="">
+          <input matInput name="telefonoTres" [(ngModel)]="items.telefonoTres" placeholder="Teléfono 3" [readonly]="bloqCampos"
+                 maxLength="11">
+        </mat-form-field>
+
+      </div>
+    </div>
+    <div class="row contenedorFormObservaciones">
+      <mat-form-field hintLabel="" class="campoObservaciones">
+        <textarea matInput name="descripcion" [(ngModel)]="items.descripcion" placeholder="Observaciones" [readonly]="bloqCampos"
+                  maxLength="500"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="row" *ngIf="!realizandoAccion">
+      <div class="btnsEditarAnyadir">
+        <div *ngIf="!editar && _authService.tienePermiso(29)" class="btnsEditarAnyadir">
+          <mat-dialog-actions class="btnsEditarAnyadir">
+            <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid">Crear</button>
+            <button type="button" mat-raised-button (click)="limpiarCampos()" color="warn">Limpiar campos</button>
+          </mat-dialog-actions>
+        </div>
+        <div *ngIf="editar && _authService.tienePermiso(30)" class="btnsEditarAnyadir">
+          <div *ngIf="bloqCampos" class="btnsEditarAnyadir">
+            <button type="button" mat-raised-button color="primary" (click)="disable_enable_campos()">Editar</button>
+          </div>
+          <div *ngIf="!bloqCampos" class="btnsEditarAnyadir">
+            <mat-dialog-actions class="btnsEditarAnyadir">
+              <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid">Guardar cambios</button>
+              <button type="button" mat-raised-button (click)="restaurarValores()" color="warn">Restaurar valores</button>
+              <button type="button" mat-raised-button (click)="disable_enable_campos()" color="warn">Cancelar</button>
+            </mat-dialog-actions>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <br><br><br><br><br>
 <div class="container-fluid">
 
         <h1><span class="icon-user-add-outline"></span> Nuevo Usuario <small>{{usuario.nombreUsuario}}</small></h1>
-        <!-- mensajes -->
+
         <div class="container" *ngIf="errorUsuario === true">
             <div class="jumbotron">
                 <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
@@ -32,7 +176,6 @@
 
             </div>
         </div>
-        <!-- fin mensajes -->
 
         <form class="animated fadeIn fast"(ngSubmit)="guardar()" #forma="ngForm">
           <div class="form-group">
@@ -108,4 +251,4 @@
 
 </div>
 
-<!-- aqui acaba el container fluid -->
+ -->

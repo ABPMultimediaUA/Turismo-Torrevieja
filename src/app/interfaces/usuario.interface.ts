@@ -10,5 +10,7 @@ export interface UsuarioInterface
     esVerificado:number;
     //key$?:string; identificador es la key
     rol:number;
-
+    fechaActualizacion:string;
+    fechaCreacion:string;
+    fechaEliminacion:string;
 }

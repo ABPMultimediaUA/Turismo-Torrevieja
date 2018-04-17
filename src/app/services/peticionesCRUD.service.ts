@@ -118,6 +118,10 @@ export class PeticionesCrudService {
           //Realiza busqueda teniendo en cuenta todos sus campos, en id se pasa lo escrito
           url += `BusquedaProveedor/${id}`;
           break;
+      case 305:
+          //Realiza busqueda teniendo en cuenta todos sus campos, en id se pasa lo escrito
+          url += `BusquedaUser/${id}`;
+          break;
       default:
           console.log("No se ha especificado correctamente una URL.");
     }
