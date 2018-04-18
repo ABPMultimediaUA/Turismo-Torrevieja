@@ -1,0 +1,28 @@
+<h1 class="mat-display-1 tituloComponentes"><span class="icon-town-hall"></span> Eliminar roles</h1>
+<div class="VentanaEmergenteSpinner1">
+  <div class="VentanaEmergenteSpinner2" *ngIf="eliminando==true;">
+      <mat-spinner color="warn"></mat-spinner>
+  </div>
+</div>
+<h1 class="VentanaEmergenteEliminarPregunta" *ngIf="eliminando==false;" mat-dialog-title>¿Estás seguro de que deseas eliminar las siguientes filas?</h1>
+<p class="VentanaEmergenteEliminarInfo" *ngIf="eliminando==false;">Una vez hecho no podrás recuperarlas.</p>
+<mat-table class="tablaComponenteVEEliminar" #table [dataSource]="dataSource">
+  <ng-container matColumnDef="identificador">
+    <mat-header-cell *matHeaderCellDef >Id</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.identificador}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="nombreRol">
+    <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.nombreRol}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="fechaCreacion">
+    <mat-header-cell *matHeaderCellDef>Fecha de creación</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.fechaCreacion}}</mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="['identificador','nombreRol','fechaCreacion']"></mat-header-row>
+  <mat-row class="elementoTabla" *matRowDef="let row; columns: ['identificador','nombreRol','fechaCreacion']" ></mat-row>
+</mat-table>
+<mat-dialog-actions class="VentanaEmergenteEliminarBtns" *ngIf="eliminando==false;">
+    <button mat-raised-button (click)="eliminarItem()" color="warn">Eliminar</button>
+    <a mat-raised-button (click)="cerrarDialogo()" color="primary">Cancelar</a>
+</mat-dialog-actions>

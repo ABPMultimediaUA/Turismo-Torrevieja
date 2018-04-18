@@ -50,6 +50,10 @@ import { UsuariosComponent }          from './components/usuarios/usuarios.compo
 import { NuevoUsuarioComponent }      from './components/usuarios/nuevo-usuario.component';
 import { EliminarUsuarioComponent }   from './components/usuarios/eliminar-usuario.component';
 
+import { RolesComponent }             from './components/roles/roles.component';
+import { NuevoRolComponent }          from './components/roles/nuevo-rol.component';
+import { EliminarRolComponent }       from './components/roles/eliminar-rol.component';
+
 //Otros
 import { VentanaEmergenteComponent }  from './components/ventana-emergente/ventana-emergente.component';
 
@@ -73,8 +77,7 @@ import { ExpedientesComponent } from './components/expedientes/expedientes.compo
 import { ExpedienteComponent } from './components/expedientes/expediente.component';
 import { NuevoExpedienteComponent } from './components/expedientes/nuevo-expediente.component';
 
-import { RolesComponent } from './components/roles/roles.component';
-import { NuevoRolComponent } from './components/roles/nuevo-rol.component';
+
 import { RolComponent } from './components/roles/rol.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 
@@ -109,6 +112,7 @@ import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.com
     CarteraComponent,
     NuevaCarteraComponent,
     RolesComponent,
+    EliminarRolComponent,
     RolComponent,
     NuevoRolComponent,
     PerfilComponent,
@@ -182,12 +186,16 @@ import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.com
     EliminarUsuarioComponent,
 
     //Ventanas emergentes espacio
-    EliminarEspacioComponent,
     NuevoEspacioComponent,
+    EliminarEspacioComponent,
 
     //Ventanas emergentes proveedor
-    EliminarProveedorComponent,
     NuevoProveedorComponent,
+    EliminarProveedorComponent,
+
+    //Ventanas emergentes rol
+    NuevoRolComponent,
+    EliminarRolComponent,
 
     //Mensaje emergente
     VentanaEmergenteComponent,
