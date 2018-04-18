@@ -36,8 +36,8 @@
       </mat-form-field> -->
 
       <mat-form-field>
-        <mat-select placeholder="Rol" [value]="items.rol">
-          <mat-option *ngFor="let i of roles" [value]="i.identificador">{{i.nombreRol}}</mat-option>
+        <mat-select placeholder="Rol" [value]="items.rol" [disabled]="bloqCampos">
+          <mat-option *ngFor="let i of roles" [value]="i.identificador" readonly>{{i.nombreRol}}</mat-option>
         </mat-select>
       </mat-form-field>
 

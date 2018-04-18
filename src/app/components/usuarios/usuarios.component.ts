@@ -5,6 +5,7 @@ import { MatTableDataSource, MatDialog }        from '@angular/material';
 import { EliminarUsuarioComponent }             from './eliminar-usuario.component';
 import { PaginacionInterface }                  from '../../interfaces/paginacion.interface';
 import { UsuarioInterface }                     from '../../interfaces/usuario.interface';
+import { RolesInterface }                     from '../../interfaces/roles.interface';
 import { NuevoUsuarioComponent }                from './nuevo-usuario.component';
 
 @Component({
@@ -25,6 +26,7 @@ export class UsuariosComponent implements OnInit {
   valorEscogidoForOrder:number = -1;  //Para saber el elemento seleccionado, -1 valor neutro
   btnEliminar:boolean = true;         //Activar / desactivar boton de eliminar item/s
   @ViewChild("btnsPag") BtnsPagOff;   //Div que contiene los botones de paginacion
+  roles:RolesInterface[]=[];
 
   dataSource = new MatTableDataSource(this.items);            //Datos de la tabla
   selection = new SelectionModel<UsuarioInterface>(true, []); //Filas seleccionadas
@@ -36,6 +38,7 @@ export class UsuariosComponent implements OnInit {
   ){
     this.cargarItems(this.selectUrl,+this.option_Items_Pgn,1);
     this.cargarPaginacionInicial();
+
   }
 
   ngOnInit() {
@@ -52,6 +55,7 @@ export class UsuariosComponent implements OnInit {
             this.paginacion = res["meta"].pagination as PaginacionInterface;
             this.ngAfterViewInit();
             this.activarDesactvarBtnsPag();
+            this.cargarNombreRoles();
           }
           else{
             this.items = [];
@@ -250,6 +254,21 @@ export class UsuariosComponent implements OnInit {
       // }
       // this.cargarItems(this.selectUrl,+this.option_Items_Pgn,1);
     }
+  }
+
+  cargarNombreRoles(){
+    for(var x = 0; x < this.items.length; x++){
+      this.cargarNombreRol(x)
+    }
+  }
+  cargarNombreRol(i:number){
+    this._itemService.getItem(4,this.items[i].rol,-1,-1).then(
+      res => {
+        if(typeof res != "string"){
+          let r = res as any;
+          this.items[i]['nombreRol'] = r.data.nombreRol;
+        }
+      });
   }
 
 }

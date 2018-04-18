@@ -76,6 +76,8 @@ export class NuevoUsuarioComponent implements OnInit {
         })
     }
     else{
+      delete this.items.password;
+      delete this.items.password_confirmation;
       this._itemService.actualizarItem(5,this.items.identificador,this.items,-1)
         .then( res => {
           if(typeof res != "string") this.alertaOk();
@@ -93,8 +95,8 @@ export class NuevoUsuarioComponent implements OnInit {
       esVerificado:null,
       apodo:null,
       correo:null,
-      // password:null,
-      // password_confirmation:null,
+      password:null,
+      password_confirmation:null,
       fechaActualizacion:null,
       fechaCreacion:null,
       fechaEliminacion:null,
@@ -110,8 +112,8 @@ export class NuevoUsuarioComponent implements OnInit {
       esVerificado:this.itemSinModif.esVerificado,
       apodo:this.itemSinModif.apodo,
       correo:this.itemSinModif.correo,
-      // password:this.itemSinModif.password,
-      // password_confirmation:this.itemSinModif.password_confirmation,
+      password:this.itemSinModif.password,
+      password_confirmation:this.itemSinModif.password_confirmation,
       fechaActualizacion:this.itemSinModif.fechaActualizacion,
       fechaCreacion:this.itemSinModif.fechaCreacion,
       fechaEliminacion:this.itemSinModif.fechaEliminacion,
