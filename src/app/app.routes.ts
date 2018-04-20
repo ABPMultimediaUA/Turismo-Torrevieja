@@ -38,7 +38,7 @@ import { NuevoRolComponent } from "./components/roles/nuevo-rol.component";
 import { RolComponent } from "./components/roles/rol.component";
 //TODO Fin eliminar
 
-
+import { PublicarComponent } from "./components/publicar/publicar.component";
 
 const app_routes: Routes = [
   //Menu no login
@@ -57,6 +57,8 @@ const app_routes: Routes = [
   { path: 'expedientes', canActivate:[AuthGuardService,AuthGuardEventosService], component: ExpedientesComponent },
   { path: 'espacios', canActivate:[AuthGuardService,AuthGuardEspaciosService], component: EspaciosComponent },
   { path: 'proveedores', canActivate:[AuthGuardService,AuthGuardProveedoresService], component: ProveedoresComponent },
+
+  { path: 'publicar', canActivate:[AuthGuardService], component: PublicarComponent },
 
 
   //Otros
