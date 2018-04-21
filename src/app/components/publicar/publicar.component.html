@@ -5,31 +5,43 @@
         <div class="example-header"><br><br><br>
           <h1 class="mat-display-1 tituloComponentes"><i class="fa fa-share-square"></i> Publicar</h1>
               <form class="animated fadeIn fast"(ngSubmit)="subirPost()" #forma="ngForm">
-                <label>Nombre del evento</label>
-                <input [(ngModel)]="post.message" name="message" class="form-control" placeholder="Mensaje del post" required type="text">
+                <label>Id de la pagina</label>
+                <input [(ngModel)]="page_id" name="page_id" class="form-control" placeholder="id de la pagina" required type="text">
+                <label>page_access_token</label>
+                <input [(ngModel)]="page_access_token" name="page_access_token" class="form-control" placeholder="id de la pagina" required type="textarea">
+                <label>Texto del post</label>
+                <input [(ngModel)]="post.message" name="message" class="form-control" placeholder="Texto principal" required type="text">
+
+
+                <div class="foto" id="foto">
+                <label for="subirfoto"><img  onclick="this.parentNode.parentNode.childNodes[4].click();" src="/assets/noimg.jpg"  width="200" height="200" ></label><br>
+                <input ng-change="mostrarFoto(this);" type="file" name="file" class="file" accept="image/x-png,image/gif,image/jpeg" required><br id="preInput">
+                </div>
+
+
+
+
+
+
+
+                <br>
                 <div class="form-group">
                   <button type="submit" class="btn btn-outline-primary">Postear</button>
                 </div>
               </form>
 
-          <form id="formNuevaReceta" (ngSubmit)="subirPost(this)">
+          <!-- <form id="formNuevaReceta" (ngSubmit)="subirPost(this)">
             <div>
               <h2>Publicar en facebook</h2>
 
-              <!-- -caption:string=Link caption in post that appears below name. The caption must be an actual URLs
-                and should accurately reflect the URL and associated advertiser or business someone visits when they click on it.
-              -description:string=A description of a link in the post (appears beneath the caption).
-              -full_picture:string=URL to a full-sized version of the Photo published in the Post or scraped from a link in the Post.
-                If the photo's largest dimension exceeds 720 pixels, it will be resized, with the largest dimension set to 720.
-              -is_published
-              message -->
+
 
 
               <label for="message">Texto principal:</label> <br>
               <input type="text" name="message" id="message" placeholder="Mensaje del post" autofocus required> <br>
 
 
-              <!-- <label for="elaboracion">Elaboracion</label> <br>
+               <label for="elaboracion">Elaboracion</label> <br>
               <textarea name="elaboracion" id="elaboracion" cols="50" rows="7" placeholder="Escribe aqui la elaboracion" required></textarea> <br>
               <label for="tiempo">Tiempo de elaboracion </label>
               <input style="width:50px" type="number" name="tiempo" min="1" id="tiempo" required> (min)<br>
@@ -52,11 +64,11 @@
               <div id="fotos">
 
               </div>
-              <input type="button" onclick="anadirZonaFoto()" value="Añadir foto" id="nuevaImgBoton"><br> -->
+              <input type="button" onclick="anadirZonaFoto()" value="Añadir foto" id="nuevaImgBoton"><br>
 
               <input type="submit" value="Enviar Post" id="nuevoPostBoton">
             </div>
-          </form>
+          </form> -->
 
 
         </div>
