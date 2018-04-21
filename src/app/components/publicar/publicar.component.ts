@@ -35,25 +35,25 @@ export class PublicarComponent implements OnInit {
   }
   //https://graph.facebook.com/497922363906912/feed?message=prueba2&access_token=EAACEdEose0cBAJEeZCcuWlcsrHQZAiwuLNyEdHHwNfOvDEHZBjnj5Fm0srUVKHlHJn0Mukmwnn1Pv1pv0VkhHHYUnzffN1Ux4eGarE7nLT5gZBGZAZAPVZAgYyNZBs7XD5Mw9VuKIj07t5j5d9WbFNJJ8ytiZANsx2o6PPir5Gg11VtkW6jSSDViEPZCbqzfiVTBLK35Wm1SwjVwZDZD
 
-  subirPost() {
-    let xhr = new XMLHttpRequest(),
-      url = this.URL + this.page_id + '/feed?message=' + this.post.message + '&access_token=' + this.page_access_token;
-    xhr.open('POST', url, true);
-    xhr.onload = function() {
-      console.log(xhr.responseText);
-      let res = JSON.parse(xhr.responseText);
-      if (res.id) {
-        let post_id = res.id;
-        console.log(post_id);
-        //cuando ya tengo la id del post procedo a subir la imagen si hay
-
-      }
-
-    };
-    xhr.send();
-    // goTo("index");
-    return false;
-  }
+  // subirPost() {
+  //   let xhr = new XMLHttpRequest(),
+  //     url = this.URL + this.page_id + '/feed?message=' + this.post.message + '&access_token=' + this.page_access_token;
+  //   xhr.open('POST', url, true);
+  //   xhr.onload = function() {
+  //     console.log(xhr.responseText);
+  //     let res = JSON.parse(xhr.responseText);
+  //     if (res.id) {
+  //       let post_id = res.id;
+  //       console.log(post_id);
+  //
+  //
+  //     }
+  //
+  //   };
+  //   xhr.send();
+  //   // goTo("index");
+  //   return false;
+  // }
 
   mostrarFoto($event): void {
     console.log($event);
@@ -76,17 +76,7 @@ export class PublicarComponent implements OnInit {
     myReader.readAsDataURL(file);
   }
 
-  subirFoto() {
-    // console.log(this.imagen);
-    // let xhr = new XMLHttpRequest(),
-    //   url2 = this.URL + this.page_id + '/photos?url=' + this.imagen + '&access_token=' + this.page_access_token;
-    // xhr.open('POST', url2, true);
-    // xhr.onload = function() {
-    //   console.log(xhr.responseText);
-    //
-    // }
-    // xhr.send();
-
+  subirPost() {
     let xhr = new XMLHttpRequest();
     let fd = new FormData();
     let url2 = this.URL + this.page_id + '/photos';
@@ -94,86 +84,16 @@ export class PublicarComponent implements OnInit {
     // xhr.setRequestHeader('access_token', this.page_access_token);
     fd.append("foto", this.imagen);
     fd.append("access_token", this.page_access_token);
+    fd.append("caption",  this.post.message);
+
     xhr.onload = function() {
       console.log(xhr.responseText);
+      let res = JSON.parse(xhr.responseText);
+
+
     }
     xhr.send(fd);
   }
 
 
-  //
-  // console.log("entrando en subirFOto");
-  //
-  // let xhr = new XMLHttpRequest();
-  // // let fd = new FormData();
-  // let inputFo=document.getElementById("inputFoto");
-  // console.log(inputFo);
-
-  // var file: File = inputFo.files;
-  //
-  // let urlFoto =
-  // let  url = this.URL + this.page_id + '/photos?url=' + + '&access_token=' + this.page_access_token;
-  // xhr.open('POST', url, true);
-  // // xhr.setRequestHeader('access_token', this.page_access_token);
-  // // fd.append("f", foto.querySelector("input.file").files[0]);
-  // xhr.onload = function() {
-  //   console.log(xhr.responseText);
-  //   let res = JSON.parse(xhr.responseText);
-  //   if (res.id) {
-  //     let post_id = res.id;
-  //     console.log(post_id);
-  //     //cuando ya tengo la id del post procedo a subir la imagen si hay
-  //
-  //   }
-  //
-  // };
-  // xhr.send();
-  // // goTo("index");
-  // return false;
-
-
-
-  // }
-
-
-
-  // subirPost(frm) {
-  //   let xhr = new XMLHttpRequest();
-  //   let url = './rest/receta/';
-  //   let fd = new FormData();
-  //   xhr.open('POST', url, true);
-  //   xhr.setRequestHeader('Authorization', sessionStorage.getItem("clave"));
-  //   fd.append("l", sessionStorage.getItem("login"));
-  //   fd.append("n", frm.titulo.value);
-  //   fd.append("e", frm.elaboracion.value);
-  //   fd.append("t", frm.tiempo.value);
-  //   fd.append("d", frm.dificultad.value);
-  //   fd.append("c", frm.comensales.value);
-  //   //si al menos hay una foto en la receta
-  //   // var fotos = document.querySelectorAll(".foto");
-  //   if (fotos.length < 1) {
-  //     crearMensaje("minimo1foto");
-  //   } else {
-  //     //enviamos los datos basicos de la receta sin ingredientes ni fotos para crear el id
-  //     xhr.onload = function() {
-  //       console.log(xhr.responseText);
-  //       let v = JSON.parse(xhr.responseText);
-  //       console.log(v);
-  //       if (v.RESULTADO == 'OK') {
-  //         console.log("se ha creado el id de la receta" + v.ID);
-  //         let idReceta = v.ID;
-  //         //ahora recogemos los ingredientes
-  //         subirIngredientes(idReceta);
-  //         //ahora recogemos las fotos
-  //         subirFotos(idReceta);
-  //       } else {
-  //         descripcionError = v.DESCRIPCION;
-  //         crearMensaje("errorNuevaReceta");
-  //       }
-  //     }
-  //     xhr.send(fd);
-  //     // return false;
-  //   }
-  //
-  // }
 }
