@@ -15,8 +15,9 @@ export class PublicarComponent implements OnInit {
   page_name: string = "Cultura Torrevieja";
   page_id: string = "497922363906912";
 
-  page_access_token: string = "EAACEdEose0cBAJEeZCcuWlcsrHQZAiwuLNyEdHHwNfOvDEHZBjnj5Fm0srUVKHlHJn0Mukmwnn1Pv1pv0VkhHHYUnzffN1Ux4eGarE7nLT5gZBGZAZAPVZAgYyNZBs7XD5Mw9VuKIj07t5j5d9WbFNJJ8ytiZANsx2o6PPir5Gg11VtkW6jSSDViEPZCbqzfiVTBLK35Wm1SwjVwZDZD";
+  page_access_token: string = "EAACEdEose0cBAGHh1E9wqoHBZA2779DL7d1OJl28uxEPs15GZCixO0H0FkjZBz8ZCfn8fQ1055ZAZAm7b5KNHmoCRvs92ygAWcRj5wfZCzLPiFrv9oD7abDCj9IimgZB62Yr6Uwqf9Cid7CVp1q3rqZBj4dnUwBy1h9QH2F64dEqaW6n6ZCYs7uy8dTk7Hs5vDuF4ZD";
 
+  imagen: File;
   public post: PostFacebook = {
     message: ""
   };
@@ -55,32 +56,84 @@ export class PublicarComponent implements OnInit {
   }
 
   mostrarFoto($event): void {
+    console.log($event);
     this.readThis($event.target);
   }
-
   readThis(inputValue: any): void {
     let foto = document.getElementById("foto");
     let inp = foto.childNodes[4];
     let img = document.getElementById("img");
 
     var file: File = inputValue.files[0];
-
+    this.imagen = file;
     var myReader: FileReader = new FileReader();
 
     myReader.onloadend = function(e) {
       // you can perform an action with readed data here
-      console.log(myReader.result);
       img.setAttribute('src', myReader.result);
       img.setAttribute('alt', file.name);
-      console.log(img);
     }
     myReader.readAsDataURL(file);
-
   }
 
-  subirFoto(){
-    console.log("entrando en subirFOto");
+  subirFoto() {
+    // console.log(this.imagen);
+    // let xhr = new XMLHttpRequest(),
+    //   url2 = this.URL + this.page_id + '/photos?url=' + this.imagen + '&access_token=' + this.page_access_token;
+    // xhr.open('POST', url2, true);
+    // xhr.onload = function() {
+    //   console.log(xhr.responseText);
+    //
+    // }
+    // xhr.send();
+
+    let xhr = new XMLHttpRequest();
+    let fd = new FormData();
+    let url2 = this.URL + this.page_id + '/photos';
+    xhr.open('POST', url2, true);
+    // xhr.setRequestHeader('access_token', this.page_access_token);
+    fd.append("foto", this.imagen);
+    fd.append("access_token", this.page_access_token);
+    xhr.onload = function() {
+      console.log(xhr.responseText);
+    }
+    xhr.send(fd);
   }
+
+
+  //
+  // console.log("entrando en subirFOto");
+  //
+  // let xhr = new XMLHttpRequest();
+  // // let fd = new FormData();
+  // let inputFo=document.getElementById("inputFoto");
+  // console.log(inputFo);
+
+  // var file: File = inputFo.files;
+  //
+  // let urlFoto =
+  // let  url = this.URL + this.page_id + '/photos?url=' + + '&access_token=' + this.page_access_token;
+  // xhr.open('POST', url, true);
+  // // xhr.setRequestHeader('access_token', this.page_access_token);
+  // // fd.append("f", foto.querySelector("input.file").files[0]);
+  // xhr.onload = function() {
+  //   console.log(xhr.responseText);
+  //   let res = JSON.parse(xhr.responseText);
+  //   if (res.id) {
+  //     let post_id = res.id;
+  //     console.log(post_id);
+  //     //cuando ya tengo la id del post procedo a subir la imagen si hay
+  //
+  //   }
+  //
+  // };
+  // xhr.send();
+  // // goTo("index");
+  // return false;
+
+
+
+  // }
 
 
 
