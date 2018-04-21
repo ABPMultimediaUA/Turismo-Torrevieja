@@ -53,38 +53,36 @@ export class PublicarComponent implements OnInit {
     // goTo("index");
     return false;
   }
-   mostrarFoto(btn) {
 
-    // var newNode = document.createElement("input");
-    // newNode.type = "file";
-    // newNode.name = "file";
-    // newNode.className = "file";
-    // newNode.accept = "image/x-png,image/gif,image/jpeg"
-    // newNode.setAttribute("onchange", "mostrarFoto(this)");
+  mostrarFoto($event): void {
+    this.readThis($event.target);
+  }
 
-    let foto = btn.parentNode;
-    console.log(foto);
-    let inp = btn.parentNode.childNodes[4];
-    //si la imagen es mas grande que 300kb no lo carga
-    // if (inp.files[0].size > 300000) {
-    //   //si la imagen es mas grande se crea el mensaje y ademas se vacia la imagen el texto y el input del archivo
-    //   crearMensaje("imgGrande");
-    //   inp.remove();
-    //   preInput = document.getElementById("preInput");
-    //   foto.insertBefore(newNode, preInput);
-    //   let img = foto.childNodes[0].childNodes[0];
-    //   img.src = "imgs/noimg.jpg";
-    //   let text = foto.childNodes[2];
-    //   text.value = '';
-    // } else {
-      let fr = new FileReader();
-      fr.onload = function() {
-        let img = btn.parentNode.childNodes[0].childNodes[0];
-        img.src = fr.result;
-        img.alt = inp.files[0].name;
-      };
-      fr.readAsDataURL(inp.files[0]);
+  readThis(inputValue: any): void {
+    let foto = document.getElementById("foto");
+    let inp = foto.childNodes[4];
+    let img = document.getElementById("img");
+
+    var file: File = inputValue.files[0];
+
+    var myReader: FileReader = new FileReader();
+
+    myReader.onloadend = function(e) {
+      // you can perform an action with readed data here
+      console.log(myReader.result);
+      img.setAttribute('src', myReader.result);
+      img.setAttribute('alt', file.name);
+      console.log(img);
     }
+    myReader.readAsDataURL(file);
+
+  }
+
+  subirFoto(){
+    console.log("entrando en subirFOto");
+  }
+
+
 
   // subirPost(frm) {
   //   let xhr = new XMLHttpRequest();
