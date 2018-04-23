@@ -1,98 +1,99 @@
 import { Component, OnInit, Inject } from '@angular/core';
-import { ViewChild} from '@angular/core';
-import {MatTableDataSource, MatSort} from '@angular/material';
-import { MatFormFieldModule } from '@angular/material';
-import {MatInputModule} from '@angular/material';
-import {SelectionModel} from '@angular/cdk/collections';
-import { MatPaginatorModule, MatPaginator } from '@angular/material';
-import { MatIcon} from '@angular/material';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {LoginComponent} from '../login/login.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatIconRegistry, MatIconModule, MatButtonModule } from '@angular/material';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatProgressBarModule, MatProgressSpinnerModule} from '@angular/material';
-import {MatDialogModule} from '@angular/material/dialog';
+import { PeticionesCrudService, AuthService } from '../../services/index';
+import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatDialog } from '@angular/material';
+import { VentanaEmergenteComponent } from '../ventana-emergente/ventana-emergente.component'
+import { CarteraInterface } from '../../interfaces/cartera.interface';
 
-import { Element }  from "../../interfaces/element.interface";
-import { Cartera }  from "../../interfaces/cartera.interface";
-import {HomeComponent} from "../home/home.component";
-import { Router, ActivatedRoute } from '@angular/router';
-import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';//ramoon
-
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { HttpClientModule } from '@angular/common/http';
-import { HttpModule } from '@angular/http';
-// import {AlertService } from '../../services/alert.service';
-import { AlertService, CarterasService } from '../../services/index';
-// import { AlertComponent } from '../../../_directives/index';
-// import { AuthGuard } from '../../../_guards/index';
 @Component({
   selector: 'eliminar-cartera-dialog',
   templateUrl: 'eliminar-cartera-dialog.html',
+  styleUrls: ['../../app.component.css']
 })
-export class EliminarCarteraDialog {
-  row:Cartera;
-  id:string;
-  eliminando:boolean =false;
-  constructor(private _carterasService:CarterasService,
-              private router:Router,
-              private route:ActivatedRoute,
-              public dialog: MatDialog,
-              public dialogRef: MatDialogRef<EliminarCarteraDialog>,
-              @Inject(MAT_DIALOG_DATA) public data: any
-            ) {
-              this.row=data.row;
-              console.log(this.row);
 
+export class EliminarCarteraDialog implements OnInit {
 
-               this.id=this.row.identificador;
+  items:CarteraInterface[]=[];
+  eliminando:boolean;
+  aux:number; //Items a eliminar, recursividad
 
-               console.log(this.row.identificador);
+  dataSource = new MatTableDataSource(this.items);
 
+  constructor(  private _itemService: PeticionesCrudService,
+                private _authService:AuthService,
+                public dialogRef: MatDialogRef<EliminarCarteraDialog>,
+                public dialog: MatDialog,
+                @Inject(MAT_DIALOG_DATA) public data
+             )
+  {
+    // this._authService.comprobarEstadoLog();
+    dialogRef.disableClose = true;
 
-                  this.eliminando=false;
- }
- borrarCartera(){
+    if(data.item){
+      if(data.item.length) this.items=data.item;
+      else this.items.push(data.item);
+    }
 
-   this.eliminando=true;
-   // var rand = Math.floor(Math.random() * 10);
-   // console.log(rand);
-   setTimeout(()=>{
+    this.eliminando=false;
+    this.aux = this.items.length;
+  }
 
-        this.dialogRef.close();
-          // this.router.navigate(['/carteras']);
-      location.reload(true);
-   },2000);
+  //Cargar tabla
+  ngAfterViewInit() {
+    this.dataSource = new MatTableDataSource(this.items);
+  }
 
-     this._carterasService.borrarCartera( this.id)
-         .subscribe(respuesta=>{
-           if(respuesta){
-             console.log("caracola");
-             console.log(respuesta);
-             console.log( "borra cartera y ahora va a pedir todos las carteras de nuevo" );
-           this._carterasService.getCarteras("1");
-           console.log( "aqui los ha pedido ya todos de nuevo y voy a hacer el router navigate a carteras" );
+  ngOnInit() {
+  }
 
-            // this.dialogRef.close();
+  //Elimina array items
+  eliminarItem(){
+    this.eliminando=true;
+    if(this.aux>0){
+      this.aux=this.aux-1;
+      this._itemService.eliminarItem(8,this.items[this.aux].identificador,-1)
+          .then( res => {
+            this.eliminarItem();
+          })
+          .catch( (err) => {
+            this.alertaNoOk();
+          })
+    }
+    else{
+      this.alertaOk();
+    }
+  }
 
-           // this.router.navigate(['eventos']);
-           // this.refresh();
-           }else{
-             //todo bien
-             // delete this.eventos[id];
-           //   console.log( "borrausuario y ahora va a pedir todos los usuarios de nuevo" );
-           // this._usuariosService.getUsuarios();
-           // console.log( "aqui los ha pedido ya todos de nuevo" );
-           // this.refresh();
+  //Cerrar ventana emergente
+  cerrarDialogo(){
+    this.dialogRef.close(false);
+  }
 
+  //Ventana emergente si todo ha ido bien
+  alertaOk(){
+    let sms:string = "Acción realizada correctamente.";
+    let icono:number = 0;
+    const dialogRef = this.dialog.open(VentanaEmergenteComponent,{
+      height: '17em',
+      width: '32em',
+      data: { item: sms, item2: icono }
+    });
+    dialogRef.afterClosed().subscribe( res => {
+      this.dialogRef.close(true);
+    });
+  }
 
-           }
+  //Ventana emergente si ha habido error
+  alertaNoOk(){
+    let sms:string = "Se ha producido un error inesperado.";
+    let icono:number = 1;
+    const dialogRef = this.dialog.open(VentanaEmergenteComponent,{
+      height: '17em',
+      width: '32em',
+      data: { item: sms, item2: icono }
+    });
+    dialogRef.afterClosed().subscribe( res => {
+      this.dialogRef.close(true);
+    });
+  }
 
-         })
-
-   }
-
-   cancelar(){
-     this.dialogRef.close();
-   }
 }

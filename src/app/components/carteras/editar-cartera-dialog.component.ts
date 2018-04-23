@@ -16,7 +16,7 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatSelectModule} from '@angular/material/select';
 
 import { Element }  from "../../interfaces/element.interface";
-import { Cartera }  from "../../interfaces/cartera.interface";
+import { CarteraInterface }  from "../../interfaces/cartera.interface";
 import {HomeComponent} from "../home/home.component";
 import { Router, ActivatedRoute } from '@angular/router';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';//ramoon
@@ -33,12 +33,12 @@ import { AlertService, CarterasService } from '../../services/index';
   templateUrl: 'editar-cartera-dialog.html'
 })
 export class EditarCarteraDialog {
-  row:Cartera;
+  row:CarteraInterface;
   id:string;
   // evento:Evento[];
   editando:boolean;
   creando:boolean;
-  public cartera:Cartera={
+  public cartera:CarteraInterface={
     identificador:"",
     nombreCartera:"",
     year:2019,

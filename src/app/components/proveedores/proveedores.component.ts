@@ -108,13 +108,13 @@ export class ProveedoresComponent implements OnInit {
 
   //Buscador
   //TODO por hacer, da error
-  realizarBusqueda(e,u){
-    if(e.target.value == "" || u){
+  realizarBusqueda(e){
+    if(e.target.value == ""){
       this.busqueda = -1;
       this.selectUrl = 7;
       e.target.value = "";
     }
-    if(e.keyCode == 13 || u){
+    if(e.keyCode == 13){
       if(e.target.value != ""){
         this.selectUrl = 304;
         this.busqueda = e.target.value.toString();

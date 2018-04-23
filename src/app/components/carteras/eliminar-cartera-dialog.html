@@ -1,22 +1,42 @@
-<h1 *ngIf="eliminando==false;" mat-dialog-title style="text-align:center">¿Estas seguro que deseas eliminarlo?</h1>
-<p *ngIf="eliminando==false;" style="text-align:center; margin-bottom:0px;">Una vez lo elimines no podras recuperarlo de nuevo. Piensalo bien.</p>
+<h1 class="mat-display-1 tituloComponentes"><span class="icon-town-hall"></span> Eliminar carteras</h1>
+<h1 class="VentanaEmergenteEliminarPregunta" mat-dialog-title>¿Estás seguro de que deseas eliminar las siguientes filas?</h1>
+<p class="VentanaEmergenteEliminarInfo">Una vez hecho no podrás recuperarlas.</p>
+<mat-table class="tablaComponenteVEEliminar" #table [dataSource]="dataSource">
 
+  <ng-container matColumnDef="nombreCartera">
+    <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.nombreCartera}}</mat-cell>
+  </ng-container>
 
-  <mat-dialog-actions *ngIf="eliminando==false;" style="display:block; text-align:center;">
-      <button  mat-raised-button (click)="borrarCartera()" color="warn">Eliminar</button>
-      <button  mat-raised-button (click)="cancelar()"color="primary">Cancelar</button>
-  </mat-dialog-actions>
+  <ng-container matColumnDef="trimestre">
+    <mat-header-cell *matHeaderCellDef>Periodo</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.trimestre}}</mat-cell>
+  </ng-container>
 
+  <ng-container matColumnDef="year">
+    <mat-header-cell *matHeaderCellDef>Año</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.year}}</mat-cell>
+  </ng-container>
 
+  <ng-container matColumnDef="fechaCreacion">
+    <mat-header-cell *matHeaderCellDef>Fecha creación</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.fechaCreacion | date}}</mat-cell>
+  </ng-container>
 
+  <ng-container matColumnDef="estado">
+    <mat-header-cell *matHeaderCellDef>Estado</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.estado}}</mat-cell>
+  </ng-container>
 
-
-  <h1 *ngIf="eliminando==true;" mat-dialog-title style="text-align:center">Eliminando</h1>
-
-  <div *ngIf="eliminando==true;" style="margin-left:150px;">
+  <mat-header-row *matHeaderRowDef="['nombreCartera','trimestre','year','fechaCreacion','estado']"></mat-header-row>
+  <mat-row class="elementoTabla" *matRowDef="let row; columns: ['nombreCartera','trimestre','year','fechaCreacion','estado']" (click)="editarAnyadirItem(row)"></mat-row>
+</mat-table>
+<mat-dialog-actions class="VentanaEmergenteEliminarBtns" *ngIf="!eliminando;">
+    <button mat-raised-button (click)="eliminarItem()" color="warn">Eliminar</button>
+    <a mat-raised-button (click)="cerrarDialogo()" color="primary">Cancelar</a>
+</mat-dialog-actions>
+<div class="VentanaEmergenteSpinner1">
+  <div class="VentanaEmergenteSpinner2" *ngIf="eliminando">
       <mat-spinner color="warn"></mat-spinner>
   </div>
-  <!-- <mat-dialog-actions style="display:block; text-align:center;" *ngIf="eliminando==true;">
-
-      <mat-spinner color="warn"></mat-spinner>
-  </mat-dialog-actions> -->
+</div>

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from "@angular/http";
-import { Cartera }  from "../interfaces/cartera.interface";
+import { CarteraInterface }  from "../interfaces/cartera.interface";
 import 'rxjs/Rx';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class CarterasService {
   Secound_accessToken:string=localStorage.accesToken;
   constructor( private http:Http ) { }
 
-  nuevaCartera( cartera:Cartera )
+  nuevaCartera( cartera:CarteraInterface )
   {
 
     let body = JSON.stringify( cartera );//Cambiar todos los valos de heroe a string
@@ -33,7 +33,7 @@ export class CarterasService {
       })
   }
 
-  actualizarCartera ( cartera:Cartera, id:string){
+  actualizarCartera ( cartera:CarteraInterface, id:string){
     // if(usuario.password=="" ){
     //   delete usuario.password;
     //   delete usuario.password_confirmation;

@@ -128,7 +128,10 @@ export class NuevoUsuarioComponent implements OnInit {
   //Bloquea y desbloquea los campos del form al pulsar los btn EDITAR o CANCELAR
   disable_enable_campos(){
     if(this.bloqCampos) this.bloqCampos = false;
-    else this.bloqCampos = true;
+    else {
+      this.restaurarValores();
+      this.bloqCampos = true;
+    }
   }
 
   //Ventana emergente si se ha realizado una peticion y todo ha ido bien

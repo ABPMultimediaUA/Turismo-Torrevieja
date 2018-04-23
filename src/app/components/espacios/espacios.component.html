@@ -1,45 +1,50 @@
 <div class="container-fluid divContenedorTabla">
   <div class="row">
-    <div  class="table-responsive">
-      <div class="example-container mat-elevation-z8">
-        <div class="example-header">
-          <h1 class="mat-display-1 tituloComponentes"><span class="icon-town-hall"></span> Espacios</h1>
-          <button *ngIf="_authService.tienePermiso(5)" mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
-            (click)="editarAnyadirItem(null)">Nuevo Espacio</button>
-          <mat-form-field class="inputBuscarItem">
+    <div class="example-header">
+      <h1 class="mat-display-1 tituloComponentes"><span class="icon-town-hall"></span> Espacios</h1>
+      <div class="elementosCabecera">
+        <button *ngIf="_authService.tienePermiso(5)" mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
+          (click)="editarAnyadirItem(null)">Nuevo Espacio</button>
+
+        <div class="divPaginacion">
+          <mat-form-field class="elementosPaginacion">
             <input matInput (keyup)="realizarBusqueda($event)" placeholder="Búsqueda" [(ngModel)]="value">
-            <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)='realizarBusqueda($event, true);value=""'>
+            <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)='value=""'>
               <mat-icon>close</mat-icon>
             </button>
           </mat-form-field>
-          <div class="divPaginacion">
-            <!-- <p>Elementos por página</p> -->
-            <div class="elementosPaginacion">
-              <mat-form-field class="selectNumPgns">
-                <mat-select [(value)]="option_Items_Pgn" placeholder="Elementos por página" (change)="actualizarPaginacion()">
-                  <mat-option value="5">5</mat-option>
-                  <mat-option value="10">10</mat-option>
-                  <mat-option value="15">15</mat-option>
-                  <mat-option value="20">20</mat-option>
-                  <mat-option value="30">30</mat-option>
-                  <mat-option value="40">40</mat-option>
-                  <mat-option value="50">50</mat-option>
-                  <mat-option value="75">75</mat-option>
-                  <mat-option value="100">100</mat-option>
-                </mat-select>
-              </mat-form-field>
-            </div>
-            <div class="elementosPaginacion">
-              <p>Pág. {{paginacion.current_page}} de {{paginacion.total_pages}}</p>
-            </div>
-            <div class="elementosPaginacion btnsPaginacion" #btnsPag>
-              <a class="btnsPaginacionOff" (click)="cambiarPgn(1)"><i class="material-icons">first_page</i></a>
-              <a class="btnsPaginacionOff" (click)="cambiarPgn(2)"><i class="material-icons">navigate_before</i></a>
-              <a class="btnsPaginacionOff" (click)="cambiarPgn(3)"><i class="material-icons">navigate_next</i></a>
-              <a class="btnsPaginacionOff" (click)="cambiarPgn(4)"><i class="material-icons">last_page</i></a>
-            </div>
+          <!-- <p>Elementos por página</p> -->
+          <div class="elementosPaginacion">
+            <mat-form-field class="selectNumPgns">
+              <mat-select [(value)]="option_Items_Pgn" placeholder="Elementos por página" (change)="actualizarPaginacion()">
+                <mat-option value="5">5</mat-option>
+                <mat-option value="10">10</mat-option>
+                <mat-option value="15">15</mat-option>
+                <mat-option value="20">20</mat-option>
+                <mat-option value="30">30</mat-option>
+                <mat-option value="40">40</mat-option>
+                <mat-option value="50">50</mat-option>
+                <mat-option value="75">75</mat-option>
+                <mat-option value="100">100</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="elementosPaginacion">
+            <p>Pág. {{paginacion.current_page}} de {{paginacion.total_pages}}</p>
+          </div>
+          <div class="elementosPaginacion btnsPaginacion" #btnsPag>
+            <a class="btnsPaginacionOff" (click)="cambiarPgn(1)"><i class="material-icons">first_page</i></a>
+            <a class="btnsPaginacionOff" (click)="cambiarPgn(2)"><i class="material-icons">navigate_before</i></a>
+            <a class="btnsPaginacionOff" (click)="cambiarPgn(3)"><i class="material-icons">navigate_next</i></a>
+            <a class="btnsPaginacionOff" (click)="cambiarPgn(4)"><i class="material-icons">last_page</i></a>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="table-responsive">
+      <div class="example-container mat-elevation-z8">
         <mat-table class="tablaComponente" #table [dataSource]="dataSource" matSort>
           <ng-container matColumnDef="select">
             <mat-header-cell *matHeaderCellDef>
@@ -56,11 +61,6 @@
                             (change)="activarDesBtnEliminar(selection.selected)">
               </mat-checkbox>
             </mat-cell>
-          </ng-container>
-
-          <ng-container matColumnDef="identificador">
-            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(0)">Id</mat-header-cell>
-            <mat-cell *matCellDef="let items">{{items.identificador}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="nombreEspacio">
@@ -93,8 +93,8 @@
             <mat-cell *matCellDef="let items">{{items.aforo}}</mat-cell>
           </ng-container>
 
-          <mat-header-row *matHeaderRowDef="['select','identificador','nombreEspacio','CP','calle','numero','telefono1','aforo']"></mat-header-row>
-          <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','identificador','nombreEspacio','CP','calle','numero','telefono1','aforo']" (click)="editarAnyadirItem(row)"></mat-row>
+          <mat-header-row *matHeaderRowDef="['select','nombreEspacio','CP','calle','numero','telefono1','aforo']"></mat-header-row>
+          <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','nombreEspacio','CP','calle','numero','telefono1','aforo']" (click)="editarAnyadirItem(row)"></mat-row>
         </mat-table>
         <button *ngIf="_authService.tienePermiso(8)" mat-raised-button type="submit" class="botonMat botonEliminarItems" [disabled]="btnEliminar" color="warn" (click)="botonEliminarItem(selection.selected)">Eliminar espacios</button>
       </div>

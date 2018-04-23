@@ -3,7 +3,7 @@ import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
 import { UsuarioInterface }  from "../../interfaces/usuario.interface";
-import { Cartera }  from "../../interfaces/cartera.interface";
+import { CarteraInterface }  from "../../interfaces/cartera.interface";
 import { AlertService , PeticionesCrudService } from '../../services/index';
 
 @Component({
@@ -26,7 +26,7 @@ export class NuevoExpedienteComponent implements OnInit {
   };
 
   public users:UsuarioInterface[];
-  public cartera:Cartera[];
+  public cartera:CarteraInterface[];
 
   @ViewChild("etiquetaImgExp") etiqueta;
   archivoImg:File = null;
@@ -50,11 +50,11 @@ export class NuevoExpedienteComponent implements OnInit {
       //COGEMOS LAS CARTERAS CUYO ESTADO PERMITEN ANYADIR NUEVOS EXPEDIENTES (1 y 2)
       this._crudService.getItem(301,-1,-1,-1).then(
         res => {
-          this.cartera = res as Cartera[];
+          this.cartera = res as CarteraInterface[];
           //TODO Eliminar cuando se arregle la select
           this._crudService.getItem(302,-1,-1,-1).then(
             res => {
-              this.cartera = this.cartera.concat(res as Cartera[]);
+              this.cartera = this.cartera.concat(res as CarteraInterface[]);
             }
           );
         }

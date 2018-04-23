@@ -1,10 +1,5 @@
 <div class="contenedorEditar">
   <h1 class="mat-display-1 tituloComponentes"><span class="icon-town-hall"></span> {{titulo}} {{items.nombreRol}}</h1>
-  <div class="VentanaEmergenteSpinner1">
-    <div class="VentanaEmergenteSpinner2" *ngIf="realizandoAccion">
-        <mat-spinner color="warn"></mat-spinner>
-    </div>
-  </div>
   <a class="btnCerrar" (click)="cerrarDialogo()"><i class="material-icons iconoCerrar">close</i></a>
   <form (ngSubmit)="anyadirItem()" #formulario="ngForm">
     <div class="row contenedorFormCamposDestacados">
@@ -16,65 +11,66 @@
       </mat-form-field>
 
     </div><br>
-    <div class="row contenedorFormObservaciones">
+    <div class="row contenedorFormCamposDestacados">
       <div class="col-sm-3">
-        <mat-checkbox (click)="checkboxCambiado(27)" id="27" name="expediente" value="ConsultarEx">Consultar expedientes</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(25)" id="25" name="expediente" value="CrearEx">Crear expedientes</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(26)" id="26" name="expediente" value="ActualizarEx">Actualizar expedientes</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(28)" id="28" name="expediente" value="EliminarEx">Eliminar expedientes</mat-checkbox><br><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(23) : null" [checked]="selection.isSelected(23)" (click)="$event.stopPropagation()" name="cartera" value="ConsultarCa">Consultar carteras</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(21) : null" [checked]="selection.isSelected(21)" (click)="$event.stopPropagation()" name="cartera" value="CrearCa">Crear carteras</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(22) : null" [checked]="selection.isSelected(22)" (click)="$event.stopPropagation()" name="cartera" value="ActualizarCa">Actualizar carteras</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(24) : null" [checked]="selection.isSelected(24)" (click)="$event.stopPropagation()" name="cartera" value="EliminarCa">Eliminar carteras</mat-checkbox><br><br>
       </div>
       <div class="col-sm-3">
-        <mat-checkbox (click)="checkboxCambiado(3)" id="3" name="evento" value="ConsultarEv">Consultar eventos</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(1)" id="1" name="evento" value="CrearEv">Crear eventos</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(2)" id="2" name="evento" value="ActualizarEv">Actualizar eventos</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(4)" id="4" name="evento" value="EliminarEv">Eliminar eventos</mat-checkbox><br><br>
+        <!-- <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle($event) : null" [checked]="selection.hasValue() || hasPerm(26)" (click)="$event.stopPropagation()[25,26,27,28])" name="expediente" value="ActualizarEx"><b>Gestor eventos</b></mat-checkbox><br> -->
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(3) : null" [checked]="selection.isSelected(3)" (click)="$event.stopPropagation()" name="evento" value="ConsultarEv">Consultar eventos</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(1) : null" [checked]="selection.isSelected(1)" (click)="$event.stopPropagation()" name="evento" value="CrearEv">Crear eventos</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(2) : null" [checked]="selection.isSelected(2)" (click)="$event.stopPropagation()" name="evento" value="ActualizarEv">Actualizar eventos</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(4) : null" [checked]="selection.isSelected(4)" (click)="$event.stopPropagation()" name="evento" value="EliminarEv">Eliminar eventos</mat-checkbox><br><br>
       </div>
       <div class="col-sm-3">
-        <mat-checkbox (click)="checkboxCambiado(15)" id="15" name="actividad" value="ConsultarAc">Consultar actividades</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(13)" id="13" name="actividad" value="CrearAc">Crear actividades</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(14)" id="14" name="actividad" value="ActualizarAc">Actualizar actividades</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(16)" id="16" name="actividad" value="EliminarAc">Eliminar actividades</mat-checkbox><br><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(15) : null" [checked]="selection.isSelected(15)" (click)="$event.stopPropagation()" name="actividad" value="ConsultarAc">Consultar actividades</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(13) : null" [checked]="selection.isSelected(13)" (click)="$event.stopPropagation()" name="actividad" value="CrearAc">Crear actividades</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(14) : null" [checked]="selection.isSelected(14)" (click)="$event.stopPropagation()" name="actividad" value="ActualizarAc">Actualizar actividades</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(16) : null" [checked]="selection.isSelected(16)" (click)="$event.stopPropagation()" name="actividad" value="EliminarAc">Eliminar actividades</mat-checkbox><br><br>
+      </div>
+    </div>
+    <div class="row contenedorFormCamposDestacados">
+      <div class="col-sm-3">
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(11) : null" [checked]="selection.isSelected(11)" (click)="$event.stopPropagation()" name="tarea" value="ConsultarTa">Consultar tareas</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(9) : null" [checked]="selection.isSelected(9)" (click)="$event.stopPropagation()" name="tarea" value="CrearTa">Crear tareas</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(10) : null" [checked]="selection.isSelected(10)" (click)="$event.stopPropagation()" name="tarea" value="ActualizarTa">Actualizar tareas</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(12) : null" [checked]="selection.isSelected(12)" (click)="$event.stopPropagation()" name="tarea" value="EliminarTa">Eliminar tareas</mat-checkbox><br><br>
       </div>
       <div class="col-sm-3">
-        <mat-checkbox (click)="checkboxCambiado(11)" id="11" name="tarea" value="ConsultarTa">Consultar tareas</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(9)" id="9" name="tarea" value="CrearTa">Crear tareas</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(10)" id="10" name="tarea" value="ActualizarTa">Actualizar tareas</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(12)" id="12" name="tarea" value="EliminarTa">Eliminar tareas</mat-checkbox><br><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(19) : null" [checked]="selection.isSelected(19)" (click)="$event.stopPropagation()" name="contrato" value="ConsultarCo">Consultar contratos</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(17) : null" [checked]="selection.isSelected(17)" (click)="$event.stopPropagation()" name="contrato" value="CrearCo">Crear contratos</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(18) : null" [checked]="selection.isSelected(18)" (click)="$event.stopPropagation()" name="contrato" value="ActualizarCo">Actualizar contratos</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(20) : null" [checked]="selection.isSelected(20)" (click)="$event.stopPropagation()" name="contrato" value="EliminarCo">Eliminar contratos</mat-checkbox><br><br>
       </div>
       <div class="col-sm-3">
-        <mat-checkbox (click)="checkboxCambiado(23)" id="23" name="cartera" value="ConsultarCa">Consultar carteras</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(21)" id="21" name="cartera" value="CrearCa">Crear carteras</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(22)" id="22" name="cartera" value="ActualizarCa">Actualizar carteras</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(24)" id="24" name="cartera" value="EliminarCa">Eliminar carteras</mat-checkbox><br><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(7) : null" [checked]="selection.isSelected(7)" (click)="$event.stopPropagation()" name="espacio" value="ConsultarEs">Consultar espacios</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(5) : null" [checked]="selection.isSelected(5)" (click)="$event.stopPropagation()" name="espacio" value="CrearEs">Crear espacios</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(6) : null" [checked]="selection.isSelected(6)" (click)="$event.stopPropagation()" name="espacio" value="ActualizarEs">Actualizar espacios</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(8) : null" [checked]="selection.isSelected(8)" (click)="$event.stopPropagation()" name="espacio" value="EliminarEs">Eliminar espacios</mat-checkbox><br><br>
+      </div>
+    </div>
+    <div class="row contenedorFormCamposDestacados">
+      <div class="col-sm-3">
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(31) : null" [checked]="selection.isSelected(31)" (click)="$event.stopPropagation()" name="proveedor" value="ConsultarPr">Consultar proveedores</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(29) : null" [checked]="selection.isSelected(29)" (click)="$event.stopPropagation()" name="proveedor" value="CrearPr">Crear proveedores</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(30) : null" [checked]="selection.isSelected(30)" (click)="$event.stopPropagation()" name="proveedor" value="ActualizarPr">Actualizar proveedores</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(32) : null" [checked]="selection.isSelected(32)" (click)="$event.stopPropagation()" name="proveedor" value="EliminarPr">Eliminar proveedores</mat-checkbox><br><br>
       </div>
       <div class="col-sm-3">
-        <mat-checkbox (click)="checkboxCambiado(7)" id="7" name="espacio" value="ConsultarEs">Consultar espacios</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(5)" id="5" name="espacio" value="CrearEs">Crear espacios</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(6)" id="6" name="espacio" value="ActualizarEs">Actualizar espacios</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(8)" id="8" name="espacio" value="EliminarEs">Eliminar espacios</mat-checkbox><br><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(35) : null" [checked]="selection.isSelected(35)" (click)="$event.stopPropagation()" name="rol" value="ConsultarRol">Consultar roles</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(33) : null" [checked]="selection.isSelected(33)" (click)="$event.stopPropagation()" name="rol" value="CrearRol">Crear roles</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(34) : null" [checked]="selection.isSelected(34)" (click)="$event.stopPropagation()" name="rol" value="ActualizarRol">Actualizar roles</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(36) : null" [checked]="selection.isSelected(36)" (click)="$event.stopPropagation()" name="rol" value="EliminarRol">Eliminar roles</mat-checkbox><br><br>
       </div>
       <div class="col-sm-3">
-        <mat-checkbox (click)="checkboxCambiado(31)" id="31" name="proveedor" value="ConsultarPr">Consultar proveedores</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(29)" id="29" name="proveedor" value="CrearPr">Crear proveedores</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(30)" id="30" name="proveedor" value="ActualizarPr">Actualizar proveedores</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(32)" id="32" name="proveedor" value="EliminarPr">Eliminar proveedores</mat-checkbox><br><br>
-      </div>
-      <div class="col-sm-3">
-        <mat-checkbox (click)="checkboxCambiado(19)" id="19" name="contrato" value="ConsultarCo">Consultar contratos</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(17)" id="17" name="contrato" value="CrearCo">Crear contratos</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(18)" id="18" name="contrato" value="ActualizarCo">Actualizar contratos</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(20)" id="20" name="contrato" value="EliminarCo">Eliminar contratos</mat-checkbox><br><br>
-      </div>
-      <div class="col-sm-3">
-        <mat-checkbox (click)="checkboxCambiado(55)" id="55" name="usuario" value="ConsultarU">Consultar usuarios</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(54)" id="54" name="usuario" value="CrearU">Crear usuarios</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(56)" id="56" name="usuario" value="ActualizarU">Actualizar usuarios</mat-checkbox><br><br>
-      </div>
-      <div class="col-sm-3">
-        <mat-checkbox (click)="checkboxCambiado(35)" id="35" name="rol" value="ConsultarRol">Consultar roles</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(33)" id="33" name="rol" value="CrearRol">Crear roles</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(34)" id="34" name="rol" value="ActualizarRol">Actualizar roles</mat-checkbox><br>
-        <mat-checkbox (click)="checkboxCambiado(36)" id="36" name="rol" value="EliminarRol">Eliminar roles</mat-checkbox><br><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(55) : null" [checked]="selection.isSelected(55)" (click)="$event.stopPropagation()" name="usuario" value="ConsultarU">Consultar usuarios</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(54) : null" [checked]="selection.isSelected(54)" (click)="$event.stopPropagation()" name="usuario" value="CrearU">Crear usuarios</mat-checkbox><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(56) : null" [checked]="selection.isSelected(56)" (click)="$event.stopPropagation()" name="usuario" value="ActualizarU">Actualizar usuarios</mat-checkbox><br>
+        <mat-checkbox [disabled]="true" (change)="$event ? selection.toggle(56) : null" [checked]="selection.isSelected(56)" (click)="$event.stopPropagation()" name="usuario" value="ActualizarU">Eliminar usuarios</mat-checkbox><br><br>
+        <!-- TODO: CAMBIAR el disabled y el 56 por el codigo que se le asigne -->
       </div>
     </div>
     <div class="row" *ngIf="!realizandoAccion">
@@ -97,6 +93,11 @@
             </mat-dialog-actions>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="VentanaEmergenteSpinner1">
+      <div class="VentanaEmergenteSpinner2" *ngIf="realizandoAccion">
+          <mat-spinner color="warn"></mat-spinner>
       </div>
     </div>
   </form>

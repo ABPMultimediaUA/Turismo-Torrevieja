@@ -17,7 +17,7 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatDatepickerModule} from '@angular/material/datepicker';
 
 import { Element }  from "../../interfaces/element.interface";
-import { Cartera }  from "../../interfaces/cartera.interface";
+import { CarteraInterface }  from "../../interfaces/cartera.interface";
 import { UsuarioInterface }  from "../../interfaces/usuario.interface";
 
 
@@ -39,12 +39,12 @@ import { AlertService, PeticionesCrudService,ExpedientesService } from '../../se
   templateUrl: 'crear-expediente-dialog.html'
 })
 export class CrearExpedienteDialog {
-  row:Cartera;
+  row:CarteraInterface;
   id:number;
   // evento:Evento[];
   editando:boolean;
   creando:boolean;
-  public cartera:Cartera={
+  public cartera:CarteraInterface={
     identificador:"",
     nombreCartera:"",
     year:2019,

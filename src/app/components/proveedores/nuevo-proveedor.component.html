@@ -1,10 +1,5 @@
 <div class="contenedorEditar">
   <h1 class="mat-display-1 tituloComponentes"><span class="icon-handshake-o"></span> {{titulo}} {{items.nombreProveedor}}</h1>
-  <div class="VentanaEmergenteSpinner1">
-    <div class="VentanaEmergenteSpinner2" *ngIf="realizandoAccion">
-        <mat-spinner color="warn"></mat-spinner>
-    </div>
-  </div>
   <a class="btnCerrar" (click)="cerrarDialogo()"><i class="material-icons iconoCerrar">close</i></a>
   <form (ngSubmit)="anyadirItem()" #formulario="ngForm">
     <div class="row contenedorFormCamposDestacados">
@@ -101,7 +96,7 @@
       </div>
     </div>
     <div class="row contenedorFormObservaciones">
-      <mat-form-field hintLabel="" class="campoObservaciones">
+      <mat-form-field hintLabel="" class="campoWidth100">
         <textarea matInput name="descripcion" [(ngModel)]="items.descripcion" placeholder="Observaciones" [readonly]="bloqCampos"
                   maxLength="500"></textarea>
       </mat-form-field>
@@ -126,6 +121,11 @@
             </mat-dialog-actions>
           </div>
         </div>
+      </div>
+    </div>
+    <div class="VentanaEmergenteSpinner1">
+      <div class="VentanaEmergenteSpinner2" *ngIf="realizandoAccion">
+          <mat-spinner color="warn"></mat-spinner>
       </div>
     </div>
   </form>

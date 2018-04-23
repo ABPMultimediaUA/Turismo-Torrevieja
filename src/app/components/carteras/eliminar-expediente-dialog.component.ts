@@ -14,7 +14,7 @@ import {MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatProgressBarModule, MatProgr
 import {MatDialogModule} from '@angular/material/dialog';
 
 import { Element }  from "../../interfaces/element.interface";
-import { Cartera }  from "../../interfaces/cartera.interface";
+import { CarteraInterface }  from "../../interfaces/cartera.interface";
 import {HomeComponent} from "../home/home.component";
 import { Router, ActivatedRoute } from '@angular/router';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';//ramoon
@@ -31,7 +31,7 @@ import { AlertService, CarterasService } from '../../services/index';
   templateUrl: 'eliminar-expediente-dialog.html',
 })
 export class EliminarExpedienteDialog {
-  row:Cartera;
+  row:CarteraInterface;
   id:string;
   eliminando:boolean =false;
   constructor(private _carterasService:CarterasService,

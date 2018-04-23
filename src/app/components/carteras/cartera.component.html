@@ -1,3 +1,4 @@
+<!--
 <br><br><br><br><br>
 <div class="container-fluid">
       <div style="width:100%">
@@ -9,7 +10,7 @@
           </button>
         </h1>
       </div>
-        <!-- mensajes -->
+
         <div class="container" *ngIf="errorCartera === true">
             <div class="jumbotron">
                 <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
@@ -42,7 +43,8 @@
 
 
           <div class="row">
-          <!-- *ngIf="!permisoEditar" -->
+
+
             <div *ngIf="!permisoEditar" class="form-group col-sm-3">
               <label>Nombre</label>
               <input [(ngModel)]="cartera.nombreCartera"
@@ -76,7 +78,8 @@
                 <option [ngValue]=i *ngFor="let e of estados, let i = index">{{e}}</option>
               </select>
             </div>
-              <!-- *ngIf="permisoEditar" -->
+
+            
             <div *ngIf="permisoEditar" class="form-group col-sm-3">
               <label>Nombre</label>
               <input [(ngModel)]="cartera.nombreCartera"
@@ -132,13 +135,10 @@
           </div>
         </form>
         <br>
-        <!-- <div class="row">
-           <h3 class="col-sm-3">Expedientes</h3>
-           <button *ngIf="!formExVisible && cartera.estado <3 " (click)="mostrarFormExp(true)" type="button" name="button" class="btn btn-outline-primary">Nuevo expediente</button>
-           <button *ngIf="formExVisible" (click)="mostrarFormExp(false)" type="button" name="button" class="btn btn-outline-danger">Cancelar</button>
-        </div>
-        <br> -->
-        <!-- ***************** FORMULARIO EXPEDIENTE ***************** -->
+
+
+
+
         <div *ngIf="formExVisible">
           <form (ngSubmit)="crearNuevoExp()" #forma="ngForm">
             <div class="row">
@@ -173,38 +173,6 @@
           </form>
           <br>
         </div>
-        <!-- ***************** LISTA EXPEDIENTES ***************** -->
-        <!-- <table class="table table-striped">
-          <thead class="thead-dark">
-            <tr>
-              <th scope="col">#</th>
-              <th scope="col">Id</th>
-              <th scope="col">Nombre</th>
-              <th scope="col">Título</th>
-              <th scope="col">Coordinador</th>
-              <th scope="col">Fecha Inicio</th>
-              <th scope="col">Fecha Fin</th>
-              <th *ngIf="cartera.estado >=3 " class="text-right">Opciones</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let e of  expediente; let i = index">
-              <td>{{ i + 1 }}</td>
-              <td>{{ e.identificador }}</td>
-              <td>{{ e.nombreExpediente }}</td>
-              <td>{{ e.titulo }}</td>
-              <td>{{ e.coordinador }}</td>
-              <td>{{ e.fechaInicio }}</td>
-              <td>{{ e.fechaFin }}</td>
-              <td class="text-right w20">
-                <button *ngIf="cartera.estado >=3 "  [routerLink]="['/expediente', e.identificador]"
-                type="button" class="btn btn-outline-success">
-                  <span class="icon-pencil"></span>
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table> -->
 
 
 
@@ -215,10 +183,11 @@
               <div class="example-container mat-elevation-z8">
                 <div class="example-header">
                   <h1 style="margin-left:30px; padding-top:30px; margin-bottom:10px;" class="mat-display-1">Eventos</h1>
-                  <!-- subheader -->
-                   <!-- <button *ngIf="!formExVisible && cartera.estado <3 " (click)="mostrarFormExp(true)" type="button" name="button" class="btn btn-outline-primary">Nuevo expediente</button> -->
-<!-- <button *ngIf="formExVisible" (click)="mostrarFormExp(false)" type="button" name="button" class="btn btn-outline-danger">Cancelar</button> -->
-                    <button style="margin-left:30px;"  mat-raised-button
+
+
+
+
+                  <button style="margin-left:30px;"  mat-raised-button
                       class="botonMat"
                       type="submit"
                       color="primary"
@@ -301,4 +270,4 @@
               </div>
             </div>
 
-      </div>
+      </div> -->

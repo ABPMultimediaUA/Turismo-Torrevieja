@@ -101,26 +101,24 @@ export class RolesComponent implements OnInit {
 
   //CHECKBOX ROW TABLA - Habilita o deshabilita el boton eliminar item/s
   activarDesBtnEliminar(i){
-    if(i.length>0) this.btnEliminar = false;
-    else this.btnEliminar = true;
+    (i.length > 0) ? this.btnEliminar = false : this.btnEliminar = true;
   }
 
   //Buscador
   //TODO por hacer, da error
-  realizarBusqueda(e,u){
-    if(e.target.value == "" || u){
+  realizarBusqueda(e){
+    if(e.target.value == ""){
       this.busqueda = -1;
       this.selectUrl = 4;
       e.target.value = "";
     }
-    if(e.keyCode == 13 || u){
+    if(e.keyCode == 13){
       if(e.target.value != ""){
         this.selectUrl = 306;
         this.busqueda = e.target.value.toString();
       }
       this.cargarItems(this.selectUrl,+this.option_Items_Pgn,1);
     }
-
   }
 
   //BOTON - Funcion eliminar item/s

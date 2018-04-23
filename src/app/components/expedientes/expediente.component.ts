@@ -6,7 +6,7 @@ import { ActividadInterface }  from "../../interfaces/actividad.interface";
 import { TareasInterface }  from "../../interfaces/tareas.interface";
 import { ContratoInterface }  from "../../interfaces/contrato.interface";
 import { UsuarioInterface }  from "../../interfaces/usuario.interface";
-import { Cartera }  from "../../interfaces/cartera.interface";
+import { CarteraInterface }  from "../../interfaces/cartera.interface";
 import { EspacioInterface }  from "../../interfaces/espacio.interface";
 import { ProveedorInterface }  from "../../interfaces/proveedor.interface";
 import { AlertService ,PeticionesCrudService } from '../../services/index';
@@ -54,7 +54,7 @@ export class ExpedienteComponent implements OnInit {
     titulo:"",
   };
 
-  public cartera:Cartera={
+  public cartera:CarteraInterface={
     identificador:"",
     nombreCartera:"",
     year:0,
@@ -99,7 +99,7 @@ export class ExpedienteComponent implements OnInit {
                 //cogemos cartera
                 this._ItemService.getItem(8,this.expediente.cartera,-1,-1).then(
                   res => {
-                    this.cartera = res as Cartera;
+                    this.cartera = res as CarteraInterface;
                     if(this.cartera.estado < 3) this.eliminable = true;
                     else this.modificable = true;
                   }

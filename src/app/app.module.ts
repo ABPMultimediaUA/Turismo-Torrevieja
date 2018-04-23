@@ -26,7 +26,8 @@ import {MatToolbarModule} from '@angular/material/toolbar';
 import { MatIcon, MatPaginatorModule, MatTableDataSource, MatSort,
          MatSortModule, MatTableModule, MatFormFieldModule, MatNativeDateModule,
          MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatProgressBarModule,
-         MatProgressSpinnerModule,MatIconRegistry, MatIconModule,MatButtonModule,MatInputModule
+         MatProgressSpinnerModule,MatIconRegistry, MatIconModule,MatButtonModule,MatInputModule,
+         MatRadioModule
         } from '@angular/material';
 
 //Componentes no login
@@ -146,6 +147,7 @@ import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.com
     MatFormFieldModule,
     BrowserAnimationsModule,
     MatButtonModule,
+    MatRadioModule,
     MatToolbarModule,
     MatIconModule,
     MatPaginatorModule,

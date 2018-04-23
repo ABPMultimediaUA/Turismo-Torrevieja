@@ -15,6 +15,7 @@ import { ContactComponent }     from "./components/contact/contact.component";
 import { PerfilComponent }      from "./components/perfil/perfil.component";
 import { UsuariosComponent }    from "./components/usuarios/usuarios.component";
 import { CarterasComponent }    from './components/carteras/carteras.component';
+import { CarteraComponent }     from './components/carteras/cartera.component';
 import { ExpedientesComponent } from './components/expedientes/expedientes.component';
 import { ProveedoresComponent } from './components/proveedores/proveedores.component';
 import { RolesComponent }       from './components/roles/roles.component';
@@ -27,8 +28,6 @@ import { MensajesComponent }    from "./components/mensajes/mensajes.component";
 
 //TODO eliminar
 
-import { CarteraComponent } from './components/carteras/cartera.component';
-import { NuevaCarteraComponent } from './components/carteras/nueva-cartera.component';
 
 import { ExpedienteComponent } from './components/expedientes/expediente.component';
 import { NuevoExpedienteComponent } from './components/expedientes/nuevo-expediente.component';
@@ -54,6 +53,7 @@ const app_routes: Routes = [
   { path: 'usuarios', canActivate:[AuthGuardService,AuthGuardUsuariosService], component: UsuariosComponent },
   { path: 'roles', canActivate:[AuthGuardService,AuthGuardRolesService], component: RolesComponent },
   { path: 'carteras', canActivate:[AuthGuardService,AuthGuardCarterasService], component: CarterasComponent },
+  { path: 'cartera/:id', canActivate:[AuthGuardService,AuthGuardCarterasService], component: CarteraComponent },
   { path: 'expedientes', canActivate:[AuthGuardService,AuthGuardEventosService], component: ExpedientesComponent },
   { path: 'espacios', canActivate:[AuthGuardService,AuthGuardEspaciosService], component: EspaciosComponent },
   { path: 'proveedores', canActivate:[AuthGuardService,AuthGuardProveedoresService], component: ProveedoresComponent },
@@ -67,12 +67,8 @@ const app_routes: Routes = [
   //TODO ELIMINAR
   { path: 'nuevo-rol', component: NuevoRolComponent },
   { path: 'rol/:id', component: RolComponent },
-  { path: 'mensajes/:parame', component: MensajesComponent },
   //{ path: 'usuariosReloaded', component: UsuariosComponent },
   //rutas carteras
-  { path: 'carteras/:id', component: CarterasComponent },
-  { path: 'nueva-cartera', component: NuevaCarteraComponent },
-  { path: 'cartera/:id', component: CarteraComponent },
   //rutas expedientes
   { path: 'nuevo-expediente', component: NuevoExpedienteComponent },
   { path: 'expediente/:id', component: ExpedienteComponent },
