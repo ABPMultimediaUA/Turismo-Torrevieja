@@ -31,13 +31,13 @@ export class CarteraComponent implements OnInit {
   row:ExpedienteInterface;            //Devuelve la fila que se seleccione en la tabla
   paginacion:PaginacionInterface;     //Guardar todos los datos de paginacion
   option_Items_Pgn='10';              //Cantidad de items por pagina al cargar el componente
-  selectUrl:number = 0;              //Selecciona la url para las peticiones getItem
+  selectUrl:number = 403;              //Selecciona la url para las peticiones getItem
   busqueda = -1;                      //Si se ha rellenado el campo de busqueda
   selectASC_DESC:number=-1;           //Saber si el usuario quiere ordenar los items: -1 nada seleccionado, 0 ASC, 1 DES
   valorEscogidoForOrder:number = -1;  //Para saber el elemento seleccionado, -1 valor neutro
   btnEliminar:boolean = true;         //Activar / desactivar boton de eliminar item/s
   @ViewChild("btnsPag") BtnsPagOff;   //Div que contiene los botones de paginacion
-  estadoCarteraEscogido:number = 50;  //Valor radio button (url basica por estados)
+  estadoCarteraEscogido:number = 400;  //Valor radio button (url basica por estados)
 
   dataSource = new MatTableDataSource(this.items);            //Datos de la tabla
   selection = new SelectionModel<CarteraInterface>(true, []); //Filas seleccionadas
@@ -66,7 +66,7 @@ export class CarteraComponent implements OnInit {
 
   //Realiza la peticion GetItems a la BD y actualiza las variables
   cargarItems(peticion:number, per_pgn:number, pgn:number){
-    this._itemService.getItem(peticion,this.busqueda,per_pgn,pgn).then(
+    this._itemService.getItem(peticion,this.cartera.identificador,per_pgn,pgn).then(
       res => {
         if(typeof res != "string"){
           if(res && res["data"] && res["meta"]){

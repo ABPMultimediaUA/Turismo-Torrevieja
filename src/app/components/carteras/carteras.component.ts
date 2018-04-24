@@ -20,13 +20,13 @@ export class CarterasComponent implements OnInit {
   row:CarteraInterface;               //Devuelve la fila que se seleccione en la tabla
   paginacion:PaginacionInterface;     //Guardar todos los datos de paginacion
   option_Items_Pgn='10';              //Cantidad de items por pagina al cargar el componente
-  selectUrl:number = 50;              //Selecciona la url para las peticiones getItem
+  selectUrl:number = 400;              //Selecciona la url para las peticiones getItem
   busqueda = -1;                      //Si se ha rellenado el campo de busqueda
   selectASC_DESC:number=-1;           //Saber si el usuario quiere ordenar los items: -1 nada seleccionado, 0 ASC, 1 DES
   valorEscogidoForOrder:number = -1;  //Para saber el elemento seleccionado, -1 valor neutro
   btnEliminar:boolean = true;         //Activar / desactivar boton de eliminar item/s
   @ViewChild("btnsPag") BtnsPagOff;   //Div que contiene los botones de paginacion
-  estadoCarteraEscogido:number = 50;  //Valor radio button (url basica por estados)
+  estadoCarteraEscogido:number = 400;  //Valor radio button (url basica por estados)
 
   dataSource = new MatTableDataSource(this.items);            //Datos de la tabla
   selection = new SelectionModel<CarteraInterface>(true, []); //Filas seleccionadas
@@ -237,7 +237,7 @@ export class CarterasComponent implements OnInit {
       //Una vez actualizado todo escoge la select correspondiente
       // switch(this.valorEscogidoForOrder){
       //   case -1:
-      //     this.selectUrl = 8; //TODO dependera del estado de las carteras a buscar
+      //     this.selectUrl = 400; //TODO dependera del estado de las carteras a buscar
       //     break;
       //   case 0:
       //     if(this.selectASC_DESC == 0) this.selectUrl = null; //ID ASC

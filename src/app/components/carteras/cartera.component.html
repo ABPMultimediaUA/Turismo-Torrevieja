@@ -2,7 +2,40 @@
   <div class="row">
     <div class="example-header">
       <h1 class="mat-display-1 tituloComponentes"><span class="icon-town-hall"></span> Cartera {{cartera.nombreCartera}} </h1>
+      <div class="row contenedorFormCamposDestacados">
+        <mat-form-field hintLabel="" class="">
+          <input matInput name="nombreCartera" [(ngModel)]="cartera.nombreCartera" placeholder="Nombre"
+                 maxLength="200" required>
+          <mat-error>Campo requerido</mat-error>
+        </mat-form-field>
+
+        <mat-form-field hintLabel="" class="">
+          <input matInput name="trimestre" [(ngModel)]="cartera.trimestre" placeholder="Periodo"
+                 maxLength="100">
+        </mat-form-field>
+
+        <mat-form-field hintLabel="" class="">
+          <input matInput name="year" [(ngModel)]="cartera.year" placeholder="Año"
+                 pattern="[0-9]{4}" maxLength="4">
+          <mat-error>Han de ser cuatro números</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Estado" name="estado" [(ngModel)]="cartera.estado" [disabled]="bloqCampos" >
+            <mat-option [value]="1">Aprobada</mat-option>
+            <mat-option [value]="2">Sin aprobar</mat-option>
+            <mat-option [value]="3">Finalizada</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput name="fechaCreacion" [(ngModel)]="cartera.fechaCreacion" placeholder="Estado" [readonly]="bloqCampos"
+                 maxLength="50">
+        </mat-form-field>
+
+      </div>
       <div class="elementosCabecera">
+
         <button *ngIf="_authService.tienePermiso(5)" mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
           (click)="editarAnyadirItem(null)">Nuevo Evento</button>
 
