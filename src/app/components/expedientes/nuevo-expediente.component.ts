@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
-import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
+import { ExpedienteInterface }  from "../../interfaces/expediente.interface";
 import { UsuarioInterface }  from "../../interfaces/usuario.interface";
 import { CarteraInterface }  from "../../interfaces/cartera.interface";
 import { AlertService , PeticionesCrudService } from '../../services/index';
@@ -12,7 +12,7 @@ import { AlertService , PeticionesCrudService } from '../../services/index';
 })
 export class NuevoExpedienteComponent implements OnInit {
 
-  public expediente:ExpedienteInterfaz={
+  public expediente:ExpedienteInterface={
     identificador:0,
     avance:0,
     cartera:0,

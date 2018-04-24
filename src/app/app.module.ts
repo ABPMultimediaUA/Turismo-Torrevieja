@@ -199,15 +199,20 @@ import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.com
     NuevoRolComponent,
     EliminarRolComponent,
 
+    //Ventanas emergentes cartera
+    NuevaCarteraComponent,
+    EliminarCarteraDialog,
+
+    //Ventanas emergentes expediente
+    CrearExpedienteDialog,
+    EliminarExpedienteDialog,
+
     //Mensaje emergente
     VentanaEmergenteComponent,
 
 
-      EliminarCarteraDialog,
       EditarPerfilDialog,
       EditarCarteraDialog,
-      CrearExpedienteDialog,
-      EliminarExpedienteDialog,
 
   ],
   bootstrap: [AppComponent]

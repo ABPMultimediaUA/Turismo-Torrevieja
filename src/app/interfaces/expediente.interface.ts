@@ -1,4 +1,4 @@
-export interface ExpedienteInterfaz
+export interface ExpedienteInterface
 {
     identificador:number;
     avance:number;

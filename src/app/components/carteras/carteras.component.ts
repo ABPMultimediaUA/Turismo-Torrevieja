@@ -150,8 +150,21 @@ export class CarterasComponent implements OnInit {
   }
 
   //BOTON - ROW - Se activacon el boton nuevo item o pinchando una fila, abre el formulario crear / editar item
+  editarAnyadirItem(row){
+    const dialogRef = this.dialog.open(NuevaCarteraComponent,{
+      height: '90%',
+      width: '37%',
+      data: { item: row }
+    });
+    dialogRef.afterClosed().subscribe( res => {
+      if(res){
+        this.btnEliminar = true;
+        this.cargarItems(this.selectUrl,this.paginacion.per_page,this.paginacion.current_page)
+      }
+    });
+  }
+
   abrirCartera(row){
-    console.log(row);
     this.router.navigate(['/cartera', row.identificador]);
   }
 

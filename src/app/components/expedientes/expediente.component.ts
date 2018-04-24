@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
 import { NgForm }  from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
-import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
+import { ExpedienteInterface }  from "../../interfaces/expediente.interface";
 import { ActividadInterface }  from "../../interfaces/actividad.interface";
 import { TareasInterface }  from "../../interfaces/tareas.interface";
 import { ContratoInterface }  from "../../interfaces/contrato.interface";
@@ -41,7 +41,7 @@ export class ExpedienteComponent implements OnInit {
   //TODO Arreglar Coordinador
   coordinador:number;
 
-  public expediente:ExpedienteInterfaz={
+  public expediente:ExpedienteInterface={
     identificador:0,
     avance:0,
     cartera:0,
@@ -85,7 +85,7 @@ export class ExpedienteComponent implements OnInit {
             //COGEMOS EL EXPEDIENTE
             this._ItemService.getItem(0,this.id,-1,-1).then(
               res => {
-                this.expediente = res as ExpedienteInterfaz;
+                this.expediente = res as ExpedienteInterface;
 
                 //cargamos imagen
                 if(this.expediente.image){

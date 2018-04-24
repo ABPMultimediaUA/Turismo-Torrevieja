@@ -21,7 +21,7 @@ import { CarteraInterface }  from "../../interfaces/cartera.interface";
 import { UsuarioInterface }  from "../../interfaces/usuario.interface";
 
 
-import { ExpedienteInterfaz }  from "../../interfaces/expediente.interface";
+import { ExpedienteInterface }  from "../../interfaces/expediente.interface";
 
 import {HomeComponent} from "../home/home.component";
 import { Router, ActivatedRoute } from '@angular/router';
@@ -62,7 +62,7 @@ export class CrearExpedienteDialog {
   ];
   public users:UsuarioInterface[];
 
-  public expediente:ExpedienteInterfaz={
+  public expediente:ExpedienteInterface={
     identificador:null,
     avance:0,
     cartera:0,
@@ -135,7 +135,7 @@ export class CrearExpedienteDialog {
      this._carterasService.crearItem(0,this.expediente)
        .then( res=> {
          alert("Expediente creado correctamente.");
-         // this.expediente.push(res as ExpedienteInterfaz);
+         // this.expediente.push(res as ExpedienteInterface);
          // this.borrarFormExp();
          // this.formExVisible = false;
          location.reload(true);

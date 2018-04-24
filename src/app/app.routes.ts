@@ -28,13 +28,9 @@ import { MensajesComponent }    from "./components/mensajes/mensajes.component";
 
 //TODO eliminar
 
-
 import { ExpedienteComponent } from './components/expedientes/expediente.component';
 import { NuevoExpedienteComponent } from './components/expedientes/nuevo-expediente.component';
 
-
-import { NuevoRolComponent } from "./components/roles/nuevo-rol.component";
-import { RolComponent } from "./components/roles/rol.component";
 //TODO Fin eliminar
 
 
@@ -65,11 +61,7 @@ const app_routes: Routes = [
 
 
   //TODO ELIMINAR
-  { path: 'nuevo-rol', component: NuevoRolComponent },
-  { path: 'rol/:id', component: RolComponent },
   //{ path: 'usuariosReloaded', component: UsuariosComponent },
-  //rutas carteras
-  //rutas expedientes
   { path: 'nuevo-expediente', component: NuevoExpedienteComponent },
   { path: 'expediente/:id', component: ExpedienteComponent },
   //TODO Fin eliminar

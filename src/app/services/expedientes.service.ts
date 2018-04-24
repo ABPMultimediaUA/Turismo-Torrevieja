@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers } from "@angular/http";
-import { ExpedienteInterfaz }  from "../interfaces/expediente.interface";
+import { ExpedienteInterface }  from "../interfaces/expediente.interface";
 import 'rxjs/Rx';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class ExpedientesService {
   Secound_accessToken:string=localStorage.accesToken;
   constructor( private http:Http ) { }
 
-  nuevoExpediente( expediente:ExpedienteInterfaz)
+  nuevoExpediente( expediente:ExpedienteInterface)
   {
 
     let body = JSON.stringify( expediente );//Cambiar todos los valos de heroe a string
@@ -33,7 +33,7 @@ export class ExpedientesService {
       })
   }
 
-  actualizarExpediente ( expediente:ExpedienteInterfaz, id:string){
+  actualizarExpediente ( expediente:ExpedienteInterface, id:string){
     // if(evento.password=="" ){
     //   delete evento.password;
     //   delete evento.password_confirmation;

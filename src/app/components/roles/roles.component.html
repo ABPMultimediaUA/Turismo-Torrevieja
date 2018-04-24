@@ -64,6 +64,11 @@
             </mat-cell>
           </ng-container>
 
+          <ng-container matColumnDef="identificador">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(1)"></mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.identificador}}</mat-cell>
+          </ng-container>
+
           <ng-container matColumnDef="nombreRol">
             <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(1)">Nombre</mat-header-cell>
             <mat-cell *matCellDef="let items">{{items.nombreRol}}</mat-cell>
@@ -74,8 +79,8 @@
             <mat-cell *matCellDef="let items">{{items.fechaCreacion | date}}</mat-cell>
           </ng-container>
 
-          <mat-header-row *matHeaderRowDef="['select','nombreRol','fechaCreacion']"></mat-header-row>
-          <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','nombreRol','fechaCreacion']" (click)="editarAnyadirItem(row)"></mat-row>
+          <mat-header-row *matHeaderRowDef="['select','identificador','nombreRol','fechaCreacion']"></mat-header-row>
+          <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','identificador','nombreRol','fechaCreacion']" (click)="editarAnyadirItem(row)"></mat-row>
         </mat-table>
         <button *ngIf="_authService.tienePermiso(36)" mat-raised-button type="submit" class="botonMat botonEliminarItems" [disabled]="btnEliminar" color="warn" (click)="botonEliminarItem(selection.selected)">Eliminar roles</button>
       </div>
