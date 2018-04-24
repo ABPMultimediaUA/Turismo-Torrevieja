@@ -5,6 +5,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { PostFacebook } from "../../interfaces/postFacebook.interface";
 import { Http, Headers } from "@angular/http";
 
+import { PaginasInterface }                     from '../../interfaces/paginas.interface';
 
 
 @Component({
@@ -14,6 +15,8 @@ import { Http, Headers } from "@angular/http";
 })
 export class PublicarComponent implements OnInit {
   URL = "https://graph.facebook.com/";
+
+  paginas:PaginasInterface[]=[];
 
   page_name: string = "Cultura Torrevieja";
   page_id: string = "497922363906912";
@@ -35,6 +38,16 @@ export class PublicarComponent implements OnInit {
       let body = JSON.parse(res._body);
       this.page_access_token=body.access_token;
     });
+
+    // //Estaria mejor si lo que recibo son todas las paginas que maneja ese usuario y
+    // //que el elija en cual Publicar
+    // let urlPagesUser = this.URL+ 'me/accounts' + '?access_token=' + this.user_access_token;
+    // this.http.get(urlPagesUser).toPromise().then((res) => {
+    //   let body2 = JSON.parse(res._body);
+    //   body2.data
+    //   console.log(body2);
+    // });
+
 
     // let xhr: any = new XMLHttpRequest();
     // // // let urlPage = this.URL + this.page_id +'?access_token='+this.user_access_token;
