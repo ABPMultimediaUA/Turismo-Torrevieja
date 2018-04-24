@@ -17,7 +17,6 @@ import { Router, ActivatedRoute }               from "@angular/router";
 
 export class CarteraComponent implements OnInit {
 
-
   cartera:CarteraInterface={
     identificador:null,
     nombreCartera:null,
@@ -32,7 +31,7 @@ export class CarteraComponent implements OnInit {
   row:ExpedienteInterface;            //Devuelve la fila que se seleccione en la tabla
   paginacion:PaginacionInterface;     //Guardar todos los datos de paginacion
   option_Items_Pgn='10';              //Cantidad de items por pagina al cargar el componente
-  selectUrl:number = 50;              //Selecciona la url para las peticiones getItem
+  selectUrl:number = 0;              //Selecciona la url para las peticiones getItem
   busqueda = -1;                      //Si se ha rellenado el campo de busqueda
   selectASC_DESC:number=-1;           //Saber si el usuario quiere ordenar los items: -1 nada seleccionado, 0 ASC, 1 DES
   valorEscogidoForOrder:number = -1;  //Para saber el elemento seleccionado, -1 valor neutro
