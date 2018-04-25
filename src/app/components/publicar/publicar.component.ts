@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, OnChanges, ViewChild} from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { Component, OnInit, Input, OnChanges, ViewChild } from '@angular/core';
+import { Observable } from 'rxjs/Observable';
 import { NgForm } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { PostFacebook } from "../../interfaces/postFacebook.interface";
 import { Http, Headers } from "@angular/http";
 
-import { PaginasInterface }                     from '../../interfaces/paginas.interface';
+import { PaginasInterface } from '../../interfaces/paginas.interface';
 
 
 @Component({
@@ -16,12 +16,12 @@ import { PaginasInterface }                     from '../../interfaces/paginas.i
 export class PublicarComponent implements OnInit {
   URL = "https://graph.facebook.com/";
 
-  paginas:PaginasInterface[]=[];
+  paginas: PaginasInterface[] = [];
 
   page_name: string = "Cultura Torrevieja";
   page_id: string = "497922363906912";
 
-  user_access_token: string = "EAACEdEose0cBAKgDoZA0TA2qSqNI0kwbkzwIcbZArEi2SELwa2N0rMlRoSwVZCMPCDjKCEFhq9rqIfdVSxVjc0MymSyfKFF9jYZBNbmRKDn0bsBaknZCpb19DeGPEfAxwNCcn8GQ2FqRRXkf7ZAcFPsZA0ms8owJBS3DXXZBWTMkFqQfIZAFHWQUyVY3Bm18Vj0I49pFZC85NsZCgZDZD";
+  user_access_token: string = "EAACEdEose0cBAKq0MGPDJnunezMAQQZC9OuoaCn7WPsGtZAa3CryRbo2N4mFZC86PmP4OQAGWZAgSl3rt58IZCauYEYNpwp2DS2BskPijS4VfZALITDt6dyDMeS0q2s4qzqGlhXWkwZBItP29DZB0ZCG6sIzOSIG1ulugkViTHcRlX5wE4bpRoBqCMJIFr7ZCLDFx5xuJRxZAJNiwZDZD";
   page_access_token: string = "";
 
   imagen: File;
@@ -34,19 +34,13 @@ export class PublicarComponent implements OnInit {
     //para ello necesito hacer la peticion con el access token de un usuario que
     //puede manejar la pagina
     let urlPage = this.URL + this.page_id + '?fields=access_token' + '&access_token=' + this.user_access_token;
-    this.http.get(urlPage).toPromise().then((res) => {
-      let body = JSON.parse(res._body);
-      this.page_access_token=body.access_token;
+    this.http.get(urlPage).subscribe(response => {
+      let res = JSON.parse(response.text());
+      this.page_id = res.id;
+      this.page_access_token = res.access_token;
     });
-
-    // //Estaria mejor si lo que recibo son todas las paginas que maneja ese usuario y
-    // //que el elija en cual Publicar
-    // let urlPagesUser = this.URL+ 'me/accounts' + '?access_token=' + this.user_access_token;
-    // this.http.get(urlPagesUser).toPromise().then((res) => {
-    //   let body2 = JSON.parse(res._body);
-    //   body2.data
-    //   console.log(body2);
-    // });
+    // TODO: Estaria mejor si lo que recibo son todas las paginas que maneja ese usuario y
+    // que el elija en cual Publicar
 
 
     // let xhr: any = new XMLHttpRequest();
