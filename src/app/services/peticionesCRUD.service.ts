@@ -70,6 +70,21 @@ export class PeticionesCrudService {
           //Con id crud
           url += "cartera";
           break;
+      case 50:
+          //Cartera aprobada: no se puede añadir expediente ni eliminar
+          // url += "cartera?estado=3";
+          url += "cartera?estado=2";
+          break;
+      case 51:
+          //Cartera sin aprobar: se puede añadir expediente y eliminar
+          // url += "cartera?estado=1";
+          url += "cartera?estado=1";
+          break;
+      case 52:
+          //Cartera terminada: no se puede añadir expediente ni eliminar ni editar
+          // url += "cartera?estado=5";
+          url += "cartera?estado=3";
+          break;
       case 101:
           //Todas las actividades de un expediente
           url += `DeExpediente/${id}/actividades`;
@@ -130,30 +145,12 @@ export class PeticionesCrudService {
           //Realiza busqueda teniendo en cuenta todos sus campos, en id se pasa lo escrito
           url += `BusquedaCartera/${id}`;
           break;
-      case 400:
-          //Cartera aprobada: no se puede añadir expediente ni eliminar
-          // url += "cartera?estado=3";
-          url += "cartera?estado=2";
-      case 401:
-          //Cartera sin aprobar: se puede añadir expediente y eliminar
-          // url += "cartera?estado=1";
-          url += "cartera?estado=1";
-      case 402:
-          //Cartera terminada: no se puede añadir expediente ni eliminar ni editar
-          // url += "cartera?estado=5";
-          url += "cartera?estado=3";
-          break;
-      case 403:
-          //Cartera terminada: no se puede añadir expediente ni eliminar ni editar
-          // url += "cartera?estado=5";
-          url += `expediente?cartera=${id}`;
-          break;
       default:
           console.log("No se ha especificado correctamente una URL.");
     }
     if(id>-1 && tipo <101) url+=`/${id}`;
-    if(id2>-1 && pgn>-1 && tipo<400) url+= `?per_page=${id2}&page=${pgn}`;
-    if(id2>-1 && pgn>-1 && tipo>399) url+= `&per_page=${id2}&page=${pgn}`;
+    if(id2>-1 && pgn>-1 && tipo<50) url+= `?per_page=${id2}&page=${pgn}`;
+    if(id2>-1 && pgn>-1 && tipo>49) url+= `&per_page=${id2}&page=${pgn}`;
     // if() url+=`&orderBy=${variable,}`
     return url;
   }
