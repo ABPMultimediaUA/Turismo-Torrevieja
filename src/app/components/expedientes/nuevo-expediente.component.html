@@ -1,59 +1,69 @@
-<br><br><br><br><br>
-<div class="container-fluid">
-        <h1><span class="icon-folder-add"></span> Nuevo Evento <small>{{expediente.nombreExpediente}}</small></h1>
-        <form class="animated fadeIn fast"(ngSubmit)="guardar()" #forma="ngForm">
-          <div class="row">
-            <div class="col-sm-3">
-              <label>Nombre del evento</label>
-              <input [(ngModel)]="expediente.nombreExpediente" name="nombreExp" class="form-control" placeholder="Nombre del expediente" required type="text">
-            </div>
-            <div class="col-sm-3">
-              <label>Título</label>
-              <input [(ngModel)]="expediente.titulo" name="nombreTit" class="form-control" placeholder="Título del evento" required type="text">
-            </div>
-            <div class="col-sm-3">
-              <label>Cartera</label>
-              <select class="form-control" name=expediente_cartera [(ngModel)]="expediente.cartera" required>
-                <option [ngValue]="c.identificador" *ngFor="let c of cartera" >{{c.nombreCartera}}</option>
-              </select>
-            </div>
-            <div class="col-sm-3">
-              <label>Fecha inicio</label>
-              <input [(ngModel)]="expediente.fechaInicio" name="fechaInicio" class="form-control" required type="date">
-            </div>
-            <div class="col-sm-3">
-              <label>Fecha fin</label>
-              <input [(ngModel)]="expediente.fechaFin" name="fechaFin" class="form-control" required type="date">
-            </div>
-            <div class="col-sm-3">
-              <label>Coordinador</label>
-              <select class="form-control" name=expediente_coordinador [(ngModel)]="expediente.coordinador" required>
-                <option [ngValue]="u.identificador" *ngFor="let u of users" >{{u.nombreUsuario}}</option>
-              </select>
-            </div>
-            <div class="col-sm-3">
-              <label>Detalles</label>
-              <input [(ngModel)]="expediente.detalle" name="detalle" class="form-control" type="text">
-            </div>
-            <div class="col-sm-9">
-              <label for="imagenForm">Imagen evento</label>
-              <img src=""  alt="Imagen del evento" width="200px" #etiquetaImgExp>
-              <input type="file" id="imagenForm" (change)="cargarImg($event.target.files)" accept="image/*">
-            </div>
-          </div>
-          <div class="form-group">
-            <button type="submit" class="btn btn-outline-primary">Guardar cambios</button>
-            <button (click)="borrarFormExp()" class="btn btn-danger">Limpiar campos</button>
-          </div>
+<div class="contenedorEditar">
+  <h1 class="mat-display-1 tituloFormEstrecho"><span class="icon-folder"></span> {{titulo}} {{items.nombreExpediente}}</h1>
+  <a class="btnCerrar" (click)="cerrarDialogo()"><i class="material-icons iconoCerrar">close</i></a>
+  <form (ngSubmit)="anyadirItem()" #formulario="ngForm">
 
-        </form>
-        <br>
+    <div class="row contenedorFormEstrecho">
+        <mat-form-field class="campoWidth100">
+          <input matInput name="nombreExpediente" [(ngModel)]="items.nombreExpediente" placeholder="Nombre"
+                 maxLength="200" required>
+          <mat-error>Campo requerido</mat-error>
+        </mat-form-field>
 
+        <mat-form-field class="campoWidth100">
+          <input matInput name="titulo" [(ngModel)]="items.titulo" placeholder="Título"
+                 maxLength="100" required>
+          <mat-error>Campo requerido</mat-error>
+       </mat-form-field>
 
+       <mat-form-field class="campoWidth100">
+         <mat-select placeholder="Coordinador" [(ngModel)]="items.coordinador" name="coordinador" >
+           <mat-option [value]="u.nombreUsuario" *ngFor="let u of users">
+             {{ u.nombreUsuario }}
+           </mat-option>
+         </mat-select>
+       </mat-form-field>
 
+       <mat-form-field class="campoWidth100">
+        <mat-select placeholder="Cartera" [(ngModel)]="items.cartera" name="coordinador" required>
+          <mat-option [value]="c.identificador" *ngFor="let c of carteras">
+            {{ c.nombreCartera }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
 
+       <mat-form-field class="campoWidth100">
+         <input matInput type="date" name="fechaInicio" [(ngModel)]="items.fechaInicio" placeholder="Fecha inicio" required >
+         <mat-error>Campo requerido</mat-error>
+       </mat-form-field>
 
+       <mat-form-field class="campoWidth100">
+         <input matInput type="date" name="fechaFin" [(ngModel)]="items.fechaFin" placeholder="Fecha fin" required>
+         <mat-error>Campo requerido</mat-error>
+       </mat-form-field>
+    </div>
 
+    <div class="row contenedorFormEstrecho">
+      <mat-form-field class="campoWidth100">
+        <textarea matInput name="detalle" [(ngModel)]="items.detalle" placeholder="Detalles"
+                  maxLength="500"></textarea>
+      </mat-form-field>
+    </div>
+
+    <div class="row" *ngIf="!realizandoAccion">
+      <div class="btnsEditarAnyadir">
+        <div *ngIf="_authService.tienePermiso(25)" class="btnsEditarAnyadir">
+          <mat-dialog-actions class="btnsEditarAnyadir">
+            <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid">Crear</button>
+            <button type="button" mat-raised-button (click)="limpiarCampos()" color="warn">Limpiar campos</button>
+          </mat-dialog-actions>
+        </div>
+      </div>
+    </div>
+    <div class="VentanaEmergenteSpinner1">
+      <div class="VentanaEmergenteSpinner2" *ngIf="realizandoAccion">
+          <mat-spinner color="warn"></mat-spinner>
+      </div>
+    </div>
+  </form>
 </div>
-
-<!-- aqui acaba el container fluid -->

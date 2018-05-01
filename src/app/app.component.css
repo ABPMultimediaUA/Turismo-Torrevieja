@@ -1,5 +1,10 @@
 
 /*CSS comun a todos los componentes con tabla*/
+.mat-row{
+  height: 48px;
+  min-height: 48px;
+  max-height: 48px;
+}
 .divContenedorTabla{
   margin-top:6em;
   margin-bottom: 5em;
@@ -77,9 +82,37 @@
     margin-right: 2em;
     font-size: .8em;
   }
+.carteraFormEditar{
+  margin-top: .2em;
+  margin-left: 2.5em;
+  margin-right: 2.5em;
+  justify-content: space-between;
+}
+.descripcionCarteraForm{
+  width: 100%;
+  margin-left: 3.2em;
+  margin-right: 3.2em;
+}
+.carteraFecha{
+  width: 7em;
+}
+.carteraAnyo{
+  width: 3.5em;
+}
+.carteraNombre{
+  width: 30%;
+  min-width: 10em;
+}
+.carteraPeriodo{
+  width: 20%;
+  min-width: 9em;
+}
 /* Fin cartera */
 
-/*Tamanyo columnas comunes (id, eliminar)*/
+/*Tamanyo columnas*/
+.mat-column-identificador{
+  flex:0 0 0;
+}
 .mat-column-select,.mat-column-estado{
   flex:0 0 5%
 }
@@ -87,28 +120,29 @@
 .mat-column-year{
   flex:0 0 7%
 }
-.mat-column-nombreEspacio,.mat-column-nombreCartera,.mat-column-nombreUsuario,
-.mat-column-nombreProveedor,.mat-column-nombreRol,.mat-column-nombreExpediente{
-  flex:0 0 20%
-}
 .mat-column-esVerificado{
   flex:0 0 7%;
   text-align: center;
 }
-.mat-column-trimestre{
-  flex:0 0 15%;
+.mat-column-fechaInicio, .mat-column-fechaFin{
+  flex:0 0 9%
 }
 .mat-column-telefonoUno,.mat-column-fechaCreacion{
   flex:0 0 10%;
+}
+.mat-column-trimestre{
+  flex:0 0 15%;
+}
+.mat-column-nombreEspacio,.mat-column-nombreCartera,.mat-column-nombreUsuario,
+.mat-column-nombreProveedor,.mat-column-nombreRol,.mat-column-nombreExpediente,
+.mat-column-coordinador{
+  flex:0 0 20%
 }
 .mat-column-direccion,.mat-column-descripcion{
   flex:0 0 30%;
 }
 .mat-column-descripcion{
   flex:0 0 37%;
-}
-.mat-column-identificador{
-  flex:0 0 0;
 }
 /*Fin tamanyo columnas comunes (id, eliminar)*/
 
@@ -146,7 +180,6 @@
   margin-left: 2.5em;
   margin-right: 2.5em;
   justify-content: space-between;
-  width:90%
 }
 .contenedorEditar{
   position: relative;
@@ -203,6 +236,7 @@
 .tituloFormEstrecho{
   margin-left: .3em;
   margin-bottom: .3em;
+  margin-right: 3em;
 }
 /*Fin ventana emergente editar*/
 

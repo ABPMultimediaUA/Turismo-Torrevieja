@@ -4,15 +4,15 @@
       <h1 class="mat-display-1 tituloComponentes titCarteras"><span class="icon-archive-1"></span> Carteras</h1>
       <div class="divTiposCartera">
         <label class="">Estado:</label>
-          <mat-radio-group [(ngModel)]="estadoCarteraEscogido" (change)="cambiarListaEstado()">
-            <mat-radio-button class="example-margin" value="401" matTooltip="Las carteras sin aprobar pueden ser eliminadas. También se les puede añadir o eliminar expedientes."
-                              >Sin aprobar</mat-radio-button>
-            <mat-radio-button class="example-margin" value="400" matTooltip="Las carteras aprobadas no pueden ser eliminadas. Tampoco se pueden añadir o eliminar expedientes. Las modificaciones están limitadas."
-                              >Aprobadas</mat-radio-button>
-            <mat-radio-button class="example-margin" value="402" matTooltip="Una vez terminadas no pueden ser eliminadas o modificadas, al igual que sus expedientes."
-                              >Finalizadas</mat-radio-button>
-            <mat-radio-button class="example-margin" value="8">Todas</mat-radio-button>
-          </mat-radio-group>
+        <mat-radio-group [(ngModel)]="estadoCarteraEscogido" (change)="cambiarListaEstado()">
+          <mat-radio-button class="example-margin" value="301" matTooltip="Las carteras sin aprobar pueden ser eliminadas. También se les puede añadir o eliminar expedientes."
+                            >Sin aprobar</mat-radio-button>
+          <mat-radio-button class="example-margin" value="300" matTooltip="Las carteras aprobadas no pueden ser eliminadas. Tampoco se pueden añadir o eliminar expedientes. Pueden modificarse."
+                            >Aprobadas</mat-radio-button>
+          <mat-radio-button class="example-margin" value="302" matTooltip="Una vez terminadas no pueden ser eliminadas o modificadas, al igual que sus expedientes."
+                            >Finalizadas</mat-radio-button>
+          <mat-radio-button class="example-margin" value="8">Todas</mat-radio-button>
+        </mat-radio-group>
       </div>
     </div>
   </div>
@@ -112,9 +112,6 @@
           <ng-container matColumnDef="estado">
             <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(2)">Estado</mat-header-cell>
             <mat-cell *matCellDef="let items">
-              <!-- <span *ngIf="items.estado == 1">Sin Aprobar</span>
-              <span *ngIf="items.estado == 2">Aprobada</span>
-              <span *ngIf="items.estado == 3">Finalizada</span> -->
               <span *ngIf="items.estado == 1" matTooltip="Sin aprobar" class="material-icons">lock_open</span>
               <span *ngIf="items.estado == 2" matTooltip="Aprobada" class="material-icons">lock_outline</span>
               <span *ngIf="items.estado == 3" matTooltip="Finalizada" class="material-icons">lock</span>
@@ -124,7 +121,7 @@
           <mat-header-row *matHeaderRowDef="['select','identificador','nombreCartera','descripcion','trimestre','year','fechaCreacion','estado']"></mat-header-row>
           <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','identificador','nombreCartera','descripcion','trimestre','year','fechaCreacion','estado']" (click)="abrirCartera(row)"></mat-row>
         </mat-table>
-        <button *ngIf="_authService.tienePermiso(24) && estadoCarteraEscogido==51" mat-raised-button type="submit" class="botonMat botonEliminarItems" [disabled]="btnEliminar" color="warn" (click)="botonEliminarItem(selection.selected)">Eliminar carteras</button>
+        <button *ngIf="_authService.tienePermiso(24) && estadoCarteraEscogido==301" mat-raised-button type="submit" class="botonMat botonEliminarItems" [disabled]="btnEliminar" color="warn" (click)="botonEliminarItem(selection.selected)">Eliminar carteras</button>
       </div>
     </div>
   </div>

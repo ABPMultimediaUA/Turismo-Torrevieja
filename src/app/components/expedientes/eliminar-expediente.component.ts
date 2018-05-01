@@ -6,12 +6,12 @@ import { VentanaEmergenteComponent }          from '../ventana-emergente/ventana
 import { ExpedienteInterface }                from '../../interfaces/expediente.interface';
 
 @Component({
-  selector: 'eliminar-expediente-dialog',
-  templateUrl: 'eliminar-expediente-dialog.html',
+  selector: 'eliminar-expediente',
+  templateUrl: 'eliminar-expediente.component.html',
   styleUrls: ['../../app.component.css']
 })
 
-export class EliminarExpedienteDialog implements OnInit {
+export class EliminarExpedienteComponent implements OnInit {
 
   items:ExpedienteInterface[]=[];
   eliminando:boolean;
@@ -21,7 +21,7 @@ export class EliminarExpedienteDialog implements OnInit {
 
   constructor(  private _itemService: PeticionesCrudService,
                 private _authService:AuthService,
-                public dialogRef: MatDialogRef<EliminarExpedienteDialog>,
+                public dialogRef: MatDialogRef<EliminarExpedienteComponent>,
                 public dialog: MatDialog,
                 @Inject(MAT_DIALOG_DATA) public data
              )

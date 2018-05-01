@@ -8,6 +8,7 @@ import { CarteraInterface }                     from '../../interfaces/cartera.i
 import { ExpedienteInterface }                  from '../../interfaces/expediente.interface';
 import { CrearExpedienteDialog }                from './crear-expediente-dialog.component';
 import { Router, ActivatedRoute }               from "@angular/router";
+import { VentanaEmergenteComponent }            from '../ventana-emergente/ventana-emergente.component'
 
 @Component({
   selector: 'app-cartera',
@@ -17,7 +18,7 @@ import { Router, ActivatedRoute }               from "@angular/router";
 
 export class CarteraComponent implements OnInit {
 
-  cartera:CarteraInterface={
+  cartera:CarteraInterface={          //ngForm cartera
     identificador:null,
     nombreCartera:null,
     year:null,
@@ -27,20 +28,42 @@ export class CarteraComponent implements OnInit {
     fechaActualizacion:null,
     fechaEliminacion:null,
   };
-  items:ExpedienteInterface[]=[];
-  row:ExpedienteInterface;            //Devuelve la fila que se seleccione en la tabla
-  paginacion:PaginacionInterface;     //Guardar todos los datos de paginacion
+  carteraSinModif:CarteraInterface={  //Cartera sin modificar
+    identificador:null,
+    nombreCartera:null,
+    year:null,
+    trimestre:null,
+    estado:null,
+    fechaCreacion:null,
+    fechaActualizacion:null,
+    fechaEliminacion:null,
+  };
+  items:ExpedienteInterface[]=[];     //Eventos de esta cartera
+  paginacion:PaginacionInterface={    //Guardar todos los datos de paginacion
+    count:0,
+    current_page:1,
+    links:{
+      previous:null,
+      next:null,
+    },
+    per_page:0,
+    total:0,
+    total_pages:1
+  };
   option_Items_Pgn='10';              //Cantidad de items por pagina al cargar el componente
-  selectUrl:number = 403;              //Selecciona la url para las peticiones getItem
-  busqueda = -1;                      //Si se ha rellenado el campo de busqueda
+  selectUrl:number = 306;             //Selecciona la url para las peticiones getItem
+  busqueda:string = "";               //Si se ha rellenado el campo de busqueda
   selectASC_DESC:number=-1;           //Saber si el usuario quiere ordenar los items: -1 nada seleccionado, 0 ASC, 1 DES
   valorEscogidoForOrder:number = -1;  //Para saber el elemento seleccionado, -1 valor neutro
   btnEliminar:boolean = true;         //Activar / desactivar boton de eliminar item/s
   @ViewChild("btnsPag") BtnsPagOff;   //Div que contiene los botones de paginacion
-  estadoCarteraEscogido:number = 400;  //Valor radio button (url basica por estados)
+
+  bloqCampos:boolean = true;          //Habilitar o deshabilitar campos del form (avtivar desactivar modo edicion)
+  fechaCreacion:string = "";          //Fecha modificada para mostrar por pantalla
+  realizandoAccion:boolean = false;   //Mientras se esté editando la cartera
 
   dataSource = new MatTableDataSource(this.items);            //Datos de la tabla
-  selection = new SelectionModel<CarteraInterface>(true, []); //Filas seleccionadas
+  selection = new SelectionModel<ExpedienteInterface>(true, []); //Filas seleccionadas
 
   constructor(
     private _itemService: PeticionesCrudService,
@@ -48,14 +71,17 @@ export class CarteraComponent implements OnInit {
     public dialog: MatDialog,
     private router:Router,
     private route:ActivatedRoute,
-  ){
-    this.cargarPaginacionInicial();
-    this.route.params.subscribe(param=>{
-      this._itemService.getItem(8,param.id,-1,-1).then( res => {
+  ) {
+    this.route.params.subscribe( param => {
+      this._itemService.getItem(8,param.id,-1,-1,-1,"","").then( res => {
         if(typeof res != "string"){
           let r = res as any;
           this.cartera = r.data as CarteraInterface;
-          this.cargarItems(this.selectUrl,+this.option_Items_Pgn,1);
+          this.carteraSinModif = Object.assign({}, r.data as CarteraInterface);
+          let f = this.cartera.fechaCreacion.split(' ');
+          f = f[0].split('-');
+          this.fechaCreacion = f[2]+' - '+f[1]+' - '+f[0];
+          this.cargarItems(+this.option_Items_Pgn,1);
         }
       })
     })
@@ -65,8 +91,8 @@ export class CarteraComponent implements OnInit {
   }
 
   //Realiza la peticion GetItems a la BD y actualiza las variables
-  cargarItems(peticion:number, per_pgn:number, pgn:number){
-    this._itemService.getItem(peticion,this.cartera.identificador,per_pgn,pgn).then(
+  cargarItems(per_pgn:number, pgn:number){
+    this._itemService.getItem(this.selectUrl,+this.cartera.identificador,-1,per_pgn,pgn,this.busqueda,"").then(
       res => {
         if(typeof res != "string"){
           if(res && res["data"] && res["meta"]){
@@ -74,7 +100,6 @@ export class CarteraComponent implements OnInit {
             this.paginacion = res["meta"].pagination as PaginacionInterface;
             this.ngAfterViewInit();
             this.activarDesactvarBtnsPag();
-            console.log(this.items);
           }
           else{
             this.items = [];
@@ -91,29 +116,14 @@ export class CarteraComponent implements OnInit {
   //Cargar items en tabla
   ngAfterViewInit() {
     this.dataSource = new MatTableDataSource(this.items);
-    this.selection = new SelectionModel<CarteraInterface>(true, []);
-  }
-
-  //Inicializa variables paginacion
-  cargarPaginacionInicial(){
-    this.paginacion={
-      count:0,
-      current_page:1,
-      links:{
-        previous:null,
-        next:null,
-      },
-      per_page:0,
-      total:0,
-      total_pages:1
-    };
+    this.selection = new SelectionModel<ExpedienteInterface>(true, []);
   }
 
   //Marcar checkbox
-  masterToggle() { //TODO
-    // this.isAllSelected() ?
-    //     this.selection.clear() :
-    //     this.dataSource.data.forEach(row => this.selection.select(row));
+  masterToggle(){
+    this.isAllSelected() ?
+        this.selection.clear() :
+        this.dataSource.data.forEach(row => this.selection.select(row));
   }
 
   //Marcar checkbox
@@ -124,9 +134,9 @@ export class CarteraComponent implements OnInit {
   }
 
   //CHECKBOX ROW TABLA - Habilita o deshabilita el boton eliminar item/s
-  activarDesBtnEliminar(i){
+  activarDesBtnEliminar(i) {
     if(i.length>0) {
-      if(this.estadoCarteraEscogido == 51) this.btnEliminar = false;
+      this.btnEliminar = false;
     }
     else this.btnEliminar = true;
   }
@@ -134,22 +144,22 @@ export class CarteraComponent implements OnInit {
   //Buscador
   realizarBusqueda(e){
     if(e.target.value == ""){
-      this.busqueda = -1;
-      this.selectUrl = this.estadoCarteraEscogido;
+      this.busqueda = "";
+      this.selectUrl = 306;
       e.target.value = "";
     }
     if(e.keyCode == 13){
       if(e.target.value != ""){
-        this.selectUrl = 307; //TODO la url dependera de el estado de las carteras
+        this.selectUrl = 307;
         this.busqueda = e.target.value.toString();
       }
-      this.cargarItems(this.selectUrl,+this.option_Items_Pgn,1);
+      this.cargarItems(+this.option_Items_Pgn,1);
     }
 
   }
 
   //BOTON - Funcion eliminar item/s
-  botonEliminarItem(i){
+  botonEliminarItem(i) {
     if(i){
       const dialogRef = this.dialog.open(EliminarExpedienteDialog,{
         height: '90%',
@@ -163,64 +173,63 @@ export class CarteraComponent implements OnInit {
           if(i.length < this.paginacion.count) pag = this.paginacion.current_page;
           else if(i.length == this.paginacion.count && this.paginacion.current_page > 1) pag = this.paginacion.current_page - 1;
           else pag = 1;
-          this.cargarItems(this.selectUrl,this.paginacion.per_page,pag)
+          this.cargarItems(this.paginacion.per_page,pag)
         }
       });
     }
   }
 
-  //BOTON - ROW - Se activacon el boton nuevo item o pinchando una fila, abre el formulario crear / editar item
-  editarAnyadirItem(row){
+  //BOTON - ROW - Se activa con el boton nuevo item o pinchando una fila, abre el formulario crear / editar item
+  nuevoEvento() {
     const dialogRef = this.dialog.open(CrearExpedienteDialog,{
       height: '90%',
-      width: '90%',
-      data: { item: row }
+      width: '37%',
+      data: { item: this.cartera.identificador }
     });
     dialogRef.afterClosed().subscribe( res => {
       if(res){
         this.btnEliminar = true;
-        this.cargarItems(this.selectUrl,this.paginacion.per_page,this.paginacion.current_page)
+        this.cargarItems(this.paginacion.per_page,this.paginacion.current_page)
       }
     });
   }
 
-  abrirCartera(row){
-    this.router.navigate(['/cartera', row.identificador]);
+  abrirExpediente(row){
+    this.router.navigate(['/expediente', row.identificador]);
   }
 
-
   //OPTION Elementos por Pgn- Funcion que se llama cada vez que se cambia el numero de items por pgn
-  actualizarPaginacion(){
+  actualizarPaginacion() {
     this.paginacion.per_page = +this.option_Items_Pgn;
-    this.cargarItems(this.selectUrl,+this.option_Items_Pgn,1);
+    this.cargarItems(+this.option_Items_Pgn,1);
   }
 
   //BOTONES - Botones para cambiar de pagina
-  cambiarPgn(i:number){
+  cambiarPgn(i:number) {
     if(i == 1){
       if(this.paginacion.current_page != 1){
-        this.cargarItems(this.selectUrl,+this.option_Items_Pgn,1);
+        this.cargarItems(+this.option_Items_Pgn,1);
       }
     }
     else if(i == 2){
       if(this.paginacion.current_page > 1){
-        this.cargarItems(this.selectUrl,+this.option_Items_Pgn,this.paginacion.current_page-1);
+        this.cargarItems(+this.option_Items_Pgn,this.paginacion.current_page-1);
       }
     }
     else if(i == 3){
       if(this.paginacion.current_page < this.paginacion.total_pages){
-        this.cargarItems(this.selectUrl,+this.option_Items_Pgn,this.paginacion.current_page+1);
+        this.cargarItems(+this.option_Items_Pgn,this.paginacion.current_page+1);
       }
     }
     else if(i == 4){
       if(this.paginacion.current_page != this.paginacion.total_pages){
-        this.cargarItems(this.selectUrl,+this.option_Items_Pgn,this.paginacion.total_pages);
+        this.cargarItems(+this.option_Items_Pgn,this.paginacion.total_pages);
       }
     }
   }
 
   //Activa o desactiva los botones de paginacion dependiendo de si puede ser utilizado o no
-  activarDesactvarBtnsPag(){
+  activarDesactvarBtnsPag() {
     var div = this.BtnsPagOff.nativeElement.children;
     if(this.paginacion.current_page > 1){
       div[0].classList.remove('btnsPaginacionOff');
@@ -238,6 +247,72 @@ export class CarteraComponent implements OnInit {
       div[2].classList.add('btnsPaginacionOff');
       div[3].classList.add('btnsPaginacionOff');
     }
+  }
+
+  //Bloquea y desbloquea los campos del form al pulsar los btn EDITAR o CANCELAR
+  disable_enable_campos() {
+    if(this.bloqCampos) this.bloqCampos = false;
+    else {
+      this.restaurarValores();
+      this.bloqCampos = true;
+    }
+  }
+
+  //BOTON - Cuando se esta en la opcion de editar, devuelve los campos del form a su valor original
+  restaurarValores() {
+    this.cartera={
+      identificador:this.carteraSinModif.identificador,
+      nombreCartera:this.carteraSinModif.nombreCartera,
+      year:this.carteraSinModif.year,
+      trimestre:this.carteraSinModif.trimestre,
+      estado:this.carteraSinModif.estado,
+      fechaCreacion:this.carteraSinModif.fechaCreacion,
+      fechaActualizacion:this.carteraSinModif.fechaActualizacion,
+      fechaEliminacion:this.carteraSinModif.fechaEliminacion,
+    }
+  }
+
+  //BOTON - editar la cartera
+  editarCartera() {
+    this.realizandoAccion = true;
+    this._itemService.actualizarItem(8,this.cartera.identificador,this.cartera,-1)
+      .then( res => {
+        if(typeof res != "string") {
+          this.carteraSinModif = Object.assign({}, res as CarteraInterface);
+          this.alertaOk();
+        }
+        else this.alertaNoOk();
+      })
+  }
+
+  //Ventana emergente si se ha realizado una peticion y todo ha ido bien
+  alertaOk() {
+    let sms:string = "Acción realizada correctamente.";
+    let icono:number = 0;
+    const dialogRef = this.dialog.open(VentanaEmergenteComponent,{
+      height: '17em',
+      width: '32em',
+      data: { item: sms, item2: icono }
+    });
+    dialogRef.afterClosed().subscribe( res => {
+      this.bloqCampos = true;
+      this.realizandoAccion = false;
+    });
+  }
+
+  //Ventana emergente si se ha realizado una peticion y ha habido algun error
+  alertaNoOk() {
+    let sms:string = "Se ha producido un error inesperado.";
+    let icono:number = 1;
+    const dialogRef = this.dialog.open(VentanaEmergenteComponent,{
+      height: '17em',
+      width: '32em',
+      data: { item: sms, item2: icono }
+    });
+    dialogRef.afterClosed().subscribe( res => {
+      this.bloqCampos = true;
+      this.realizandoAccion = false;
+    });
   }
 
   //CABECERA TABLA - Para hacer selects ORDER BY, cada vez que se pinche en una cabecera de la tabla
@@ -277,260 +352,8 @@ export class CarteraComponent implements OnInit {
       //     else this.selectUrl = null;
       //     break;
       // }
-      // this.cargarItems(this.selectUrl,+this.option_Items_Pgn,1);
+      // this.cargarItems(+this.option_Items_Pgn,1);
     }
   }
 
-  cambiarListaEstado(){
-    this.selection.clear();
-    this.selectUrl = +this.estadoCarteraEscogido;
-    this.cargarItems(this.selectUrl,+this.option_Items_Pgn,1);
-  }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// import { Component, OnInit } from '@angular/core';
-// import { NgForm }  from "@angular/forms";
-// import { Router, ActivatedRoute } from "@angular/router";
-// import { CarteraInterface }  from "../../interfaces/cartera.interface";
-// import { UsuarioInterface }  from "../../interfaces/usuario.interface";
-// import { ExpedienteInterface }  from "../../interfaces/expediente.interface";
-// import { AlertService, PeticionesCrudService } from '../../services/index';
-//
-// import {MatTooltipModule} from '@angular/material/tooltip';
-// import { ViewChild} from '@angular/core';
-// import {MatTableDataSource, MatSort} from '@angular/material';
-// import { MatFormFieldModule } from '@angular/material';
-// import {MatInputModule} from '@angular/material';
-// import {SelectionModel} from '@angular/cdk/collections';
-// import { MatPaginatorModule, MatPaginator } from '@angular/material';
-// import { MatIcon} from '@angular/material';
-// import {MatCheckboxModule} from '@angular/material/checkbox';
-// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { MatIconRegistry, MatIconModule, MatButtonModule } from '@angular/material';
-// import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material';
-// import {MatDialogModule} from '@angular/material/dialog';
-// import {HomeComponent} from "../home/home.component";
-// import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';//ramoon
-// import {CrearExpedienteDialog} from "./crear-expediente-dialog.component";
-// import {EliminarExpedienteDialog} from "./eliminar-expediente-dialog.component";
-// @Component({
-//   selector: 'app-cartera',
-//   templateUrl: './cartera.component.html'
-// })
-//
-// export class CarteraComponent implements OnInit {
-//   formExVisible = false;
-//   errorCartera = false;
-//   rgstrCartera = false;
-//   permisoEditar = false;
-//   errorCarteraActualizar = false;
-//
-//
-//   //TituloNuevo = "";
-//   errorMensaje:string[]=[];
-//
-//   public cartera:CarteraInterface={
-//     identificador:"",
-//     nombreCartera:"string",
-//     year:0,
-//     trimestre:0,
-//     estado:0,
-//     fechaCreacion:"",
-//     fechaActualizacion:"",
-//     fechaEliminacion:""
-//   };
-//
-//   // public expediente:ExpedienteInterface[];
-//   public users:UsuarioInterface[];
-//   public expN:ExpedienteInterface={
-//     identificador:null,
-//     avance:0,
-//     cartera:0,
-//     coordinador:0,
-//     detalle:"",
-//     fechaFin:null,
-//     fechaInicio:null,
-//     image:"",
-//     nombreExpediente:"",
-//     titulo:"",
-//   };
-//
-//   estados:string[]=["Sin aprobar", "Aprobada", "Finalizada"];
-//
-//   nuevo:boolean = false;
-//   id:string;
-//
-//
-//   //megasalchicha
-//     public expedientes:ExpedienteInterface[];
-//     ELEMENT_DATA: ExpedienteInterface[];
-//     displayedColumns = ['select','identificador', 'nombreExpediente', 'titulo', 'coordinador','fechaInicio', 'fechaFin'];
-//     dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-//     selection = new SelectionModel<ExpedienteInterface>(true, []);
-//
-//     @ViewChild(MatSort) sort: MatSort;
-//     @ViewChild(MatPaginator) paginator: MatPaginator;
-//
-//       ngAfterViewInit() {
-//           console.log("entra en el sort ese");
-//
-//         this.dataSource.sort = this.sort;
-//         this.dataSource.paginator = this.paginator;
-//         this.selection = new SelectionModel<ExpedienteInterface>(true, []);
-//         console.log(this.dataSource.sort);
-//       }
-//   //finalmegasalchicha
-//
-//
-//   constructor( private _carterasService: PeticionesCrudService,
-//                   private router:Router,
-//                   private route:ActivatedRoute,//esto es para pasar como parametro
-//                   public dialog: MatDialog
-//                 )
-//   {
-//
-//     this.route.params.subscribe(parametros=>{
-//       this.id = parametros['id'];
-//
-//       //COGEMOS LA CARTERA
-//       this._carterasService.getItem(8,this.id,-1,-1).then(
-//         res => {
-//           this.cartera = res as CarteraInterface;
-//       });
-//
-//       //COGEMOS SU EXPEDIENTES
-//       this._carterasService.getItem(106,this.id,-1,-1).then(
-//         res => {
-//           this.expedientes = res as ExpedienteInterface[];
-//           //queso
-//
-//           this.ELEMENT_DATA = this.expedientes;
-//           this.displayedColumns = ['select','identificador', 'nombreExpediente', 'titulo', 'coordinador','fechaInicio', 'fechaFin'];
-//           this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-//           this.selection = new SelectionModel<ExpedienteInterface>(true, []);
-//           this.dataSource.sort = this.sort;
-//           this.dataSource.paginator = this.paginator;
-//           //finalqueso
-//
-//
-//           console.log(res);
-//       });
-//
-//
-//       //COGEMOS LOS USUARIOS
-//       this._carterasService.getItem(5,-1,-1,-1).then(
-//         res => {
-//           this.users = res as UsuarioInterface[];
-//       });
-//     });
-//   }
-//
-//   ngOnInit() {
-//   }
-//
-//
-//
-//   guardar(){
-//     this._carterasService.actualizarItem(8,this.id,this.cartera,-1)
-//       .then( res=> { alert("Actualizado correctamente."); })
-//       .catch( (err) => { alert("Se ha producido un error inesperado.\nNo se ha podido actualizar la cartera.");
-//                          console.log( err.toString()) })
-//   }
-//   openDialogCrear(){
-//
-//      const dialogRef = this.dialog.open(CrearExpedienteDialog, {
-//        height: '600px',
-//        width: '500px',
-//        data: { carteraId: this.id  }
-//      });
-//   }
-//   openDialogEliminar(row) {
-//
-//
-//   console.log(row);
-//
-//     const dialogRef = this.dialog.open(EliminarExpedienteDialog, {
-//       height: '200px',
-//       width: '450px',
-//       data: { row: row }
-//     });
-//   }
-//   selectRow(row) {
-//    console.log(row);
-//    this.router.navigate(['/evento', row.identificador]);
-//   }
-//   puedeEditar(){
-//     console.log("1.puedeEditar? =",this.permisoEditar);
-//
-//       this.permisoEditar = true;
-//
-//
-//     console.log("2.puedeEditar? =",this.permisoEditar);
-//     return this.permisoEditar;
-//   }
-//
-//   mostrarFormExp(i){
-//       this.formExVisible = i;
-//       this.borrarFormExp();
-//   }
-//
-//   crearNuevoExp(){
-//     this._carterasService.crearItem(0,this.expN)
-//       .then( res=> {
-//         alert("Expediente creado correctamente.");
-//         this.expedientes.push(res as ExpedienteInterface);
-//         this.borrarFormExp();
-//         this.formExVisible = false;
-//         location.reload(true);
-//       })
-//       .catch( (err) => { alert("Se ha producido un error inesperado.\nNo se ha podido crear el expediente.");
-//                          console.log( err.toString()) })
-//   }
-//   editar(expediente){
-//
-//     this.router.navigate(['/expediente', expediente.identificador]);
-// // [routerLink]="['/expediente', e.identificador]"
-//
-//   }
-//
-//   applyFilter(filterValue: string) {
-//     filterValue = filterValue.trim(); // Remove whitespace
-//     filterValue = filterValue.toLowerCase(); // MatTableDataSource defaults to lowercase matches
-//     this.dataSource.filter = filterValue;
-//   }
-//
-//   borrarFormExp(){
-//     this.expN={
-//       identificador:null,
-//       avance:0,
-//       cartera:0,
-//       coordinador:0,
-//       detalle:"",
-//       fechaFin:null,
-//       fechaInicio:null,
-//       image:"",
-//       nombreExpediente:"",
-//       titulo:"",
-//     }
-//   }
-//
-// }

@@ -22,7 +22,7 @@ export class PerfilComponent implements OnInit {
     public _authService:AuthService,
   ){
     //Cargar nombreRol y las tareas no finalizadas
-    this._peticionescrudservice.getItem(4,this._authService.user.getValue().rol,-1,-1).then(
+    this._peticionescrudservice.getItem(4,this._authService.user.getValue().rol,-1,-1,-1,"","").then(
       (res) => {
         if(typeof res != 'string'){
           let rol:any = res as any;
@@ -39,7 +39,7 @@ export class PerfilComponent implements OnInit {
   //Filtrar y guardar las tareas no terminadas
   cargarTareas(){
     this.tareas = [];
-    this._peticionescrudservice.getItem(107,-1,-1,-1).then(
+    this._peticionescrudservice.getItem(9,-1,-1,-1,-1,"","").then(
       (res) => {
         if(typeof res != 'string'){
           for(let i=0; i<(res["data"]).length; i++){

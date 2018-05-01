@@ -21,6 +21,11 @@
     <mat-cell *matCellDef="let items">{{items.coordinador}}</mat-cell>
   </ng-container>
 
+  <!-- <ng-container matColumnDef="cartera">
+    <mat-header-cell *matHeaderCellDef>Cartera</mat-header-cell>
+    <mat-cell *matCellDef="let item" #carteraRow>{{cargarCarterasItems(item.cartera, carteraRow)}}</mat-cell>
+  </ng-container> -->
+
   <ng-container matColumnDef="fechaInicio">
     <mat-header-cell *matHeaderCellDef>Fecha inicio</mat-header-cell>
     <mat-cell *matCellDef="let items">{{items.fechaInicio}}</mat-cell>
@@ -30,6 +35,8 @@
     <mat-header-cell *matHeaderCellDef>Fecha fin</mat-header-cell>
     <mat-cell *matCellDef="let items">{{items.fechaFin}}</mat-cell>
   </ng-container>
+  <!-- <mat-header-row *matHeaderRowDef="['identificador','nombreExpediente','titulo','coordinador','cartera','fechaInicio','fechaFin']"></mat-header-row>
+  <mat-row class="elementoTabla" *matRowDef="let row; columns: ['identificador','nombreExpediente','titulo','coordinador','cartera','fechaInicio','fechaFin']" ></mat-row> -->
   <mat-header-row *matHeaderRowDef="['identificador','nombreExpediente','titulo','coordinador','fechaInicio','fechaFin']"></mat-header-row>
   <mat-row class="elementoTabla" *matRowDef="let row; columns: ['identificador','nombreExpediente','titulo','coordinador','fechaInicio','fechaFin']" ></mat-row>
 </mat-table>
