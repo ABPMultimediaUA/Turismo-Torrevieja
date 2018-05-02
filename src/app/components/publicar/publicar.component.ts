@@ -21,7 +21,8 @@ export class PublicarComponent implements OnInit {
   page_name: string = "Cultura Torrevieja";
   page_id: string = "497922363906912";
 
-  user_access_token: string = "EAACEdEose0cBAKq0MGPDJnunezMAQQZC9OuoaCn7WPsGtZAa3CryRbo2N4mFZC86PmP4OQAGWZAgSl3rt58IZCauYEYNpwp2DS2BskPijS4VfZALITDt6dyDMeS0q2s4qzqGlhXWkwZBItP29DZB0ZCG6sIzOSIG1ulugkViTHcRlX5wE4bpRoBqCMJIFr7ZCLDFx5xuJRxZAJNiwZDZD";
+  user_id:string= "";
+  user_access_token: string = "";
   page_access_token: string = "";
 
   imagen: File;
@@ -30,15 +31,41 @@ export class PublicarComponent implements OnInit {
   };
 
   constructor(private http: Http) {
+    // primero voy a coger el token de acceso del usuario
+    this.user_access_token=localStorage.getItem('fb_user_token');
+    this.user_id=localStorage.getItem('fb_user_id');
+    console.log(this.user_id);
+    console.log(this.user_access_token);
+
+    // let url45= this.URL + this.user_id + '/permissions?access_token=' + this.user_access_token;
+    // this.http.get(url45).subscribe(response => {
+    //   let res = JSON.parse(response.text());
+    //   console.log(res);
+    // });
+    //
+    //
+    // let url4 = this.URL +'me/accounts'+ '?access_token=' + this.user_access_token;
+    // this.http.get(url4).subscribe(response => {
+    //   let res = JSON.parse(response.text());
+    //   console.log(res);
+    // });
+
+
     //hay que conseguir el page acces token que va cambiando
     //para ello necesito hacer la peticion con el access token de un usuario que
     //puede manejar la pagina
-    let urlPage = this.URL + this.page_id + '?fields=access_token' + '&access_token=' + this.user_access_token;
-    this.http.get(urlPage).subscribe(response => {
-      let res = JSON.parse(response.text());
-      this.page_id = res.id;
-      this.page_access_token = res.access_token;
-    });
+    if(this.user_access_token != null){
+      let urlPage = this.URL + this.page_id + '?fields=access_token' + '&access_token=' + this.user_access_token;
+      this.http.get(urlPage).subscribe(response => {
+        let res = JSON.parse(response.text());
+        console.log(res);
+        this.page_id = res.id;
+        this.page_access_token = res.access_token;
+      });
+    }
+
+
+
     // TODO: Estaria mejor si lo que recibo son todas las paginas que maneja ese usuario y
     // que el elija en cual Publicar
 
@@ -66,7 +93,7 @@ export class PublicarComponent implements OnInit {
   }
 
 
-  //https://graph.facebook.com/497922363906912/feed?message=prueba2&access_token=EAACEdEose0cBAJEeZCcuWlcsrHQZAiwuLNyEdHHwNfOvDEHZBjnj5Fm0srUVKHlHJn0Mukmwnn1Pv1pv0VkhHHYUnzffN1Ux4eGarE7nLT5gZBGZAZAPVZAgYyNZBs7XD5Mw9VuKIj07t5j5d9WbFNJJ8ytiZANsx2o6PPir5Gg11VtkW6jSSDViEPZCbqzfiVTBLK35Wm1SwjVwZDZD
+
 
   // subirPost() {
   //   let xhr = new XMLHttpRequest(),
@@ -109,24 +136,29 @@ export class PublicarComponent implements OnInit {
   }
 
   subirPost() {
-    let xhr = new XMLHttpRequest();
-    let fd = new FormData();
-    let url2 = this.URL + this.page_id + '/photos';
-    xhr.open('POST', url2, true);
-    fd.append("foto", this.imagen);
-    // fd.append("access_token", this.user_access_token);
-    console.log(this.page_access_token);
-    fd.append("access_token", this.page_access_token);
-    fd.append("caption", this.post.message);
 
-    xhr.onload = function() {
-      console.log(xhr.responseText);
-      let res = JSON.parse(xhr.responseText);
+    this.user_access_token=localStorage.getItem('fb_user_token');
+    if(this.user_access_token!=null){
+      let xhr = new XMLHttpRequest();
+      let fd = new FormData();
+      let url2 = this.URL + this.page_id + '/photos';
+      xhr.open('POST', url2, true);
+      fd.append("foto", this.imagen);
+      // fd.append("access_token", this.user_access_token);
+      console.log(this.user_access_token);
+      fd.append("access_token", this.user_access_token);
+      fd.append("caption", this.post.message);
+
+      xhr.onload = function() {
+        console.log(xhr.responseText);
+        let res = JSON.parse(xhr.responseText);
 
 
+      }
+      xhr.send(fd);
     }
-    xhr.send(fd);
   }
+
 
 
 }
