@@ -85,11 +85,9 @@ export class ExpedienteComponent implements OnInit {
           //cogemos cartera
           this._itemService.getItem(8,this.expediente.cartera,-1,-1,-1,"","").then( res => {
             if(typeof res != "string"){
-              let r = res as any;
-              this.cartera = r.data as CarteraInterface;
+              this.cartera = res as CarteraInterface;
               // if(this.cartera.estado < 3) this.eliminable = true;
               // else this.modificable = true;
-              console.log(this.cartera)
             }
           });
         }
@@ -97,29 +95,17 @@ export class ExpedienteComponent implements OnInit {
 
       //COGEMOS LAS ACTIVIDADES
       this._itemService.getItem(101,this.id,-1,-1,-1,"","").then( res => {
-          if(typeof res != "string") {
-            let r = res as any;
-            this.actividades = r.data as ActividadInterface[];
-            console.log(this.actividades)
-          }
+          if(typeof res != "string") this.actividades = res as ActividadInterface[];
       });
 
       //COGEMOS LAS TAREAS
       this._itemService.getItem(102,this.id,-1,-1,-1,"","").then( res => {
-          if(typeof res != "string") {
-            let r = res as any;
-            this.tareas = r.data as TareasInterface[];
-            console.log(this.tareas)
-          }
+          if(typeof res != "string") this.tareas = res as TareasInterface[];
       });
 
       //COGEMOS LOS CONTRATOS
       this._itemService.getItem(103,this.id,-1,-1,-1,"","").then( res => {
-          if(typeof res != "string") {
-            let r = res as any;
-            this.contratos = r.data as ContratoInterface[];
-            console.log(this.contratos)
-          }
+          if(typeof res != "string") this.contratos = res as ContratoInterface[];
       });
 
       //COGEMOS LOS USUARIOS
@@ -127,29 +113,17 @@ export class ExpedienteComponent implements OnInit {
           //TODO Cambiar select para recoger solamente los usuarios que
           //tengan permiso para "coordinar" un evento
           //y permiso para realizar tareas, etc.
-          if(typeof res != "string") {
-            let r = res as any;
-            this.users = r.data as UsuarioInterface[];
-            console.log(this.users)
-          }
+          if(typeof res != "string") this.users = res as UsuarioInterface[];
       });
 
       //COGEMOS LOS ESPACIOS
       this._itemService.getItem(6,-1,-1,-1,-1,"","").then( res => {
-          if(typeof res != "string") {
-            let r = res as any;
-            this.espacio = r.data as EspacioInterface[];
-            console.log(this.espacio)
-          }
+          if(typeof res != "string") this.espacio = res as EspacioInterface[];
       });
 
       //COGEMOS LOS PROVEEDORES
       this._itemService.getItem(7,-1,-1,-1,-1,"","").then( res => {
-          if(typeof res != "string") {
-            let r = res as any;
-            this.proveedor = r.data as ProveedorInterface[];
-            console.log(this.proveedor)
-          }
+          if(typeof res != "string") this.proveedor = res as ProveedorInterface[];
         }
       );
     })
@@ -185,18 +159,18 @@ export class ExpedienteComponent implements OnInit {
     }
   }
 
-  //BOTON - editar la cartera
-  editarExp() {
-    this.realizandoAccion = true;
-    this._itemService.actualizarItem(0,this.expediente.identificador,this.expediente,-1)
-      .then( res => {
-        if(typeof res != "string") {
-          // this.carteraSinModif = Object.assign({}, res as CarteraInterface);
-          this.alertaOk();
-        }
-        else this.alertaNoOk();
-      })
-  }
+  // //BOTON - editar la cartera
+  // editarCartera() {
+  //   this.realizandoAccion = true;
+  //   this._itemService.actualizarItem(8,this.cartera.identificador,this.cartera,-1)
+  //     .then( res => {
+  //       if(typeof res != "string") {
+  //         this.carteraSinModif = Object.assign({}, res as CarteraInterface);
+  //         this.alertaOk();
+  //       }
+  //       else this.alertaNoOk();
+  //     })
+  // }
 
   //Ventana emergente si se ha realizado una peticion y todo ha ido bien
   alertaOk() {
@@ -228,104 +202,6 @@ export class ExpedienteComponent implements OnInit {
     });
   }
 
-  // CREAR NUEVAS PLANTILLA
-   crearPlantillaAct(){
-     var a:ActividadInterface;
-     a={
-       capacidadMinimo:null,
-       capacidadMaximo:null,
-       espacio:null,
-       expediente:+this.id,
-       fechaFinal:null,
-       fechaInicio:null,
-       identificador:null,
-       nombreActividad:null,
-       HoraInicio:null,
-       HoraFinal:null,
-       detalleEntrada:null,
-       precioEntrada:null,
-     };
-     this.actividades.push(a);
-   }
-
-   crearPlantillaCon(){
-     var c:ContratoInterface;
-     c={
-       archivo:null,
-       clase:null,
-       expediente:+this.id,
-       identificador:null,
-       nombreContrato:null,
-       precio:null,
-       proveedor:null,
-       tiempo:null,
-       usuario:null,
-     };
-     this.contratos.push(c);
-   }
-
-   crearPlantillaTar(){
-     var t:TareasInterface;
-     t={
-       expediente:+this.id,
-       finalizado:null,
-       identificador:null,
-       nombreTarea:null,
-       usuario:null,
-     };
-     this.tareas.push(t);
-   }
-
-   //ELIMINAR ITEMS
-   eliminarItem(a, i, index){
-   // console.log(index);
-     if (i != null){
-       var mensaje = "Va a eliminarse de forma definitiva.\n"+
-                     "¿Continuar?";
-       if(confirm(mensaje)){
-         this._itemService.eliminarItem(a,i,-1).then( res=>{
-           if(a==1){ this.actividades.splice(index,1); }
-           else if(a==3){ this.contratos.splice(index,1); }
-           else if(a==2){ this.tareas.splice(index,1); }
-         });
-       }
-     }
-     else{
-       if(a==1){
-         this.actividades.splice(index,1);
-       }
-       else if(a==3){
-         this.contratos.splice(index,1);
-       }
-       else if(a==2){
-         this.tareas.splice(index,1);
-       }
-     }
-   }
-
-
-   crearModificarActConTar(i,a,index){
-     if(a.identificador != null){
-       this._itemService.actualizarItem(i,a.identificador,a,-1)
-         .then( res=> { alert("Actualizado correctamente."); })
-         .catch( (err) => { })
-     }
-     else{
-       this._itemService.crearItem(i,a)
-         .then( res=> {
-           if(i==1){
-             this.actividades[index] = res as ActividadInterface;
-           }
-           else if(i==3){
-             this.contratos[index] = res as ContratoInterface;
-           }
-           else if(i==2){
-             this.tareas[index] = res as TareasInterface;
-           }
-           alert("Creado correctamente."); })
-         .catch( (err) => {  })
-     }
-   }
 
 }
 
