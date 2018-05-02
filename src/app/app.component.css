@@ -64,7 +64,7 @@
 }
 /*FIN CSS comun a todos los componentes con tabla*/
 
-/* Cartera */
+/* Cartera - expediente*/
 .titCarteras{
   float:left;
   display: inline-block;
@@ -107,7 +107,23 @@
   width: 20%;
   min-width: 9em;
 }
-/* Fin cartera */
+.expFecha{
+  width: 9em;
+}
+.tabExpediente{
+  width: 100%;
+  margin-top: 1.5em;
+  margin-left: 3.2em;
+  margin-right: 3.2em;
+  margin-bottom: 2em;
+}
+.btnsExpedienteNewElement{
+  margin-top: 1.5em;
+}
+.panelExp{
+  margin-bottom: 1.5em;
+}
+/* Fin cartera - expediente*/
 
 /*Tamanyo columnas*/
 .mat-column-identificador{

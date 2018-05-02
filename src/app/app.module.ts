@@ -23,6 +23,8 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatExpansionModule} from '@angular/material/expansion';
 import { MatIcon, MatPaginatorModule, MatTableDataSource, MatSort,
          MatSortModule, MatTableModule, MatFormFieldModule, MatNativeDateModule,
          MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatProgressBarModule,
@@ -148,12 +150,14 @@ import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.com
     MatButtonModule,
     MatRadioModule,
     MatToolbarModule,
+    MatTabsModule,
     MatIconModule,
     MatPaginatorModule,
     MatCheckboxModule,
     MatDialogModule,
     MatMenuModule,
     MatProgressBarModule,
+    MatExpansionModule,
     MatSelectModule,
     MatTooltipModule,
     MatDatepickerModule,
