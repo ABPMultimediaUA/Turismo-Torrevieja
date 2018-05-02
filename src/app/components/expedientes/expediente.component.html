@@ -1,8 +1,159 @@
-<br><br><br><br><br>
+<div class="container-fluid divContenedorTabla">
+  <form (ngSubmit)="editarExp()" #formulario="ngForm">
+    <div class="row">
+      <div class="example-header">
+        <h1 class="mat-display-1 tituloComponentes titCarteras"><i class="icon-folder-open"></i> Expediente {{expediente.nombreExpediente}}</h1>
+        <div class="divTiposCartera" *ngIf="_authService.tienePermiso(26) && cartera.estado!=3">
+          <div class="btnsEditarAnyadir">
+            <div *ngIf="bloqCampos" class="btnsEditarAnyadir">
+              <button type="button" mat-raised-button color="primary" (click)="disable_enable_campos()">Editar</button>
+            </div>
+            <div *ngIf="!bloqCampos" class="btnsEditarAnyadir">
+              <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid || realizandoAccion">Guardar cambios</button>
+              <button type="button" mat-raised-button (click)="restaurarValores()" color="warn" [disabled]="realizandoAccion">Restaurar valores</button>
+              <button type="button" mat-raised-button (click)="disable_enable_campos()" color="warn" [disabled]="realizandoAccion">Cancelar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="example-header">
+        <div class="elementosCabecera">
+
+          <div class="row carteraFormEditar">
+              <mat-form-field class="carteraNombre">
+                <input matInput name="nombreExpediente" [(ngModel)]="expediente.nombreExpediente" placeholder="Nombre"  [readonly]="bloqCampos"
+                       maxLength="200" required>
+                <mat-error>Campo requerido</mat-error>
+              </mat-form-field>
+
+              <mat-form-field class="carteraNombre">
+                <input matInput name="titulo" [(ngModel)]="expediente.titulo" placeholder="Título"  [readonly]="bloqCampos"
+                       maxLength="100" required>
+                <mat-error>Campo requerido</mat-error>
+             </mat-form-field>
+
+             <mat-form-field class="carteraPeriodo">
+               <mat-select placeholder="Coordinador" [value]="idNombreUsuario" name="coordinador"  [disabled]="bloqCampos">
+                 <mat-option *ngFor="let u of users" [value]="u.identificador">{{ u.nombreUsuario }}</mat-option>
+               </mat-select>
+             </mat-form-field>
+
+             <mat-form-field class="carteraNombre">
+               <input matInput name="nombreCartera" [(ngModel)]="cartera.nombreCartera" placeholder="Cartera"  readonly>
+             </mat-form-field>
+
+             <mat-form-field class="expFecha">
+               <input matInput type="date" name="fechaInicio" [(ngModel)]="expediente.fechaInicio" placeholder="Fecha inicio" required  [readonly]="bloqCampos">
+               <mat-error>Campo requerido</mat-error>
+             </mat-form-field>
+
+             <mat-form-field class="expFecha">
+               <input matInput type="date" name="fechaFin" [(ngModel)]="expediente.fechaFin" placeholder="Fecha fin" required  [readonly]="bloqCampos">
+               <mat-error>Campo requerido</mat-error>
+             </mat-form-field>
+          </div>
+
+          <div class="row">
+            <div class="descripcionCarteraForm">
+              <mat-form-field class="campoWidth100">
+                <textarea matInput name="detalle" [(ngModel)]="expediente.detalle" placeholder="Detalles"  [readonly]="bloqCampos"
+                          maxLength="500"></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div class="row">
+    <div class="tabExpediente">
+      <mat-tab-group>
+        <mat-tab label="Actividades">
+
+          <mat-accordion *ngFor="let a of actividades; let i = index">
+            <form (ngSubmit)="crearModificarActConTar(1,a,i)" #forma="ngForm">
+              <mat-expansion-panel>
+                <mat-expansion-panel-header>
+                  <mat-panel-title> {{a.nombreActividad}} </mat-panel-title>
+                  <mat-panel-description> {{a.observaciones}} </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="panelExp">
+
+                  <mat-form-field>
+                    <input placeholder="Nombre" matInput [(ngModel)]="a.nombreActividad" name=Actividad_nombre{{i}} required type="text">
+                    <mat-error>Campo requerido</mat-error>
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <input placeholder="Precio entrada" matInput [(ngModel)]="a.precioEntrada" name=Actividad_precio{{i}} type="text">
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <input placeholder="Capacidad máxima" matInput [(ngModel)]="a.capacidadMaximo" name=Actividad_capMax{{i}} type="text">
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <input placeholder="Capacidad mínima" matInput [(ngModel)]="a.capacidadMinimo" name=Actividad_capMin{{i}} type="text">
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <input matInput type="date" name="fechaInicio" [(ngModel)]="a.fechaInicio" placeholder="Fecha inicio" >
+                  </mat-form-field>
+
+                  <mat-form-field>
+                    <input matInput type="date" name="fechaFinal" [(ngModel)]="a.fechaFinal" placeholder="Fecha final">
+                  </mat-form-field>
+
+                  <div class="btnsEditarAnyadir">
+                    <button *ngIf="a.identificador" [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary"> Guardar cambios </button>
+                    <button *ngIf="!a.identificador" [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary"> Añadir actividad </button>
+                    <button (click)="eliminarItem(1, a.identificador, i)" type="button" class="btn btn-outline-danger"> <i class="icon-trash"></i> </button>
+                  </div>
+
+                </div>
+
+              </mat-expansion-panel>
+            </form>
+          </mat-accordion>
+          <button type="button" class="btn btn-outline-success btnMargen btnsExpedienteNewElement" (click)="crearPlantillaAct()"> Nueva actividad </button>
+
+        </mat-tab>
+        <mat-tab label="Contratos">
+
+        </mat-tab>
+        <mat-tab label="Tareas">
+
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--
 <div class="container-fluid">
   <div class="row ">
       <main role="main" class="col-sm-12 ml-sm-auto col-md-12 pt-3">
-        <h1><span class="icon-folder-add"></span> Evento <small>{{expediente.nombreExpediente}}</small></h1>
+        <h1><span class="icon-folder-open"></span> Evento <small>{{expediente.nombreExpediente}}</small></h1>
         <div class="container" *ngIf="errorActualizarItem === true">
             <div class="jumbotron">
                 <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
@@ -76,8 +227,8 @@
           <button type="button" name="buttonAct" class="btn btn-secondary inicio" (click)="cambiarPestanya(1)" #btnAct>Actividades</button>
           <button type="button" name="buttonCon" class="btn btn-secondary" (click)="cambiarPestanya(2)" #btnCon>Contratos</button>
           <button type="button" name="buttonTar" class="btn btn-secondary" (click)="cambiarPestanya(3)" #btnTar>Tareas</button>
-          <!-- ***************** EMPIEZAN ACTIVIDADES ***************** -->
-          <div id="DivActividades" *ngIf="mostrarActividades">
+          <! ***************** EMPIEZAN ACTIVIDADES ***************** -->
+            <!--<div id="DivActividades" *ngIf="mostrarActividades">
             <div class="fondoComponentes">
               <div *ngFor="let a of actividades; let i = index">
                 <form (ngSubmit)="crearModificarActConTar(1,a,i)" #forma="ngForm">
@@ -147,8 +298,8 @@
               <span class=""></span>Nueva actividad
             </button>
           </div>
-          <!-- ***************** EMPIEZAN CONTRATOS ***************** -->
-          <div id="DivContratos" *ngIf="mostrarContratos">
+          ***************** EMPIEZAN CONTRATOS ***************** -->
+            <!--<div id="DivContratos" *ngIf="mostrarContratos">
             <div class="fondoComponentes">
               <div *ngFor="let a of contratos; let i = index">
                 <form (ngSubmit)="crearModificarActConTar(3,a,i)" #forma="ngForm">
@@ -208,8 +359,8 @@
               <span class=""></span>Nuevo contrato
             </button>
           </div>
-          <!-- ***************** EMPIEZAN TAREAS ***************** -->
-          <div id="DivTareas" *ngIf="mostrarTareas">
+          <!- ***************** EMPIEZAN TAREAS ***************** -->
+            <!--<div id="DivTareas" *ngIf="mostrarTareas">
             <div class="fondoComponentes">
               <div *ngFor="let a of tareas; let i = index">
                 <form (ngSubmit)="crearModificarActConTar(2,a,i)" #forma="ngForm">
@@ -224,11 +375,11 @@
                         <option [ngValue]="u.identificador" *ngFor="let u of users" >{{u.nombreUsuario}}</option>
                       </select>
                     </div>
-                    <!-- <div class="col-sm-3">
+                    <!-<div class="col-sm-3">
                       <label>Finalizada</label>
                       <input [(ngModel)]="a.finalizado" name=Tarea_finalizado{{i}} class="form-control" type="text">
                     </div> -->
-                    <div class="col-sm-3">
+                      <!--<div class="col-sm-3">
                       <label>Finalizada
                         <input [(ngModel)]="a.finalizado" name=Tarea_finalizado{{i}} class="form-control" type="checkbox">
                       </label>
@@ -259,4 +410,4 @@
         </div>
       </main>
     </div>
-</div>
+</div> -->

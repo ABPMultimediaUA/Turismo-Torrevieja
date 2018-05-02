@@ -23,10 +23,12 @@ import {MatSelectModule} from '@angular/material/select';
 import {MatCardModule} from '@angular/material/card';
 import {MatListModule} from '@angular/material/list';
 import {MatToolbarModule} from '@angular/material/toolbar';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatExpansionModule} from '@angular/material/expansion';
 import { MatIcon, MatPaginatorModule, MatTableDataSource, MatSort,
          MatSortModule, MatTableModule, MatFormFieldModule, MatNativeDateModule,
          MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatProgressBarModule,
-         MatProgressSpinnerModule,MatIconRegistry, MatIconModule,MatButtonModule,MatInputModule,
+         MatProgressSpinnerModule, MatIconRegistry, MatIconModule, MatButtonModule, MatInputModule,
          MatRadioModule
         } from '@angular/material';
 
@@ -55,6 +57,8 @@ import { RolesComponent }             from './components/roles/roles.component';
 import { NuevoRolComponent }          from './components/roles/nuevo-rol.component';
 import { EliminarRolComponent }       from './components/roles/eliminar-rol.component';
 
+import { EliminarExpedienteComponent }  from './components/expedientes/eliminar-expediente.component';
+
 //Otros
 import { VentanaEmergenteComponent }  from './components/ventana-emergente/ventana-emergente.component';
 
@@ -79,11 +83,9 @@ import { ExpedienteComponent } from './components/expedientes/expediente.compone
 import { NuevoExpedienteComponent } from './components/expedientes/nuevo-expediente.component';
 
 
-import { RolComponent } from './components/roles/rol.component';
 import { PerfilComponent } from './components/perfil/perfil.component';
 
 import { EliminarCarteraDialog} from "./components/carteras/eliminar-cartera-dialog.component";
-import { EditarCarteraDialog} from "./components/carteras/editar-cartera-dialog.component";
 import { CrearExpedienteDialog} from "./components/carteras/crear-expediente-dialog.component";
 import { EliminarExpedienteDialog } from "./components/carteras/eliminar-expediente-dialog.component";
 
@@ -114,15 +116,14 @@ import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.com
     NuevaCarteraComponent,
     RolesComponent,
     EliminarRolComponent,
-    RolComponent,
     NuevoRolComponent,
     PerfilComponent,
     ExpedientesComponent,
     ExpedienteComponent,
     NuevoExpedienteComponent,
+    EliminarExpedienteComponent,
     EditarPerfilDialog,
     EliminarCarteraDialog,
-    EditarCarteraDialog,
     CrearExpedienteDialog,
     EliminarExpedienteDialog,
     ProveedoresComponent,
@@ -149,12 +150,14 @@ import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.com
     MatButtonModule,
     MatRadioModule,
     MatToolbarModule,
+    MatTabsModule,
     MatIconModule,
     MatPaginatorModule,
     MatCheckboxModule,
     MatDialogModule,
     MatMenuModule,
     MatProgressBarModule,
+    MatExpansionModule,
     MatSelectModule,
     MatTooltipModule,
     MatDatepickerModule,
@@ -202,17 +205,18 @@ import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.com
     //Ventanas emergentes cartera
     NuevaCarteraComponent,
     EliminarCarteraDialog,
-
-    //Ventanas emergentes expediente
     CrearExpedienteDialog,
     EliminarExpedienteDialog,
+
+    //Ventanas emergentes expediente
+    EliminarExpedienteComponent,
+    NuevoExpedienteComponent,
 
     //Mensaje emergente
     VentanaEmergenteComponent,
 
 
       EditarPerfilDialog,
-      EditarCarteraDialog,
 
   ],
   bootstrap: [AppComponent]

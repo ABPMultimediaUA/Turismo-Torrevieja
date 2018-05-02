@@ -69,7 +69,7 @@
         <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(55) : null" [checked]="selection.isSelected(55)" (click)="$event.stopPropagation()" name="usuario" value="ConsultarU">Consultar usuarios</mat-checkbox><br>
         <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(54) : null" [checked]="selection.isSelected(54)" (click)="$event.stopPropagation()" name="usuario" value="CrearU">Crear usuarios</mat-checkbox><br>
         <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(56) : null" [checked]="selection.isSelected(56)" (click)="$event.stopPropagation()" name="usuario" value="ActualizarU">Actualizar usuarios</mat-checkbox><br>
-        <mat-checkbox [disabled]="true" (change)="$event ? selection.toggle(56) : null" [checked]="selection.isSelected(56)" (click)="$event.stopPropagation()" name="usuario" value="ActualizarU">Eliminar usuarios</mat-checkbox><br><br>
+        <mat-checkbox [disabled]="bloqCampos" (change)="$event ? selection.toggle(58) : null" [checked]="selection.isSelected(58)" (click)="$event.stopPropagation()" name="usuario" value="ActualizarU">Eliminar usuarios</mat-checkbox><br><br>
         <!-- TODO: CAMBIAR el disabled y el 56 por el codigo que se le asigne -->
       </div>
     </div>

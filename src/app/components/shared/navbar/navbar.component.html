@@ -38,6 +38,43 @@
     <div *ngIf="_authService.userLog.getValue()">
       <ul class="navbar-nav mr-auto d9d9d9">
 
+        <div class="dropdown mr-auto" *ngIf="_authService.tienePermiso(23) && _authService.tienePermiso(3)">
+          <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           <span class="icon-folder"></span> Eventos
+          </button>
+          <div class="bg-blue dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a role="button" [routerLink]="['/carteras']" class="nav-link elemento-navbar d9d9d9" >
+              <span class="icon-archive-1"></span> Carteras
+            </a>
+            <div class="dropdown-divider"></div>
+            <a role="button" [routerLink]="['/expedientes']" class="nav-link elemento-navbar d9d9d9" >
+              <span class="icon-folder-open"></span> Eventos
+            </a>
+          </div>
+        </div>
+        <div *ngIf="_authService.tienePermiso(23) && !_authService.tienePermiso(3)">
+          <button [routerLink]="['/carteras']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
+           <span class="icon-archive-1"></span> Carteras
+          </button>
+        </div>
+        <div *ngIf="!_authService.tienePermiso(23) && _authService.tienePermiso(3)">
+          <button [routerLink]="['/expedientes']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
+           <span class="icon-folder-open"></span> Eventos
+          </button>
+        </div>
+
+        <div *ngIf="_authService.tienePermiso(7)">
+          <button [routerLink]="['/espacios']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
+           <span class="icon-town-hall"></span> Espacios
+          </button>
+        </div>
+
+        <div *ngIf="_authService.tienePermiso(31)">
+          <button [routerLink]="['/proveedores']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
+           <span class="icon-handshake-o"></span> Proveedores
+          </button>
+        </div>
+
         <div class="dropdown mr-auto" *ngIf="_authService.tienePermiso(55) && _authService.tienePermiso(35)">
           <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" #dropdownMenuButton data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
            <span class="icon-users-outline"></span> Usuarios
@@ -63,42 +100,6 @@
           </button>
         </div>
 
-        <div class="dropdown mr-auto" *ngIf="_authService.tienePermiso(23) && _authService.tienePermiso(3)">
-          <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-           <span class="icon-folder"></span> Eventos
-          </button>
-          <div class="bg-blue dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a role="button" [routerLink]="['/carteras']" class="nav-link elemento-navbar d9d9d9" >
-              <span class="icon-archive-1"></span> Carteras
-            </a>
-            <div class="dropdown-divider"></div>
-            <a role="button" [routerLink]="['/expedientes']" class="nav-link elemento-navbar d9d9d9" >
-              <span class="icon-doc"></span> Eventos
-            </a>
-          </div>
-        </div>
-        <div *ngIf="_authService.tienePermiso(23) && !_authService.tienePermiso(3)">
-          <button [routerLink]="['/carteras']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
-           <span class="icon-archive-1"></span> Carteras
-          </button>
-        </div>
-        <div *ngIf="!_authService.tienePermiso(23) && _authService.tienePermiso(3)">
-          <button [routerLink]="['/expedientes']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
-           <span class="icon-doc"></span> Eventos
-          </button>
-        </div>
-
-        <div *ngIf="_authService.tienePermiso(7)">
-          <button [routerLink]="['/espacios']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
-           <span class="icon-town-hall"></span> Espacios
-          </button>
-        </div>
-
-        <div *ngIf="_authService.tienePermiso(31)">
-          <button [routerLink]="['/proveedores']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
-           <span class="icon-handshake-o"></span> Proveedores
-          </button>
-        </div>
 
       </ul>
     </div>
