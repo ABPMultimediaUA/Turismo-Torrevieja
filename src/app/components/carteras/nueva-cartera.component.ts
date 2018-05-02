@@ -74,14 +74,14 @@ export class NuevaCarteraComponent implements OnInit {
   //BOTON - Cuando se esta en la opcion de crear vacia los campos del form
   limpiarCampos(){
     this.items={
-      identificador:"",
-      nombreCartera:"",
-      year:null,
-      trimestre:null,
-      estado:null,
-      fechaCreacion:"",
-      fechaActualizacion:"",
-      fechaEliminacion:""
+          identificador:"",
+          nombreCartera:"",
+          year:null,
+          trimestre:null,
+          estado:null,
+          fechaCreacion:"",
+          fechaActualizacion:"",
+          fechaEliminacion:""
     }
   }
 

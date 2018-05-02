@@ -1,44 +1,22 @@
-<h1 class="mat-display-1 tituloComponentes"><i class="icon-folder"></i> Eliminar eventos</h1>
-<h1 class="VentanaEmergenteEliminarPregunta" mat-dialog-title>¿Estás seguro de que deseas eliminar las siguientes filas?</h1>
-<p class="VentanaEmergenteEliminarInfo">Una vez hecho no podrás recuperarlas.</p>
-<mat-table class="tablaComponenteVEEliminar" #table [dataSource]="dataSource">
-  <ng-container matColumnDef="identificador">
-    <mat-header-cell *matHeaderCellDef >Id</mat-header-cell>
-    <mat-cell *matCellDef="let items">{{items.identificador}}</mat-cell>
-  </ng-container>
-  <ng-container matColumnDef="nombreExpediente">
-    <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
-    <mat-cell *matCellDef="let items">{{items.nombreExpediente}}</mat-cell>
-  </ng-container>
+<h1 *ngIf="eliminando==false;" mat-dialog-title style="text-align:center">¿Estas seguro que deseas eliminarlo?</h1>
+<p *ngIf="eliminando==false;" style="text-align:center; margin-bottom:0px;">Una vez lo elimines no podras recuperarlo de nuevo. Piensalo bien.</p>
 
-  <ng-container matColumnDef="titulo">
-    <mat-header-cell *matHeaderCellDef>Título</mat-header-cell>
-    <mat-cell *matCellDef="let items">{{items.titulo}}</mat-cell>
-  </ng-container>
 
-  <ng-container matColumnDef="coordinador">
-    <mat-header-cell *matHeaderCellDef>Coordinador</mat-header-cell>
-    <mat-cell *matCellDef="let items">{{items.coordinador}}</mat-cell>
-  </ng-container>
+  <mat-dialog-actions *ngIf="eliminando==false;" style="display:block; text-align:center;">
+      <button  mat-raised-button (click)="borrarCartera()" color="warn">Eliminar</button>
+      <button  mat-raised-button (click)="cancelar()"color="primary">Cancelar</button>
+  </mat-dialog-actions>
 
-  <ng-container matColumnDef="fechaInicio">
-    <mat-header-cell *matHeaderCellDef>Fecha inicio</mat-header-cell>
-    <mat-cell *matCellDef="let items">{{items.fechaInicio}}</mat-cell>
-  </ng-container>
 
-  <ng-container matColumnDef="fechaFin">
-    <mat-header-cell *matHeaderCellDef>Fecha fin</mat-header-cell>
-    <mat-cell *matCellDef="let items">{{items.fechaFin}}</mat-cell>
-  </ng-container>
-  <mat-header-row *matHeaderRowDef="['identificador','nombreExpediente','titulo','coordinador','fechaInicio','fechaFin']"></mat-header-row>
-  <mat-row class="elementoTabla" *matRowDef="let row; columns: ['identificador','nombreExpediente','titulo','coordinador','fechaInicio','fechaFin']" ></mat-row>
-</mat-table>
-<mat-dialog-actions class="VentanaEmergenteEliminarBtns" *ngIf="!eliminando;">
-    <button mat-raised-button (click)="eliminarItem()" color="warn">Eliminar</button>
-    <a mat-raised-button (click)="cerrarDialogo()" color="primary">Cancelar</a>
-</mat-dialog-actions>
-<div class="VentanaEmergenteSpinner1">
-  <div class="VentanaEmergenteSpinner2" *ngIf="eliminando">
+
+
+
+  <h1 *ngIf="eliminando==true;" mat-dialog-title style="text-align:center">Eliminando</h1>
+
+  <div *ngIf="eliminando==true;" style="margin-left:150px;">
       <mat-spinner color="warn"></mat-spinner>
   </div>
-</div>
+  <!-- <mat-dialog-actions style="display:block; text-align:center;" *ngIf="eliminando==true;">
+
+      <mat-spinner color="warn"></mat-spinner>
+  </mat-dialog-actions> -->

@@ -17,13 +17,23 @@ import { UsuariosComponent }    from "./components/usuarios/usuarios.component";
 import { CarterasComponent }    from './components/carteras/carteras.component';
 import { CarteraComponent }     from './components/carteras/cartera.component';
 import { ExpedientesComponent } from './components/expedientes/expedientes.component';
-import { ExpedienteComponent }  from './components/expedientes/expediente.component';
 import { ProveedoresComponent } from './components/proveedores/proveedores.component';
 import { RolesComponent }       from './components/roles/roles.component';
 import { EspaciosComponent }    from './components/espacios/espacios.component';
 
 //Otros
 import { MensajesComponent }    from "./components/mensajes/mensajes.component";
+
+
+
+//TODO eliminar
+
+import { ExpedienteComponent } from './components/expedientes/expediente.component';
+import { NuevoExpedienteComponent } from './components/expedientes/nuevo-expediente.component';
+
+//TODO Fin eliminar
+
+
 
 const app_routes: Routes = [
   //Menu no login
@@ -41,13 +51,20 @@ const app_routes: Routes = [
   { path: 'carteras', canActivate:[AuthGuardService,AuthGuardCarterasService], component: CarterasComponent },
   { path: 'cartera/:id', canActivate:[AuthGuardService,AuthGuardCarterasService], component: CarteraComponent },
   { path: 'expedientes', canActivate:[AuthGuardService,AuthGuardEventosService], component: ExpedientesComponent },
-  { path: 'expediente/:id', canActivate:[AuthGuardService,AuthGuardEventosService], component: ExpedienteComponent },
   { path: 'espacios', canActivate:[AuthGuardService,AuthGuardEspaciosService], component: EspaciosComponent },
   { path: 'proveedores', canActivate:[AuthGuardService,AuthGuardProveedoresService], component: ProveedoresComponent },
+
 
   //Otros
   { path: 'mensajes/:parame', component: MensajesComponent },
   { path: '**', pathMatch: 'full', redirectTo: 'home' },
+
+
+  //TODO ELIMINAR
+  //{ path: 'usuariosReloaded', component: UsuariosComponent },
+  { path: 'nuevo-expediente', component: NuevoExpedienteComponent },
+  { path: 'expediente/:id', component: ExpedienteComponent },
+  //TODO Fin eliminar
 
   //{ path: 'usuariosReloaded', component: UsuariosComponent }, //TODO que es esto???
 ];

@@ -2,7 +2,44 @@
   <div class="row">
     <div class="example-header">
       <h1 class="mat-display-1 tituloComponentes"><span class="icon-town-hall"></span> Cartera {{cartera.nombreCartera}} </h1>
+<<<<<<< HEAD
       <div class="elementosCabecera">
+=======
+      <div class="row contenedorFormCamposDestacados">
+        <mat-form-field hintLabel="" class="">
+          <input matInput name="nombreCartera" [(ngModel)]="cartera.nombreCartera" placeholder="Nombre"
+                 maxLength="200" required>
+          <mat-error>Campo requerido</mat-error>
+        </mat-form-field>
+
+        <mat-form-field hintLabel="" class="">
+          <input matInput name="trimestre" [(ngModel)]="cartera.trimestre" placeholder="Periodo"
+                 maxLength="100">
+        </mat-form-field>
+
+        <mat-form-field hintLabel="" class="">
+          <input matInput name="year" [(ngModel)]="cartera.year" placeholder="Año"
+                 pattern="[0-9]{4}" maxLength="4">
+          <mat-error>Han de ser cuatro números</mat-error>
+        </mat-form-field>
+
+        <mat-form-field>
+          <mat-select placeholder="Estado" name="estado" [(ngModel)]="cartera.estado" [disabled]="bloqCampos" >
+            <mat-option [value]="1">Aprobada</mat-option>
+            <mat-option [value]="2">Sin aprobar</mat-option>
+            <mat-option [value]="3">Finalizada</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field>
+          <input matInput name="fechaCreacion" [(ngModel)]="cartera.fechaCreacion" placeholder="Estado" [readonly]="bloqCampos"
+                 maxLength="50">
+        </mat-form-field>
+
+      </div>
+      <div class="elementosCabecera">
+
+>>>>>>> parent of 852ef93... empezando expediente
         <button *ngIf="_authService.tienePermiso(5)" mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
           (click)="editarAnyadirItem(null)">Nuevo Evento</button>
 
@@ -76,6 +113,7 @@
           <ng-container matColumnDef="CP">
             <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(3)">CP</mat-header-cell>
             <mat-cell *matCellDef="let items">{{items.CP}}</mat-cell>
+<<<<<<< HEAD
           </ng-container>
 
           <ng-container matColumnDef="calle">
@@ -98,6 +136,30 @@
             <mat-cell *matCellDef="let items">{{items.aforo}}</mat-cell>
           </ng-container>
 
+=======
+          </ng-container>
+
+          <ng-container matColumnDef="calle">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(4)">Calle</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.calle}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="numero">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(5)">Número</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.numero}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="telefono1">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(6)">Teléfono</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.telefono1}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="aforo">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(2)">Aforo</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.aforo}}</mat-cell>
+          </ng-container>
+
+>>>>>>> parent of 852ef93... empezando expediente
           <mat-header-row *matHeaderRowDef="['select','identificador','nombreExpediente','CP','calle','numero','telefono1','aforo']"></mat-header-row>
           <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','identificador','nombreExpediente','CP','calle','numero','telefono1','aforo']" (click)="editarAnyadirItem(row)"></mat-row>
         </mat-table>

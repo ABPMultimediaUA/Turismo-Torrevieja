@@ -46,8 +46,9 @@ export class NuevoUsuarioComponent implements OnInit {
     }
 
     //Obtenemos los roles
-    this._itemService.getItem(4,-1,-1,-1,-1,"","").then(
+    this._itemService.getItem(4,-1,-1,-1).then(
       res => {
+        console.log(res);
         if(typeof res != "string"){
           if(res && res["data"] && res["meta"]){
             this.roles = res["data"] as RolesInterface[];

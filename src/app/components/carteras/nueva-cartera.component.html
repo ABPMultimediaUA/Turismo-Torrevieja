@@ -12,30 +12,56 @@
 
         <mat-form-field hintLabel="" class="campoWidth100">
           <input matInput name="trimestre" [(ngModel)]="items.trimestre" placeholder="Periodo"
-                 maxLength="100" required>
-          <mat-error>Campo requerido</mat-error>
+                 maxLength="100">
         </mat-form-field>
 
         <mat-form-field hintLabel="" class="campoWidth100">
           <input matInput name="year" [(ngModel)]="items.year" placeholder="Año"
-                 pattern="[0-9]{4}" maxLength="4" required>
-          <mat-error>Campo requerido. Han de ser cuatro números</mat-error>
+                 pattern="[0-9]{4}" maxLength="4">
+          <mat-error>Han de ser cuatro números</mat-error>
         </mat-form-field>
+
+        <!-- <mat-form-field hintLabel="" class="campoWidth100" *ngIf="editar">
+          <mat-select placeholder="Estado" name="estado" [(ngModel)]="items.estado" [disabled]="bloqCampos" >
+            <mat-option [value]="1">Aprobada</mat-option>
+            <mat-option [value]="2">Sin aprobar</mat-option>
+            <mat-option [value]="3">Finalizada</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field *ngIf="editar" class="campoWidth100">
+          <input matInput name="fechaCreacion" [(ngModel)]="items.fechaCreacion" placeholder="Estado" [readonly]="bloqCampos"
+                 maxLength="50">
+        </mat-form-field> -->
+
     </div>
     <div class="row contenedorFormEstrecho">
       <mat-form-field hintLabel="" class="campoWidth100">
-        <textarea matInput name="descripcion" [(ngModel)]="items.descripcion" placeholder="Descripción"
+        <textarea matInput name="descripcion" [(ngModel)]="items.descripcion" placeholder="Observaciones"
                   maxLength="500"></textarea>
       </mat-form-field>
     </div>
     <div class="row" *ngIf="!realizandoAccion">
       <div class="btnsEditarAnyadir">
+        <!-- <div *ngIf="!editar && _authService.tienePermiso(21)" class="btnsEditarAnyadir"> -->
         <div *ngIf="_authService.tienePermiso(21)" class="btnsEditarAnyadir">
           <mat-dialog-actions class="btnsEditarAnyadir">
             <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid">Crear</button>
             <button type="button" mat-raised-button (click)="limpiarCampos()" color="warn">Limpiar campos</button>
           </mat-dialog-actions>
         </div>
+        <!-- <div *ngIf="editar && _authService.tienePermiso(22)" class="btnsEditarAnyadir">
+          <div *ngIf="bloqCampos" class="btnsEditarAnyadir">
+            <button type="button" mat-raised-button color="primary" (click)="disable_enable_campos()">Editar</button>
+          </div>
+          <div *ngIf="!bloqCampos" class="btnsEditarAnyadir">
+            <mat-dialog-actions class="btnsEditarAnyadir">
+              <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid">Guardar cambios</button>
+              <button type="button" mat-raised-button (click)="restaurarValores()" color="warn">Restaurar valores</button>
+              <button type="button" mat-raised-button (click)="disable_enable_campos()" color="warn">Cancelar</button>
+            </mat-dialog-actions>
+          </div>
+        </div> -->
       </div>
     </div>
     <div class="VentanaEmergenteSpinner1">

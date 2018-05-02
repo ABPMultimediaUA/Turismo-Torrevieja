@@ -19,19 +19,16 @@ export class PeticionesCrudService {
   constructor( private http:Http ) { }
 
   //FUNCION QUE CREA LAS URL
-  crearURL(
-    tipo:number,      //La tabla / peticion que se quiere realizar
-    id:number,        //Id de item a buscar
-    id2:number,       //Segundo id para tablas combinadas
-    item_pgn:number,  //Cantidad de elementos por pgn (cuando id = -1)
-    pgn:number,       //Pgn que se quiere obtener
-    busqueda:string,  //Para las peticiones que contienen una busqueda
-    orderBy:string    //Variable por la cual se va a ordenar una select
-  ){
+  //tipo --> la tabla / peticion que se quiere realizar
+  //id --> id de item a buscar
+  //id2 --> segundo id para tablas combinadas / cantidad de elementos por pgn (cuando id = -1)
+  crearURL (tipo,id,id2,pgn){
     let url = "https://gvent.ovh/Prueba2_1/public/";
-
     switch(tipo) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 852ef93... empezando expediente
       case 0:
           //Sin id muestra todos los items
           //Con id crud
@@ -77,6 +74,7 @@ export class PeticionesCrudService {
           //Con id crud
           url += "cartera";
           break;
+<<<<<<< HEAD
       case 50:
           //Cartera aprobada: no se puede añadir expediente ni eliminar
           // url += "cartera?estado=3";
@@ -92,6 +90,8 @@ export class PeticionesCrudService {
           // url += "cartera?estado=5";
           url += "cartera?estado=3";
           break;
+=======
+>>>>>>> parent of 852ef93... empezando expediente
       case 101:
           //Todas las actividades de un expediente
           url += `DeExpediente/${id}/actividades`;
@@ -152,6 +152,7 @@ export class PeticionesCrudService {
           //Realiza busqueda teniendo en cuenta todos sus campos, en id se pasa lo escrito
           url += `BusquedaCartera/${id}`;
           break;
+<<<<<<< HEAD
       default:
           console.log("No se ha especificado correctamente una URL.");
     }
@@ -211,12 +212,39 @@ export class PeticionesCrudService {
     // if() url+=`&orderBy=${variable,}`;                   //Ordenar select
 
 >>>>>>> 0528d55e3f96c387becd011a3dca3ed72f26e5d1
+=======
+      case 400:
+          //Cartera aprobada: no se puede añadir expediente ni eliminar
+          // url += "cartera?estado=3";
+          url += "cartera?estado=2";
+      case 401:
+          //Cartera sin aprobar: se puede añadir expediente y eliminar
+          // url += "cartera?estado=1";
+          url += "cartera?estado=1";
+      case 402:
+          //Cartera terminada: no se puede añadir expediente ni eliminar ni editar
+          // url += "cartera?estado=5";
+          url += "cartera?estado=3";
+          break;
+      case 403:
+          //Cartera terminada: no se puede añadir expediente ni eliminar ni editar
+          // url += "cartera?estado=5";
+          url += `expediente?cartera=${id}`;
+          break;
+      default:
+          console.log("No se ha especificado correctamente una URL.");
+    }
+    if(id>-1 && tipo <101) url+=`/${id}`;
+    if(id2>-1 && pgn>-1 && tipo<400) url+= `?per_page=${id2}&page=${pgn}`;
+    if(id2>-1 && pgn>-1 && tipo>399) url+= `&per_page=${id2}&page=${pgn}`;
+    // if() url+=`&orderBy=${variable,}`
+>>>>>>> parent of 852ef93... empezando expediente
     return url;
   }
 
   crearItem (tipo,_body){
     let promise = new Promise((resolve, reject) => {
-      let url = this.crearURL(tipo,-1,-1,-1,-1,"","");
+      let url = this.crearURL(tipo,-1,-1,-1);
       let body = JSON.stringify( _body );
       let headers = this.header;
       this.http.post(url, body, { headers })
@@ -229,15 +257,15 @@ export class PeticionesCrudService {
     return promise;
   }
 
-  getItem (tipo:number,id:number,id2:number,i_pgn:number,pgn:number,busqueda:string,orderBy:string){
+  getItem (tipo,id,id2,pgn){
     let promise = new Promise((resolve, reject) => {
-      let url = this.crearURL(tipo,id,id2,i_pgn,pgn,busqueda,orderBy);
+      let url = this.crearURL(tipo,id,id2,pgn);
       let headers = this.header;
       console.log(url);
       this.http.get(url, { headers })
         .toPromise()
-          .then(  (res) => { resolve( res.json() ); console.log(res.json()) },
-                  (err) => { resolve( err.toString() ); console.log(err) }
+          .then(  (res) => { resolve( res.json() ); },
+                  (err) => { resolve( err.toString() )}
           )
           // .catch((err) => { console.log(err.toString()); console.error(err); })
     });
@@ -260,7 +288,7 @@ export class PeticionesCrudService {
 
   actualizarItem (tipo,id, _body, id2){
     let promise = new Promise((resolve, reject) => {
-      let url = this.crearURL(tipo,id,id2,-1,-1,"","");
+      let url = this.crearURL(tipo,id,id2,-1);
       let body = JSON.stringify( _body );
       let headers = this.header;
       this.http.put(url, body, { headers })
@@ -275,7 +303,7 @@ export class PeticionesCrudService {
 
   eliminarItem (tipo,id,id2){
     let promise = new Promise((resolve, reject) => {
-      let url = this.crearURL(tipo,id,id2,-1,-1,"","");
+      let url = this.crearURL(tipo,id,id2,-1);
       let headers = this.header;
       this.http.delete(url, { headers })
         .toPromise()
@@ -289,7 +317,7 @@ export class PeticionesCrudService {
 
   subirFile (tipo, id, file: File){
     let promise = new Promise((resolve, reject) => {
-      let url = this.crearURL(tipo,id,-1,-1,-1,"","");
+      let url = this.crearURL(tipo,id,-1,-1);
       let formData: FormData = new FormData();
       formData.append('image', file);
       formData.append('_method','put');

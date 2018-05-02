@@ -10,6 +10,10 @@
     <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
     <mat-cell *matCellDef="let items">{{items.nombreUsuario}}</mat-cell>
   </ng-container>
+  <ng-container matColumnDef="apodo">
+    <mat-header-cell *matHeaderCellDef>Apodo</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.apodo}}</mat-cell>
+  </ng-container>
   <ng-container matColumnDef="correo">
     <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
     <mat-cell *matCellDef="let items">{{items.correo}}</mat-cell>
@@ -21,8 +25,8 @@
       <mat-icon color="primary" *ngIf="items.esVerificado == 0">highlight_off</mat-icon>
     </mat-cell>
   </ng-container>
-  <mat-header-row *matHeaderRowDef="['identificador','nombreUsuario','correo','esVerificado']"></mat-header-row>
-  <mat-row class="elementoTabla" *matRowDef="let row; columns: ['identificador','nombreUsuario','correo','esVerificado']" ></mat-row>
+  <mat-header-row *matHeaderRowDef="['identificador','nombreUsuario','apodo','correo','esVerificado']"></mat-header-row>
+  <mat-row class="elementoTabla" *matRowDef="let row; columns: ['identificador','nombreUsuario','apodo','correo','esVerificado']" ></mat-row>
 </mat-table>
 <mat-dialog-actions class="VentanaEmergenteEliminarBtns" *ngIf="!eliminando">
     <button mat-raised-button (click)="eliminarItem()" color="warn">Eliminar</button>

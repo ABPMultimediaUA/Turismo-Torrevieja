@@ -60,7 +60,7 @@ export class NuevoRolComponent implements OnInit {
 
   //Recupera todos los permisos al abrir la ventana o reiniciar campos
   cargarPermisos(){
-    this._itemService.getItem(104,+this.items.identificador,-1,-1,-1,"","").then(
+    this._itemService.getItem(104,this.items.identificador,-1,-1).then(
       res => {
         if(typeof res != "string"){
           let r = res as any;

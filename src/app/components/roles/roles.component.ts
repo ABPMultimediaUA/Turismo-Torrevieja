@@ -16,21 +16,11 @@ import { RolesInterface }                       from '../../interfaces/roles.int
 export class RolesComponent implements OnInit {
 
   items:RolesInterface[]=[];
-  row:RolesInterface;                 //Devuelve la fila que se seleccione en la tabla
-  paginacion:PaginacionInterface={    //Guardar todos los datos de paginacion
-    count:0,
-    current_page:1,
-    links:{
-      previous:null,
-      next:null,
-    },
-    per_page:0,
-    total:0,
-    total_pages:1
-  };
+  row:RolesInterface;               //Devuelve la fila que se seleccione en la tabla
+  paginacion:PaginacionInterface;     //Guardar todos los datos de paginacion
   option_Items_Pgn='10';              //Cantidad de items por pagina al cargar el componente
   selectUrl:number = 4;               //Selecciona la url para las peticiones getItem
-  busqueda:string = "";               //Si se ha rellenado el campo de busqueda
+  busqueda = -1;                      //Si se ha rellenado el campo de busqueda
   selectASC_DESC:number=-1;           //Saber si el usuario quiere ordenar los items: -1 nada seleccionado, 0 ASC, 1 DES
   valorEscogidoForOrder:number = -1;  //Para saber el elemento seleccionado, -1 valor neutro
   btnEliminar:boolean = true;         //Activar / desactivar boton de eliminar item/s
@@ -44,15 +34,16 @@ export class RolesComponent implements OnInit {
     private _authService:AuthService,
     public dialog: MatDialog
   ){
-    this.cargarItems(+this.option_Items_Pgn,1);
+    this.cargarItems(this.selectUrl,+this.option_Items_Pgn,1);
+    this.cargarPaginacionInicial();
   }
 
   ngOnInit() {
   }
 
   //Realiza la peticion GetItems a la BD y actualiza las variables
-  cargarItems(per_pgn:number, pgn:number){
-    this._itemService.getItem(this.selectUrl,-1,-1,per_pgn,pgn,this.busqueda,"").then(
+  cargarItems(peticion:number, per_pgn:number, pgn:number){
+    this._itemService.getItem(peticion,this.busqueda,per_pgn,pgn).then(
       res => {
         if(typeof res != "string"){
           if(res && res["data"] && res["meta"]){
@@ -79,6 +70,21 @@ export class RolesComponent implements OnInit {
     this.selection = new SelectionModel<RolesInterface>(true, []);
   }
 
+  //Inicializa variables paginacion
+  cargarPaginacionInicial(){
+    this.paginacion={
+      count:0,
+      current_page:1,
+      links:{
+        previous:null,
+        next:null,
+      },
+      per_page:0,
+      total:0,
+      total_pages:1
+    };
+  }
+
   //Marcar checkbox
   masterToggle() {
     this.isAllSelected() ?
@@ -102,16 +108,16 @@ export class RolesComponent implements OnInit {
   //TODO por hacer, da error
   realizarBusqueda(e){
     if(e.target.value == ""){
-      this.busqueda = "";
+      this.busqueda = -1;
       this.selectUrl = 4;
       e.target.value = "";
     }
     if(e.keyCode == 13){
       if(e.target.value != ""){
-        this.selectUrl = 206;
+        this.selectUrl = 306;
         this.busqueda = e.target.value.toString();
       }
-      this.cargarItems(+this.option_Items_Pgn,1);
+      this.cargarItems(this.selectUrl,+this.option_Items_Pgn,1);
     }
   }
 
@@ -130,7 +136,7 @@ export class RolesComponent implements OnInit {
           if(i.length < this.paginacion.count) pag = this.paginacion.current_page;
           else if(i.length == this.paginacion.count && this.paginacion.current_page > 1) pag = this.paginacion.current_page - 1;
           else pag = 1;
-          this.cargarItems(this.paginacion.per_page,pag)
+          this.cargarItems(this.selectUrl,this.paginacion.per_page,pag)
         }
       });
     }
@@ -146,7 +152,7 @@ export class RolesComponent implements OnInit {
     dialogRef.afterClosed().subscribe( res => {
       if(res){
         this.btnEliminar = true;
-        this.cargarItems(this.paginacion.per_page,this.paginacion.current_page)
+        this.cargarItems(this.selectUrl,this.paginacion.per_page,this.paginacion.current_page)
       }
     });
   }
@@ -154,29 +160,29 @@ export class RolesComponent implements OnInit {
   //OPTION Elementos por Pgn- Funcion que se llama cada vez que se cambia el numero de items por pgn
   actualizarPaginacion(){
     this.paginacion.per_page = +this.option_Items_Pgn;
-    this.cargarItems(+this.option_Items_Pgn,1);
+    this.cargarItems(this.selectUrl,+this.option_Items_Pgn,1);
   }
 
   //BOTONES - Botones para cambiar de pagina
   cambiarPgn(i:number){
     if(i == 1){
       if(this.paginacion.current_page != 1){
-        this.cargarItems(+this.option_Items_Pgn,1);
+        this.cargarItems(this.selectUrl,+this.option_Items_Pgn,1);
       }
     }
     else if(i == 2){
       if(this.paginacion.current_page > 1){
-        this.cargarItems(+this.option_Items_Pgn,this.paginacion.current_page-1);
+        this.cargarItems(this.selectUrl,+this.option_Items_Pgn,this.paginacion.current_page-1);
       }
     }
     else if(i == 3){
       if(this.paginacion.current_page < this.paginacion.total_pages){
-        this.cargarItems(+this.option_Items_Pgn,this.paginacion.current_page+1);
+        this.cargarItems(this.selectUrl,+this.option_Items_Pgn,this.paginacion.current_page+1);
       }
     }
     else if(i == 4){
       if(this.paginacion.current_page != this.paginacion.total_pages){
-        this.cargarItems(+this.option_Items_Pgn,this.paginacion.total_pages);
+        this.cargarItems(this.selectUrl,+this.option_Items_Pgn,this.paginacion.total_pages);
       }
     }
   }
@@ -239,7 +245,7 @@ export class RolesComponent implements OnInit {
       //     else this.selectUrl = null;
       //     break;
       // }
-      // this.cargarItems(+this.option_Items_Pgn,1);
+      // this.cargarItems(this.selectUrl,+this.option_Items_Pgn,1);
     }
   }
 

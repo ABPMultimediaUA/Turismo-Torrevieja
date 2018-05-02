@@ -1,117 +1,117 @@
-import { Component, OnInit }                from '@angular/core';
-import { PeticionesCrudService, AuthService }       from '../../services/index';
-import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
-import { VentanaEmergenteComponent }                from '../ventana-emergente/ventana-emergente.component'
-import { ExpedienteInterface }                      from '../../interfaces/expediente.interface';
-import { UsuarioInterface }                         from '../../interfaces/usuario.interface';
-import { CarteraInterface }                         from '../../interfaces/cartera.interface';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { NgForm }  from "@angular/forms";
+import { Router, ActivatedRoute } from "@angular/router";
+import { ExpedienteInterface }  from "../../interfaces/expediente.interface";
+import { UsuarioInterface }  from "../../interfaces/usuario.interface";
+import { CarteraInterface }  from "../../interfaces/cartera.interface";
+import { AlertService , PeticionesCrudService } from '../../services/index';
 
 @Component({
-  selector: 'nuevo-expediente',
-  templateUrl: 'nuevo-expediente.component.html',
-  styleUrls: ['../../app.component.css']
+  selector: 'app-nuevo-expediente',
+  templateUrl: './nuevo-expediente.component.html'
 })
-
 export class NuevoExpedienteComponent implements OnInit {
 
-  items:ExpedienteInterface;
-  users:UsuarioInterface[]=[];
-  carteras:CarteraInterface[]=[];
-  titulo:string;                      //El titulo de la ventana emergente
-  realizandoAccion:boolean = false;   //Para saber si mostrar o no el spinner
-  camposAnyadidos:boolean = false;    //Feedback que devuelve a la ventana anterior cuando esta se cierra
-  tipoCRUD:number = 0;                //Seleccionar el tipo de url para el crudService
+  public expediente:ExpedienteInterface={
+    identificador:0,
+    avance:0,
+    cartera:0,
+    coordinador:0,
+    detalle:"",
+    fechaFin:null,
+    fechaInicio:null,
+    image:"",
+    nombreExpediente:"",
+    titulo:"",
+  };
 
-  constructor(  private _itemService: PeticionesCrudService,
-                private _authService:AuthService,
-                public dialogRef: MatDialogRef<NuevoExpedienteComponent>,
-                public dialog: MatDialog
-             )
-  {
-    dialogRef.disableClose = true;
-    this.limpiarCampos();
-    this.titulo = "Nuevo evento";
+  public users:UsuarioInterface[];
+  public cartera:CarteraInterface[];
 
-    //COGEMOS LOS USUARIOS
-    this._itemService.getItem(5,-1,-1,-1,-1,"","").then(
-      res => {
-        let r = res as any;
-        if(typeof res != "string") this.users = r.data as UsuarioInterface[];
-    });
+  @ViewChild("etiquetaImgExp") etiqueta;
+  archivoImg:File = null;
 
-    //COGEMOS LAS CARTERAS
-    this._itemService.getItem(301,-1,-1,-1,-1,"","").then(
-      res => {
-        let r = res as any;
-        if(typeof res != "string") this.carteras = r.data as CarteraInterface[];
-    });
+  constructor( private _crudService: PeticionesCrudService,
+                  private router:Router,
+                  private route:ActivatedRoute,//esto es para pasar como parametro
+                )
+    {
+      // this.evento.usuario= localStorage.identificador;
 
-  }
+      //COGEMOS LOS USUARIOS
+      this._crudService.getItem(5,-1,-1,-1).then(
+        res => {
+          //TODO Cambiar select para recoger solamente los usuarios que
+          //tengan permiso para "coordinar" un evento
+          this.users = res as UsuarioInterface[];
+        }
+      );
 
-  ngOnInit() {
-  }
+      //COGEMOS LAS CARTERAS CUYO ESTADO PERMITEN ANYADIR NUEVOS EXPEDIENTES (1 y 2)
+      this._crudService.getItem(301,-1,-1,-1).then(
+        res => {
+          this.cartera = res as CarteraInterface[];
+          //TODO Eliminar cuando se arregle la select
+          this._crudService.getItem(302,-1,-1,-1).then(
+            res => {
+              this.cartera = this.cartera.concat(res as CarteraInterface[]);
+            }
+          );
+        }
+      );
 
-  //BOTON - Crear un nuevo item o lo edita si ya existe
-  anyadirItem(){
-    this.realizandoAccion = true;
-    this._itemService.crearItem(this.tipoCRUD,this.items)
-      .then( res => {
-        if(typeof res != "string") this.alertaOk();
-        else this.alertaNoOk();
-      })
-  }
-
-  //BOTON - Cuando se esta en la opcion de crear vacia los campos del form
-  limpiarCampos(){
-    this.items={
-      identificador:null,
-      nombreExpediente:null,
-      avance:0,
-      cartera:null,
-      coordinador:null,
-      detalle:null,
-      fechaFin:null,
-      fechaInicio:null,
-      image:null,
-      titulo:null,
     }
-  }
 
+    ngOnInit() {
+    }
 
-  //BOTON - Cerrar ventana emergente volviendo a la anterior
-  cerrarDialogo(){
-    this.dialogRef.close(this.camposAnyadidos);
-  }
+    guardar(){
+      var expBody = this.expediente;
+      delete expBody.image;
+      this._crudService.crearItem(0,expBody)
+      .then( res=> {
+        // if(this.archivoImg){ //ACTUALIZAMOS IMG
+        //   this._crudService.subirFile(0,this.id,this.archivoImg)
+        //     .then( res=>{ alert("Actualizado correctamente."); console.log(res);})
+        //     .catch( (er) => { alert("Expediente actualizado correctamente, a excepción de la imagen.");
+        //                       console.log( er.toString()) })
+        // }
+        // else{
+           alert("Creado correctamente.");
+           this.borrarFormExp();
 
-  //Ventana emergente si se ha realizado una peticion y todo ha ido bien
-  alertaOk(){
-    let sms:string = "Acción realizada correctamente.";
-    let icono:number = 0;
-    const dialogRef = this.dialog.open(VentanaEmergenteComponent,{
-      height: '17em',
-      width: '32em',
-      data: { item: sms, item2: icono }
-    });
-    dialogRef.afterClosed().subscribe( res => {
-      this.realizandoAccion = false;
-      this.camposAnyadidos = true;
-      this.limpiarCampos();
-    });
-  }
+        // }
+      })
+      .catch( (err) => { alert("Error interno, no pudo crearse el expediente.");
+                         console.log( err.toString()) })
+    }
 
-  //Ventana emergente si se ha realizado una peticion y ha habido algun error
-  alertaNoOk(){
-    let sms:string = "Se ha producido un error inesperado.";
-    let icono:number = 1;
-    const dialogRef = this.dialog.open(VentanaEmergenteComponent,{
-      height: '17em',
-      width: '32em',
-      data: { item: sms, item2: icono }
-    });
-    dialogRef.afterClosed().subscribe( res => {
-      this.realizandoAccion = false;
-      this.camposAnyadidos = true;
-      this.limpiarCampos();
-    });
-  }
+    cargarImg(files: FileList){
+      this.archivoImg = files.item(0);
+      var exp = this.expediente;
+      var etiqueta = this.etiqueta;
+      var r = new FileReader();
+      r.onload = function(e){
+        let o = etiqueta.nativeElement as HTMLImageElement;
+        o.src = r.result;
+        exp.image = o.alt = files[0].name;
+      }
+      r.readAsDataURL(files[0]);
+    }
+
+    borrarFormExp(){
+      this.expediente={
+        identificador:null,
+        avance:0,
+        cartera:0,
+        coordinador:0,
+        detalle:"",
+        fechaFin:null,
+        fechaInicio:null,
+        image:"",
+        nombreExpediente:"",
+        titulo:"",
+      }
+    }
+
 }
