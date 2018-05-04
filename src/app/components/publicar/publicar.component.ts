@@ -34,9 +34,7 @@ export class PublicarComponent implements OnInit {
     // primero voy a coger el token de acceso del usuario
     this.user_access_token=localStorage.getItem('fb_user_token');
     this.user_id=localStorage.getItem('fb_user_id');
-    console.log(this.user_id);
-    console.log(this.user_access_token);
-
+ this.user_access_token="EAACEdEose0cBAGTjSuOcPjsFGZASakVI8PBQ4mjKLSuYflxriH0Q43ThnwsqLHwLdHEXYHUHhxluGGkUl4cNbnvjn5NnpPPdIMwYZCnld7grsLjEvnumK2GCoo0OrHpQtqvclag7YjyH6ZANg640eS6VAcRNvkQmaiOxNLQXZBlwyhhffMOnJ2awWZA6QZCLUZD";
     // let url45= this.URL + this.user_id + '/permissions?access_token=' + this.user_access_token;
     // this.http.get(url45).subscribe(response => {
     //   let res = JSON.parse(response.text());
@@ -144,9 +142,8 @@ export class PublicarComponent implements OnInit {
       let url2 = this.URL + this.page_id + '/photos';
       xhr.open('POST', url2, true);
       fd.append("foto", this.imagen);
-      // fd.append("access_token", this.user_access_token);
       console.log(this.user_access_token);
-      fd.append("access_token", this.user_access_token);
+      fd.append("access_token", this.page_access_token);
       fd.append("caption", this.post.message);
 
       xhr.onload = function() {
