@@ -94,7 +94,6 @@ export class PeticionesCrudService {
           .then(  (res) => { resolve( res.json().data ); },
                   (err) => { resolve( err.toString() )}
           )
-          // .catch((err) => { console.log(err.toString()); console.error(err); })
     });
     return promise;
   }
@@ -109,21 +108,19 @@ export class PeticionesCrudService {
           .then(  (res) => { resolve( res.json() ); console.log(res.json()) },
                   (err) => { resolve( err.toString() ); console.log(err) }
           )
-          // .catch((err) => { console.log(err.toString()); console.error(err); })
     });
     return promise;
   }
 
-  paginacionItems (url){
+  getItemURL (url:string){
     let promise = new Promise((resolve, reject) => {
       let headers = this.header;
       console.log(url);
       this.http.get(url, { headers })
         .toPromise()
-          .then(  (res) => { resolve( res.json() ); },
-                  (err) => { resolve( err.toString() )}
+          .then(  (res) => { resolve( res.json() ); console.log(res.json()) },
+                  (err) => { resolve( err.toString() ); console.log(err) }
           )
-          // .catch((err) => { console.log(err.toString()); console.error(err); })
     });
     return promise;
   }
@@ -138,7 +135,6 @@ export class PeticionesCrudService {
           .then(  (res) => { resolve( res.json().data ); },
                   (err) => { resolve( err.toString() )}
           )
-          // .catch((err) => { console.log(err.toString()); console.error(err); })
     });
     return promise;
   }
@@ -152,7 +148,6 @@ export class PeticionesCrudService {
           .then(  (res) => { resolve( res.json().data ); },
                   (err) => { resolve( err.toString() )}
           )
-          // .catch((err) => { console.log(err.toString()); console.error(err); })
     });
     return promise;
   }

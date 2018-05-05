@@ -21,6 +21,7 @@
       <div class="elementosCabecera">
         <button *ngIf="_authService.tienePermiso(21)" mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
           (click)="editarAnyadirItem(null)">Nueva Cartera</button>
+        <button *ngIf="_authService.tienePermiso(24) && estadoCarteraEscogido==301" mat-raised-button type="button" class="botonEliminarItems" [disabled]="btnEliminar" color="warn" (click)="botonEliminarItem(selection.selected)"><i class="material-icons">delete</i></button>
 
         <div class="divPaginacion">
           <mat-form-field class="elementosPaginacion">
@@ -121,7 +122,6 @@
           <mat-header-row *matHeaderRowDef="['select','identificador','nombreCartera','descripcion','trimestre','year','fechaCreacion','estado']"></mat-header-row>
           <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','identificador','nombreCartera','descripcion','trimestre','year','fechaCreacion','estado']" (click)="abrirCartera(row)"></mat-row>
         </mat-table>
-        <button *ngIf="_authService.tienePermiso(24) && estadoCarteraEscogido==301" mat-raised-button type="submit" class="botonMat botonEliminarItems" [disabled]="btnEliminar" color="warn" (click)="botonEliminarItem(selection.selected)">Eliminar carteras</button>
       </div>
     </div>
   </div>

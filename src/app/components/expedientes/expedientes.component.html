@@ -23,6 +23,7 @@
 
         <button *ngIf="_authService.tienePermiso(25)" mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
           (click)="nuevoEvento()">Nuevo Evento</button>
+        <button *ngIf="_authService.tienePermiso(28)" mat-raised-button type="button" class="botonEliminarItems" [disabled]="btnEliminar" color="warn" (click)="botonEliminarItem(selection.selected)"><i class="material-icons">delete</i></button>
 
         <div class="divPaginacion">
           <mat-form-field class="elementosPaginacion">
@@ -120,7 +121,6 @@
           <mat-header-row *matHeaderRowDef="['select','identificador','nombreExpediente','titulo','coordinador','cartera','fechaInicio','fechaFin']"></mat-header-row>
           <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','identificador','nombreExpediente','titulo','coordinador','cartera','fechaInicio','fechaFin']" (click)="abrirExpediente(row)"></mat-row>
         </mat-table>
-        <button *ngIf="_authService.tienePermiso(28)" mat-raised-button type="submit" class="botonMat botonEliminarItems" [disabled]="btnEliminar" color="warn" (click)="botonEliminarItem(selection.selected)">Eliminar eventos</button>
       </div>
     </div>
   </div>

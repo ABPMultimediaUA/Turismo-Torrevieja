@@ -47,7 +47,7 @@ export class ExpedienteComponent implements OnInit {
 
   actividades:ActividadInterface[];
   tareas:TareasInterface[];
-  contratos:ContratoInterface[];
+  contratos:ContratoInterface[]=[];
   users:UsuarioInterface[];
   espacio:EspacioInterface[];
   proveedor:ProveedorInterface[];
@@ -56,10 +56,12 @@ export class ExpedienteComponent implements OnInit {
   fechaCreacion:string = "";          //Fecha modificada para mostrar por pantalla
   realizandoAccion:boolean = false;   //Mientras se esté editando la cartera
 
+  panelActividadAbierto:number = undefined;
+  panelContratoAbierto:number = undefined;
+  panelTareaAbierto:number = undefined;
+
   @ViewChild("etiquetaImgExp") etiqueta;
-  @ViewChild("btnAct") btnAct;
-  @ViewChild("btnCon") btnCon;
-  @ViewChild("btnTar") btnTar;
+
 
   constructor(
     private _itemService: PeticionesCrudService,
@@ -89,7 +91,7 @@ export class ExpedienteComponent implements OnInit {
               this.cartera = r.data as CarteraInterface;
               // if(this.cartera.estado < 3) this.eliminable = true;
               // else this.modificable = true;
-              console.log(this.cartera)
+              // console.log(this.cartera)
             }
           });
         }
@@ -109,7 +111,7 @@ export class ExpedienteComponent implements OnInit {
           if(typeof res != "string") {
             let r = res as any;
             this.tareas = r.data as TareasInterface[];
-            console.log(this.tareas)
+            // console.log(this.tareas)
           }
       });
 
@@ -118,7 +120,7 @@ export class ExpedienteComponent implements OnInit {
           if(typeof res != "string") {
             let r = res as any;
             this.contratos = r.data as ContratoInterface[];
-            console.log(this.contratos)
+            // console.log(this.contratos)
           }
       });
 
@@ -130,7 +132,7 @@ export class ExpedienteComponent implements OnInit {
           if(typeof res != "string") {
             let r = res as any;
             this.users = r.data as UsuarioInterface[];
-            console.log(this.users)
+            // console.log(this.users)
           }
       });
 
@@ -139,7 +141,7 @@ export class ExpedienteComponent implements OnInit {
           if(typeof res != "string") {
             let r = res as any;
             this.espacio = r.data as EspacioInterface[];
-            console.log(this.espacio)
+            // console.log(this.espacio)
           }
       });
 
@@ -148,7 +150,7 @@ export class ExpedienteComponent implements OnInit {
           if(typeof res != "string") {
             let r = res as any;
             this.proveedor = r.data as ProveedorInterface[];
-            console.log(this.proveedor)
+            // console.log(this.proveedor)
           }
         }
       );
@@ -157,8 +159,6 @@ export class ExpedienteComponent implements OnInit {
 
   ngOnInit() {
   }
-
-
 
   //Bloquea y desbloquea los campos del form al pulsar los btn EDITAR o CANCELAR
   disable_enable_campos() {
@@ -192,15 +192,14 @@ export class ExpedienteComponent implements OnInit {
       .then( res => {
         if(typeof res != "string") {
           // this.carteraSinModif = Object.assign({}, res as CarteraInterface);
-          this.alertaOk();
+          this.alertaOk("Expediente editado correctamente.");
         }
         else this.alertaNoOk();
       })
   }
 
   //Ventana emergente si se ha realizado una peticion y todo ha ido bien
-  alertaOk() {
-    let sms:string = "Acción realizada correctamente.";
+  alertaOk(sms:string) {
     let icono:number = 0;
     const dialogRef = this.dialog.open(VentanaEmergenteComponent,{
       height: '17em',
@@ -239,7 +238,7 @@ export class ExpedienteComponent implements OnInit {
        fechaFinal:null,
        fechaInicio:null,
        identificador:null,
-       nombreActividad:null,
+       nombreActividad:"* Nueva actividad",
        HoraInicio:null,
        HoraFinal:null,
        detalleEntrada:null,
@@ -255,11 +254,12 @@ export class ExpedienteComponent implements OnInit {
        clase:null,
        expediente:+this.id,
        identificador:null,
-       nombreContrato:null,
+       nombreContrato:"* Nuevo contrato",
        precio:null,
        proveedor:null,
        tiempo:null,
        usuario:null,
+       observaciones:null,
      };
      this.contratos.push(c);
    }
@@ -270,8 +270,9 @@ export class ExpedienteComponent implements OnInit {
        expediente:+this.id,
        finalizado:null,
        identificador:null,
-       nombreTarea:null,
+       nombreTarea:"* Nueva tarea",
        usuario:null,
+       fechaCreacion:null,
      };
      this.tareas.push(t);
    }
@@ -284,9 +285,12 @@ export class ExpedienteComponent implements OnInit {
                      "¿Continuar?";
        if(confirm(mensaje)){
          this._itemService.eliminarItem(a,i,-1).then( res=>{
-           if(a==1){ this.actividades.splice(index,1); }
-           else if(a==3){ this.contratos.splice(index,1); }
-           else if(a==2){ this.tareas.splice(index,1); }
+           if(typeof res != "string"){
+             if(a==1){ this.actividades.splice(index,1); }
+             else if(a==3){ this.contratos.splice(index,1); }
+             else if(a==2){ this.tareas.splice(index,1); }
+           }
+           else this.alertaNoOk();
          });
        }
      }
@@ -307,23 +311,40 @@ export class ExpedienteComponent implements OnInit {
    crearModificarActConTar(i,a,index){
      if(a.identificador != null){
        this._itemService.actualizarItem(i,a.identificador,a,-1)
-         .then( res=> { alert("Actualizado correctamente."); })
-         .catch( (err) => { })
+         .then( res=> {
+           if(typeof res != "string"){
+             if(i==1){
+               this.alertaOk("Actividad actualizada correctamente.");
+             }
+             else if(i==3){
+               this.alertaOk("Contrato actualizado correctamente.");
+             }
+             else if(i==2){
+               this.alertaOk("Tarea actualizada correctamente.");
+             }
+           }
+           else this.alertaNoOk();
+         })
      }
      else{
        this._itemService.crearItem(i,a)
          .then( res=> {
-           if(i==1){
-             this.actividades[index] = res as ActividadInterface;
+           if(typeof res != "string"){
+             if(i==1){
+               this.actividades[index] = res as ActividadInterface;
+               this.alertaOk("Actividad creada correctamente.");
+             }
+             else if(i==3){
+               this.contratos[index] = res as ContratoInterface;
+               this.alertaOk("Contrato creado correctamente.");
+             }
+             else if(i==2){
+               this.tareas[index] = res as TareasInterface;
+               this.alertaOk("Tarea creada correctamente.");
+             }
            }
-           else if(i==3){
-             this.contratos[index] = res as ContratoInterface;
-           }
-           else if(i==2){
-             this.tareas[index] = res as TareasInterface;
-           }
-           alert("Creado correctamente."); })
-         .catch( (err) => {  })
+           else this.alertaNoOk();
+         })
      }
    }
 

@@ -76,7 +76,6 @@
           <div *ngIf="!bloqCampos" class="btnsEditarAnyadir">
             <mat-dialog-actions class="btnsEditarAnyadir">
               <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid">Guardar cambios</button>
-              <button type="button" mat-raised-button (click)="restaurarValores()" color="warn">Restaurar valores</button>
               <button type="button" mat-raised-button (click)="disable_enable_campos()" color="warn">Cancelar</button>
             </mat-dialog-actions>
           </div>

@@ -5,4 +5,5 @@ export interface TareasInterface
   identificador:number;
   nombreTarea:string;
   usuario:number;
+  fechaCreacion:Date;
 }

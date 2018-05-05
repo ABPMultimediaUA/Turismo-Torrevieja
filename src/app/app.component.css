@@ -21,19 +21,23 @@
   margin-left: 1.5em;
   margin-right: 1.5em;
 }
-.botonEliminarItems{
-  margin-left: 3em;
-  margin-top: 2em;
-}
 .example-header{
   width: 100%;
 }
 .elementosCabecera{
   margin-top: 1em;
 }
+.mat-raised-button{
+  min-width: 55px;
+}
 .botonNuevoItem{
   float:left;
   margin-left: 3em;
+  display: inline-block;
+}
+.botonEliminarItems{
+  float:left;
+  margin-left: 1em;
   display: inline-block;
 }
 .divPaginacion{
@@ -61,6 +65,13 @@
 .btnsPaginacionOff>*{
   color:#dddddd;
   cursor:context-menu;
+}
+/deep/ div.mat-expansion-panel-content:not(.mat-expanded) {
+    height: 0px !important;
+    visibility: hidden !important;
+}
+/deep/ .mat-expansion-panel-header  {
+    height: 48px;
 }
 /*FIN CSS comun a todos los componentes con tabla*/
 
@@ -119,9 +130,54 @@
 }
 .btnsExpedienteNewElement{
   margin-top: 1.5em;
+  color: white;
+  background-color: rgb(32, 184, 79);
+}
+.expMatPanelDescription{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 30em;
+}
+.expMatPanelTitle{
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 20em;
 }
 .panelExp{
   margin-bottom: 1.5em;
+  margin-right: 2em;
+}
+.space-between{
+	text-align: justify;
+}
+.space-between:after{
+	content: '';
+	display: inline-block;
+	width: 100%;
+}
+.space-between>.expActCampos1{
+	display: inline-block;
+  width: 25%;
+  min-width: 200px;
+}
+.space-between>.expActCampos2{
+	display: inline-block;
+  width: 140px;
+}
+.space-between>.expActCampos3{
+	display: inline-block;
+  width: 20%;
+  min-width: 200px;
+}
+.alinearCabeceraPanel .mat-expansion-panel-header-title,
+.example-headers-align .mat-expansion-panel-header-description{
+  flex-basis: 0;
+}
+.alinearCabeceraPanel .mat-expansion-panel-header-description {
+  justify-content: space-between;
+  align-items: center;
 }
 /* Fin cartera - expediente*/
 
@@ -133,12 +189,8 @@
   flex:0 0 5%
 }
 .mat-column-aforo, .mat-column-codigoPostal, .mat-column-CP, .mat-column-numero,
-.mat-column-year{
+.mat-column-year,.mat-column-esVerificado{
   flex:0 0 7%
-}
-.mat-column-esVerificado{
-  flex:0 0 7%;
-  text-align: center;
 }
 .mat-column-fechaInicio, .mat-column-fechaFin{
   flex:0 0 9%

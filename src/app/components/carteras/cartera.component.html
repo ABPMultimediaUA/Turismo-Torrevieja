@@ -10,7 +10,6 @@
             </div>
             <div *ngIf="!bloqCampos" class="btnsEditarAnyadir">
               <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid || realizandoAccion">Guardar cambios</button>
-              <button type="button" mat-raised-button (click)="restaurarValores()" color="warn" [disabled]="realizandoAccion">Restaurar valores</button>
               <button type="button" mat-raised-button (click)="disable_enable_campos()" color="warn" [disabled]="realizandoAccion">Cancelar</button>
             </div>
           </div>
@@ -65,6 +64,7 @@
 
         <button *ngIf="_authService.tienePermiso(25) && carteraSinModif.estado==1" mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
           (click)="nuevoEvento()">Nuevo Evento</button>
+        <button *ngIf="_authService.tienePermiso(28) && carteraSinModif.estado==1" mat-raised-button type="button" class="botonEliminarItems" [disabled]="btnEliminar" color="warn" (click)="botonEliminarItem(selection.selected)"><i class="material-icons">delete</i></button>
 
         <div class="divPaginacion">
           <mat-form-field class="elementosPaginacion">
@@ -157,8 +157,7 @@
           <mat-header-row *matHeaderRowDef="['select','identificador','nombreExpediente','titulo','coordinador','fechaInicio','fechaFin']"></mat-header-row>
           <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','identificador','nombreExpediente','titulo','coordinador','fechaInicio','fechaFin']" (click)="abrirExpediente(row)"></mat-row>
         </mat-table>
-        <button *ngIf="_authService.tienePermiso(28) && carteraSinModif.estado==1" mat-raised-button type="submit" class="botonMat botonEliminarItems" [disabled]="btnEliminar" color="warn" (click)="botonEliminarItem(selection.selected)">Eliminar eventos</button>
-      </div>
+        </div>
     </div>
   </div>
 </div>

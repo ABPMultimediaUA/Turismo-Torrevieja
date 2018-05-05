@@ -10,7 +10,6 @@
             </div>
             <div *ngIf="!bloqCampos" class="btnsEditarAnyadir">
               <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid || realizandoAccion">Guardar cambios</button>
-              <button type="button" mat-raised-button (click)="restaurarValores()" color="warn" [disabled]="realizandoAccion">Restaurar valores</button>
               <button type="button" mat-raised-button (click)="disable_enable_campos()" color="warn" [disabled]="realizandoAccion">Cancelar</button>
             </div>
           </div>
@@ -69,61 +68,177 @@
   </form>
   <div class="row">
     <div class="tabExpediente">
-      <mat-tab-group>
+      <mat-tab-group #tabGroup>
+        <!--*****************ACTIVIDADES*****************-->
         <mat-tab label="Actividades">
 
-          <mat-accordion *ngFor="let a of actividades; let i = index">
-            <form (ngSubmit)="crearModificarActConTar(1,a,i)" #forma="ngForm">
-              <mat-expansion-panel>
+          <mat-accordion>
+              <mat-expansion-panel *ngFor="let a of actividades; let i = index" class="alinearCabeceraPanel" >
                 <mat-expansion-panel-header>
-                  <mat-panel-title> {{a.nombreActividad}} </mat-panel-title>
-                  <mat-panel-description> {{a.observaciones}} </mat-panel-description>
+                  <mat-panel-title><p class="expMatPanelTitle">{{a.nombreActividad}}</p></mat-panel-title>
+                  <mat-panel-description><p class="expMatPanelDescription">{{a.observaciones}}</p></mat-panel-description>
                 </mat-expansion-panel-header>
                 <div class="panelExp">
 
-                  <mat-form-field>
-                    <input placeholder="Nombre" matInput [(ngModel)]="a.nombreActividad" name=Actividad_nombre{{i}} required type="text">
-                    <mat-error>Campo requerido</mat-error>
-                  </mat-form-field>
+                  <form (ngSubmit)="crearModificarActConTar(1,a,i)" #forma="ngForm">
+                    <div class="space-between">
+                      <mat-form-field class="expActCampos1">
+                        <input placeholder="Nombre" matInput [(ngModel)]="a.nombreActividad" name=Actividad_nombre{{i}} required type="text"
+                        maxlength="300">
+                        <mat-error>Campo requerido</mat-error>
+                      </mat-form-field>
 
-                  <mat-form-field>
-                    <input placeholder="Precio entrada" matInput [(ngModel)]="a.precioEntrada" name=Actividad_precio{{i}} type="text">
-                  </mat-form-field>
+                      <mat-form-field class="expActCampos1">
+                        <mat-select placeholder="Espacio" [(ngModel)]="a.espacio" name=Actividad_espacio{{i}} required>
+                          <mat-option *ngFor="let e of espacio" [value]="e.identificador">{{ e.nombreEspacio }}</mat-option>
+                        </mat-select>
+                        <mat-error>Campo requerido</mat-error>
+                      </mat-form-field>
 
-                  <mat-form-field>
-                    <input placeholder="Capacidad máxima" matInput [(ngModel)]="a.capacidadMaximo" name=Actividad_capMax{{i}} type="text">
-                  </mat-form-field>
+                      <mat-form-field class="expActCampos1">
+                        <input placeholder="Precio entrada" matInput [(ngModel)]="a.entrada" name=Actividad_entrada{{i}} type="text"
+                        maxlength="200">
+                      </mat-form-field>
+                    </div>
 
-                  <mat-form-field>
-                    <input placeholder="Capacidad mínima" matInput [(ngModel)]="a.capacidadMinimo" name=Actividad_capMin{{i}} type="text">
-                  </mat-form-field>
+                    <div class="space-between">
+                      <mat-form-field class="expActCampos2">
+                        <input placeholder="Capacidad máxima" matInput [(ngModel)]="a.capacidadMaximo" name=Actividad_capMax{{i}} type="text">
+                      </mat-form-field>
 
-                  <mat-form-field>
-                    <input matInput type="date" name="fechaInicio" [(ngModel)]="a.fechaInicio" placeholder="Fecha inicio" >
-                  </mat-form-field>
+                      <mat-form-field class="expActCampos2">
+                        <input placeholder="Capacidad mínima" matInput [(ngModel)]="a.capacidadMinimo" name=Actividad_capMin{{i}} type="text">
+                      </mat-form-field>
 
-                  <mat-form-field>
-                    <input matInput type="date" name="fechaFinal" [(ngModel)]="a.fechaFinal" placeholder="Fecha final">
-                  </mat-form-field>
+                      <mat-form-field class="expActCampos2">
+                        <input matInput type="date" name=Actividad_fechaInicio{{i}} [(ngModel)]="a.fechaInicio" placeholder="Fecha inicio" >
+                      </mat-form-field>
 
-                  <div class="btnsEditarAnyadir">
-                    <button *ngIf="a.identificador" [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary"> Guardar cambios </button>
-                    <button *ngIf="!a.identificador" [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary"> Añadir actividad </button>
-                    <button (click)="eliminarItem(1, a.identificador, i)" type="button" class="btn btn-outline-danger"> <i class="icon-trash"></i> </button>
-                  </div>
+                      <mat-form-field class="expActCampos2">
+                        <input matInput type="date" name=Actividad_fechaFinal{{i}} [(ngModel)]="a.fechaFinal" placeholder="Fecha final">
+                      </mat-form-field>
+
+                      <mat-form-field class="expActCampos2">
+                        <input matInput type="time" name=Actividad_horaFinal{{i}} [(ngModel)]="a.HoraFinal" placeholder="Hora final">
+                      </mat-form-field>
+
+                      <mat-form-field class="expActCampos2">
+                        <input matInput type="time" name=Actividad_horaFinal{{i}} [(ngModel)]="a.HoraFinal" placeholder="Hora final">
+                      </mat-form-field>
+                    </div>
+
+                    <div>
+                      <mat-form-field hintLabel="" class="campoWidth100">
+                        <textarea matInput name=Actividad_observaciones{{i}} [(ngModel)]="a.observaciones" placeholder="Observaciones"
+                                  maxLength="500" type="text"></textarea>
+                      </mat-form-field>
+                    </div>
+
+                    <div class="btnsEditarAnyadir">
+                      <button *ngIf="a.identificador" [disabled]="!forma.valid && realizandoAccion" type="submit" color="primary" mat-raised-button> Guardar cambios </button>
+                      <button *ngIf="!a.identificador" [disabled]="!forma.valid && realizandoAccion" type="submit" color="primary" mat-raised-button> Añadir actividad </button>
+                      <button (click)="eliminarItem(1, a.identificador, i)" [disabled]="realizandoAccion" type="button" color="warn" mat-raised-button><i class="icon-trash"></i></button>
+                    </div>
+                  </form>
 
                 </div>
-
               </mat-expansion-panel>
-            </form>
           </mat-accordion>
-          <button type="button" class="btn btn-outline-success btnMargen btnsExpedienteNewElement" (click)="crearPlantillaAct()"> Nueva actividad </button>
+          <button mat-raised-button type="button" class="btnsExpedienteNewElement" (click)="crearPlantillaAct()" [disabled]="realizandoAccion"> Nueva actividad </button>
 
         </mat-tab>
+
+        <!--*********************CONTRATOS*******************-->
         <mat-tab label="Contratos">
 
+          <mat-accordion>
+            <mat-expansion-panel *ngFor="let c of contratos; let i = index" class="alinearCabeceraPanel">
+              <mat-expansion-panel-header>
+                <mat-panel-title><p class="expMatPanelTitle">{{c.nombreContrato}}</p></mat-panel-title>
+                <mat-panel-description><p class="expMatPanelDescription">{{c.observaciones}}</p></mat-panel-description>
+              </mat-expansion-panel-header>
+              <div class="panelExp">
+
+                <form (ngSubmit)="crearModificarActConTar(3,c,i)" #forma="ngForm">
+                  <div class="space-between">
+                    <mat-form-field class="expActCampos1">
+                      <input placeholder="Nombre" matInput [(ngModel)]="c.nombreContrato" name=Contrato_nombre{{i}} required type="text"
+                      maxlength="300">
+                      <mat-error>Campo requerido</mat-error>
+                    </mat-form-field>
+                  </div>
+                  <div>
+                    <mat-form-field hintLabel="" class="campoWidth100">
+                      <textarea matInput name=Contrato_observaciones{{i}} [(ngModel)]="c.observaciones" placeholder="Observaciones"
+                                maxLength="500" type="text"></textarea>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="btnsEditarAnyadir">
+                    <button *ngIf="c.identificador" [disabled]="!forma.valid && realizandoAccion" type="submit" color="primary" mat-raised-button> Guardar cambios </button>
+                    <button *ngIf="!c.identificador" [disabled]="!forma.valid && realizandoAccion" type="submit" color="primary" mat-raised-button> Añadir actividad </button>
+                    <button (click)="eliminarItem(3, c.identificador, i)" [disabled]="realizandoAccion" type="button" color="warn" mat-raised-button><i class="icon-trash"></i></button>
+                  </div>
+                </form>
+
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+          <button mat-raised-button type="button" class="btnsExpedienteNewElement" (click)="crearPlantillaCon()" [disabled]="realizandoAccion"> Nueva actividad </button>
+
         </mat-tab>
-        <mat-tab label="Tareas">
+
+        <!--*****************TAREAS*****************-->
+        <mat-tab label="Tareas" matBadge="15">
+
+          <p>
+            <span matBadge="4" matBadgeOverlap="false">Text with a badge</span>
+          </p>
+
+          <mat-accordion>
+            <mat-expansion-panel *ngFor="let t of tareas; let o = index" class="alinearCabeceraPanel">
+              <mat-expansion-panel-header>
+                <mat-panel-title><p class="expMatPanelTitle">{{t.nombreTarea}}</p></mat-panel-title>
+                <mat-panel-description><mat-checkbox [(ngModel)]="t.finalizado" name=Tarea_finalizado{{i}}>Finalizada</mat-checkbox></mat-panel-description>
+              </mat-expansion-panel-header>
+              <div class="panelExp">
+
+                <form (ngSubmit)="crearModificarActConTar(2,t,o)" #forma="ngForm">
+                  <div class="space-between">
+                    <mat-form-field class="expActCampos1">
+                      <input placeholder="Nombre" matInput [(ngModel)]="t.nombreTarea" name=Tarea_nombre{{o}} required type="text"
+                      maxlength="300">
+                      <mat-error>Campo requerido</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="expActCampos3">
+                      <mat-select placeholder="Responsable" [(ngModel)]="t.usuario" name=Tarea_usuario{{o}} required>
+                        <mat-option *ngFor="let u of users" [value]="u.identificador">{{ u.nombreUsuario }}</mat-option>
+                      </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field class="expActCampos2">
+                      <input matInput type="text" name=Tarea_fechaCreacion{{o}} [(ngModel)]="t.fechaCreacion" placeholder="Fecha creación" readonly>
+                    </mat-form-field>
+
+                    <mat-form-field class="expActCampos2">
+                      <input matInput type="text" name=Tarea_fechaFinalizacion{{o}} [(ngModel)]="t.fecha_finalizacion" placeholder="Fecha finalización" readonly>
+                    </mat-form-field>
+
+                    <mat-checkbox [(ngModel)]="t.finalizado" name=Tarea_finalizado{{o}}>Finalizada</mat-checkbox>
+                  </div>
+
+                  <div class="btnsEditarAnyadir">
+                    <button *ngIf="t.identificador" [disabled]="!forma.valid && realizandoAccion" type="submit" color="primary" mat-raised-button> Guardar cambios </button>
+                    <button *ngIf="!t.identificador" [disabled]="!forma.valid && realizandoAccion" type="submit" color="primary" mat-raised-button> Añadir tarea </button>
+                    <button (click)="eliminarItem(2, t.identificador, o)" [disabled]="realizandoAccion" type="button" color="warn" mat-raised-button><i class="icon-trash"></i></button>
+                  </div>
+                </form>
+
+              </div>
+            </mat-expansion-panel>
+          </mat-accordion>
+          <button mat-raised-button type="button" class="btnsExpedienteNewElement" (click)="crearPlantillaTar()" [disabled]="realizandoAccion"> Nueva tarea </button>
 
         </mat-tab>
       </mat-tab-group>

@@ -115,7 +115,7 @@ export class ExpedientesComponent implements OnInit {
     }
     if(e.keyCode == 13){
       if(e.target.value != ""){
-        this.selectUrl = 307;
+        this.selectUrl = 202;
         this.busqueda = e.target.value.toString();
       }
       this.cargarItems(+this.option_Items_Pgn,1);

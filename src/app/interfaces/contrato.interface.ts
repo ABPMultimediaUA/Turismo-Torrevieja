@@ -9,4 +9,5 @@ export interface ContratoInterface
   proveedor:number;
   tiempo:number;
   usuario:number;
+  observaciones:string;
 }
