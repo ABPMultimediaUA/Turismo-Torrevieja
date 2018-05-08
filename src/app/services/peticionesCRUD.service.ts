@@ -165,11 +165,30 @@ export class PeticionesCrudService {
       });
       this.http.post(url, formData, { headers })
         .toPromise()
-          .then( res => { resolve( res.json().data ); })
-          .catch((err) => {
-            //TODO ARREGLAR ESTO, es una chapuza
-            alert("Modificado correctamente.");
-            console.log(err.toString()); console.error(err); })
+          .then(  (res) => { resolve( res.json().data ); },
+                  (err) => { resolve( err.toString() )}
+          )
+    });
+    return promise;
+  }
+
+  subirFilePdf (tipo, id, file: File){
+    let promise = new Promise((resolve, reject) => {
+      let url = this.crearURL(tipo,id,-1,-1,-1,"","");
+      let formData: FormData = new FormData();
+      formData.append('fichero', file);
+      formData.append('_method','put');
+
+      let headers = new Headers ({
+        'Access-Control-Allow-Origin':'https://gvent.ovh/Prueba2_1/public',
+        'Authorization': this.First_accessToken+this.Secound_accessToken,
+        'responseType':'blob'
+      });
+      this.http.post(url, formData, { headers })
+        .toPromise()
+          .then(  (res) => { resolve( res.json().data ); },
+                  (err) => { resolve( err.toString() )}
+          )
     });
     return promise;
   }

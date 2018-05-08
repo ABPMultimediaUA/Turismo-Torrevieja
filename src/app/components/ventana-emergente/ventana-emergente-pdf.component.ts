@@ -17,9 +17,7 @@ export class VentanaEmergentePdfComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data
             )
   {
-    // dialogRef.disableClose = true;
-    if(data.item) this.fichero = data.item;
-    // this.fichero = "http://www.dccia.ua.es/dccia/inf/asignaturas/GC/Teoria/OpenGL.Introduccion.pdf";
+    if(data.item) this.fichero = "https://gvent.ovh/Prueba2_1/public/img/" + data.item;
   }
 
   ngOnInit() {

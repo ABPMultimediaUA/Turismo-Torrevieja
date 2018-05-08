@@ -60,14 +60,16 @@ export class ExpedienteComponent implements OnInit {
   bloqCampos:boolean = true;          //Habilitar o deshabilitar campos del form (avtivar desactivar modo edicion)
   fechaCreacion:string = "";          //Fecha modificada para mostrar por pantalla
   realizandoAccion:boolean = false;   //Mientras se esté editando la cartera
-  imgInsertada:boolean = false;        //Activa el boton de actualizar exp si se inserta una imagen
+
   porcentajeAvanzado = new BehaviorSubject<number>(0);
   tareasTerminadas = new BehaviorSubject<number>(0);
   tareasPropuestas = new BehaviorSubject<number>(0);
   colorSpinner = new BehaviorSubject<string>("warn");
 
   archivoImg:File = null;             //guardar el archivo para mandarlo en la peticion
-  archivoPDF:File = null;             //guardar el archivo para mandarlo en la peticion
+  archivoPDF:File[] = [];             //guardar el archivo para mandarlo en la peticion
+  imgInsertada:boolean = false;        //Activa el boton de actualizar exp si se inserta una imagen
+  nombrePDF = new BehaviorSubject<string[]>([]);
 
   @ViewChild("etiquetaImgExp") etiqueta;  //La etiqueta html img
 
@@ -134,6 +136,10 @@ export class ExpedienteComponent implements OnInit {
                     if(typeof res != "string") {
                       let r = res as any;
                       this.contratos = r.data as ContratoInterface[];
+                      for(var x = 0; x < this.contratos.length; x++){
+                        this.archivoPDF.push(null);
+                        this.nombrePDF.getValue().push("");
+                      }
                       // console.log(this.contratos)
                     }
                 });
@@ -299,7 +305,7 @@ export class ExpedienteComponent implements OnInit {
    crearPlantillaCon(){
      var c:ContratoInterface;
      c={
-       archivo:null,
+       fichero:null,
        clase:null,
        expediente:+this.id,
        identificador:null,
@@ -311,6 +317,8 @@ export class ExpedienteComponent implements OnInit {
        observaciones:null,
      };
      this.contratos.push(c);
+     this.archivoPDF.push(null);
+     this.nombrePDF.getValue().push("");
    }
 
    crearPlantillaTar(){
@@ -343,7 +351,11 @@ export class ExpedienteComponent implements OnInit {
            this._itemService.eliminarItem(a,i,-1).then( res=>{
              if(typeof res != "string"){
                if(a==1){ this.actividades.splice(index,1); }
-               else if(a==3){ this.contratos.splice(index,1); }
+               else if(a==3){
+                 this.contratos.splice(index,1);
+                 this.archivoPDF.splice(index,1);
+                 this.nombrePDF.getValue().splice(index,1);
+               }
                else if(a==2){
                  let r = res as TareasInterface;
                  this.tareas.splice(index,1);
@@ -371,6 +383,8 @@ export class ExpedienteComponent implements OnInit {
        }
        else if(a==3){
          this.contratos.splice(index,1);
+         this.archivoPDF.splice(index,1);
+         this.nombrePDF.getValue().splice(index,1);
        }
        else if(a==2){
          this.tareas.splice(index,1);
@@ -412,6 +426,7 @@ export class ExpedienteComponent implements OnInit {
 
    crearModificar(i,a,index){
      if(a.identificador != null ){
+       console.log(a);
        this._itemService.actualizarItem(i,a.identificador,a,-1)
          .then( res=> {
            if(typeof res != "string"){
@@ -419,10 +434,15 @@ export class ExpedienteComponent implements OnInit {
                this.alertaOk("Actividad actualizada correctamente.");
              }
              else if(i==3){
-               if(this.archivoPDF){ //ACTUALIZAMOS IMG
-                 this._itemService.subirFile(3,a.identificador,this.archivoPDF)
+               if(this.archivoPDF[index]){
+                 this._itemService.subirFilePdf(3,a.identificador,this.archivoPDF[index])
                    .then( res=>{
-                     if(typeof res != "string") this.alertaOk("Contrato actualizado correctamente.");
+                     if(typeof res != "string"){
+                       this.contratos[index].fichero = (res as any).fichero;
+                       this.archivoPDF[index] = undefined;
+                       this.nombrePDF.getValue()[index] = "";
+                       this.alertaOk("Contrato creado correctamente.");
+                     }
                      else this.alertaNoOk("Se ha producido un error inesperado subiendo el archivo.");
                    })
                }
@@ -451,14 +471,26 @@ export class ExpedienteComponent implements OnInit {
              }
              else if(i==3){
                this.contratos[index] = res as ContratoInterface;
-               this.alertaOk("Contrato creado correctamente.");
+               if(this.archivoPDF[index]){
+                 this._itemService.subirFilePdf(3,this.contratos[index].identificador,this.archivoPDF[index])
+                   .then( res=>{
+                     if(typeof res != "string"){
+                       this.contratos[index].fichero = (res as any).fichero;
+                       this.archivoPDF[index] = undefined;
+                       this.nombrePDF.getValue()[index] = "";
+                       this.alertaOk("Contrato creado correctamente.");
+                     }
+                     else this.alertaNoOk("Se ha producido un error inesperado subiendo el archivo.");
+                   })
+               }
+               else this.alertaOk("Contrato creado correctamente.");
              }
              else if(i==2){
                this.tareas[index] = res as TareasInterface;
-                 if(a.finalizado == 1 && this.tareaBloqueada[index] == false){
-                   this.tareaBloqueada[index] = true;
-                   this.tareasTerminadas.next(this.tareasTerminadas.getValue()+1);
-                 }
+               if(a.finalizado == 1 && this.tareaBloqueada[index] == false){
+                 this.tareaBloqueada[index] = true;
+                 this.tareasTerminadas.next(this.tareasTerminadas.getValue()+1);
+               }
                this.calcularAvance();
                this.editarAvanceExp();
                this.alertaOk("Tarea creada correctamente.");
@@ -474,29 +506,36 @@ export class ExpedienteComponent implements OnInit {
    }
 
    cargarImg(files: FileList){
-     this.imgInsertada = true;
-     this.archivoImg = files.item(0);
-     var exp = this.expediente;
-     var etiqueta = this.etiqueta;
-     var r = new FileReader();
-     r.onload = function(e){
-       let o = etiqueta.nativeElement as HTMLImageElement;
-       o.src = r.result;
-       exp.image = o.alt = files[0].name;
+     if(files){
+       this.imgInsertada = true;
+       this.archivoImg = files.item(0);
+       var exp = this.expediente;
+       var etiqueta = this.etiqueta;
+       var r = new FileReader();
+       r.onload = function(e){
+         let o = etiqueta.nativeElement as HTMLImageElement;
+         o.src = r.result;
+         exp.image = o.alt = files[0].name;
+       }
+       r.readAsDataURL(files[0]);
      }
-     r.readAsDataURL(files[0]);
    }
 
    //Prueba, luego hacer un array de files, etc
-   cargarPDF(files: FileList, con){
-     // this.imgInsertada = true;
-     this.archivoPDF = files.item(0);
-     var etiqueta = this.etiqueta;
-     var r = new FileReader();
-     r.onload = function(e){
-       con.fichero = files[0].name;
-     }
-     r.readAsDataURL(files[0]);
+   cargarPDF(files: FileList, i){
+      if(files && files.item(0)){
+        this.archivoPDF[i] = files.item(0);
+        var nom = this.nombrePDF;
+        var r = new FileReader();
+        r.onload = function(e){
+          nom.getValue()[i] = files[0].name;
+        }
+        r.readAsDataURL(files[0]);
+      }
+      else{
+        this.archivoPDF[i] = null;
+        this.nombrePDF.getValue()[i] = "";
+      }
    }
 
    verFicheroContrato(fichero){

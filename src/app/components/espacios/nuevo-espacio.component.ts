@@ -3,7 +3,7 @@ import { PeticionesCrudService, AuthService } from '../../services/index';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { VentanaEmergenteComponent } from '../ventana-emergente/ventana-emergente.component'
 import { EspacioInterface } from '../../interfaces/espacio.interface';
-import { Observable, BehaviorSubject }          from 'rxjs/Rx';
+import { Observable, BehaviorSubject } from 'rxjs/Rx';
 import { } from '@types/googlemaps';
 
 @Component({
@@ -23,6 +23,7 @@ export class NuevoEspacioComponent implements OnInit {
   camposAnyadidos:boolean;            //Feedback que devuelve a la ventana anterior cuando esta se cierra
   @ViewChild('gmap') gmapElement: any;
   map: google.maps.Map;
+  marker: google.maps.Marker;
   latX = 38.3453359;
   latY = -0.5042837;
 
@@ -47,8 +48,12 @@ export class NuevoEspacioComponent implements OnInit {
         this.latX = (+this.items.latitudX);
         if(this.items.latitudY){
           this.latY = (+this.items.latitudY);
-          this.dibujarMapa();
+          this.dibujarMapa(true);
         }
+        this.dibujarMapa(false);
+      }
+      else if(navigator.geolocation){
+        this.geolocalizar();
       }
     }
     //Si no lo hay se prepara todo para crear
@@ -64,16 +69,35 @@ export class NuevoEspacioComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dibujarMapa();
+    this.dibujarMapa(false);
   }
 
-  dibujarMapa(){
+  geolocalizar(){
+    navigator.geolocation.getCurrentPosition(success, fail, { maximumAge: 500000, enableHighAccuracy: true, timeout: 6000 });
+    function success(pos) {
+      this.latX = pos.coords.latitude;
+      this.latY =  pos.coords.longitude;
+      this.dibujarMapa(false);
+    }
+    function fail(){
+      this.dibujarMapa(false);
+    }
+  }
+
+  dibujarMapa(b){
     var mapProp = {
       center: new google.maps.LatLng(this.latX, this.latY),
       zoom: 13,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
     this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
+    if (b && !this.marker) {
+      this.marker = new google.maps.Marker({
+        position: new google.maps.LatLng(this.latX, this.latY),
+        map: this.map,
+        title: this.items.nombreEspacio
+      });
+    }
   }
 
   //BOTON - Crear un nuevo item o lo edita si ya existe

@@ -212,6 +212,10 @@ margin-right: 2.5em;
   z-index: 0;
   stroke: rgb(172, 172, 172);
 }
+.nombreConPDF{
+  position: absolute;
+  /* max-width: 200px; */
+}
 /* Fin cartera - expediente*/
 
 /*Tamanyo columnas*/

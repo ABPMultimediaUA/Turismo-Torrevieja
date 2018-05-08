@@ -182,7 +182,7 @@
             <mat-expansion-panel *ngFor="let c of contratos; let i = index" class="alinearCabeceraPanel">
               <mat-expansion-panel-header>
                 <mat-panel-title><p class="expMatPanelTitle">{{c.nombreContrato}}</p></mat-panel-title>
-                <mat-panel-description><p class="expMatPanelDescription">{{c.observaciones}}</p></mat-panel-description>
+                <mat-panel-description><p class="expMatPanelDescription">{{c.clase}}</p></mat-panel-description>
               </mat-expansion-panel-header>
               <div class="panelExp">
 
@@ -195,32 +195,27 @@
                       <mat-error>Campo requerido</mat-error>
                     </mat-form-field>
 
+                    <mat-form-field class="expActCampos3">
+                      <mat-select placeholder="Proveedor" [(ngModel)]="c.proveedor" name=Tarea_proveedor{{o}} required>
+                        <mat-option *ngFor="let p of proveedor" [value]="p.identificador">{{ p.nombreProveedor }}</mat-option>
+                      </mat-select>
+                      <mat-error>Campo requerido</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="expActCampos2">
+                      <input placeholder="Coste (€)" matInput [(ngModel)]="c.precio" name=Contrato_precio{{i}} type="number" required>
+                      <mat-error>Campo requerido</mat-error>
+                    </mat-form-field>
+
                     <mat-form-field class="expActCampos1">
                       <input placeholder="Clase" matInput [(ngModel)]="c.clase" name=clase{{i}} type="text" required
                       maxlength="100">
                       <mat-error>Campo requerido</mat-error>
                     </mat-form-field>
 
-                    <mat-form-field class="expActCampos1">
-                      <input placeholder="Código" matInput [(ngModel)]="c.codigo" name=Contrato_codigo{{i}} type="text"
-                      maxlength="200">
-                    </mat-form-field>
-
-                    <mat-form-field class="expActCampos1">
+                    <mat-form-field class="expActCampos2">
                       <input placeholder="Días de duración" matInput [(ngModel)]="c.duracion" name=Contrato_duracion{{i}} type="number"
                       maxlength="11">
-                    </mat-form-field>
-
-                    <mat-form-field class="expActCampos1">
-                      <input placeholder="Coste (€)" matInput [(ngModel)]="c.precio" name=Contrato_precio{{i}} type="number" required>
-                      <mat-error>Campo requerido</mat-error>
-                    </mat-form-field>
-
-                    <mat-form-field class="expActCampos3">
-                      <mat-select placeholder="Proveedor" [(ngModel)]="c.proveedor" name=Tarea_proveedor{{o}} required>
-                        <mat-option *ngFor="let p of proveedor" [value]="p.identificador">{{ p.nombreProveedor }}</mat-option>
-                      </mat-select>
-                      <mat-error>Campo requerido</mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="expActCampos3">
@@ -230,12 +225,18 @@
                       <mat-error>Campo requerido</mat-error>
                     </mat-form-field>
 
+                    <mat-form-field class="expActCampos1">
+                      <input placeholder="Código" matInput [(ngModel)]="c.codigo" name=Contrato_codigo{{i}} type="text"
+                      maxlength="200">
+                    </mat-form-field>
 
-                    <input #fileInputPDF type="file" (change)="cargarPDF($event.target.files,c)" accept="application/pdf" class="invisible">
-                    <button (click)="fileInputPDF.click()" type="button" color="primary" mat-raised-button [disabled]="realizandoAccion">Subir PDF</button>
+                    <div class="expActCampos2">
+                      <input #fileInputPDF type="file" (change)="cargarPDF($event.target.files,i)" accept="application/pdf" class="invisible">
+                      <button (click)="fileInputPDF.click()" type="button" color="primary" mat-raised-button [disabled]="realizandoAccion">Subir PDF</button>
+                      <div *ngIf="archivoPDF[i]" class="nombreConPDF">{{nombrePDF.getValue()[i]}}</div>
+                    </div>
 
                     <button (click)="verFicheroContrato(c.fichero)" type="button" color="primary" mat-raised-button [disabled]="!c.fichero">Ver contrato</button>
-
 
                   </div>
                   <div>
@@ -246,7 +247,7 @@
                   </div>
 
                   <div class="btnsEditarAnyadir">
-                    <button *ngIf="c.identificador" [disabled]="!forma.valid || realizandoAccion || !forma.dirty" type="submit" color="primary" mat-raised-button> Guardar cambios </button>
+                    <button *ngIf="c.identificador" [disabled]="!forma.valid || realizandoAccion || (!forma.dirty && !archivoPDF[i])" type="submit" color="primary" mat-raised-button> Guardar cambios </button>
                     <button *ngIf="!c.identificador" [disabled]="!forma.valid || realizandoAccion" type="submit" color="primary" mat-raised-button> Añadir actividad </button>
                     <button (click)="eliminarItem(3, c.identificador, i)" [disabled]="realizandoAccion" type="button" color="warn" mat-raised-button><i class="icon-trash"></i></button>
                   </div>
@@ -312,66 +313,3 @@
       </mat-tab-group>
     </div>
   </div>
-
-
-
-            <!--<div id="DivContratos" *ngIf="mostrarContratos">
-            <div class="fondoComponentes">
-              <div *ngFor="let a of contratos; let i = index">
-                <form (ngSubmit)="crearModificarActConTar(3,a,i)" #forma="ngForm">
-                  <div class="row CuadroContrato">
-                    <div class="col-sm-3">
-                      <label>Nombre del contrato</label>
-                      <input [(ngModel)]="a.nombreContrato" name=Contrato_nombre{{i}} class="form-control" required type="text">
-                    </div>
-                    <div class="col-sm-3">
-                      <label>Proveedor</label>
-                      <select class="form-control" name=Contrato_proveedor{{i}} [(ngModel)]="a.proveedor">
-                        <option [ngValue]="p.identificador" *ngFor="let p of proveedor">{{p.nombreProveedor}}</option>
-                      </select>
-                    </div>
-                    <div class="col-sm-3">
-                      <label>Usuario responsable</label>
-                      <select class="form-control" name=Contrato_usuario{{i}} [(ngModel)]="a.usuario">
-                        <option [ngValue]="u.identificador" *ngFor="let u of users">{{u.nombreUsuario}}</option>
-                      </select>
-                    </div>
-                    <div class="col-sm-3">
-                      <label>Precio</label>
-                      <input [(ngModel)]="a.precio" name=Contrato_precio{{i}} class="form-control" type="text">
-                    </div>
-                    <div class="col-sm-3">
-                      <label>Tiempo</label>
-                      <input [(ngModel)]="a.tiempo" name=Contrato_tiempo{{i}} class="form-control" type="text">
-                    </div>
-                    <div class="col-sm-3">
-                      <label>Clase</label>
-                      <input [(ngModel)]="a.clase" name=Contrato_clase{{i}} class="form-control" type="text">
-                    </div>
-                    <div class="col-sm-3">
-                      <label>Archivo</label>
-                      <input [(ngModel)]="a.archivo" name=Contrato_archivo{{i}} class="form-control" type="text">
-                    </div>
-                    <div class="col-sm-3" *ngIf="a.identificador !== null">
-                      <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
-                        Guardar cambios
-                      </button>
-                    </div>
-                    <div class="col-sm-3" *ngIf="a.identificador === null">
-                      <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
-                        Añadir contrato
-                      </button>
-                    </div>
-                    <div class="col-sm-3">
-                      <button (click)="eliminarItem(3, a.identificador, i)" type="button" class="btn btn-outline-danger">
-                        <span class="icon-trash"></span>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-            <button type="button" class="btn btn-outline-success btnMargen" (click)="crearPlantillaCon()">
-              <span class=""></span>Nuevo contrato
-            </button>
-          </div>-->
