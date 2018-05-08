@@ -3,15 +3,26 @@
     <div class="row">
       <div class="example-header">
         <h1 class="mat-display-1 tituloComponentes titCarteras"><i class="icon-folder-open"></i> Expediente {{expediente.nombreExpediente}}</h1>
+        <div *ngIf="cartera.estado>1" class="tituloComponentes titCarteras porcentajeAvance" matTooltip="Tareas terminadas: {{tareasTerminadas.getValue()}} de {{tareasPropuestas.getValue()}}">
+          <div class="spinnerAvanceFondo">
+            <mat-progress-spinner  [value]="100" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
+          </div>
+          <div class="spinnerAvance">
+            <mat-progress-spinner class="" [value]="porcentajeAvanzado.getValue()" [diameter]="30" [strokeWidth]="6" [color]="colorSpinner.getValue()"></mat-progress-spinner>
+          </div>
+        </div>
         <div class="divTiposCartera" *ngIf="_authService.tienePermiso(26) && cartera.estado!=3">
           <div class="btnsEditarAnyadir">
-            <div *ngIf="bloqCampos" class="btnsEditarAnyadir">
-              <button type="button" mat-raised-button color="primary" (click)="disable_enable_campos()">Editar</button>
-            </div>
-            <div *ngIf="!bloqCampos" class="btnsEditarAnyadir">
-              <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid || realizandoAccion">Guardar cambios</button>
-              <button type="button" mat-raised-button (click)="disable_enable_campos()" color="warn" [disabled]="realizandoAccion">Cancelar</button>
-            </div>
+            <button *ngIf="bloqCampos" type="button" mat-raised-button color="primary" (click)="disable_enable_campos()">Editar</button>
+            <button *ngIf="!bloqCampos" type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid || realizandoAccion || (!formulario.form.dirty && !imgInsertada)">Guardar cambios</button>
+            <button *ngIf="!bloqCampos" type="button" mat-raised-button (click)="disable_enable_campos()" color="warn" [disabled]="realizandoAccion">Cancelar</button>
+            <button *ngIf="cartera.estado==1 && bloqCampos" mat-raised-button type="button" color="warn" (click)="eliminarExpediente()"><i class="material-icons">delete</i></button>
+            <button mat-raised-button type="button" name="button" class="btnVerCartera" (click)="verCartera()"><i class="icon-archive-1" matTooltip="Ir a la cartera a la que pertenece el expediente."></i> {{cartera.nombreCartera}}</button>
+          </div>
+        </div>
+        <div class="divTiposCartera" *ngIf="!_authService.tienePermiso(26) && cartera.estado==3">
+          <div class="btnsEditarAnyadir">
+            <button mat-raised-button type="button" name="button" class="btnVerCartera" (click)="verCartera()" matTooltip="Ir a la cartera a la que pertenece el expediente."><i class="icon-archive-1"></i> {{cartera.nombreCartera}}</button>
           </div>
         </div>
       </div>
@@ -20,53 +31,69 @@
       <div class="example-header">
         <div class="elementosCabecera">
 
-          <div class="row carteraFormEditar">
-              <mat-form-field class="carteraNombre">
-                <input matInput name="nombreExpediente" [(ngModel)]="expediente.nombreExpediente" placeholder="Nombre"  [readonly]="bloqCampos"
-                       maxLength="200" required>
-                <mat-error>Campo requerido</mat-error>
-              </mat-form-field>
+          <div class="row carteraFormExpediente">
 
-              <mat-form-field class="carteraNombre">
-                <input matInput name="titulo" [(ngModel)]="expediente.titulo" placeholder="Título"  [readonly]="bloqCampos"
-                       maxLength="100" required>
-                <mat-error>Campo requerido</mat-error>
-             </mat-form-field>
+            <div class="col">
+              <div class="row">
+                <mat-form-field class="carteraNombre marginRight">
+                  <input matInput name="nombreExpediente" [(ngModel)]="expediente.nombreExpediente" placeholder="Nombre"  [readonly]="bloqCampos"
+                         maxLength="200" required>
+                  <mat-error>Campo requerido</mat-error>
+                </mat-form-field>
 
-             <mat-form-field class="carteraPeriodo">
-               <mat-select placeholder="Coordinador" [value]="idNombreUsuario" name="coordinador"  [disabled]="bloqCampos">
-                 <mat-option *ngFor="let u of users" [value]="u.identificador">{{ u.nombreUsuario }}</mat-option>
-               </mat-select>
-             </mat-form-field>
+                <mat-form-field class="expFecha marginRight">
+                  <input matInput type="date" name="fechaCreacion" [value]="expFechaCreacion" placeholder="Fecha creación" readonly>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="expTitulo marginRight">
+                  <input matInput name="titulo" [(ngModel)]="expediente.titulo" placeholder="Título"  [readonly]="bloqCampos"
+                         maxLength="100" required>
+                  <mat-error>Campo requerido</mat-error>
+                 </mat-form-field>
 
-             <mat-form-field class="carteraNombre">
-               <input matInput name="nombreCartera" [(ngModel)]="cartera.nombreCartera" placeholder="Cartera"  readonly>
-             </mat-form-field>
+                 <mat-form-field class="carteraNombre marginRight">
+                   <mat-select placeholder="Coordinador" [value]="idNombreUsuario" name="coordinador"  [disabled]="bloqCampos">
+                     <mat-option *ngFor="let u of users" [value]="u.identificador">{{ u.nombreUsuario }}</mat-option>
+                   </mat-select>
+                 </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="expFecha marginRight">
+                  <input matInput type="date" name="fechaInicio" [(ngModel)]="expediente.fechaInicio" placeholder="Fecha inicio" required  [readonly]="bloqCampos">
+                  <mat-error>Campo requerido</mat-error>
+                </mat-form-field>
 
-             <mat-form-field class="expFecha">
-               <input matInput type="date" name="fechaInicio" [(ngModel)]="expediente.fechaInicio" placeholder="Fecha inicio" required  [readonly]="bloqCampos">
-               <mat-error>Campo requerido</mat-error>
-             </mat-form-field>
-
-             <mat-form-field class="expFecha">
-               <input matInput type="date" name="fechaFin" [(ngModel)]="expediente.fechaFin" placeholder="Fecha fin" required  [readonly]="bloqCampos">
-               <mat-error>Campo requerido</mat-error>
-             </mat-form-field>
-          </div>
-
-          <div class="row">
-            <div class="descripcionCarteraForm">
-              <mat-form-field class="campoWidth100">
-                <textarea matInput name="detalle" [(ngModel)]="expediente.detalle" placeholder="Detalles"  [readonly]="bloqCampos"
-                          maxLength="500"></textarea>
-              </mat-form-field>
+                <mat-form-field class="expFecha marginRight">
+                  <input matInput type="date" name="fechaFin" [(ngModel)]="expediente.fechaFin" placeholder="Fecha fin" required  [readonly]="bloqCampos">
+                  <mat-error>Campo requerido</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="row">
+                <mat-form-field class="campoWidth100 marginRight">
+                  <textarea matInput name="detalle" [(ngModel)]="expediente.detalle" placeholder="Detalles"  [readonly]="bloqCampos"
+                            maxLength="500"></textarea>
+                </mat-form-field>
+              </div>
             </div>
+            <div class="col-md-auto">
+              <mat-card class="plantillaImg">
+                <mat-card-header>
+                </mat-card-header>
+                <img mat-card-image src=""  alt="Imagen del evento"  #etiquetaImgExp>
+                <mat-card-actions>
+                  <input #fileInput type="file" (change)="cargarImg($event.target.files)" accept="image/*" class="invisible">
+                  <button (click)="fileInput.click()" type="button" color="primary" mat-raised-button [disabled]="bloqCampos || realizandoAccion">Subir imagen</button>
+                  </mat-card-actions>
+              </mat-card>
+            </div>
+
           </div>
         </div>
       </div>
     </div>
   </form>
-  <div class="row">
+  <div class="row" *ngIf="cartera.estado>1">
     <div class="tabExpediente">
       <mat-tab-group #tabGroup>
         <!--*****************ACTIVIDADES*****************-->
@@ -135,8 +162,8 @@
                     </div>
 
                     <div class="btnsEditarAnyadir">
-                      <button *ngIf="a.identificador" [disabled]="!forma.valid && realizandoAccion" type="submit" color="primary" mat-raised-button> Guardar cambios </button>
-                      <button *ngIf="!a.identificador" [disabled]="!forma.valid && realizandoAccion" type="submit" color="primary" mat-raised-button> Añadir actividad </button>
+                      <button *ngIf="a.identificador" [disabled]="!forma.valid || realizandoAccion || !forma.dirty" type="submit" color="primary" mat-raised-button> Guardar cambios </button>
+                      <button *ngIf="!a.identificador" [disabled]="!forma.valid || realizandoAccion" color="primary" mat-raised-button> Añadir actividad </button>
                       <button (click)="eliminarItem(1, a.identificador, i)" [disabled]="realizandoAccion" type="button" color="warn" mat-raised-button><i class="icon-trash"></i></button>
                     </div>
                   </form>
@@ -161,11 +188,55 @@
 
                 <form (ngSubmit)="crearModificarActConTar(3,c,i)" #forma="ngForm">
                   <div class="space-between">
+
                     <mat-form-field class="expActCampos1">
                       <input placeholder="Nombre" matInput [(ngModel)]="c.nombreContrato" name=Contrato_nombre{{i}} required type="text"
-                      maxlength="300">
+                      maxlength="200">
                       <mat-error>Campo requerido</mat-error>
                     </mat-form-field>
+
+                    <mat-form-field class="expActCampos1">
+                      <input placeholder="Clase" matInput [(ngModel)]="c.clase" name=clase{{i}} type="text" required
+                      maxlength="100">
+                      <mat-error>Campo requerido</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="expActCampos1">
+                      <input placeholder="Código" matInput [(ngModel)]="c.codigo" name=Contrato_codigo{{i}} type="text"
+                      maxlength="200">
+                    </mat-form-field>
+
+                    <mat-form-field class="expActCampos1">
+                      <input placeholder="Días de duración" matInput [(ngModel)]="c.duracion" name=Contrato_duracion{{i}} type="number"
+                      maxlength="11">
+                    </mat-form-field>
+
+                    <mat-form-field class="expActCampos1">
+                      <input placeholder="Coste (€)" matInput [(ngModel)]="c.precio" name=Contrato_precio{{i}} type="number" required>
+                      <mat-error>Campo requerido</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="expActCampos3">
+                      <mat-select placeholder="Proveedor" [(ngModel)]="c.proveedor" name=Tarea_proveedor{{o}} required>
+                        <mat-option *ngFor="let p of proveedor" [value]="p.identificador">{{ p.nombreProveedor }}</mat-option>
+                      </mat-select>
+                      <mat-error>Campo requerido</mat-error>
+                    </mat-form-field>
+
+                    <mat-form-field class="expActCampos3">
+                      <mat-select placeholder="Responsable" [(ngModel)]="c.usuario" name=Tarea_usuario{{o}} required>
+                        <mat-option *ngFor="let u of users" [value]="u.identificador">{{ u.nombreUsuario }}</mat-option>
+                      </mat-select>
+                      <mat-error>Campo requerido</mat-error>
+                    </mat-form-field>
+
+
+                    <input #fileInputPDF type="file" (change)="cargarPDF($event.target.files,c)" accept="application/pdf" class="invisible">
+                    <button (click)="fileInputPDF.click()" type="button" color="primary" mat-raised-button [disabled]="realizandoAccion">Subir PDF</button>
+
+                    <button (click)="verFicheroContrato(c.fichero)" type="button" color="primary" mat-raised-button [disabled]="!c.fichero">Ver contrato</button>
+
+
                   </div>
                   <div>
                     <mat-form-field hintLabel="" class="campoWidth100">
@@ -175,8 +246,8 @@
                   </div>
 
                   <div class="btnsEditarAnyadir">
-                    <button *ngIf="c.identificador" [disabled]="!forma.valid && realizandoAccion" type="submit" color="primary" mat-raised-button> Guardar cambios </button>
-                    <button *ngIf="!c.identificador" [disabled]="!forma.valid && realizandoAccion" type="submit" color="primary" mat-raised-button> Añadir actividad </button>
+                    <button *ngIf="c.identificador" [disabled]="!forma.valid || realizandoAccion || !forma.dirty" type="submit" color="primary" mat-raised-button> Guardar cambios </button>
+                    <button *ngIf="!c.identificador" [disabled]="!forma.valid || realizandoAccion" type="submit" color="primary" mat-raised-button> Añadir actividad </button>
                     <button (click)="eliminarItem(3, c.identificador, i)" [disabled]="realizandoAccion" type="button" color="warn" mat-raised-button><i class="icon-trash"></i></button>
                   </div>
                 </form>
@@ -189,32 +260,29 @@
         </mat-tab>
 
         <!--*****************TAREAS*****************-->
-        <mat-tab label="Tareas" matBadge="15">
-
-          <!-- <p>
-            <span matBadge="4" matBadgeOverlap="false">Text with a badge</span>
-          </p> -->
+        <mat-tab label="Tareas">
 
           <mat-accordion>
             <mat-expansion-panel *ngFor="let t of tareas; let o = index" class="alinearCabeceraPanel">
               <mat-expansion-panel-header>
                 <mat-panel-title><p class="expMatPanelTitle">{{t.nombreTarea}}</p></mat-panel-title>
-                <mat-panel-description><mat-checkbox [(ngModel)]="t.finalizado" name=Tarea_finalizado{{i}}>Finalizada</mat-checkbox></mat-panel-description>
+                <mat-panel-description><mat-checkbox [(ngModel)]="t.finalizado" name=Tarea_finalizado{{i}} disabled>Finalizada</mat-checkbox></mat-panel-description>
               </mat-expansion-panel-header>
               <div class="panelExp">
 
                 <form (ngSubmit)="crearModificarActConTar(2,t,o)" #forma="ngForm">
                   <div class="space-between">
                     <mat-form-field class="expActCampos1">
-                      <input placeholder="Nombre" matInput [(ngModel)]="t.nombreTarea" name=Tarea_nombre{{o}} required type="text"
+                      <input placeholder="Nombre" matInput [(ngModel)]="t.nombreTarea" name=Tarea_nombre{{o}} required type="text" [readonly]="t.finalizado==1"
                       maxlength="300">
                       <mat-error>Campo requerido</mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="expActCampos3">
-                      <mat-select placeholder="Responsable" [(ngModel)]="t.usuario" name=Tarea_usuario{{o}} required>
+                      <mat-select placeholder="Responsable" [(ngModel)]="t.usuario" name=Tarea_usuario{{o}} required [disabled]="t.finalizado==1">
                         <mat-option *ngFor="let u of users" [value]="u.identificador">{{ u.nombreUsuario }}</mat-option>
                       </mat-select>
+                      <mat-error>Campo requerido</mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="expActCampos2">
@@ -225,12 +293,12 @@
                       <input matInput type="text" name=Tarea_fechaFinalizacion{{o}} [(ngModel)]="t.fecha_finalizacion" placeholder="Fecha finalización" readonly>
                     </mat-form-field>
 
-                    <mat-checkbox [(ngModel)]="t.finalizado" name=Tarea_finalizado{{o}}>Finalizada</mat-checkbox>
+                    <mat-checkbox [(ngModel)]="t.finalizado" name=Tarea_finalizado{{o}} [disabled]="tareaBloqueada[o]">Finalizada</mat-checkbox>
                   </div>
 
                   <div class="btnsEditarAnyadir">
-                    <button *ngIf="t.identificador" [disabled]="!forma.valid && realizandoAccion" type="submit" color="primary" mat-raised-button> Guardar cambios </button>
-                    <button *ngIf="!t.identificador" [disabled]="!forma.valid && realizandoAccion" type="submit" color="primary" mat-raised-button> Añadir tarea </button>
+                    <button *ngIf="t.identificador" [disabled]="!forma.valid || realizandoAccion || !forma.dirty || tareaBloqueada[o]" type="submit" color="primary" mat-raised-button> Guardar cambios </button>
+                    <button *ngIf="!t.identificador" [disabled]="!forma.valid || realizandoAccion" type="submit" color="primary" mat-raised-button> Añadir tarea </button>
                     <button (click)="eliminarItem(2, t.identificador, o)" [disabled]="realizandoAccion" type="button" color="warn" mat-raised-button><i class="icon-trash"></i></button>
                   </div>
                 </form>
@@ -247,173 +315,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--
-<div class="container-fluid">
-  <div class="row ">
-      <main role="main" class="col-sm-12 ml-sm-auto col-md-12 pt-3">
-        <h1><span class="icon-folder-open"></span> Evento <small>{{expediente.nombreExpediente}}</small></h1>
-        <div class="container" *ngIf="errorActualizarItem === true">
-            <div class="jumbotron">
-                <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
-                <h1 class="text-center">¡Ups! <p> </p>
-                  <p><small class="text-center"> Ha habido un error actualizando el permiso.</small></p></h1>
-                  <p class="text-center text-danger" *ngFor="let mensaje of errorMensaje">
-                        {{mensaje}}
-                </p>
-            </div>
-        </div>
-        <div class="container" *ngIf="itemActualizado === true">
-            <div class="jumbotron">
-                <div class="text-center"><i class="fa fa-5x fa-smile-o" style="color:#28a745;"></i></div>
-                <h1 class="text-center">Expediente actualizado!</h1>
-            </div>
-        </div>
-        <br>
-        <form (ngSubmit)="guardarCambiosExp()" #forma="ngForm">
-          <div class="row">
-            <div class="col-sm-3">
-              <label>Nombre evento</label>
-              <input [(ngModel)]="expediente.nombreExpediente" name="nombreExp" class="form-control" placeholder="Nombre del expediente" required type="text">
-            </div>
-            <div class="col-sm-3">
-              <label>Título</label>
-              <input [(ngModel)]="expediente.titulo" name="nombreTit" class="form-control" placeholder="Título del evento" required type="text">
-            </div>
-            <div class="col-sm-3">
-              <label>Cartera</label>
-              <input [(ngModel)]="cartera.nombreCartera" name="nombreCartera" class="form-control" required type="text" disabled>
-            </div>
-            <div class="col-sm-3">
-              <label>Fecha inicio</label>
-              <input [(ngModel)]="expediente.fechaInicio" name="fechaInicio" class="form-control" required type="date">
-            </div>
-            <div class="col-sm-3">
-              <label>Fecha fin</label>
-              <input [(ngModel)]="expediente.fechaFin" name="fechaFin" class="form-control" required type="date">
-            </div>
-            <div class="col-sm-3">
-              <label>Coordinador</label>
-              <select class="form-control" name=expediente_coordinador [(ngModel)]="coordinador" required>
-                <option [ngValue]="u.identificador" *ngFor="let u of users" >{{u.nombreUsuario}}</option>
-              </select>
-            </div>
-            <div class="col-sm-3">
-              <label>Detalles</label>
-              <input [(ngModel)]="expediente.detalle" name="detalle" class="form-control" required type="text">
-            </div>
-            <div class="col-sm-9">
-              <label for="imagenForm">Imagen evento</label>
-              <img src=""  alt="Imagen del evento" width="200px" #etiquetaImgExp>
-              <input *ngIf="modificable" type="file" id="imagenForm" (change)="cargarImg($event.target.files)" accept="image/*">
-            </div>
-          </div>
-          <div class="form-group" *ngIf="modificable">
-            <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
-              Guardar cambios
-            </button>
-          </div>
-        </form>
-        <br>
-        <div *ngIf="eliminable">
-          <button (click)="borrarItem()" class="btn btn-outline-danger">
-            Eliminar
-          </button>
-          <br>
-        </div>
-        <br>
-        <div *ngIf="modificable">
-          <button type="button" name="buttonAct" class="btn btn-secondary inicio" (click)="cambiarPestanya(1)" #btnAct>Actividades</button>
-          <button type="button" name="buttonCon" class="btn btn-secondary" (click)="cambiarPestanya(2)" #btnCon>Contratos</button>
-          <button type="button" name="buttonTar" class="btn btn-secondary" (click)="cambiarPestanya(3)" #btnTar>Tareas</button>
-          <! ***************** EMPIEZAN ACTIVIDADES ***************** -->
-            <!--<div id="DivActividades" *ngIf="mostrarActividades">
-            <div class="fondoComponentes">
-              <div *ngFor="let a of actividades; let i = index">
-                <form (ngSubmit)="crearModificarActConTar(1,a,i)" #forma="ngForm">
-                  <div class="row CuadroActividad">
-                    <div class="col-sm-3">
-                      <label>Nombre de la actividad</label>
-                      <input [(ngModel)]="a.nombreActividad" name=Actividad_nombre{{i}} class="form-control" required type="text">
-                    </div>
-                    <div class="col-sm-3">
-                      <label>Fecha inicio</label>
-                      <input [(ngModel)]="a.fechaInicio" name=Actividad_fechaInicio{{i}} class="form-control" type="date">
-                    </div>
-                    <div class="col-sm-3">
-                      <label>Fecha final</label>
-                      <input [(ngModel)]="a.fechaFinal" name=Actividad_fechaFinal{{i}} class="form-control" type="date">
-                    </div>
-                    <div class="col-sm-3">
-                      <label>Hora inicio</label>
-                      <input [(ngModel)]="a.HoraInicio" name=Actividad_HoraInicio{{i}} class="form-control" type="time">
-                    </div>
-                    <div class="col-sm-3">
-                      <label>Hora final</label>
-                      <input [(ngModel)]="a.HoraFinal" name=Actividad_HoraFinal{{i}} class="form-control" type="time">
-                    </div>
-                    <div class="col-sm-3">
-                      <label>Espacio</label>
-                      <select class="form-control" name=Actividad_espacio{{i}} [(ngModel)]="a.espacio">
-                        <option [ngValue]="e.identificador" *ngFor="let e of espacio">{{e.nombreEspacio}}</option>
-                      </select>
-                    </div>
-                    <div class="col-sm-3">
-                      <label>Capacidad máxima</label>
-                      <input [(ngModel)]="a.capacidadMinimo" name=Actividad_capacidad_min{{i}} class="form-control" type="text">
-                    </div>
-                    <div class="col-sm-3">
-                      <label>Capacidad mínima</label>
-                      <input [(ngModel)]="a.capacidadMaximo" name=Actividad_capacidad_max{{i}} class="form-control" type="text">
-                    </div>
-                    <div class="col-sm-3">
-                      <label>Detalle de Entrada</label>
-                      <input [(ngModel)]="a.detalleEntrada" name=Actividad_detalle_entrada{{i}} class="form-control" type="text">
-                    </div>
-                    <div class="col-sm-3">
-                      <label>Precio de Entrada</label>
-                      <input [(ngModel)]="a.precioEntrada" name=Actividad_precio_entrada{{i}} class="form-control" type="text">
-                    </div>
-                    <div class="col-sm-3" *ngIf="a.identificador !== null">
-                      <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
-                        Guardar cambios
-                      </button>
-                    </div>
-                    <div class="col-sm-3" *ngIf="a.identificador === null">
-                      <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
-                        Añadir actividad
-                      </button>
-                    </div>
-                    <div class="col-sm-3">
-                      <button (click)="eliminarItem(1, a.identificador, i)" type="button" class="btn btn-outline-danger">
-                        <span class="icon-trash"></span>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-            <button type="button" class="btn btn-outline-success btnMargen" (click)="crearPlantillaAct()">
-              <span class=""></span>Nueva actividad
-            </button>
-          </div>
-          ***************** EMPIEZAN CONTRATOS ***************** -->
             <!--<div id="DivContratos" *ngIf="mostrarContratos">
             <div class="fondoComponentes">
               <div *ngFor="let a of contratos; let i = index">
@@ -473,56 +374,4 @@
             <button type="button" class="btn btn-outline-success btnMargen" (click)="crearPlantillaCon()">
               <span class=""></span>Nuevo contrato
             </button>
-          </div>
-          <!- ***************** EMPIEZAN TAREAS ***************** -->
-            <!--<div id="DivTareas" *ngIf="mostrarTareas">
-            <div class="fondoComponentes">
-              <div *ngFor="let a of tareas; let i = index">
-                <form (ngSubmit)="crearModificarActConTar(2,a,i)" #forma="ngForm">
-                  <div class="row CuadroTarea">
-                    <div class="col-sm-3">
-                      <label>Nombre de la tarea</label>
-                      <input [(ngModel)]="a.nombreTarea" name=Tarea_nombre{{i}} class="form-control" required type="text">
-                    </div>
-                    <div class="col-sm-3">
-                      <label>Usuario responsable</label>
-                      <select class="form-control" name=Tarea_usuario{{i}} [(ngModel)]="a.usuario" required>
-                        <option [ngValue]="u.identificador" *ngFor="let u of users" >{{u.nombreUsuario}}</option>
-                      </select>
-                    </div>
-                    <!-<div class="col-sm-3">
-                      <label>Finalizada</label>
-                      <input [(ngModel)]="a.finalizado" name=Tarea_finalizado{{i}} class="form-control" type="text">
-                    </div> -->
-                      <!--<div class="col-sm-3">
-                      <label>Finalizada
-                        <input [(ngModel)]="a.finalizado" name=Tarea_finalizado{{i}} class="form-control" type="checkbox">
-                      </label>
-                    </div>
-                    <div class="col-sm-3" *ngIf="a.identificador !== null">
-                      <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
-                        Guardar cambios
-                      </button>
-                    </div>
-                    <div class="col-sm-3" *ngIf="a.identificador === null">
-                      <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
-                        Añadir tarea
-                      </button>
-                    </div>
-                    <div class="col-sm-3">
-                      <button (click)="eliminarItem(2, a.identificador,i)" type="button" class="btn btn-outline-danger">
-                        <span class="icon-trash"></span>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </div>
-            <button type="button" class="btn btn-outline-success btnMargen" (click)="crearPlantillaTar()">
-              <span class=""></span>Nueva tarea
-            </button>
-          </div>
-        </div>
-      </main>
-    </div>
-</div> -->
+          </div>-->

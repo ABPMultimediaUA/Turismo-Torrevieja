@@ -66,6 +66,9 @@
   color:#dddddd;
   cursor:context-menu;
 }
+.plantillaImg {
+  width: 300px;
+}
 /deep/ div.mat-expansion-panel-content:not(.mat-expanded) {
     height: 0px !important;
     visibility: hidden !important;
@@ -73,6 +76,7 @@
 /deep/ .mat-expansion-panel-header  {
     height: 48px;
 }
+.pointer {cursor: pointer;}
 /*FIN CSS comun a todos los componentes con tabla*/
 
 /* Cartera - expediente*/
@@ -99,6 +103,11 @@
   margin-right: 2.5em;
   justify-content: space-between;
 }
+.carteraFormExpediente{
+margin-top: .2em;
+margin-left: 2.5em;
+margin-right: 2.5em;
+}
 .descripcionCarteraForm{
   width: 100%;
   margin-left: 3.2em;
@@ -114,6 +123,10 @@
   width: 30%;
   min-width: 10em;
 }
+.expTitulo{
+  width: 50%;
+  min-width: 10em;
+}
 .carteraPeriodo{
   width: 20%;
   min-width: 9em;
@@ -127,6 +140,11 @@
   margin-left: 3.2em;
   margin-right: 3.2em;
   margin-bottom: 2em;
+}
+/deep/ .btnVerCartera{
+  color: white;
+  background-color: rgb(32, 184, 79);
+  margin-left: 1em;
 }
 .btnsExpedienteNewElement{
   margin-top: 1.5em;
@@ -179,13 +197,28 @@
   justify-content: space-between;
   align-items: center;
 }
+.marginRight{
+  margin-right: 2em;
+  margin-left: 1.1em;
+}
+.porcentajeAvance{
+  margin-top: 5px;
+}
+.spinnerAvance{
+  margin-top: -30px;
+  z-index: 1;
+}
+/deep/ .spinnerAvanceFondo circle{
+  z-index: 0;
+  stroke: rgb(172, 172, 172);
+}
 /* Fin cartera - expediente*/
 
 /*Tamanyo columnas*/
 .mat-column-identificador{
   flex:0 0 0;
 }
-.mat-column-select,.mat-column-estado{
+.mat-column-select,.mat-column-estado, .mat-column-avance{
   flex:0 0 5%
 }
 .mat-column-aforo, .mat-column-codigoPostal, .mat-column-CP, .mat-column-numero,
@@ -313,3 +346,12 @@
   cursor:pointer;
 }
 /*Fin navegador*/
+
+.invisible{
+  display: none;
+}
+.mapa{
+  margin-top: 2em;
+  width:95%;
+  height:400px
+}

@@ -7,9 +7,10 @@ import { AppComponent }                               from './app.component';
 import { APP_ROUTING }                                from './app.routes';
 import { BrowserAnimationsModule }                    from '@angular/platform-browser/animations';
 import { SelectionModel }                             from '@angular/cdk/collections';
+import { PdfViewerModule }                            from 'ng2-pdf-viewer';
 
 // servicios
-import { AlertService, ExpedientesService, AuthService, CarterasService, PeticionesCrudService,
+import { AlertService, AuthService, PeticionesCrudService,
 AuthGuardService, AuthGuardUsuariosService, AuthGuardRolesService, AuthGuardCarterasService,
 AuthGuardEventosService, AuthGuardEspaciosService, AuthGuardProveedoresService } from './services/index';
 
@@ -60,7 +61,9 @@ import { EliminarRolComponent }       from './components/roles/eliminar-rol.comp
 import { EliminarExpedienteComponent }  from './components/expedientes/eliminar-expediente.component';
 
 //Otros
-import { VentanaEmergenteComponent }  from './components/ventana-emergente/ventana-emergente.component';
+import { VentanaEmergenteComponent }          from './components/ventana-emergente/ventana-emergente.component';
+import { VentanaEmergentePreguntaComponent }  from './components/ventana-emergente/ventana-emergente-pregunta.component';
+import { VentanaEmergentePdfComponent }       from './components/ventana-emergente/ventana-emergente-pdf.component';
 
 
 
@@ -133,6 +136,8 @@ import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.com
     NuevoEspacioComponent,
     EliminarEspacioComponent,
     VentanaEmergenteComponent,
+    VentanaEmergentePreguntaComponent,
+    VentanaEmergentePdfComponent,
   ],
   imports: [
     HttpClientModule,
@@ -163,18 +168,17 @@ import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.com
     MatDatepickerModule,
     MatProgressSpinnerModule,
     MatNativeDateModule,
+    PdfViewerModule,
     // FacebookModule.forRoot(),
     // FacebookModule,
 
     APP_ROUTING,
   ],
   providers: [
-    CarterasService,
     PeticionesCrudService,
     AlertService,
     NavbarComponent,
     HomeComponent,
-    ExpedientesService,
     MatDatepickerModule,
     AuthService,
     AuthGuardService,
@@ -214,6 +218,8 @@ import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.com
 
     //Mensaje emergente
     VentanaEmergenteComponent,
+    VentanaEmergentePreguntaComponent,
+    VentanaEmergentePdfComponent,
 
 
       EditarPerfilDialog,

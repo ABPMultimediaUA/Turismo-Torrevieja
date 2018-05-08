@@ -1,8 +1,10 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { PeticionesCrudService, AuthService } from '../../services/index';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { VentanaEmergenteComponent } from '../ventana-emergente/ventana-emergente.component'
 import { EspacioInterface } from '../../interfaces/espacio.interface';
+import { Observable, BehaviorSubject }          from 'rxjs/Rx';
+import { } from '@types/googlemaps';
 
 @Component({
   selector: 'app-nuevo-espacio',
@@ -19,6 +21,11 @@ export class NuevoEspacioComponent implements OnInit {
   editar:boolean = false;             //Saber si el form es para crear o para editar
   bloqCampos:boolean = true;          //Habilitar o deshabilitar campos del form (avtivar desactivar modo edicion)
   camposAnyadidos:boolean;            //Feedback que devuelve a la ventana anterior cuando esta se cierra
+  @ViewChild('gmap') gmapElement: any;
+  map: google.maps.Map;
+  latX = 38.3453359;
+  latY = -0.5042837;
+
 
   constructor(  private _itemService: PeticionesCrudService,
                 private _authService:AuthService,
@@ -36,6 +43,13 @@ export class NuevoEspacioComponent implements OnInit {
       this.titulo = "Espacio";
       this.items = Object.assign({}, data.item as EspacioInterface);
       this.itemSinModif = Object.assign({}, data.item as EspacioInterface);
+      if(this.items.latitudX) {
+        this.latX = (+this.items.latitudX);
+        if(this.items.latitudY){
+          this.latY = (+this.items.latitudY);
+          this.dibujarMapa();
+        }
+      }
     }
     //Si no lo hay se prepara todo para crear
     else{
@@ -46,9 +60,20 @@ export class NuevoEspacioComponent implements OnInit {
 
     this.camposAnyadidos=false;
 
+
   }
 
   ngOnInit() {
+    this.dibujarMapa();
+  }
+
+  dibujarMapa(){
+    var mapProp = {
+      center: new google.maps.LatLng(this.latX, this.latY),
+      zoom: 13,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
+    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
   }
 
   //BOTON - Crear un nuevo item o lo edita si ya existe

@@ -118,8 +118,20 @@
             <mat-cell *matCellDef="let items">{{items.fechaFin}}</mat-cell>
           </ng-container>
 
-          <mat-header-row *matHeaderRowDef="['select','identificador','nombreExpediente','titulo','coordinador','cartera','fechaInicio','fechaFin']"></mat-header-row>
-          <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','identificador','nombreExpediente','titulo','coordinador','cartera','fechaInicio','fechaFin']" (click)="abrirExpediente(row)"></mat-row>
+          <ng-container matColumnDef="avance">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(6)">Avance</mat-header-cell>
+            <mat-cell *matCellDef="let items; let i = index" matTooltip="Tareas terminadas: {{avances[i].tareasTerminadas}} de {{avances[i].tareasPropuestas}}">
+              <div class="spinnerAvanceFondo">
+                <mat-progress-spinner  [value]="100" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
+              </div>
+              <div class="spinnerAvance">
+                <mat-progress-spinner [value]="avances[i].porcentajeAvanzado" [diameter]="30" [strokeWidth]="6" [color]="avances[i].colorSpinner"></mat-progress-spinner>
+              </div>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="['select','identificador','nombreExpediente','titulo','coordinador','cartera','fechaInicio','fechaFin','avance']"></mat-header-row>
+          <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','identificador','nombreExpediente','titulo','coordinador','cartera','fechaInicio','fechaFin','avance']" (click)="abrirExpediente(row)"></mat-row>
         </mat-table>
       </div>
     </div>

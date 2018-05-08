@@ -6,6 +6,7 @@ import { EliminarExpedienteComponent }          from './eliminar-expediente.comp
 import { PaginacionInterface }                  from '../../interfaces/paginacion.interface';
 import { CarteraInterface }                     from '../../interfaces/cartera.interface';
 import { ExpedienteInterface }                  from '../../interfaces/expediente.interface';
+import { AvanceExpedienteInterface }            from '../../interfaces/avanceExpediente.interface';
 import { NuevoExpedienteComponent }             from './nuevo-expediente.component';
 import { Router, ActivatedRoute }               from "@angular/router";
 import { VentanaEmergenteComponent }            from '../ventana-emergente/ventana-emergente.component'
@@ -19,6 +20,7 @@ import { VentanaEmergenteComponent }            from '../ventana-emergente/venta
 export class ExpedientesComponent implements OnInit {
 
   items:ExpedienteInterface[]=[];
+  avances:AvanceExpedienteInterface[]=[];
   paginacion:PaginacionInterface={    //Guardar todos los datos de paginacion
     count:0,
     current_page:1,
@@ -55,6 +57,31 @@ export class ExpedientesComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  calcularAvance(){
+    this.avances = [];
+    for(var x = 0; x < this.items.length; x++){
+      let auxAvance:AvanceExpedienteInterface ={
+        porcentajeAvanzado:0,
+        tareasTerminadas:0,
+        tareasPropuestas:0,
+        colorSpinner:"warn",
+      };
+      if(this.items[x].avance){
+        var num = (this.items[x].avance).toString().split('.');
+        if(num && num.length == 2){
+          auxAvance.tareasTerminadas = (+num[0]);
+          auxAvance.tareasPropuestas = (+num[1]);
+          auxAvance.porcentajeAvanzado = ( +(auxAvance.tareasTerminadas / auxAvance.tareasPropuestas * 100).toFixed(1) );
+          if(auxAvance.porcentajeAvanzado == 100) auxAvance.colorSpinner = "primary";
+          else if(auxAvance.porcentajeAvanzado >= 50) auxAvance.colorSpinner = "accent";
+          else auxAvance.colorSpinner = "warn";
+        }
+      }
+      this.avances.push(auxAvance);
+    }
+  }
+
   //Realiza la peticion GetItems a la BD y actualiza las variables
   cargarItems(per_pgn:number, pgn:number){
     this._itemService.getItem(this.selectUrl,-1,-1,per_pgn,pgn,this.busqueda,"").then(
@@ -63,6 +90,7 @@ export class ExpedientesComponent implements OnInit {
           if(res && res["data"] && res["meta"]){
             this.items = res["data"] as ExpedienteInterface[];
             this.paginacion = res["meta"].pagination as PaginacionInterface;
+            this.calcularAvance();
             this.ngAfterViewInit();
             this.activarDesactvarBtnsPag();
           }

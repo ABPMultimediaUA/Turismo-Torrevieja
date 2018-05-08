@@ -9,6 +9,9 @@
 .iconErr{
   color:red;
 }
+.iconWarning{
+  color:yellow;
+}
 .material-icons.md-48{
   font-size: 48px;
 }
@@ -20,4 +23,16 @@
 .divBtnVentEmerg{
   display:block;
   text-align:center;
+}
+.margenD{
+  margin-right: 1em;
+}
+.margenI{
+  margin-left: 1em;
+}
+.btnPdfDialog{
+  text-align: center;
+}
+.ventanaPdf{
+  background-color: rgb(201, 201, 201);
 }
