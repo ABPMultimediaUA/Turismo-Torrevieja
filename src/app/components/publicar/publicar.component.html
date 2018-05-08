@@ -96,28 +96,31 @@
     <div class="table-responsive">
       <div class="example-container mat-elevation-z8">
         <div class="example-header"><br><br><br>
-          <h1 class="mat-display-1 tituloComponentes"><i class="fa fa-share-square"></i> Publicar</h1>
+          <h1 class="mat-display-1 tituloComponentes"><i class="fa fa-share-square"></i> Publicar con facebook</h1>
           <h3>Como funciona?</h3>
           <p>Primero hacemos login con  el boton de login con un usuario que sea administrador de la pagina. El login nos devuelve,
             entre otras cosas, un access_token del usuario con los permisos  que se han pedido en el boton de login, entre ellos "publish_pages".
           Una vez tenemos ese token obtenemos el accessToken de la pagina y una vez tenemos el tokende la pagina hacemos el post a la pagina.</p>
-          <p style="color:rgb(237, 231, 59)">importante: para hacer login en facebook el login debe hacerse desde https y para usar https en localhost hay que correr el servidor
+          <p style="color:rgb(237, 231, 59)">importante para testeo en local: para hacer login en facebook el login debe hacerse desde https y para usar https en localhost hay que correr el servidor
           con ng serve -ssl</p>
           <p style="color:rgb(163, 28, 28)">El problema esta en obtener el access_token del usuario con permisos para publicar ya que para obtener ese permiso del usuario primero necesito que
           facebook me revise la aplicacion y diga "esta aplicacion es segura y puede usar el permiso de publicar del usuario"</p>
+
+          <h3>Haz Login para publicar.</h3>
+          <div class="fb-login-button" data-max-rows="1"  data-size="large" data-button-type="login_with" data-show-faces="false" scope="email" data-auto-logout-link="true" data-use-continue-as="false"  data-scope="public_profile,email,user_birthday,publish_actions,location"></div>
+
           <form class="animated fadeIn fast" (ngSubmit)="subirPost()" #forma="ngForm">
-            <label>Id de la pagina</label>
-            <input [(ngModel)]="page_id" name="page_id" class="form-control" placeholder="id de la pagina" required type="text">
-            <label>user_access_token</label>
+            <label>Id de la pagina (497922363906912), Aqui se deberia elegir la pagina en laque el usuario quiere postear, o poner siempre una como esta ahora</label><br>
+            <!-- <input [(ngModel)]="page_id" name="page_id" class="form-control" placeholder="id de la pagina" required type="text"> -->
+            <!-- <label>user_access_token</label>
             <input [(ngModel)]="user_access_token" name="user_access_token" class="form-control" placeholder="id de la pagina" required type="textarea">
             <label>page_access_token</label>
-                <input [(ngModel)]="page_access_token" name="page_access_token" class="form-control" placeholder="id de la pagina" required type="textarea">
+                <input [(ngModel)]="page_access_token" name="page_access_token" class="form-control" placeholder="id de la pagina" required type="textarea"> -->
 
-            <div class="fb-login-button" data-max-rows="1"  data-size="large" data-button-type="login_with" data-show-faces="false" scope="email" data-auto-logout-link="true" data-use-continue-as="false"  data-scope="public_profile,email,user_birthday,publish_actions,location"></div>
-            <label>Texto del post</label>
+              <h2>texto del evento a postear</h2><br>
             <input [(ngModel)]="post.message" name="message" class="form-control" placeholder="Texto principal" required type="text">
 
-            <h2>Foto</h2><br>
+            <h2>foto del evento a postear</h2><br>
             <p>La foto debe ser menor de 10MB</p><br>
             <div class="foto" id="foto">
               <label for="subirfoto"><img id="img"  onclick="this.parentNode.parentNode.childNodes[4].click();" src="/assets/noimg.jpg"  width="200" height="200" ></label><br>

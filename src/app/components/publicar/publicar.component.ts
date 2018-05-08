@@ -34,7 +34,8 @@ export class PublicarComponent implements OnInit {
     // primero voy a coger el token de acceso del usuario
     this.user_access_token=localStorage.getItem('fb_user_token');
     this.user_id=localStorage.getItem('fb_user_id');
- this.user_access_token="EAACEdEose0cBAGTjSuOcPjsFGZASakVI8PBQ4mjKLSuYflxriH0Q43ThnwsqLHwLdHEXYHUHhxluGGkUl4cNbnvjn5NnpPPdIMwYZCnld7grsLjEvnumK2GCoo0OrHpQtqvclag7YjyH6ZANg640eS6VAcRNvkQmaiOxNLQXZBlwyhhffMOnJ2awWZA6QZCLUZD";
+    this.user_access_token="EAACEdEose0cBAHteBE26183nHYAtXhrZBJaHBlu7cxAHT7rKqH5XkZCVXPgj5cC58fn3cjhtYMB1n7ehaVHFvv76X1ZA1okcZBSJ6EmjGwBX1AAHffK4DJNAYzuKCGwiKZCf1dxnw737gmt7ZARUuzhQhfzfEYvYrIQ80rK39cg0x3INBuj1hrsE5hLaMK6dae15B7ZCTeFTAZDZD";
+
     // let url45= this.URL + this.user_id + '/permissions?access_token=' + this.user_access_token;
     // this.http.get(url45).subscribe(response => {
     //   let res = JSON.parse(response.text());
