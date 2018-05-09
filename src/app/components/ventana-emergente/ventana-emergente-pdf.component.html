@@ -1,0 +1,12 @@
+<div *ngIf="isLoaded" class="btnPdfDialog">
+  <button class="margenD" mat-raised-button color="primary" (click)="prevPage()" [disabled]="page === 1">Atrás</button>
+  <span>  {{ page }} / {{ totalPages }}  </span>
+  <button class="margenI" mat-raised-button color="primary" (click)="nextPage()" [disabled]="page === totalPages">Siguiente</button>
+</div>
+
+<pdf-viewer class="ventanaPdf"
+            [src]="fichero"
+            [show-all]="false"
+            [page]="page"
+            (after-load-complete)="afterLoadComplete($event)"
+></pdf-viewer>

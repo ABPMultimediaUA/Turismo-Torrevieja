@@ -1,74 +1,139 @@
-<br><br><br><br><br>
-<div class="container-fluid">
-  <div class="row ">
-        <h1><span class="icon-folder-add"></span> Eventos</h1>
-        <div class="table-responsive">
-          <table class="table table-striped">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">#</th>
-                <th scope="col">Id</th>
-                <th scope="col">Nombre</th>
-                <th scope="col">Título</th>
-                <th scope="col">Coordinador</th>
-                <th scope="col">Fecha Inicio</th>
-                <th scope="col">Fecha Fin</th>
-                <th class="text-right">Opciones</th>
-              </tr>
-            </thead>
-            <tbody>
-               <!-- el pipe keys es para pasar un objeto a un array-->
-              <tr *ngFor="let item of  itemsActuales  ; let i = index">
-                <td>{{ i + 1 }}</td>
-                <td>{{ item.identificador }}</td>
-                <td>{{ item.nombreExpediente }}</td>
-                <td>{{ item.titulo }}</td>
-                <td>{{ item.coordinador }}</td>
-                <td>{{ item.fechaInicio }}</td>
-                <td>{{ item.fechaFin }}</td>
-                <td class="text-right w20">
-                  <button  [routerLink]="['/expediente', item.identificador]"
-                  type="button" class="btn btn-outline-success">
-                    <span class="icon-pencil"></span>
-                  </button>
-                  <!-- <button  (click)="borrarItem(item.identificador)"
-                  type="button" class="btn btn-outline-danger">
-                    <span class="icon-trash"></span>
-                  </button> -->
-                </td>
-              </tr>
-
-            </tbody>
-
-          </table>
-
-          <!-- si no hay items muestra esto -->
-          <div *ngIf="(item).length === 0 && !loading"
-          class="alert alert-info" role="alert">
-              <strong>No hay </strong> items que mostrar
-          </div>
-
-        </div>
-        <br>
-        <nav aria-label="Page navigation example">
-          <ul class="pagination justify-content-center">
-            <li *ngIf="currentPage > 1 " class="page-item" >
-              <a class="page-link" (click)="nuevaPagina(currentPage-1)" aria-label="Previous">
-                <span aria-hidden="true">&laquo;</span>
-                <span class="sr-only">Previous</span>
-              </a>
-            </li>
-            <li class="page-item" *ngFor="let i of cantidadPagina" >
-              <a class="page-link" (click)="nuevaPagina(i+1)" >{{ i+1 }}</a>
-            </li>
-
-            <li *ngIf="currentPage!=totalPaginas" class="page-item" routerLinkActive="active">
-              <a class="page-link" (click)="nuevaPagina(currentPage+1)" aria-label="Next">
-                <span aria-hidden="true">&raquo;</span>
-                <span class="sr-only">Next</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+<div class="container-fluid divContenedorTabla">
+  <div class="row">
+    <div class="example-header">
+      <h1 class="mat-display-1 tituloComponentes titCarteras"><i class="icon-folder"></i> Eventos </h1>
+      <div class="divTiposCartera">
+        <label class="">Estado de las carteras:</label>
+        <mat-radio-group [(ngModel)]="estadoCarteraEscogido" (change)="cambiarListaEstado()">
+          <mat-radio-button class="example-margin" value="301" matTooltip="Las carteras sin aprobar pueden ser eliminadas. También se les puede añadir o eliminar expedientes."
+                            >Sin aprobar</mat-radio-button>
+          <mat-radio-button class="example-margin" value="300" matTooltip="Las carteras aprobadas no pueden ser eliminadas. Tampoco se pueden añadir o eliminar expedientes. Pueden modificarse."
+                            >Aprobadas</mat-radio-button>
+          <mat-radio-button class="example-margin" value="302" matTooltip="Una vez terminadas no pueden ser eliminadas o modificadas, al igual que sus expedientes."
+                            >Finalizadas</mat-radio-button>
+          <mat-radio-button class="example-margin" value="8">Todas</mat-radio-button>
+        </mat-radio-group>
+      </div>
     </div>
+  </div>
+
+  <div class="row">
+    <div class="example-header">
+      <div class="elementosCabecera">
+
+        <button *ngIf="_authService.tienePermiso(25)" mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
+          (click)="nuevoEvento()">Nuevo Evento</button>
+        <button *ngIf="_authService.tienePermiso(28)" mat-raised-button type="button" class="botonEliminarItems" [disabled]="btnEliminar" color="warn" (click)="botonEliminarItem(selection.selected)"><i class="material-icons">delete</i></button>
+
+        <div class="divPaginacion">
+          <mat-form-field class="elementosPaginacion">
+            <input matInput (keyup)="realizarBusqueda($event)" placeholder="Búsqueda" [(ngModel)]="value">
+            <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)='value=""'>
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+
+          <div class="elementosPaginacion">
+            <mat-form-field class="selectNumPgns">
+              <mat-select [(value)]="option_Items_Pgn" placeholder="Elementos por página" (change)="actualizarPaginacion()">
+                <mat-option value="5">5</mat-option>
+                <mat-option value="10">10</mat-option>
+                <mat-option value="15">15</mat-option>
+                <mat-option value="20">20</mat-option>
+                <mat-option value="30">30</mat-option>
+                <mat-option value="40">40</mat-option>
+                <mat-option value="50">50</mat-option>
+                <mat-option value="75">75</mat-option>
+                <mat-option value="100">100</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="elementosPaginacion">
+            <p>Pág. {{paginacion.current_page}} de {{paginacion.total_pages}}</p>
+          </div>
+          <div class="elementosPaginacion btnsPaginacion" #btnsPag>
+            <a class="btnsPaginacionOff" (click)="cambiarPgn(1)"><i class="material-icons">first_page</i></a>
+            <a class="btnsPaginacionOff" (click)="cambiarPgn(2)"><i class="material-icons">navigate_before</i></a>
+            <a class="btnsPaginacionOff" (click)="cambiarPgn(3)"><i class="material-icons">navigate_next</i></a>
+            <a class="btnsPaginacionOff" (click)="cambiarPgn(4)"><i class="material-icons">last_page</i></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="table-responsive">
+      <div class="example-container mat-elevation-z8">
+        <mat-table class="tablaComponente" #table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="select">
+            <mat-header-cell *matHeaderCellDef>
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()"
+                            (change)="activarDesBtnEliminar(selection.selected)">
+              </mat-checkbox>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null"
+                            [checked]="selection.isSelected(row)"
+                            (change)="activarDesBtnEliminar(selection.selected)">
+              </mat-checkbox>
+            </mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="identificador">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(1)"></mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.identificador}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="nombreExpediente">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(1)">Nombre</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.nombreExpediente}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="titulo">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(3)">Título</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.titulo}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="coordinador">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(4)">Coordinador</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.coordinador}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="cartera">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(4)">Cartera</mat-header-cell>
+            <mat-cell *matCellDef="let item" #carteraRow>{{cargarCarterasItems(item.cartera, carteraRow)}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="fechaInicio">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(5)">Fecha inicio</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.fechaInicio}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="fechaFin">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(6)">Fecha fin</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.fechaFin}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="avance">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(6)">Avance</mat-header-cell>
+            <mat-cell *matCellDef="let items; let i = index" matTooltip="Tareas terminadas: {{avances[i].tareasTerminadas}} de {{avances[i].tareasPropuestas}}">
+              <div class="spinnerAvanceFondo">
+                <mat-progress-spinner  [value]="100" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
+              </div>
+              <div class="spinnerAvance">
+                <mat-progress-spinner [value]="avances[i].porcentajeAvanzado" [diameter]="30" [strokeWidth]="6" [color]="avances[i].colorSpinner"></mat-progress-spinner>
+              </div>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="['select','identificador','nombreExpediente','titulo','coordinador','cartera','fechaInicio','fechaFin','avance']"></mat-header-row>
+          <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','identificador','nombreExpediente','titulo','coordinador','cartera','fechaInicio','fechaFin','avance']" (click)="abrirExpediente(row)"></mat-row>
+        </mat-table>
+      </div>
+    </div>
+  </div>
 </div>

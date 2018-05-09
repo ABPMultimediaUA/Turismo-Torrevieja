@@ -1,88 +1,47 @@
-<br><br><br><br><br>
-<div class="container-fluid">
+<div class="contenedorEditar">
+  <h1 class="mat-display-1 tituloFormEstrecho"><span class="icon-folder-add"></span> {{titulo}} {{items.nombreCartera}}</h1>
+  <a class="btnCerrar" (click)="cerrarDialogo()"><i class="material-icons iconoCerrar">close</i></a>
+  <form (ngSubmit)="anyadirItem()" #formulario="ngForm">
+    <div class="row contenedorFormEstrecho">
 
+        <mat-form-field hintLabel="" class="campoWidth100">
+          <input matInput name="nombreCartera" [(ngModel)]="items.nombreCartera" placeholder="Nombre"
+                 maxLength="200" required>
+          <mat-error>Campo requerido</mat-error>
+        </mat-form-field>
 
+        <mat-form-field hintLabel="" class="campoWidth100">
+          <input matInput name="trimestre" [(ngModel)]="items.trimestre" placeholder="Periodo"
+                 maxLength="100" required>
+          <mat-error>Campo requerido</mat-error>
+        </mat-form-field>
 
-
-        <h1><span class="icon-folder-add"></span> Nueva Cartera <small>{{cartera.nombreCartera}}</small></h1>
-        <!-- mensajes -->
-        <div class="container" *ngIf="errorCartera === true">
-            <div class="jumbotron">
-                <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
-                <h1 class="text-center">¡Ups! <p> </p>
-                  <p><small class="text-center"> Ha habido un error creando una cartera.</small></p></h1>
-                  <p class="text-center text-danger" *ngFor="let mensaje of errorMensaje">
-                        {{mensaje}}
-                </p>
-            </div>
+        <mat-form-field hintLabel="" class="campoWidth100">
+          <input matInput name="year" [(ngModel)]="items.year" placeholder="Año"
+                 pattern="[0-9]{4}" maxLength="4" required>
+          <mat-error>Campo requerido. Han de ser cuatro números</mat-error>
+        </mat-form-field>
+    </div>
+    <div class="row contenedorFormEstrecho">
+      <mat-form-field hintLabel="" class="campoWidth100">
+        <textarea matInput name="descripcion" [(ngModel)]="items.descripcion" placeholder="Descripción"
+                  maxLength="500"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="row" *ngIf="!realizandoAccion">
+      <div class="btnsEditarAnyadir">
+        <div *ngIf="_authService.tienePermiso(21)" class="btnsEditarAnyadir">
+          <mat-dialog-actions class="btnsEditarAnyadir">
+            <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid">Crear</button>
+            <button type="button" mat-raised-button (click)="limpiarCampos()" color="warn">Limpiar campos</button>
+          </mat-dialog-actions>
         </div>
-        <div class="container" *ngIf="errorCarteraActualizar === true">
-            <div class="jumbotron">
-                <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
-                <h1 class="text-center">¡Ups! <p> </p>
-                  <p><small class="text-center"> Ha habido un error actualizando una cartera.</small></p></h1>
-                  <p class="text-center text-danger" *ngFor="let mensaje of errorMensaje">
-                        {{mensaje}}
-                </p>
-            </div>
-        </div>
-
-        <div class="container" *ngIf="rgstrCartera === true">
-            <div class="jumbotron">
-                <div class="text-center"><i class="fa fa-5x fa-smile-o" style="color:#28a745;"></i></div>
-                <h1 class="text-center">¡Cartera creada! </h1>
-
-            </div>
-        </div>
-        <!-- fin mensajes -->
-      <form (ngSubmit)="guardar()" #forma="ngForm">
-        <div class="form-group">
-          <label>Nombre</label>
-          <input [(ngModel)]="cartera.nombreCartera"
-            name="nombreCartera"
-            class="form-control"
-            placeholder="Nombre de la Cartera"
-            required
-            type="text">
-        </div>
-        <div class="form-group">
-          <label>Año</label>
-          <input [(ngModel)]="cartera.year"
-            name="año"
-            class="form-control"
-            placeholder="Año de la Cartera"
-            required
-            type="text">
-        </div>
-
-        <div  class="form-group">
-                <label>Trimestre</label>
-                <select [(ngModel)]="cartera.trimestre"
-                  name="trimestre"
-                  class="form-control">
-                    <option value="1">1er Trimestre</option>
-                    <option value="2">2do Trimestre</option>
-                    <option value="3">3er Trimestre</option>
-                    <option value="4">4to Trimestre</option>
-                </select>
-        </div>
-        <div class="form-group">
-          <button
-          [disabled]="!forma.valid"
-             type="submit" class="btn btn-outline-primary">
-            Guardar
-          </button>
-          <button
-            [routerLink]="['/carteras']"
-             class="btn btn-outline-danger">
-            Cancelar
-          </button>
-
-        </div>
-
-        </form>
-        <br>
-
+      </div>
+    </div>
+    <div class="VentanaEmergenteSpinner1">
+      <div class="VentanaEmergenteSpinner2" *ngIf="realizandoAccion">
+          <mat-spinner color="warn"></mat-spinner>
+      </div>
+    </div>
+  </form>
 </div>
-
-<!-- aqui acaba el container fluid -->

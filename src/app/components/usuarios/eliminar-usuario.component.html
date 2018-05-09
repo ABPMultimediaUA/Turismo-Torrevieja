@@ -1,0 +1,35 @@
+<h1 class="mat-display-1 tituloComponentes"><span class="icon-users-outline"></span> Eliminar usuarios</h1>
+<h1 class="VentanaEmergenteEliminarPregunta" mat-dialog-title>¿Estás seguro de que deseas eliminar las siguientes filas?</h1>
+<p class="VentanaEmergenteEliminarInfo">Una vez hecho no podrás recuperarlas.</p>
+<mat-table class="tablaComponenteVEEliminar" #table [dataSource]="dataSource">
+  <ng-container matColumnDef="identificador">
+    <mat-header-cell *matHeaderCellDef >Id</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.identificador}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="nombreUsuario">
+    <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.nombreUsuario}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="correo">
+    <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.correo}}</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="esVerificado">
+    <mat-header-cell *matHeaderCellDef>Verificado</mat-header-cell>
+    <mat-cell *matCellDef="let items">
+      <mat-icon color="primary" *ngIf="items.esVerificado == 1">done</mat-icon>
+      <mat-icon color="primary" *ngIf="items.esVerificado == 0">highlight_off</mat-icon>
+    </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="['identificador','nombreUsuario','correo','esVerificado']"></mat-header-row>
+  <mat-row class="elementoTabla" *matRowDef="let row; columns: ['identificador','nombreUsuario','correo','esVerificado']" ></mat-row>
+</mat-table>
+<mat-dialog-actions class="VentanaEmergenteEliminarBtns" *ngIf="!eliminando">
+    <button mat-raised-button (click)="eliminarItem()" color="warn">Eliminar</button>
+    <a mat-raised-button (click)="cerrarDialogo()" color="primary">Cancelar</a>
+</mat-dialog-actions>
+<div class="VentanaEmergenteSpinner1">
+  <div class="VentanaEmergenteSpinner2" *ngIf="eliminando">
+      <mat-spinner color="warn"></mat-spinner>
+  </div>
+</div>

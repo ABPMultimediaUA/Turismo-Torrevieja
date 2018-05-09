@@ -1,0 +1,47 @@
+<h1 class="mat-display-1 tituloComponentes"><span class="icon-handshake-o"></span> Eliminar proveedores</h1>
+<h1 class="VentanaEmergenteEliminarPregunta" mat-dialog-title>¿Estás seguro de que deseas eliminar las siguientes filas?</h1>
+<p class="VentanaEmergenteEliminarInfo">Una vez hecho no podrás recuperarlas.</p>
+<mat-table class="tablaComponenteVEEliminar" #table [dataSource]="dataSource">
+
+  <ng-container matColumnDef="identificador">
+    <mat-header-cell *matHeaderCellDef>Id</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.identificador}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="nombreProveedor">
+    <mat-header-cell *matHeaderCellDef>Nombre</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.nombreProveedor}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="codigoPostal">
+    <mat-header-cell *matHeaderCellDef>CP</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.codigoPostal}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="direccion">
+    <mat-header-cell *matHeaderCellDef>Dirección</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.direccion}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="telefonoUno">
+    <mat-header-cell *matHeaderCellDef>Teléfono</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.telefonoUno}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="correoUno">
+    <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.correoUno}}</mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="['identificador','nombreProveedor','codigoPostal','direccion','telefonoUno','correoUno']"></mat-header-row>
+  <mat-row class="elementoTabla" *matRowDef="let row; columns: ['identificador','nombreProveedor','codigoPostal','direccion','telefonoUno','correoUno']"></mat-row>
+</mat-table>
+<mat-dialog-actions class="VentanaEmergenteEliminarBtns" *ngIf="!eliminando">
+    <button mat-raised-button (click)="eliminarItem()" color="warn">Eliminar</button>
+    <a mat-raised-button (click)="cerrarDialogo()" color="primary">Cancelar</a>
+</mat-dialog-actions>
+<div class="VentanaEmergenteSpinner1">
+  <div class="VentanaEmergenteSpinner2" *ngIf="eliminando">
+      <mat-spinner color="warn"></mat-spinner>
+  </div>
+</div>

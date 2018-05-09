@@ -1,7 +1,7 @@
 
-export interface Usuario
+export interface UsuarioInterface
 {
-    identificador:string;
+    identificador:number;
     nombreUsuario:string;
     apodo:string;
     correo:string;
@@ -10,5 +10,7 @@ export interface Usuario
     esVerificado:number;
     //key$?:string; identificador es la key
     rol:number;
-
+    fechaActualizacion:string;
+    fechaCreacion:string;
+    fechaEliminacion:string;
 }

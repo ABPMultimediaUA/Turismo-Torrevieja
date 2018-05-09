@@ -1,117 +1,128 @@
+<div class="container-fluid divContenedorTabla">
+  <div class="row">
+    <div class="example-header">
+      <h1 class="mat-display-1 tituloComponentes titCarteras"><span class="icon-archive-1"></span> Carteras</h1>
+      <div class="divTiposCartera">
+        <label class="">Estado:</label>
+        <mat-radio-group [(ngModel)]="estadoCarteraEscogido" (change)="cambiarListaEstado()">
+          <mat-radio-button class="example-margin" value="301" matTooltip="Las carteras sin aprobar pueden ser eliminadas. También se les puede añadir o eliminar expedientes."
+                            >Sin aprobar</mat-radio-button>
+          <mat-radio-button class="example-margin" value="300" matTooltip="Las carteras aprobadas no pueden ser eliminadas. Tampoco se pueden añadir o eliminar expedientes. Pueden modificarse."
+                            >Aprobadas</mat-radio-button>
+          <mat-radio-button class="example-margin" value="302" matTooltip="Una vez terminadas no pueden ser eliminadas o modificadas, al igual que sus expedientes."
+                            >Finalizadas</mat-radio-button>
+          <mat-radio-button class="example-margin" value="8">Todas</mat-radio-button>
+        </mat-radio-group>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="example-header">
+      <div class="elementosCabecera">
+        <button *ngIf="_authService.tienePermiso(21)" mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
+          (click)="editarAnyadirItem(null)">Nueva Cartera</button>
+        <button *ngIf="_authService.tienePermiso(24) && estadoCarteraEscogido==301" mat-raised-button type="button" class="botonEliminarItems" [disabled]="btnEliminar" color="warn" (click)="botonEliminarItem(selection.selected)"><i class="material-icons">delete</i></button>
 
-
-<br><br>
-
-<div class="container-fluid">
-  <div class="row ">
-      <div  class="table-responsive">
-        <div class="example-container mat-elevation-z8">
-          <div class="example-header">
-            <h1 style="margin-left:30px; padding-top:30px; margin-bottom:10px;" class="mat-display-1">Carteras</h1>
-            <!-- subheader -->
-
-              <button style="margin-left:30px;"  mat-raised-button
-                class="botonMat"
-                type="submit"
-                color="primary"
-
-                (click)="openDialogEditar(row)"> Nueva Cartera
-              </button>
-              <mat-form-field style="margin-left:30px;">
-                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filtrar">
-              </mat-form-field>
-
-              <mat-paginator style="width:auto; margin-right:30px;" #paginator
-                    [pageSize]="10"
-                    [pageSizeOptions]="[5, 10, 20, 50, 100]"
-                    [showFirstLastButtons]="true">
-               </mat-paginator>
-
+        <div class="divPaginacion">
+          <mat-form-field class="elementosPaginacion">
+            <input matInput (keyup)="realizarBusqueda($event)" placeholder="Búsqueda" [(ngModel)]="value">
+            <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)='value=""'>
+              <mat-icon>close</mat-icon>
+            </button>
+          </mat-form-field>
+          <!-- <p>Elementos por página</p> -->
+          <div class="elementosPaginacion">
+            <mat-form-field class="selectNumPgns">
+              <mat-select [(value)]="option_Items_Pgn" placeholder="Elementos por página" (change)="actualizarPaginacion()">
+                <mat-option value="5">5</mat-option>
+                <mat-option value="10">10</mat-option>
+                <mat-option value="15">15</mat-option>
+                <mat-option value="20">20</mat-option>
+                <mat-option value="30">30</mat-option>
+                <mat-option value="40">40</mat-option>
+                <mat-option value="50">50</mat-option>
+                <mat-option value="75">75</mat-option>
+                <mat-option value="100">100</mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
-
-
-          <mat-table style="margin-left:30px; margin-right:30px;" #table [dataSource]="dataSource" matSort>
-
-
-             <ng-container matColumnDef="eliminar">
-               <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
-               <mat-cell   *matCellDef="let cartera">
-                 <button (click)="openDialogEliminar(cartera)"  class="botonMat" mat-icon-button color="warn">
-                     <mat-icon color="warn" >delete</mat-icon>
-                </button>
-
-               </mat-cell>
-             </ng-container>
-
-            <ng-container matColumnDef="identificador">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>Id </mat-header-cell>
-              <mat-cell (click)="editar(cartera)"  *matCellDef="let cartera">{{cartera.identificador}}</mat-cell>
-            </ng-container>
-
-
-            <ng-container matColumnDef="nombreCartera">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </mat-header-cell>
-              <mat-cell (click)="editar(cartera)" *matCellDef="let cartera">{{cartera.nombreCartera}}</mat-cell>
-            </ng-container>
-
-
-            <ng-container matColumnDef="year">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Año </mat-header-cell>
-              <mat-cell  (click)="editar(cartera)" *matCellDef="let cartera"> {{cartera.year}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="trimestre">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Trimestre </mat-header-cell>
-              <mat-cell  (click)="editar(cartera)" *matCellDef="let cartera"> {{cartera.trimestre}} </mat-cell>
-            </ng-container>
-
-            <!-- <ng-container matColumnDef="estado">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Estado </mat-header-cell>
-              <mat-cell  (click)="editar(cartera)" *matCellDef="let cartera"> {{cartera.estado}} </mat-cell>
-            </ng-container> -->
-
-
-            <ng-container matColumnDef="estado">
-              <mat-header-cell *matHeaderCellDef mat-sort-header>
-                <span matTooltip="Nueva: Se puede editar y añadir expedientes.
-                                  Planificación: No aprobada. Se puede añadir expediente.
-                                  En trámite: No aprobada. Se puede añadir expediente.
-                                  Aprobada: Aprobada. No se puede añadir expediente.
-                                  Gestión: Aprobada. Gestión de expedientes. No se puede añadir expediente.
-                                  Cerrada: No se puede editar.
-                       ">Estado</span>
-              </mat-header-cell>
-              <mat-cell (click)="editar(cartera)" *matCellDef="let cartera">
-                <div *ngIf="cartera.estado ==0"><span matTooltip="Se puede editar y añadir expedientes">Nueva</span></div>
-                <div *ngIf="cartera.estado ==1"><span matTooltip="No aprobada. Se puede añadir expediente">Planificación</span></div>
-                <div *ngIf="cartera.estado ==2"><span matTooltip="No aprobada. Se puede añadir expediente">En trámite</span></div>
-                <div *ngIf="cartera.estado ==3"><span matTooltip="Aprobada. No se puede añadir expediente">Aprobada</span></div>
-                <div *ngIf="cartera.estado ==4"><span matTooltip="Aprobada. Gestion de expedientes. No se puede añadir expediente">Gestion</span></div>
-                <div *ngIf="cartera.estado ==5"><span matTooltip="No se puede editar">Cerrada</span></div>
-              </mat-cell>
-            </ng-container>
-
-
-
-
-            <ng-container matColumnDef="fechaCreacion">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Creación </mat-header-cell>
-              <mat-cell  (click)="editar(cartera)" *matCellDef="let cartera"> {{cartera.fechaCreacion}} </mat-cell>
-            </ng-container>
-
-            <ng-container matColumnDef="fechaActualizacion">
-              <mat-header-cell *matHeaderCellDef mat-sort-header> Actualización </mat-header-cell>
-              <mat-cell  (click)="editar(cartera)" *matCellDef="let cartera"> {{cartera.fechaActualizacion}} </mat-cell>
-            </ng-container>
-
-
-
-            <mat-header-row *matHeaderRowDef="['eliminar','identificador', 'nombreCartera', 'year', 'trimestre','estado', 'fechaCreacion', 'fechaActualizacion']"></mat-header-row>
-            <mat-row class="elementoTabla" *matRowDef="let row; columns: ['eliminar','identificador', 'nombreCartera', 'year', 'trimestre','estado', 'fechaCreacion', 'fechaActualizacion']" ></mat-row>
-          </mat-table>
-<br><br><br>
+          <div class="elementosPaginacion">
+            <p>Pág. {{paginacion.current_page}} de {{paginacion.total_pages}}</p>
+          </div>
+          <div class="elementosPaginacion btnsPaginacion" #btnsPag>
+            <a class="btnsPaginacionOff" (click)="cambiarPgn(1)"><i class="material-icons">first_page</i></a>
+            <a class="btnsPaginacionOff" (click)="cambiarPgn(2)"><i class="material-icons">navigate_before</i></a>
+            <a class="btnsPaginacionOff" (click)="cambiarPgn(3)"><i class="material-icons">navigate_next</i></a>
+            <a class="btnsPaginacionOff" (click)="cambiarPgn(4)"><i class="material-icons">last_page</i></a>
+          </div>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="table-responsive">
+      <div class="example-container mat-elevation-z8">
+        <mat-table class="tablaComponente" #table [dataSource]="dataSource" matSort>
+          <ng-container matColumnDef="select">
+            <mat-header-cell *matHeaderCellDef>
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()"
+                            (change)="activarDesBtnEliminar(selection.selected)">
+              </mat-checkbox>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <mat-checkbox (click)="$event.stopPropagation()"
+                            (change)="$event ? selection.toggle(row) : null"
+                            [checked]="selection.isSelected(row)"
+                            (change)="activarDesBtnEliminar(selection.selected)">
+              </mat-checkbox>
+            </mat-cell>
+          </ng-container>
 
+          <ng-container matColumnDef="identificador">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(1)"></mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.identificador}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="nombreCartera">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(1)">Nombre</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.nombreCartera}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="descripcion">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(1)">Descripción</mat-header-cell>
+            <mat-cell *matCellDef="let items"></mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="trimestre">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(5)">Periodo</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.trimestre}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="year">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(6)">Año</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.year}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="fechaCreacion">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(4)">Fecha creación</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.fechaCreacion | date}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="estado">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(2)">Estado</mat-header-cell>
+            <mat-cell *matCellDef="let items">
+              <span *ngIf="items.estado == 1" matTooltip="Sin aprobar" class="material-icons">lock_open</span>
+              <span *ngIf="items.estado == 2" matTooltip="Aprobada" class="material-icons">lock_outline</span>
+              <span *ngIf="items.estado == 3" matTooltip="Finalizada" class="material-icons">lock</span>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="['select','identificador','nombreCartera','descripcion','trimestre','year','fechaCreacion','estado']"></mat-header-row>
+          <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','identificador','nombreCartera','descripcion','trimestre','year','fechaCreacion','estado']" (click)="abrirCartera(row)"></mat-row>
+        </mat-table>
+      </div>
+    </div>
+  </div>
 </div>
-<!-- aqui acaba el container fluid -->

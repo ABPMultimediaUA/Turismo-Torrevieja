@@ -1,7 +1,21 @@
 export interface EspacioInterface
 {
+  CP:number;
   aforo:number;
+  calle:string;
+  descripcion:string;
+  fechaActualizacion:string;
+  fechaCreacion:string;
+  fechaEliminacion:string;
   identificador:number;
+  latitudX:string;
+  latitudY:string;
+  localidad:string;
   nombreEspacio:string;
-  sitio:string;
+  numero:string;
+  planta:string;
+  provincia:string;
+  puerta:string;
+  telefono1:string;
+  telefono2:string;
 }

@@ -1,111 +1,91 @@
-<br><br><br><br><br>
-<div class="container-fluid">
+<div class="contenedorEditar">
+  <h1 class="mat-display-1 tituloComponentes">
+    <span *ngIf="!editar" class="icon-user-add-outline"></span>
+    <span *ngIf="editar" class="icon-user-outline"></span> {{titulo}} {{items.nombreUsuario}}
+  </h1>
+  <a class="btnCerrar" (click)="cerrarDialogo()"><i class="material-icons iconoCerrar">close</i></a>
+  <form (ngSubmit)="anyadirItem()" #formulario="ngForm">
+    <div class="row tresCamposFila">
 
-        <h1><span class="icon-user-add-outline"></span> Nuevo Usuario <small>{{usuario.nombreUsuario}}</small></h1>
-        <!-- mensajes -->
-        <div class="container" *ngIf="errorUsuario === true">
-            <div class="jumbotron">
-                <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
-                <h1 class="text-center">¡Ups! <p> </p>
-                  <p><small class="text-center"> Ha habido un error creando un usuario.</small></p></h1>
-                  <p class="text-center text-danger" *ngFor="let mensaje of errorMensaje">
-                        {{mensaje}}
-                </p>
-            </div>
+      <mat-form-field hintLabel="">
+        <input matInput name="nombreUsuario" [(ngModel)]="items.nombreUsuario" placeholder="Nombre" [readonly]="bloqCampos"
+               maxLength="200" required>
+        <mat-error>Campo requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field hintLabel="">
+        <input matInput name="correo" [(ngModel)]="items.correo" placeholder="Email" [readonly]="bloqCampos"
+               maxLength="50">
+      </mat-form-field>
+
+    </div>
+    <div class="row tresCamposFila">
+
+      <!-- <mat-form-field hintLabel="">
+        <input matInput name="rol" [(ngModel)]="items.rol" placeholder="Rol" [readonly]="bloqCampos">
+      </mat-form-field> -->
+
+      <mat-form-field>
+        <mat-select placeholder="Rol" [value]="items.rol" [disabled]="bloqCampos">
+          <mat-option *ngFor="let i of roles" [value]="i.identificador" readonly>{{i.nombreRol}}</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field hintLabel="" *ngIf="!editar">
+        <input matInput type="password" name="password" [(ngModel)]="items.password" placeholder="Contraseña"
+        required minLength="6">
+        <mat-error>Mínimo seis caracteres</mat-error>
+      </mat-form-field>
+
+      <mat-form-field hintLabel="" *ngIf="!editar">
+        <input matInput type="password" name="password_confirmation" [(ngModel)]="items.password_confirmation" placeholder="Confirmar contraseña"
+        required minLength="6">
+        <mat-error>Las contraseñas no coinciden</mat-error>
+      </mat-form-field>
+
+      <mat-form-field hintLabel="" *ngIf="editar">
+        <input matInput name="fechaCreacion" [(ngModel)]="items.fechaCreacion" placeholder="Fecha de creación" readonly>
+      </mat-form-field>
+
+      <div class="" *ngIf="editar">
+        <p>Verificado
+          <mat-icon color="primary" *ngIf="items.esVerificado == 1">done</mat-icon>
+          <mat-icon color="primary" *ngIf="items.esVerificado == 0">highlight_off</mat-icon>
+        </p>
+      </div>
+
+    </div>
+    <div class="row contenedorFormObservaciones">
+      <mat-form-field hintLabel="" class="campoWidth100">
+        <textarea matInput name="descripcion" [(ngModel)]="items.descripcion" placeholder="Observaciones" [readonly]="bloqCampos"
+                  maxLength="500"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="row" *ngIf="!realizandoAccion">
+      <div class="btnsEditarAnyadir">
+        <div *ngIf="!editar && _authService.tienePermiso(54)" class="btnsEditarAnyadir">
+          <mat-dialog-actions class="btnsEditarAnyadir">
+            <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid">Crear</button>
+            <button type="button" mat-raised-button (click)="limpiarCampos()" color="warn">Limpiar campos</button>
+          </mat-dialog-actions>
         </div>
-        <div class="container" *ngIf="errorUsuarioActualizar === true">
-            <div class="jumbotron">
-                <div class="text-center"><i class="fa fa-5x fa-frown-o" style="color:#d9534f;"></i></div>
-                <h1 class="text-center">¡Ups! <p> </p>
-                  <p><small class="text-center"> Ha habido un error actualizando un usuario.</small></p></h1>
-                  <p class="text-center text-danger" *ngFor="let mensaje of errorMensaje">
-                        {{mensaje}}
-                </p>
-            </div>
+        <div *ngIf="editar && _authService.tienePermiso(54)" class="btnsEditarAnyadir">
+          <div *ngIf="bloqCampos" class="btnsEditarAnyadir">
+            <button type="button" mat-raised-button color="primary" (click)="disable_enable_campos()">Editar</button>
+          </div>
+          <div *ngIf="!bloqCampos" class="btnsEditarAnyadir">
+            <mat-dialog-actions class="btnsEditarAnyadir">
+              <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid">Guardar cambios</button>
+              <button type="button" mat-raised-button (click)="disable_enable_campos()" color="warn">Cancelar</button>
+            </mat-dialog-actions>
+          </div>
         </div>
-
-        <div class="container" *ngIf="rgstrUsuario === true">
-            <div class="jumbotron">
-                <div class="text-center"><i class="fa fa-5x fa-smile-o" style="color:#28a745;"></i></div>
-                <h1 class="text-center">¡Usuario creado! <p> </p>
-                  <p><small class="text-center text-success"> Se ha enviado un email de confirmación a {{usuario.correo}}.</small></p></h1>
-
-            </div>
-        </div>
-        <!-- fin mensajes -->
-
-        <form class="animated fadeIn fast"(ngSubmit)="guardar()" #forma="ngForm">
-          <div class="form-group">
-            <label>Nombre</label>
-            <input [(ngModel)]="usuario.nombreUsuario"
-              name="nombreUsuario"
-              class="form-control"
-              placeholder="Nombre del Usuario"
-              required
-              type="text">
-          </div>
-          <div class="form-group">
-            <label>Apodo</label>
-            <input [(ngModel)]="usuario.apodo"
-              name="apodo"
-              class="form-control"
-              placeholder="Apodo del Usuario"
-              required
-              type="text">
-          </div>
-          <div class="form-group">
-            <label>Correo</label>
-            <input [(ngModel)]="usuario.correo"
-              name="correo"
-              class="form-control"
-              placeholder="Correo del Usuario"
-              required
-              type="text">
-          </div>
-          <div class="form-group">
-            <label>Contraseña</label>
-            <input [(ngModel)]="usuario.password"
-              name="password"
-              class="form-control"
-              placeholder="Contraseña del Usuario"
-              required
-              type="text">
-          </div>
-          <div class="form-group">
-            <label>Confirmación de Contraseña</label>
-            <input [(ngModel)]="usuario.password_confirmation"
-              name="password_confirmation"
-              class="form-control"
-              placeholder="Confirmación Contraseña del Usuario"
-              required
-              type="text">
-          </div>
-
-          <div class="form-group">
-                  <label>Rol</label>
-                  <select [(ngModel)]="usuario.rol"
-                    name="rol"
-                  class="form-control"
-                  >
-                    <option value="1">Administrador</option>
-                    <option value="2">Trabajador</option>
-                    <option value="4">Otros</option>
-
-                  </select>
-                </div>
-          <div class="form-group">
-            <button [disabled]="!forma.valid"
-               type="submit" class="btn btn-outline-primary">
-              Guardar cambios
-            </button>
-
-          </div>
-
-        </form>
-        <br>
-
-
-
+      </div>
+    </div>
+    <div class="VentanaEmergenteSpinner1">
+      <div class="VentanaEmergenteSpinner2" *ngIf="realizandoAccion">
+          <mat-spinner color="warn"></mat-spinner>
+      </div>
+    </div>
+  </form>
 </div>
-
-<!-- aqui acaba el container fluid -->

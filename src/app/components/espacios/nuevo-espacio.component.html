@@ -1,32 +1,108 @@
-<br><br><br><br><br>
-<div class="container-fluid">
-  <div class="row ">
-    <main role="main" class="col-sm-12 ml-sm-auto col-md-12 pt-3">
-      <h1><span class="icon-town-hall"></span> Nuevo espacio <small>{{espacio.nombreEspacio}}</small></h1>
-      <br>
-      <form (ngSubmit)="guardar()" #forma="ngForm">
-        <div class="row">
-          <div class="form-group col-sm-3">
-            <label>Nombre espacio</label>
-            <input [(ngModel)]="espacio.nombreEspacio" name="espacioNombre" class="form-control" placeholder="" required type="text">
+<div class="contenedorEditar">
+  <h1 class="mat-display-1 tituloComponentes"><span class="icon-town-hall"></span> {{titulo}} {{items.nombreEspacio}}</h1>
+  <a class="btnCerrar" (click)="cerrarDialogo()"><i class="material-icons iconoCerrar">close</i></a>
+  <form (ngSubmit)="anyadirItem()" #formulario="ngForm">
+    <div class="row contenedorFormCamposDestacados">
+
+      <mat-form-field hintLabel="">
+        <input matInput name="nombreEspacio" [(ngModel)]="items.nombreEspacio" placeholder="Nombre" [readonly]="bloqCampos"
+               maxLength="200" required>
+        <mat-error>Campo requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field hintLabel="">
+        <input matInput name="CP" [(ngModel)]="items.CP" placeholder="Código Postal" [readonly]="bloqCampos"
+               pattern="[0-9]{5}" minLength="5" maxLength="5">
+        <mat-error>Han de ser cinco números</mat-error>
+      </mat-form-field>
+
+      <mat-form-field hintLabel="">
+        <input matInput name="provincia" [(ngModel)]="items.provincia" placeholder="Provincia" [readonly]="bloqCampos"
+               maxLength="50">
+      </mat-form-field>
+
+      <mat-form-field hintLabel="">
+        <input matInput name="localidad" [(ngModel)]="items.localidad" placeholder="Localidad" [readonly]="bloqCampos"
+               maxLength="50">
+      </mat-form-field>
+
+    </div>
+    <div class="row">
+      <div class="col-sm-3 contenedorFormCampos">
+
+        <mat-form-field hintLabel="">
+          <input matInput name="calle" [(ngModel)]="items.calle" placeholder="Calle" [readonly]="bloqCampos"
+                 maxLength="200">
+        </mat-form-field>
+
+        <mat-form-field hintLabel="">
+          <input matInput name="numero" [(ngModel)]="items.numero" placeholder="Número" [readonly]="bloqCampos"
+                 maxLength="50">
+        </mat-form-field>
+
+        <mat-form-field hintLabel="">
+          <input matInput name="planta" [(ngModel)]="items.planta" placeholder="Planta" [readonly]="bloqCampos"
+                 maxLength="20">
+        </mat-form-field>
+
+        <mat-form-field hintLabel="">
+          <input matInput name="puerta" [(ngModel)]="items.puerta" placeholder="Puerta" [readonly]="bloqCampos"
+                 maxLength="20">
+        </mat-form-field>
+
+        <mat-form-field hintLabel="">
+          <input matInput name="telefono1" [(ngModel)]="items.telefono1" placeholder="Teléfono 1" [readonly]="bloqCampos"
+                 maxLength="40">
+        </mat-form-field>
+
+        <mat-form-field hintLabel="">
+          <input matInput name="telefono2" [(ngModel)]="items.telefono2" placeholder="Teléfono 2" [readonly]="bloqCampos"
+                 maxLength="40">
+        </mat-form-field>
+
+        <mat-form-field hintLabel="">
+          <input matInput type="number" name="aforo" [(ngModel)]="items.aforo" placeholder="Aforo" [readonly]="bloqCampos"
+                 maxLength="11">
+        </mat-form-field>
+
+      </div>
+      <div class="col-sm">
+        <!-- GOOGLE MAPS -->
+        <div #gmap class="mapa"></div>
+        <!-- FIN GOOGLE MAPS -->
+      </div>
+    </div>
+    <div class="row contenedorFormObservaciones">
+      <mat-form-field hintLabel="" class="campoWidth100">
+        <textarea matInput name="descripcion" [(ngModel)]="items.descripcion" placeholder="Observaciones" [readonly]="bloqCampos"
+                  maxLength="500"></textarea>
+      </mat-form-field>
+    </div>
+    <div class="row" *ngIf="!realizandoAccion">
+      <div class="btnsEditarAnyadir">
+        <div *ngIf="!editar && _authService.tienePermiso(5)" class="btnsEditarAnyadir">
+          <mat-dialog-actions class="btnsEditarAnyadir">
+            <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid">Crear</button>
+            <button type="button" mat-raised-button (click)="limpiarCampos()" color="warn">Limpiar campos</button>
+          </mat-dialog-actions>
+        </div>
+        <div *ngIf="editar && _authService.tienePermiso(6)" class="btnsEditarAnyadir">
+          <div *ngIf="bloqCampos" class="btnsEditarAnyadir">
+            <button type="button" mat-raised-button color="primary" (click)="disable_enable_campos()">Editar</button>
           </div>
-          <div class="form-group col-sm-3">
-            <label>Dirección</label>
-            <input [(ngModel)]="espacio.sitio" name="espacioDir" class="form-control" placeholder="" required type="text">
-          </div>
-          <div class="form-group col-sm-3">
-            <label>Aforo</label>
-            <input [(ngModel)]="espacio.aforo" name="espacioAforo" class="form-control" placeholder="" required type="number">
-          </div>
-          <div class="form-group">
-            <br>
-            <button [disabled]="!forma.valid" type="submit" class="btn btn-outline-primary">
-              Guardar cambios
-            </button>
+          <div *ngIf="!bloqCampos" class="btnsEditarAnyadir">
+            <mat-dialog-actions class="btnsEditarAnyadir">
+              <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid">Guardar cambios</button>
+              <button type="button" mat-raised-button (click)="disable_enable_campos()" color="warn">Cancelar</button>
+            </mat-dialog-actions>
           </div>
         </div>
-      </form>
-      <br>
-    </main>
-  </div>
+      </div>
+    </div>
+    <div class="VentanaEmergenteSpinner1">
+      <div class="VentanaEmergenteSpinner2" *ngIf="realizandoAccion">
+          <mat-spinner color="warn"></mat-spinner>
+      </div>
+    </div>
+  </form>
 </div>

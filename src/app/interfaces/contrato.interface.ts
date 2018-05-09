@@ -1,6 +1,6 @@
 export interface ContratoInterface
 {
-  archivo:string;
+  fichero:string;
   clase:string;
   expediente:number;
   identificador:number;
@@ -9,4 +9,5 @@ export interface ContratoInterface
   proveedor:number;
   tiempo:number;
   usuario:number;
+  observaciones:string;
 }

@@ -1,4 +1,4 @@
-export interface Cartera
+export interface CarteraInterface
 {
     identificador:string;
     nombreCartera:string;
