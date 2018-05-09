@@ -93,6 +93,7 @@ import { CrearExpedienteDialog} from "./components/carteras/crear-expediente-dia
 import { EliminarExpedienteDialog } from "./components/carteras/eliminar-expediente-dialog.component";
 
 import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.component";
+import { PublicarComponent } from './components/publicar/publicar.component';
 
 
 
@@ -138,6 +139,7 @@ import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.com
     VentanaEmergenteComponent,
     VentanaEmergentePreguntaComponent,
     VentanaEmergentePdfComponent,
+    PublicarComponent
   ],
   imports: [
     HttpClientModule,

@@ -25,6 +25,20 @@ import { EspaciosComponent }    from './components/espacios/espacios.component';
 //Otros
 import { MensajesComponent }    from "./components/mensajes/mensajes.component";
 
+
+
+//TODO eliminar
+
+import { NuevaCarteraComponent } from './components/carteras/nueva-cartera.component';
+
+import { NuevoExpedienteComponent } from './components/expedientes/nuevo-expediente.component';
+
+
+import { NuevoRolComponent } from "./components/roles/nuevo-rol.component";
+//TODO Fin eliminar
+
+import { PublicarComponent } from "./components/publicar/publicar.component";
+
 const app_routes: Routes = [
   //Menu no login
   { path: 'home', component: HomeComponent },
@@ -44,6 +58,9 @@ const app_routes: Routes = [
   { path: 'expediente/:id', canActivate:[AuthGuardService,AuthGuardEventosService], component: ExpedienteComponent },
   { path: 'espacios', canActivate:[AuthGuardService,AuthGuardEspaciosService], component: EspaciosComponent },
   { path: 'proveedores', canActivate:[AuthGuardService,AuthGuardProveedoresService], component: ProveedoresComponent },
+
+  { path: 'publicar', canActivate:[AuthGuardService], component: PublicarComponent },
+
 
   //Otros
   { path: 'mensajes/:parame', component: MensajesComponent },

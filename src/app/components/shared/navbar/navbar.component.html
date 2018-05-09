@@ -10,24 +10,24 @@
     <div *ngIf="!_authService.userLog.getValue()">
       <ul class="navbar-nav mr-auto d9d9d9">
         <div>
-          <button [routerLink]="['/home']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
+          <button [routerLink]="['/home']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button">
             <span class="icon-home-outline"></span> Inicio
             <span class="sr-only">(current)</span>
           </button>
         </div>
         <div>
-          <button [routerLink]="['/about']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
+          <button [routerLink]="['/about']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button">
            <span class="icon-info-circled"></span> Acerca de GVENT
           </button>
         </div>
         <div>
-          <button [routerLink]="['/contact']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
+          <button [routerLink]="['/contact']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button">
            <span class="icon-mail"></span> Contacto
           </button>
         </div>
         <div>
           <!-- <button [routerLink]="['/chatbots']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" > -->
-          <button href="https://gvent.ovh/chatbot/" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
+          <button href="https://gvent.ovh/chatbot/" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button">
            <span class="icon-id-badge"></span> Chatbots
           </button>
         </div>
@@ -43,7 +43,7 @@
            <span class="icon-folder"></span> Eventos
           </button>
           <div class="bg-blue dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a role="button" [routerLink]="['/carteras']" class="nav-link elemento-navbar d9d9d9" >
+            <a role="button" [routerLink]="['/carteras']" class="nav-link elemento-navbar d9d9d9">
               <span class="icon-archive-1"></span> Carteras
             </a>
             <div class="dropdown-divider"></div>
@@ -53,7 +53,7 @@
           </div>
         </div>
         <div *ngIf="_authService.tienePermiso(23) && !_authService.tienePermiso(3)">
-          <button [routerLink]="['/carteras']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
+          <button [routerLink]="['/carteras']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button">
            <span class="icon-archive-1"></span> Carteras
           </button>
         </div>
@@ -64,13 +64,13 @@
         </div>
 
         <div *ngIf="_authService.tienePermiso(7)">
-          <button [routerLink]="['/espacios']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
+          <button [routerLink]="['/espacios']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button">
            <span class="icon-town-hall"></span> Espacios
           </button>
         </div>
 
         <div *ngIf="_authService.tienePermiso(31)">
-          <button [routerLink]="['/proveedores']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
+          <button [routerLink]="['/proveedores']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button">
            <span class="icon-handshake-o"></span> Proveedores
           </button>
         </div>
@@ -111,54 +111,34 @@
      <span class="icon-vcard"></span>  {{ _authService.user.getValue().nombreUsuario }}
     </button>
     <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
-      <a
-        role="button"
-        [routerLink]="['/perfil']"
-        class="nav-link elemento-navbar d9d9d9" >
+      <a role="button" [routerLink]="['/perfil']" class="nav-link elemento-navbar d9d9d9">
         <span class="icon-user"></span> Perfil
       </a>
-      <a style="width:180px"
-        role="button"
-        [routerLink]="['/login']"
-        (click)="cerrarSesion()"
-        class="nav-link elemento-navbar d9d9d9 " >
+      <a style="width:180px" role="button" [routerLink]="['/login']" (click)="cerrarSesion()" class="nav-link elemento-navbar d9d9d9 ">
         <span class="icon-users"></span> Cambiar cuenta
       </a>
-      <a
-        role="button"
-        (click)="_authService.logout(1)"
-        [routerLink]="['/home']"
-        class="nav-link elemento-navbar d9d9d9 " >
+      <a role="button" (click)="_authService.logout(1)" [routerLink]="['/home']" class="nav-link elemento-navbar d9d9d9 ">
         <span class="icon-logout"></span> Cerrar Sesion
       </a>
-      <a
-        role="button"
-        [routerLink]="['/ajustes']"
-        class="nav-link elemento-navbar d9d9d9 " >
+      <a role="button" [routerLink]="['/ajustes']" class="nav-link elemento-navbar d9d9d9 ">
         <span class="icon-cog"></span> Ajustes
       </a>
-      <a
-        role="button"
-        [routerLink]="['/contact']"
-        class="nav-link elemento-navbar d9d9d9 " >
+      <a role="button" [routerLink]="['/contact']" class="nav-link elemento-navbar d9d9d9 ">
         <span class="icon-help"></span> Ayuda
       </a>
-      <a
-        role="button"
-        [routerLink]="['/contact']"
-        class="nav-link elemento-navbar d9d9d9 " >
+      <a role="button" [routerLink]="['/contact']" class="nav-link elemento-navbar d9d9d9 ">
         <span class="icon-comment"></span> Sugerencias
-      </a>
+      </a> <a role="button" [routerLink]="['/publicar']" class="nav-link elemento-navbar d9d9d9 ">
+          <span class="icon-comment"></span> Publicar
+        </a>
     </div>
   </div>
 
   <!-- BOTONES LOGIN LOGOUT -->
-  <button style="margin-left:30px;" mat-raised-button *ngIf="!_authService.userLog.getValue()"
-    class="botonMat" type="submit" color="primary" [routerLink]="['/login']">
+  <button style="margin-left:30px;" mat-raised-button *ngIf="!_authService.userLog.getValue()" class="botonMat" type="submit" color="primary" [routerLink]="['/login']">
     <span class="icon-login"></span>Login
   </button>
-  <button style="margin-left:30px;" mat-raised-button *ngIf="_authService.userLog.getValue()"
-    class="botonMat" type="submit" color="warn" (click)="_authService.logout(0)">
+  <button style="margin-left:30px;" mat-raised-button *ngIf="_authService.userLog.getValue()" class="botonMat" type="submit" color="warn" (click)="_authService.logout(0)">
     <span class="icon-logout"></span>Logout
   </button>
 </mat-toolbar>
