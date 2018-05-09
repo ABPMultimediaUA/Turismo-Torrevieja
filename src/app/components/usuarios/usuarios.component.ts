@@ -13,78 +13,8 @@ import { NuevoUsuarioComponent }                from './nuevo-usuario.component'
   templateUrl: './usuarios.component.html',
   styleUrls: ['../../app.component.css','./usuarios.component.css']
 })
-<<<<<<< HEAD
-export class UsuariosComponent implements OnInit {
-
-  row:Usuario;
-  loading:boolean = true;
-  //pagination
-  paginacion:any = [];
-  cantidadPagina:any[]=[];
-
-  usuariosActuales:any[] = [];
-  totalPaginas:number;
-  currentPage:number = 1;
-  // k:number;
- // row:Usuario;
 
 
-//megacaca
-  ELEMENT_DATA: Usuario[];
-  usuarios:any[] = [];
-  displayedColumns = ['select','identificador', 'nombreUsuario', 'apodo', 'esVerificado','rol'];
-  dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-  selection = new SelectionModel<Usuario>(true, []);
-
-  @ViewChild(MatSort) sort: MatSort;
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-
-    ngAfterViewInit() {
-        console.log("entra en el sort ese");
-
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-      this.selection = new SelectionModel<Usuario>(true, []);
-      console.log(this.dataSource.sort);
-    }
-//finalmegacaca
-
-
-  constructor(private _usuariosService:UsuariosService,
-              private router:Router,
-              private route:ActivatedRoute,
-              public  logueadoService: LogueadoService,
-                public dialog: MatDialog
-            ) {
-              this.logueadoService.comprobarLogueado();
-
-              console.log("estaLogueado:");
-              console.log(this.logueadoService.estaLogueado);
-        this._usuariosService.getUsuarios("1")
-          .subscribe( data =>{
-            console.log(data);//la data del getHeroes
-
-            this.usuarios= data.data;
-            console.log("array de usuarios:");
-            console.log(this.usuarios);
-
-
-            //megapis
-            this.ELEMENT_DATA = this.usuarios;
-            this.displayedColumns = ['select','identificador', 'nombreUsuario', 'apodo', 'esVerificado','rol'];
-            this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-            this.selection = new SelectionModel<Usuario>(true, []);
-            this.dataSource.sort = this.sort;
-            this.dataSource.paginator = this.paginator;
-            //finalmegapis
-
-
-            this.totalPaginas = Math.ceil(this.usuarios.length/10);
-            console.log("this.totalPaginas:");
-            console.log(this.totalPaginas);
-            this.loading=false;
-=======
->>>>>>> RamaDepurar2
 
 export class UsuariosComponent implements OnInit {
 
@@ -191,15 +121,7 @@ export class UsuariosComponent implements OnInit {
       this.cargarItems(+this.option_Items_Pgn,1);
     }
 
-<<<<<<< HEAD
-  console.log(row);
 
-    const dialogRef = this.dialog.open(EliminarUsuarioDialog, {
-      height: '200px',
-      width: '450px',
-      data: { row: row }
-    });
-=======
   }
 
   //BOTON - Funcion eliminar item/s
@@ -221,7 +143,7 @@ export class UsuariosComponent implements OnInit {
         }
       });
     }
->>>>>>> RamaDepurar2
+
   }
 
   //BOTON - ROW - Se activacon el boton nuevo item o pinchando una fila, abre el formulario crear / editar item
