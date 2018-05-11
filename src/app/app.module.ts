@@ -65,6 +65,8 @@ import { VentanaEmergenteComponent }          from './components/ventana-emergen
 import { VentanaEmergentePreguntaComponent }  from './components/ventana-emergente/ventana-emergente-pregunta.component';
 import { VentanaEmergentePdfComponent }       from './components/ventana-emergente/ventana-emergente-pdf.component';
 
+//Gráficas de Grafana
+import { GraficasComponent } from './components/graficas/graficas.component';
 
 
 
@@ -139,7 +141,8 @@ import { PublicarComponent } from './components/publicar/publicar.component';
     VentanaEmergenteComponent,
     VentanaEmergentePreguntaComponent,
     VentanaEmergentePdfComponent,
-    PublicarComponent
+    PublicarComponent,
+    GraficasComponent
   ],
   imports: [
     HttpClientModule,

@@ -39,6 +39,8 @@ import { NuevoRolComponent } from "./components/roles/nuevo-rol.component";
 
 import { PublicarComponent } from "./components/publicar/publicar.component";
 
+import { GraficasComponent } from './components/graficas/graficas.component';
+
 const app_routes: Routes = [
   //Menu no login
   { path: 'home', component: HomeComponent },
@@ -60,7 +62,7 @@ const app_routes: Routes = [
   { path: 'proveedores', canActivate:[AuthGuardService,AuthGuardProveedoresService], component: ProveedoresComponent },
 
   { path: 'publicar', canActivate:[AuthGuardService], component: PublicarComponent },
-
+  { path: 'graficas', canActivate:[AuthGuardService], component: GraficasComponent },
 
   //Otros
   { path: 'mensajes/:parame', component: MensajesComponent },

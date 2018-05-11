@@ -30,7 +30,11 @@ mat-toolbar{
     color: #D9D9D9;
 }
 mat-toolbar a{
-  color: #D9D9D9;
+  color: #FFFFFF;
+}
+
+mat-toolbar div a{
+  margin: 0px 0px 0px 5px;
 }
 
 mat-toolbar a:hover{
