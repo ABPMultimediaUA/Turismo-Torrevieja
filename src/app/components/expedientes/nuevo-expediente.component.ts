@@ -1,6 +1,7 @@
-import { Component, OnInit }                from '@angular/core';
+import { Component, OnInit, Inject, ViewChild }     from '@angular/core';
 import { PeticionesCrudService, AuthService }       from '../../services/index';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
+import { VentanaEmergentePreguntaComponent }        from '../ventana-emergente/ventana-emergente-pregunta.component';
 import { VentanaEmergenteComponent }                from '../ventana-emergente/ventana-emergente.component'
 import { ExpedienteInterface }                      from '../../interfaces/expediente.interface';
 import { UsuarioInterface }                         from '../../interfaces/usuario.interface';
@@ -14,13 +15,26 @@ import { CarteraInterface }                         from '../../interfaces/carte
 
 export class NuevoExpedienteComponent implements OnInit {
 
-  items:ExpedienteInterface;
+  items:ExpedienteInterface={
+    identificador:null,
+    nombreExpediente:null,
+    avance:0,
+    cartera:null,
+    coordinador:null,
+    detalle:null,
+    fechaFin:null,
+    fechaInicio:null,
+    image:null,
+    titulo:null,
+  };
   users:UsuarioInterface[]=[];
   carteras:CarteraInterface[]=[];
   titulo:string;                      //El titulo de la ventana emergente
   realizandoAccion:boolean = false;   //Para saber si mostrar o no el spinner
   camposAnyadidos:boolean = false;    //Feedback que devuelve a la ventana anterior cuando esta se cierra
   tipoCRUD:number = 0;                //Seleccionar el tipo de url para el crudService
+
+  @ViewChild("formulario") formulario;
 
   constructor(  private _itemService: PeticionesCrudService,
                 private _authService:AuthService,
@@ -29,7 +43,6 @@ export class NuevoExpedienteComponent implements OnInit {
              )
   {
     dialogRef.disableClose = true;
-    this.limpiarCampos();
     this.titulo = "Nuevo evento";
 
     //COGEMOS LOS USUARIOS
@@ -75,12 +88,23 @@ export class NuevoExpedienteComponent implements OnInit {
       image:null,
       titulo:null,
     }
+    this.formulario.reset(this.items, false);
   }
 
 
   //BOTON - Cerrar ventana emergente volviendo a la anterior
   cerrarDialogo(){
-    this.dialogRef.close(this.camposAnyadidos);
+    if(this.formulario.form.dirty){
+      const dialogRef = this.dialog.open(VentanaEmergentePreguntaComponent,{
+        height: '17em',
+        width: '32em',
+        data: { item: "Si cierras se perderán los cambios realizados.\n¿Continuar?" }
+      });
+      dialogRef.afterClosed().subscribe( res => {
+        if(res) this.dialogRef.close(this.camposAnyadidos);
+      });
+    }
+    else this.dialogRef.close(this.camposAnyadidos);
   }
 
   //Ventana emergente si se ha realizado una peticion y todo ha ido bien

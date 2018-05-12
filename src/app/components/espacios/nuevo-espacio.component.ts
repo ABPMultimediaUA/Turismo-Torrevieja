@@ -1,10 +1,11 @@
-import { Component, OnInit, Inject, ViewChild } from '@angular/core';
-import { PeticionesCrudService, AuthService } from '../../services/index';
+import { Component, OnInit, Inject, ViewChild }     from '@angular/core';
+import { PeticionesCrudService, AuthService }       from '../../services/index';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
-import { VentanaEmergenteComponent } from '../ventana-emergente/ventana-emergente.component'
-import { EspacioInterface } from '../../interfaces/espacio.interface';
-import { Observable, BehaviorSubject } from 'rxjs/Rx';
-import { } from '@types/googlemaps';
+import { VentanaEmergenteComponent }                from '../ventana-emergente/ventana-emergente.component'
+import { VentanaEmergentePreguntaComponent }        from '../ventana-emergente/ventana-emergente-pregunta.component';
+import { EspacioInterface }                         from '../../interfaces/espacio.interface';
+import { Observable, BehaviorSubject }              from 'rxjs/Rx';
+import { }                                          from '@types/googlemaps';
 
 @Component({
   selector: 'app-nuevo-espacio',
@@ -14,13 +15,35 @@ import { } from '@types/googlemaps';
 
 export class NuevoEspacioComponent implements OnInit {
 
-  items:EspacioInterface;
+  items:EspacioInterface={
+    CP:null,
+    aforo:null,
+    calle:null,
+    descripcion:null,
+    fechaActualizacion:null,
+    fechaCreacion:null,
+    fechaEliminacion:null,
+    identificador:null,
+    latitudX:null,
+    latitudY:null,
+    localidad:null,
+    nombreEspacio:null,
+    numero:null,
+    planta:null,
+    provincia:null,
+    puerta:null,
+    telefono1:null,
+    telefono2:null,
+  };
   itemSinModif:EspacioInterface;      //Guardar la copia para restaurar
   titulo:string;                      //El titulo de la ventana emergente
   realizandoAccion:boolean = false;   //Para saber si mostrar o no el spinner
   editar:boolean = false;             //Saber si el form es para crear o para editar
   bloqCampos:boolean = true;          //Habilitar o deshabilitar campos del form (avtivar desactivar modo edicion)
   camposAnyadidos:boolean;            //Feedback que devuelve a la ventana anterior cuando esta se cierra
+
+  @ViewChild("formulario") formulario;
+
   @ViewChild('gmap') gmapElement: any;
   map: google.maps.Map;
   marker: google.maps.Marker;
@@ -58,7 +81,6 @@ export class NuevoEspacioComponent implements OnInit {
     }
     //Si no lo hay se prepara todo para crear
     else{
-      this.limpiarCampos();
       this.bloqCampos = false;
       this.titulo = "Nuevo espacio";
     }
@@ -142,35 +164,27 @@ export class NuevoEspacioComponent implements OnInit {
       telefono1:null,
       telefono2:null,
     }
+    this.formulario.reset(this.items, false);
   }
 
   //BOTON - Cuando se esta en la opcion de editar, devuelve los campos del form a su valor original
   restaurarValores(){
-    this.items={
-      CP:this.itemSinModif.CP,
-      aforo:this.itemSinModif.aforo,
-      calle:this.itemSinModif.calle,
-      descripcion:this.itemSinModif.descripcion,
-      fechaActualizacion:this.itemSinModif.fechaActualizacion,
-      fechaCreacion:this.itemSinModif.fechaCreacion,
-      fechaEliminacion:this.itemSinModif.fechaEliminacion,
-      identificador:this.itemSinModif.identificador,
-      latitudX:this.itemSinModif.latitudX,
-      latitudY:this.itemSinModif.latitudY,
-      localidad:this.itemSinModif.localidad,
-      nombreEspacio:this.itemSinModif.nombreEspacio,
-      numero:this.itemSinModif.numero,
-      planta:this.itemSinModif.planta,
-      provincia:this.itemSinModif.provincia,
-      puerta:this.itemSinModif.puerta,
-      telefono1:this.itemSinModif.telefono1,
-      telefono2:this.itemSinModif.telefono2,
-    }
+    this.formulario.reset(this.itemSinModif, false);
   }
 
   //BOTON - Cerrar ventana emergente volviendo a la anterior
   cerrarDialogo(){
-    this.dialogRef.close(this.camposAnyadidos);
+    if(this.formulario.form.dirty){
+      const dialogRef = this.dialog.open(VentanaEmergentePreguntaComponent,{
+        height: '17em',
+        width: '32em',
+        data: { item: "Si cierras se perderán los cambios realizados.\n¿Continuar?" }
+      });
+      dialogRef.afterClosed().subscribe( res => {
+        if(res) this.dialogRef.close(this.camposAnyadidos);
+      });
+    }
+    else this.dialogRef.close(this.camposAnyadidos);
   }
 
   //Bloquea y desbloquea los campos del form al pulsar los btn EDITAR o CANCELAR

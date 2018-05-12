@@ -1,7 +1,8 @@
-import { Component, OnInit, Inject }                from '@angular/core';
+import { Component, OnInit, Inject, ViewChild }     from '@angular/core';
 import { PeticionesCrudService, AuthService }       from '../../services/index';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { VentanaEmergenteComponent }                from '../ventana-emergente/ventana-emergente.component'
+import { VentanaEmergentePreguntaComponent }        from '../ventana-emergente/ventana-emergente-pregunta.component';
 import { UsuarioInterface }                         from '../../interfaces/usuario.interface';
 import { RolesInterface }                           from '../../interfaces/roles.interface';
 
@@ -13,7 +14,19 @@ import { RolesInterface }                           from '../../interfaces/roles
 
 export class NuevoUsuarioComponent implements OnInit {
 
-  items:UsuarioInterface;
+  items:UsuarioInterface={
+    identificador:null,
+    nombreUsuario:null,
+    rol:null,
+    esVerificado:null,
+    apodo:null,
+    correo:null,
+    password:null,
+    password_confirmation:null,
+    fechaActualizacion:null,
+    fechaCreacion:null,
+    fechaEliminacion:null,
+  };
   itemSinModif:UsuarioInterface;      //Guardar la copia para restaurar
   titulo:string;                      //El titulo de la ventana emergente
   realizandoAccion:boolean = false;   //Para saber si mostrar o no el spinner
@@ -21,6 +34,8 @@ export class NuevoUsuarioComponent implements OnInit {
   bloqCampos:boolean = true;          //Habilitar o deshabilitar campos del form (avtivar desactivar modo edicion)
   camposAnyadidos:boolean;            //Feedback que devuelve a la ventana anterior cuando esta se cierra
   roles:RolesInterface[]=[];
+
+  @ViewChild("formulario") formulario;
 
   constructor(  private _itemService: PeticionesCrudService,
                 private _authService:AuthService,
@@ -40,7 +55,6 @@ export class NuevoUsuarioComponent implements OnInit {
     }
     //Si no lo hay se prepara todo para crear
     else{
-      this.limpiarCampos();
       this.bloqCampos = false;
       this.titulo = "Nuevo usuario";
     }
@@ -100,28 +114,27 @@ export class NuevoUsuarioComponent implements OnInit {
       fechaCreacion:null,
       fechaEliminacion:null,
     }
+    this.formulario.reset(this.items, false);
   }
 
   //BOTON - Cuando se esta en la opcion de editar, devuelve los campos del form a su valor original
   restaurarValores(){
-    this.items={
-      identificador:this.itemSinModif.identificador,
-      nombreUsuario:this.itemSinModif.nombreUsuario,
-      rol:this.itemSinModif.rol,
-      esVerificado:this.itemSinModif.esVerificado,
-      apodo:this.itemSinModif.apodo,
-      correo:this.itemSinModif.correo,
-      password:this.itemSinModif.password,
-      password_confirmation:this.itemSinModif.password_confirmation,
-      fechaActualizacion:this.itemSinModif.fechaActualizacion,
-      fechaCreacion:this.itemSinModif.fechaCreacion,
-      fechaEliminacion:this.itemSinModif.fechaEliminacion,
-    }
+    this.formulario.reset(this.itemSinModif, false);
   }
 
   //BOTON - Cerrar ventana emergente volviendo a la anterior
   cerrarDialogo(){
-    this.dialogRef.close(this.camposAnyadidos);
+    if(this.formulario.form.dirty){
+      const dialogRef = this.dialog.open(VentanaEmergentePreguntaComponent,{
+        height: '17em',
+        width: '32em',
+        data: { item: "Si cierras se perderán los cambios realizados.\n¿Continuar?" }
+      });
+      dialogRef.afterClosed().subscribe( res => {
+        if(res) this.dialogRef.close(this.camposAnyadidos);
+      });
+    }
+    else this.dialogRef.close(this.camposAnyadidos);
   }
 
   //Bloquea y desbloquea los campos del form al pulsar los btn EDITAR o CANCELAR

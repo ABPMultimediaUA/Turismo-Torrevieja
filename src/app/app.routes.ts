@@ -2,7 +2,8 @@ import { NgModule }                     from '@angular/core';
 import { RouterModule, Routes }         from '@angular/router';
 import { AuthGuardService, AuthGuardUsuariosService, AuthGuardRolesService,
 AuthGuardCarterasService, AuthGuardEventosService, AuthGuardEspaciosService,
-AuthGuardProveedoresService } from './services/auth-guard.service';
+AuthGuardProveedoresService, ConfirmDeactivateExpedienteGuard,
+ConfirmDeactivateCarteraGuard } from './services/auth-guard.service';
 
 //Menu no login
 import { HomeComponent }        from "./components/home/home.component";
@@ -25,18 +26,6 @@ import { EspaciosComponent }    from './components/espacios/espacios.component';
 //Otros
 import { MensajesComponent }    from "./components/mensajes/mensajes.component";
 
-
-
-//TODO eliminar
-
-import { NuevaCarteraComponent } from './components/carteras/nueva-cartera.component';
-
-import { NuevoExpedienteComponent } from './components/expedientes/nuevo-expediente.component';
-
-
-import { NuevoRolComponent } from "./components/roles/nuevo-rol.component";
-//TODO Fin eliminar
-
 import { PublicarComponent } from "./components/publicar/publicar.component";
 
 const app_routes: Routes = [
@@ -53,9 +42,9 @@ const app_routes: Routes = [
   { path: 'usuarios', canActivate:[AuthGuardService,AuthGuardUsuariosService], component: UsuariosComponent },
   { path: 'roles', canActivate:[AuthGuardService,AuthGuardRolesService], component: RolesComponent },
   { path: 'carteras', canActivate:[AuthGuardService,AuthGuardCarterasService], component: CarterasComponent },
-  { path: 'cartera/:id', canActivate:[AuthGuardService,AuthGuardCarterasService], component: CarteraComponent },
-  { path: 'expedientes', canActivate:[AuthGuardService,AuthGuardEventosService], component: ExpedientesComponent },
-  { path: 'expediente/:id', canActivate:[AuthGuardService,AuthGuardEventosService], component: ExpedienteComponent },
+  { path: 'cartera/:id', canActivate:[AuthGuardService,AuthGuardCarterasService], component: CarteraComponent, canDeactivate:[ConfirmDeactivateCarteraGuard] },
+  { path: 'expedientes', canActivate:[AuthGuardService,AuthGuardEventosService], component:ExpedientesComponent},
+  { path: 'expediente/:id', canActivate:[AuthGuardService,AuthGuardEventosService], component:ExpedienteComponent, canDeactivate:[ConfirmDeactivateExpedienteGuard] },
   { path: 'espacios', canActivate:[AuthGuardService,AuthGuardEspaciosService], component: EspaciosComponent },
   { path: 'proveedores', canActivate:[AuthGuardService,AuthGuardProveedoresService], component: ProveedoresComponent },
 

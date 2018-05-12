@@ -12,7 +12,8 @@ import { PdfViewerModule }                            from 'ng2-pdf-viewer';
 // servicios
 import { AlertService, AuthService, PeticionesCrudService,
 AuthGuardService, AuthGuardUsuariosService, AuthGuardRolesService, AuthGuardCarterasService,
-AuthGuardEventosService, AuthGuardEspaciosService, AuthGuardProveedoresService } from './services/index';
+AuthGuardEventosService, AuthGuardEspaciosService, AuthGuardProveedoresService,
+ConfirmDeactivateExpedienteGuard, ConfirmDeactivateCarteraGuard } from './services/index';
 
 //Angular material
 import {MatMenuModule} from '@angular/material/menu';
@@ -95,7 +96,7 @@ import { EliminarExpedienteDialog } from "./components/carteras/eliminar-expedie
 import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.component";
 import { PublicarComponent } from './components/publicar/publicar.component';
 
-
+import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 
 
 @NgModule({
@@ -189,7 +190,9 @@ import { PublicarComponent } from './components/publicar/publicar.component';
     AuthGuardCarterasService,
     AuthGuardEventosService,
     AuthGuardEspaciosService,
-    AuthGuardProveedoresService
+    AuthGuardProveedoresService,
+    ConfirmDeactivateExpedienteGuard,
+    ConfirmDeactivateCarteraGuard
   ],
   entryComponents: [
     //Ventanas emergentes usuarios
@@ -230,4 +233,10 @@ import { PublicarComponent } from './components/publicar/publicar.component';
   bootstrap: [AppComponent]
 })
 
-export class AppModule { }
+export class AppModule {
+  constructor(public _authService:AuthService) {
+    window.addEventListener("beforeunload", function (event) {
+      if(_authService.userLog.getValue()) event.returnValue = "\o/";
+    });
+  }
+}

@@ -60,6 +60,7 @@ export class CarteraComponent implements OnInit {
   valorEscogidoForOrder:number = -1;  //Para saber el elemento seleccionado, -1 valor neutro
   btnEliminar:boolean = true;         //Activar / desactivar boton de eliminar item/s
   @ViewChild("btnsPag") BtnsPagOff;   //Div que contiene los botones de paginacion
+  @ViewChild("formulario") formulario;
 
   bloqCampos:boolean = true;          //Habilitar o deshabilitar campos del form (avtivar desactivar modo edicion)
   fechaCreacion:string = "";          //Fecha modificada para mostrar por pantalla
@@ -325,6 +326,7 @@ export class CarteraComponent implements OnInit {
       .then( res => {
         if(typeof res != "string") {
           this.carteraSinModif = Object.assign({}, res as CarteraInterface);
+          this.formulario.reset(this.carteraSinModif, false);
           this.alertaOk();
         }
         else this.alertaNoOk();

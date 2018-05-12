@@ -82,8 +82,8 @@
                 </mat-card-header>
                 <img mat-card-image src=""  alt="Imagen del evento"  #etiquetaImgExp>
                 <mat-card-actions>
-                  <input #fileInput type="file" (change)="cargarImg($event.target.files)" accept="image/*" class="invisible">
-                  <button (click)="fileInput.click()" type="button" color="primary" mat-raised-button [disabled]="bloqCampos || realizandoAccion">Subir imagen</button>
+                  <input #imgInput type="file" (change)="cargarImg($event.target.files)" accept="image/*" class="invisible">
+                  <button (click)="imgInput.click()" type="button" color="primary" mat-raised-button [disabled]="bloqCampos || realizandoAccion">Subir imagen</button>
                   </mat-card-actions>
               </mat-card>
             </div>
@@ -231,8 +231,8 @@
                     </mat-form-field>
 
                     <div class="expActCampos2">
-                      <input #fileInputPDF type="file" (change)="cargarPDF($event.target.files,i)" accept="application/pdf" class="invisible">
-                      <button (click)="fileInputPDF.click()" type="button" color="primary" mat-raised-button [disabled]="realizandoAccion">Subir PDF</button>
+                      <input #pdfInput type="file" (change)="cargarPDF($event.target.files,i)" accept="application/pdf" class="invisible">
+                      <button (click)="pdfInput.click()" type="button" color="primary" mat-raised-button [disabled]="realizandoAccion">Subir PDF</button>
                       <div *ngIf="archivoPDF[i]" class="nombreConPDF">{{nombrePDF.getValue()[i]}}</div>
                     </div>
 

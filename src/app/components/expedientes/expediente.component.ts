@@ -16,6 +16,8 @@ import { ProveedorInterface }                   from "../../interfaces/proveedor
 import { Router }                               from "@angular/router";
 import { Observable, BehaviorSubject }          from 'rxjs/Rx';
 
+import { FormArray,FormGroup,FormControl } from "@angular/forms";
+
 @Component({
   selector: 'app-expediente',
   templateUrl: './expediente.component.html',
@@ -72,6 +74,9 @@ export class ExpedienteComponent implements OnInit {
   nombrePDF = new BehaviorSubject<string[]>([]);
 
   @ViewChild("etiquetaImgExp") etiqueta;  //La etiqueta html img
+  @ViewChild("formulario") formulario;
+  @ViewChild("forma") formularios;
+  @ViewChild("imgInput") imgInput : any;
 
 
   constructor(
@@ -196,22 +201,11 @@ export class ExpedienteComponent implements OnInit {
 
   //BOTON - Cuando se esta en la opcion de editar, devuelve los campos del form a su valor original
   restaurarValores() {
-    this.expediente={
-      identificador:this.expedienteSinModif.identificador,
-      nombreExpediente:this.expedienteSinModif.nombreExpediente,
-      avance:this.expedienteSinModif.avance,
-      cartera:this.expedienteSinModif.cartera,
-      coordinador:this.expedienteSinModif.coordinador,
-      detalle:this.expedienteSinModif.detalle,
-      fechaFin:this.expedienteSinModif.fechaFin,
-      fechaInicio:this.expedienteSinModif.fechaInicio,
-      image:this.expedienteSinModif.image,
-      titulo:this.expedienteSinModif.titulo,
-    }
-    if(this.expediente.image){
-      this.expediente.image = "https://gvent.ovh/Prueba2_1/public/img/" + this.expediente.image;
+    this.formulario.reset(this.expedienteSinModif, false);
+    this.imgInput.nativeElement.value = "";
+    if(this.expedienteSinModif.image){
       let o = this.etiqueta.nativeElement as HTMLImageElement;
-      o.src = this.expediente.image;
+      o.src = "https://gvent.ovh/Prueba2_1/public/img/" + this.expedienteSinModif.image;
     }
     else{
       let o = this.etiqueta.nativeElement as HTMLImageElement;
@@ -224,15 +218,20 @@ export class ExpedienteComponent implements OnInit {
     var expBody = this.expediente;
     delete expBody.image;
     this._itemService.actualizarItem(0,this.id,expBody,-1)
-    .then( res=> {
+    .then( res=> { console.log(res)
       if(typeof res != "string"){
+        this.expedienteSinModif = Object.assign({}, res as ExpedienteInterface);
+        this.formulario.reset(this.expedienteSinModif, false);
         if(this.archivoImg){ //ACTUALIZAMOS IMG
           this._itemService.subirFile(0,this.id,this.archivoImg)
             .then( res=>{
+              this.imgInsertada = false;
+              this.imgInput.nativeElement.value = "";
               if(typeof res != "string") this.alertaOk("Expediente actualizado correctamente.");
               else this.alertaNoOk("Se ha producido un error inesperado subiendo la imagen.");
             })
         }
+        else this.alertaOk("Expediente actualizado correctamente.");
       }
       else this.alertaNoOk("Se ha producido un error inesperado actualizando el expediente.");
     })
@@ -562,6 +561,10 @@ export class ExpedienteComponent implements OnInit {
      if(this.porcentajeAvanzado.getValue() == 100) this.colorSpinner.next("primary");
      else if(this.porcentajeAvanzado.getValue() >= 50) this.colorSpinner.next("accent");
      else this.colorSpinner.next("warn");
+   }
+
+   tieneCambios(){
+     return this.imgInsertada || this.formulario.form.dirty || this.formularios.form.dirty;
    }
 
 }
