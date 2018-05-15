@@ -6,6 +6,7 @@ import { VentanaEmergentePreguntaComponent }        from '../ventana-emergente/v
 import { EspacioInterface }                         from '../../interfaces/espacio.interface';
 import { Observable, BehaviorSubject }              from 'rxjs/Rx';
 import { }                                          from '@types/googlemaps';
+import { SelectionModel }                           from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-nuevo-espacio',
@@ -34,6 +35,7 @@ export class NuevoEspacioComponent implements OnInit {
     puerta:null,
     telefono1:null,
     telefono2:null,
+    activo:"1"
   };
   itemSinModif:EspacioInterface;      //Guardar la copia para restaurar
   titulo:string;                      //El titulo de la ventana emergente
@@ -41,6 +43,8 @@ export class NuevoEspacioComponent implements OnInit {
   editar:boolean = false;             //Saber si el form es para crear o para editar
   bloqCampos:boolean = true;          //Habilitar o deshabilitar campos del form (avtivar desactivar modo edicion)
   camposAnyadidos:boolean;            //Feedback que devuelve a la ventana anterior cuando esta se cierra
+  selection = new SelectionModel<number>(true, []);   //Marcar - desmarcar checkbox
+  activoChange:boolean = false;
 
   @ViewChild("formulario") formulario;
 
@@ -67,6 +71,7 @@ export class NuevoEspacioComponent implements OnInit {
       this.titulo = "Espacio";
       this.items = Object.assign({}, data.item as EspacioInterface);
       this.itemSinModif = Object.assign({}, data.item as EspacioInterface);
+      if(this.items.activo == "1") this.selection.select(0);
       if(this.items.latitudX) {
         this.latX = (+this.items.latitudX);
         if(this.items.latitudY){
@@ -134,9 +139,14 @@ export class NuevoEspacioComponent implements OnInit {
         })
     }
     else{
+      if(this.selection.selected.length > 0 && this.selection.selected[0]==0) this.items.activo = "1";
+      else this.items.activo = "0";
       this._itemService.actualizarItem(6,this.items.identificador,this.items,-1)
         .then( res => {
-          if(typeof res != "string") this.alertaOk();
+          if(typeof res != "string") {
+            this.itemSinModif = Object.assign({}, this.items as EspacioInterface);
+            this.alertaOk();
+          }
           else this.alertaNoOk();
         })
     }
@@ -163,6 +173,7 @@ export class NuevoEspacioComponent implements OnInit {
       puerta:null,
       telefono1:null,
       telefono2:null,
+      activo:"1"
     }
     this.formulario.reset(this.items, false);
   }
@@ -170,30 +181,37 @@ export class NuevoEspacioComponent implements OnInit {
   //BOTON - Cuando se esta en la opcion de editar, devuelve los campos del form a su valor original
   restaurarValores(){
     this.formulario.reset(this.itemSinModif, false);
+    this.selection.clear();
+    if(this.items.activo == "1") this.selection.select(0);
+    this.activoChange = false;
+    this.bloqCampos = true;
   }
 
   //BOTON - Cerrar ventana emergente volviendo a la anterior
   cerrarDialogo(){
-    if(this.formulario.form.dirty){
+    if(this.formulario.form.dirty || this.activoChange){
       const dialogRef = this.dialog.open(VentanaEmergentePreguntaComponent,{
         height: '17em',
         width: '32em',
         data: { item: "Si cierras se perderán los cambios realizados.\n¿Continuar?" }
       });
       dialogRef.afterClosed().subscribe( res => {
-        if(res) this.dialogRef.close(this.camposAnyadidos);
+        if(res){
+          if(this.editar) this.restaurarValores();
+          this.dialogRef.close(this.camposAnyadidos);
+        }
       });
     }
-    else this.dialogRef.close(this.camposAnyadidos);
+    else {
+      if(this.editar) this.restaurarValores();
+      this.dialogRef.close(this.camposAnyadidos);
+    }
   }
 
   //Bloquea y desbloquea los campos del form al pulsar los btn EDITAR o CANCELAR
   disable_enable_campos(){
     if(this.bloqCampos) this.bloqCampos = false;
-    else {
-      this.restaurarValores();
-      this.bloqCampos = true;
-    }
+    else this.restaurarValores();
   }
 
   //Ventana emergente si se ha realizado una peticion y todo ha ido bien
@@ -209,7 +227,7 @@ export class NuevoEspacioComponent implements OnInit {
       this.realizandoAccion = false;
       this.camposAnyadidos = true;
       if(!this.editar) this.limpiarCampos();
-      else this.bloqCampos = true;
+      else this.restaurarValores();
     });
   }
 
@@ -226,10 +244,7 @@ export class NuevoEspacioComponent implements OnInit {
       this.realizandoAccion = false;
       this.camposAnyadidos = true;
       if(!this.editar) this.limpiarCampos();
-      else {
-        this.bloqCampos = true;
-        this.restaurarValores();
-      }
+      else this.restaurarValores();
     });
   }
 }

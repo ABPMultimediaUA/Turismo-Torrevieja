@@ -1,61 +1,55 @@
 <div class="contenedorEditar">
-  <h1 class="mat-display-1 tituloComponentes">
+  <h1 class="mat-display-1 tituloFormEstrecho">
     <span *ngIf="!editar" class="icon-user-add-outline"></span>
     <span *ngIf="editar" class="icon-user-outline"></span> {{titulo}} {{items.nombreUsuario}}
   </h1>
   <a class="btnCerrar" (click)="cerrarDialogo()"><i class="material-icons iconoCerrar">close</i></a>
   <form (ngSubmit)="anyadirItem()" #formulario="ngForm">
-    <div class="row tresCamposFila">
 
-      <mat-form-field hintLabel="">
+    <div class="row contenedorFormEstrecho">
+      <mat-form-field hintLabel="" class="campoWidth100">
         <input matInput name="nombreUsuario" [(ngModel)]="items.nombreUsuario" placeholder="Nombre" [readonly]="bloqCampos"
                maxLength="200" required>
         <mat-error>Campo requerido</mat-error>
       </mat-form-field>
 
-      <mat-form-field hintLabel="">
+      <mat-form-field hintLabel="" class="campoWidth100">
         <input matInput name="correo" [(ngModel)]="items.correo" placeholder="Email" [readonly]="bloqCampos"
                maxLength="50">
       </mat-form-field>
 
-    </div>
-    <div class="row tresCamposFila">
-
-      <!-- <mat-form-field hintLabel="">
-        <input matInput name="rol" [(ngModel)]="items.rol" placeholder="Rol" [readonly]="bloqCampos">
-      </mat-form-field> -->
-
-      <mat-form-field>
+      <mat-form-field class="campoWidth100">
         <mat-select placeholder="Rol" [value]="items.rol" [disabled]="bloqCampos">
           <mat-option *ngFor="let i of roles" [value]="i.identificador" readonly>{{i.nombreRol}}</mat-option>
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field hintLabel="" *ngIf="!editar">
-        <input matInput type="password" name="password" [(ngModel)]="items.password" placeholder="Contraseña"
+      <mat-form-field hintLabel="" *ngIf="!editar" class="campoWidth100">
+        <input matInput type="password" name="password" [(ngModel)]="items.password" placeholder="Contraseña" [readonly]="bloqCampos"
         required minLength="6">
         <mat-error>Mínimo seis caracteres</mat-error>
       </mat-form-field>
 
-      <mat-form-field hintLabel="" *ngIf="!editar">
-        <input matInput type="password" name="password_confirmation" [(ngModel)]="items.password_confirmation" placeholder="Confirmar contraseña"
+      <mat-form-field hintLabel="" *ngIf="!editar" class="campoWidth100">
+        <input matInput type="password" name="password_confirmation" [(ngModel)]="items.password_confirmation" placeholder="Confirmar contraseña" [readonly]="bloqCampos"
         required minLength="6">
         <mat-error>Las contraseñas no coinciden</mat-error>
       </mat-form-field>
 
-      <mat-form-field hintLabel="" *ngIf="editar">
+      <mat-form-field hintLabel="" *ngIf="editar" class="campoWidth100">
         <input matInput name="fechaCreacion" [(ngModel)]="items.fechaCreacion" placeholder="Fecha de creación" readonly>
       </mat-form-field>
 
-      <div class="" *ngIf="editar">
+      <div class="" *ngIf="editar" class="campoWidth100 alignCenter">
         <p>Verificado
           <mat-icon color="primary" *ngIf="items.esVerificado == 1">done</mat-icon>
           <mat-icon color="primary" *ngIf="items.esVerificado == 0">highlight_off</mat-icon>
         </p>
+        <p matTooltip="Determina si se encuentra disponible en estos momentos.">
+        Activo<mat-slide-toggle name="activado" (change)="$event ? selection.toggle(0) : null; activoChange = true" [checked]="selection.isSelected(0)" (click)="$event.stopPropagation()" [disabled]="bloqCampos"></mat-slide-toggle></p>
       </div>
 
-    </div>
-    <div class="row contenedorFormObservaciones">
+
       <mat-form-field hintLabel="" class="campoWidth100">
         <textarea matInput name="descripcion" [(ngModel)]="items.descripcion" placeholder="Observaciones" [readonly]="bloqCampos"
                   maxLength="500"></textarea>
@@ -75,8 +69,8 @@
           </div>
           <div *ngIf="!bloqCampos" class="btnsEditarAnyadir">
             <mat-dialog-actions class="btnsEditarAnyadir">
-              <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid && !formulario.form.dirty">Guardar cambios</button>
-              <button type="button" mat-raised-button (click)="disable_enable_campos()" color="warn">Cancelar</button>
+              <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid || (!formulario.form.dirty && !activoChange)">Guardar cambios</button>
+              <button type="button" mat-raised-button (click)="disable_enable_campos(activ)" color="warn">Cancelar</button>
             </mat-dialog-actions>
           </div>
         </div>

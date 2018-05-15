@@ -5,7 +5,7 @@ import { MatTableDataSource, MatDialog }        from '@angular/material';
 import { EliminarUsuarioComponent }             from './eliminar-usuario.component';
 import { PaginacionInterface }                  from '../../interfaces/paginacion.interface';
 import { UsuarioInterface }                     from '../../interfaces/usuario.interface';
-import { RolesInterface }                     from '../../interfaces/roles.interface';
+import { RolesInterface }                       from '../../interfaces/roles.interface';
 import { NuevoUsuarioComponent }                from './nuevo-usuario.component';
 
 @Component({
@@ -150,7 +150,7 @@ export class UsuariosComponent implements OnInit {
   editarAnyadirItem(row){
     const dialogRef = this.dialog.open(NuevoUsuarioComponent,{
       height: '90%',
-      width: '90%',
+      width: '37%',
       data: { item: row }
     });
     dialogRef.afterClosed().subscribe( res => {

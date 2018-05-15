@@ -1,8 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
-import { PeticionesCrudService, AuthService } from '../../services/index';
+import { Component, OnInit, Inject }                                    from '@angular/core';
+import { PeticionesCrudService, AuthService }                           from '../../services/index';
 import { MatDialogRef, MAT_DIALOG_DATA, MatTableDataSource, MatDialog } from '@angular/material';
-import { VentanaEmergenteComponent } from '../ventana-emergente/ventana-emergente.component'
-import { EspacioInterface } from '../../interfaces/espacio.interface';
+import { VentanaEmergenteComponent }                                    from '../ventana-emergente/ventana-emergente.component'
+import { UsuarioInterface }                                             from '../../interfaces/usuario.interface';
+import { RolesInterface }                                               from '../../interfaces/roles.interface';
 
 @Component({
   selector: 'app-eliminar-usuario',
@@ -12,7 +13,8 @@ import { EspacioInterface } from '../../interfaces/espacio.interface';
 
 export class EliminarUsuarioComponent implements OnInit {
 
-  items:EspacioInterface[]=[];
+  items:UsuarioInterface[]=[];
+  roles:RolesInterface[]=[];
   eliminando:boolean;
   aux:number; //Items a eliminar, recursividad
 
@@ -29,7 +31,10 @@ export class EliminarUsuarioComponent implements OnInit {
     dialogRef.disableClose = true;
 
     if(data.item){
-      if(data.item.length) this.items=data.item;
+      if(data.item.length){
+        this.items=data.item as UsuarioInterface[];
+        this.cargarNombreRoles();
+      }
       else this.items.push(data.item);
     }
 
@@ -52,10 +57,8 @@ export class EliminarUsuarioComponent implements OnInit {
       this.aux=this.aux-1;
       this._itemService.eliminarItem(5,this.items[this.aux].identificador,-1)
           .then( res => {
-            this.eliminarItem();
-          })
-          .catch( (err) => {
-            this.alertaNoOk();
+            if(typeof res != "string") this.eliminarItem();
+            else this.alertaNoOk();
           })
     }
     else{
@@ -94,6 +97,21 @@ export class EliminarUsuarioComponent implements OnInit {
     dialogRef.afterClosed().subscribe( res => {
       this.dialogRef.close(true);
     });
+  }
+
+  cargarNombreRoles(){
+    for(var x = 0; x < this.items.length; x++){
+      this.cargarNombreRol(x)
+    }
+  }
+  cargarNombreRol(i:number){
+    this._itemService.getItem(4,this.items[i].rol,-1,-1,-1,"","").then(
+      res => {
+        if(typeof res != "string"){
+          let r = res as any;
+          this.items[i]['nombreRol'] = r.data.nombreRol;
+        }
+      });
   }
 
 }

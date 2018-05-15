@@ -3,7 +3,7 @@
     <div class="row">
       <div class="example-header">
         <h1 class="mat-display-1 tituloComponentes titCarteras"><i class="icon-folder-open"></i> Expediente {{expediente.nombreExpediente}}</h1>
-        <div *ngIf="cartera.estado>1" class="tituloComponentes titCarteras porcentajeAvance" matTooltip="Tareas terminadas: {{tareasTerminadas.getValue()}} de {{tareasPropuestas.getValue()}}">
+        <div *ngIf="cartera.estado>1" class="tituloComponentes titCarteras porcentajeAvance" [matTooltipClass]="'tooltipSalto'" matTooltip='Tareas terminadas: {{tareasTerminadas.getValue()}} de {{tareasPropuestas.getValue()}}&#13;Contratos terminados: {{contratosTerminados.getValue()}} de {{contratosPropuestos.getValue()}}'>
           <div class="spinnerAvanceFondo">
             <mat-progress-spinner  [value]="100" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
           </div>
@@ -182,7 +182,7 @@
             <mat-expansion-panel *ngFor="let c of contratos; let i = index" class="alinearCabeceraPanel">
               <mat-expansion-panel-header>
                 <mat-panel-title><p class="expMatPanelTitle">{{c.nombreContrato}}</p></mat-panel-title>
-                <mat-panel-description><p class="expMatPanelDescription">{{c.clase}}</p></mat-panel-description>
+                <mat-panel-description><mat-checkbox [(ngModel)]="c.terminado" name=Contrato_terminado{{o}} disabled>Finalizado</mat-checkbox></mat-panel-description>
               </mat-expansion-panel-header>
               <div class="panelExp">
 
@@ -238,6 +238,8 @@
 
                     <button (click)="verFicheroContrato(c.fichero)" type="button" color="primary" mat-raised-button [disabled]="!c.fichero">Ver contrato</button>
 
+                    <mat-checkbox [(ngModel)]="c.terminado" name=Contrato_terminado{{o}}>Finalizado</mat-checkbox>
+
                   </div>
                   <div>
                     <mat-form-field hintLabel="" class="campoWidth100">
@@ -256,7 +258,7 @@
               </div>
             </mat-expansion-panel>
           </mat-accordion>
-          <button mat-raised-button type="button" class="btnsExpedienteNewElement" (click)="crearPlantillaCon()" [disabled]="realizandoAccion"> Nueva actividad </button>
+          <button mat-raised-button type="button" class="btnsExpedienteNewElement" (click)="crearPlantillaCon()" [disabled]="realizandoAccion"> Nuevo contrato </button>
 
         </mat-tab>
 

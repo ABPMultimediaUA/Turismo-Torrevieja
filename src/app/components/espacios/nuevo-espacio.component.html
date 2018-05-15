@@ -71,6 +71,12 @@
         <div #gmap class="mapa"></div>
         <!-- FIN GOOGLE MAPS -->
       </div>
+
+      <div class="" *ngIf="editar" class="campoWidth100 alignCenter">
+        <p matTooltip="Determina si se encuentra disponible en estos momentos.">
+        Activo<mat-slide-toggle name="activado" (change)="$event ? selection.toggle(0) : null; activoChange = true" [checked]="selection.isSelected(0)" (click)="$event.stopPropagation()" [disabled]="bloqCampos"></mat-slide-toggle></p>
+      </div>
+
     </div>
     <div class="row contenedorFormObservaciones">
       <mat-form-field hintLabel="" class="campoWidth100">
@@ -92,7 +98,7 @@
           </div>
           <div *ngIf="!bloqCampos" class="btnsEditarAnyadir">
             <mat-dialog-actions class="btnsEditarAnyadir">
-              <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid && !formulario.form.dirty">Guardar cambios</button>
+              <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid || (!formulario.form.dirty && !activoChange)">Guardar cambios</button>
               <button type="button" mat-raised-button (click)="disable_enable_campos()" color="warn">Cancelar</button>
             </mat-dialog-actions>
           </div>

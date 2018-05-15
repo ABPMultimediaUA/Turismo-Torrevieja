@@ -65,14 +65,36 @@ export class ExpedientesComponent implements OnInit {
         porcentajeAvanzado:0,
         tareasTerminadas:0,
         tareasPropuestas:0,
+        contratosTerminados:0,
+        contratosPropuestos:0,
         colorSpinner:"warn",
       };
       if(this.items[x].avance){
         var num = (this.items[x].avance).toString().split('.');
-        if(num && num.length == 2){
-          auxAvance.tareasTerminadas = (+num[0]);
-          auxAvance.tareasPropuestas = (+num[1]);
-          auxAvance.porcentajeAvanzado = ( +(auxAvance.tareasTerminadas / auxAvance.tareasPropuestas * 100).toFixed(1) );
+        if(num){
+          if(num.length == 2){
+            if(num[0].length == 1){
+              auxAvance.tareasPropuestas = (+num[0].charAt(0));
+            }
+            else if(num[0].length == 2){
+              auxAvance.tareasTerminadas = (+num[0].charAt(0));
+              auxAvance.tareasPropuestas = (+num[0].charAt(1));
+            }
+            if(num[1].length == 2){
+              auxAvance.contratosTerminados = (+num[1].charAt(0));
+              auxAvance.contratosPropuestos = (+num[1].charAt(1));
+            }
+          }
+          else if(num.length == 1){
+            if(num[0].length == 1){
+              auxAvance.tareasPropuestas = (+num[0].charAt(0));
+            }
+            else if(num[0].length == 2){
+              auxAvance.tareasTerminadas = (+num[0].charAt(0));
+              auxAvance.tareasPropuestas = (+num[0].charAt(1));
+            }
+          }        
+          auxAvance.porcentajeAvanzado = ( +( (auxAvance.tareasTerminadas + auxAvance.contratosTerminados) / (auxAvance.tareasPropuestas + auxAvance.contratosPropuestos) * 100).toFixed(1) );
           if(auxAvance.porcentajeAvanzado == 100) auxAvance.colorSpinner = "primary";
           else if(auxAvance.porcentajeAvanzado >= 50) auxAvance.colorSpinner = "accent";
           else auxAvance.colorSpinner = "warn";

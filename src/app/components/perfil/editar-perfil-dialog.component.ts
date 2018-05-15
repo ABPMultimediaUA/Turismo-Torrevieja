@@ -52,6 +52,7 @@ export class EditarPerfilDialog {
     fechaActualizacion:"",
     fechaEliminacion:"",
     fechaCreacion:"",
+    activo:null,
   };
 
   roles = [

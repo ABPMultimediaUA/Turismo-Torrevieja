@@ -20,6 +20,7 @@ export class AuthService {
     fechaActualizacion:"",
     fechaEliminacion:"",
     fechaCreacion:"",
+    activo:null,
   };
   user = new BehaviorSubject<UsuarioInterface>(this.usuario);  //Datos del usuario
   userPermisos = new BehaviorSubject<number[]>([]);            //Permisos del usuario para comprobar restricciones

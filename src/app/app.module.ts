@@ -27,6 +27,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MatIcon, MatPaginatorModule, MatTableDataSource, MatSort,
          MatSortModule, MatTableModule, MatFormFieldModule, MatNativeDateModule,
          MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatProgressBarModule,
@@ -166,6 +167,7 @@ import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '
     MatMenuModule,
     MatProgressBarModule,
     MatExpansionModule,
+    MatSlideToggleModule,
     MatSelectModule,
     MatTooltipModule,
     MatDatepickerModule,

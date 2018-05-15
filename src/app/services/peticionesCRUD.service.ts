@@ -72,6 +72,10 @@ export class PeticionesCrudService {
       case 305: url += `BusquedaCartera/${busqueda}?estado=3`;          break; //Busqueda en carteras finalizadas
       case 306: url += `expediente?cartera=${id}`;                      break; //Todos los expedientes de una cartera en particular
       case 307: url += `BusquedaExpediente/${busqueda}?cartera=${id}`;  break; //Busqueda de expedientes de una cartera en particular
+      case 308: url += `user?activo=1`;                                 break;
+      case 309: url += `rol?activo=1`;                                  break;
+      case 310: url += `espacio?activo=1`;                              break;
+      case 311: url += `proveedor?activo=1`;                            break;
 
       default: console.log("No se ha especificado correctamente una URL.");
     }

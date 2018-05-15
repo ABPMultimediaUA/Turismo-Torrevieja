@@ -30,8 +30,14 @@
     <mat-header-cell *matHeaderCellDef>Aforo</mat-header-cell>
     <mat-cell *matCellDef="let items">{{items.aforo}}</mat-cell>
   </ng-container>
-  <mat-header-row *matHeaderRowDef="['identificador','nombreEspacio','CP','calle','numero','telefono1','aforo']"></mat-header-row>
-  <mat-row class="elementoTabla" *matRowDef="let row; columns: ['identificador','nombreEspacio','CP','calle','numero','telefono1','aforo']" ></mat-row>
+  <ng-container matColumnDef="activo">
+    <mat-header-cell *matHeaderCellDef>Activo</mat-header-cell>
+    <mat-cell *matCellDef="let items" [class.slideDisabledAzul]="items.activo == 1" >
+      <mat-slide-toggle [checked]="items.activo == 1" disabled ></mat-slide-toggle>
+    </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="['identificador','nombreEspacio','CP','calle','numero','telefono1','aforo','activo']"></mat-header-row>
+  <mat-row class="elementoTabla" *matRowDef="let row; columns: ['identificador','nombreEspacio','CP','calle','numero','telefono1','aforo','activo']" ></mat-row>
 </mat-table>
 <mat-dialog-actions class="VentanaEmergenteEliminarBtns" *ngIf="!eliminando;">
     <button mat-raised-button (click)="eliminarItem()" color="warn">Eliminar</button>

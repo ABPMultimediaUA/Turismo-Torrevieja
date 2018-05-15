@@ -18,9 +18,14 @@
     <mat-cell *matCellDef="let items">{{items.codigoPostal}}</mat-cell>
   </ng-container>
 
-  <ng-container matColumnDef="direccion">
-    <mat-header-cell *matHeaderCellDef>Dirección</mat-header-cell>
-    <mat-cell *matCellDef="let items">{{items.direccion}}</mat-cell>
+  <ng-container matColumnDef="calle">
+    <mat-header-cell *matHeaderCellDef>Calle</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.calle}}</mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="numero">
+    <mat-header-cell *matHeaderCellDef>Número</mat-header-cell>
+    <mat-cell *matCellDef="let items">{{items.numero}}</mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="telefonoUno">
@@ -33,8 +38,15 @@
     <mat-cell *matCellDef="let items">{{items.correoUno}}</mat-cell>
   </ng-container>
 
-  <mat-header-row *matHeaderRowDef="['identificador','nombreProveedor','codigoPostal','direccion','telefonoUno','correoUno']"></mat-header-row>
-  <mat-row class="elementoTabla" *matRowDef="let row; columns: ['identificador','nombreProveedor','codigoPostal','direccion','telefonoUno','correoUno']"></mat-row>
+  <ng-container matColumnDef="activo">
+    <mat-header-cell *matHeaderCellDef>Activo</mat-header-cell>
+    <mat-cell *matCellDef="let items" [class.slideDisabledAzul]="items.activo == 1" >
+      <mat-slide-toggle [checked]="items.activo == 1" disabled ></mat-slide-toggle>
+    </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="['identificador','nombreProveedor','codigoPostal','calle','numero','telefonoUno','correoUno','activo']"></mat-header-row>
+  <mat-row class="elementoTabla" *matRowDef="let row; columns: ['identificador','nombreProveedor','codigoPostal','calle','numero','telefonoUno','correoUno','activo']"></mat-row>
 </mat-table>
 <mat-dialog-actions class="VentanaEmergenteEliminarBtns" *ngIf="!eliminando">
     <button mat-raised-button (click)="eliminarItem()" color="warn">Eliminar</button>
