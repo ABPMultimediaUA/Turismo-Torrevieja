@@ -1,0 +1,13 @@
+<div id="ventanaChat" class="esconder">
+  <div id="cabeceraDialogo">
+    <div class="imgBotDialogo"><img src="" draggable="false"/></div>
+    <div class="nombreBotCabecera">{{nombreBot}}</div>
+    <div id="botEscribiendo"></div>
+  </div>
+  <div id="espacioDialogos" class="">
+    <ul id="ulMensajes" class="listaMensajes"></ul>
+  </div>
+  <input id="input" type="text" placeholder="Escribe aquí!">
+  <button id="btnChat" (click)="abrir_cerrar_chat(true)" >¿En qué puedo ayudarte?</button>
+</div>
+<button *ngIf="true" id="btnChatCir" (click)="abrir_cerrar_chat(false)" [@btnState]="state"><span class="icon-comment"></span></button>

@@ -1,0 +1,236 @@
+
+.lead{
+	font-size: 1.1em;
+}
+.row{
+	justify-content: space-around;
+}
+.Col-md-4{
+	/*text-align: left;*/
+	max-width: 15em;
+}
+/*BOT MARTA*/
+
+
+#ventanaChat{
+	position: fixed;
+	bottom:0px;
+	right:0px;
+	width:100%;
+	max-width:25em;
+	/* height:33em; */
+}
+#cabeceraDialogo{
+	position: fixed;
+	bottom:33em;
+	right:0px;
+	width:100%;
+	max-width:25em;
+	height:3em;
+	background-color: #5D5D5D;
+}
+	.nombreBotCabecera{
+	    position: absolute;
+	    top: 3px;
+	    left:65px;
+	    font-size: 25px;
+	    font-weight: 300;
+	    color: white;
+	    cursor: default;
+	}
+	#botEscribiendo{
+	    position: absolute;
+	    top: 10px;
+	    right: 90px;
+	    font-size: 17px;
+	    font-weight: 300;
+	    color: white;
+	    cursor: default;
+	    text-align: right;
+	}
+	.imgBotDialogo {
+	    position: absolute;
+	    width: 90px;
+	    height: 50px;
+	    top: 0px;
+	    left: 0px;
+	    color: #fff;
+	    line-height: 50px;
+	    font-size: 30px;
+	    padding-left: 10px;
+	    cursor: pointer;
+	}
+		.imgBotDialogo img {
+		    position: absolute;
+		    top: 5px;
+		    left: 2px;
+		    width: 40px;
+		    height: 40px;
+		    background-color: rgba(255,255,255,0.98);
+		    border-radius: 100%;
+		    -webkit-border-radius: 100%;
+		    -moz-border-radius: 100%;
+		    -ms-border-radius: 100%;
+		    margin-left: 10px;
+	    }
+
+
+#espacioDialogos{
+	position: fixed;
+	bottom:6em;
+	right:0px;
+	width:100%;
+	max-width:25em;
+	height:27em;
+	background-color: #E7E7E7;
+	overflow-y: scroll;
+}
+	.listaMensajes {
+	    list-style: none;
+	    background: none;
+	    margin: 0;
+	    margin-top: 7px;
+	    margin-bottom: 7px;
+	}
+		.listaMensajes li {
+		    /*overflow: hidden;
+		    /*padding: .5em 0;
+		    max-width: 18em;*/
+		}
+		/*BOCADILLOS*/
+		.bocadilloIzquierda p, .bocadilloDerecha p{
+			border-radius: 5px 5px 5px 5px;
+		    background: white;
+		    border-color: white;
+		    padding: 4px 15px 5px 15px;
+			text-shadow: none;
+			color:white;
+		}
+		.bocadilloDerecha p{ background-color: #589474; }
+		.bocadilloIzquierda p{ background-color: #5D5D5D; }
+		.bocadilloIzquierda{
+			margin-right: 3em;
+			margin-left: -1.4em;
+			float: left;
+			text-align: left;
+			color: #1C1717;
+		}
+		.bocadilloDerecha{
+			margin-right: 1.2em;
+			margin-left: 3em;
+			float: right;
+			text-align: right;
+			color: #E7EFFF;
+		}
+		/*FIN BOCADILLOS*/
+		/*FLECHAS BOCADILLOS*/
+		.flechaIzquierda{
+			width: 0;
+			height: 0;
+			border-top: 10px solid transparent;
+			border-bottom: 10px solid transparent;
+			border-right:10px solid #5D5D5D;
+			float:left;
+			margin-left:-.5em;
+			margin-top: .35em;
+		}
+		.flechaDerecha{
+			width: 0;
+			height: 0;
+			border-top: 10px solid transparent;
+			border-bottom: 10px solid transparent;
+			border-left:10px solid #589474;
+			float:right;
+			margin-right:-.5em;
+			margin-top: .35em;
+		}
+		/*FIN FLECHAS BOCADILLOS*/
+
+#input{
+	position: fixed;
+	bottom:3em;
+	right:0px;
+	width: 100%;
+	max-width: 25em;
+    height: 3em;
+    z-index: 99;
+    background: #fafafa;
+    border: none;
+    outline: none;
+    padding-left: 1em;
+    padding-right: 1em;
+    color: #666;
+    font-weight: 400;
+}
+
+#btnChat{
+	position: fixed;
+	bottom:0px;
+	right:0px;
+	width: 100%;
+	max-width: 25em;
+	height:3em;
+	font-weight: 400;
+    z-index: 99;
+    border: none;
+    outline: none;
+	background-color: #5D5D5D;
+	color: white;
+    font-weight: 400;
+}
+#btnChatCir{
+	position: fixed;
+	bottom:1.8em;
+	right:1.8em;
+	width: 4em;
+	height: 4em;
+    z-index: 99;
+    border: none;
+    outline: none;
+	background-color: #D9D9D9;
+	border-radius: 100%;
+}
+.icon-comment{font-size: 2em;color:#262626}
+/*FIN BOT MARTA*/
+
+.limpiar{ clear:both; }
+
+.esconder{ display: none; }
+
+/****** MEDIA QUERY *******/
+@media screen and (max-width: 800px) {
+    .msg img {
+	    width: 300px;
+	}
+}
+@media screen and (max-width: 550px) {
+    .msg img {
+	    width: 200px;
+	}
+}
+
+/*TODO: eliminar*/
+#response{
+	position: fixed;
+	bottom:6em;
+	left:0px;
+	width: 100%;
+	max-width: 25em;
+}
+@keyframes animacionDesplegar {
+    from {opacity: 0;}
+    to {height: 1;}
+}
+@keyframes animacionPlegar {
+    from {height: 0;}
+    to {height: 1;}
+}
+.desplegarChat{
+	visibility:visible;
+  	opacity:1;
+}
+.plegarChat{
+	visibility:hidden;
+  	opacity:0;
+ 	transition:opacity 4s linear;
+}

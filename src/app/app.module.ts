@@ -98,6 +98,7 @@ import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.com
 import { PublicarComponent } from './components/publicar/publicar.component';
 
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
+import { ChatbotAppComponent } from './components/shared/chatbot-app/chatbot-app.component';
 
 
 @NgModule({
@@ -141,7 +142,8 @@ import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '
     VentanaEmergenteComponent,
     VentanaEmergentePreguntaComponent,
     VentanaEmergentePdfComponent,
-    PublicarComponent
+    PublicarComponent,
+    ChatbotAppComponent
   ],
   imports: [
     HttpClientModule,
