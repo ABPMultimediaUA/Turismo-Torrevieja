@@ -13,7 +13,7 @@ import { PdfViewerModule }                            from 'ng2-pdf-viewer';
 import { AlertService, AuthService, PeticionesCrudService,
 AuthGuardService, AuthGuardUsuariosService, AuthGuardRolesService, AuthGuardCarterasService,
 AuthGuardEventosService, AuthGuardEspaciosService, AuthGuardProveedoresService,
-ConfirmDeactivateExpedienteGuard, ConfirmDeactivateCarteraGuard } from './services/index';
+ConfirmDeactivateExpedienteGuard, ConfirmDeactivateCarteraGuard, ChatBotService } from './services/index';
 
 //Angular material
 import {MatMenuModule} from '@angular/material/menu';
@@ -196,7 +196,8 @@ import { ChatbotAppComponent } from './components/shared/chatbot-app/chatbot-app
     AuthGuardEspaciosService,
     AuthGuardProveedoresService,
     ConfirmDeactivateExpedienteGuard,
-    ConfirmDeactivateCarteraGuard
+    ConfirmDeactivateCarteraGuard,
+    ChatBotService
   ],
   entryComponents: [
     //Ventanas emergentes usuarios

@@ -1,13 +1,13 @@
-<div id="ventanaChat" class="esconder">
-  <div id="cabeceraDialogo">
-    <div class="imgBotDialogo"><img src="" draggable="false"/></div>
+<div class="esconder ventanaChat" [@divState]="state">
+  <div class="cabeceraDialogo">
+    <div class="imgBotDialogo"><img #imgChat src="" draggable="false"/></div>
     <div class="nombreBotCabecera">{{nombreBot}}</div>
-    <div id="botEscribiendo"></div>
+    <div class="botEscribiendo" [innerHtml]="htmlEscribiendo"></div>
   </div>
-  <div id="espacioDialogos" class="">
-    <ul id="ulMensajes" class="listaMensajes"></ul>
+  <div class="espacioDialogos" #espDialog>
+    <ul class="listaMensajes" #listaSms></ul>
   </div>
-  <input id="input" type="text" placeholder="Escribe aquí!">
-  <button id="btnChat" (click)="abrir_cerrar_chat(true)" >¿En qué puedo ayudarte?</button>
+  <input class="input" type="text" placeholder="Escribe aquí!" (keyup)="inputSms($event)">
+  <button class="btnChat" (click)="abrir_cerrar_chat(true)" >¿En qué puedo ayudarte?</button>
 </div>
-<button *ngIf="true" id="btnChatCir" (click)="abrir_cerrar_chat(false)" [@btnState]="state"><span class="icon-comment"></span></button>
+<button *ngIf="true" class="btnChatCir" (click)="abrir_cerrar_chat(false)" [@btnState]="state"><span class="icon-comment"></span></button>

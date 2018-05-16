@@ -12,80 +12,81 @@
 /*BOT MARTA*/
 
 
-#ventanaChat{
+.ventanaChat{
 	position: fixed;
-	bottom:0px;
-	right:0px;
+	bottom:10px;
+	right:10px;
 	width:100%;
-	max-width:25em;
+	max-width:20em;
+  z-index: 50;
 	/* height:33em; */
 }
-#cabeceraDialogo{
+.cabeceraDialogo{
 	position: fixed;
-	bottom:33em;
+	bottom:27em;
 	right:0px;
 	width:100%;
 	max-width:25em;
-	height:3em;
-	background-color: #5D5D5D;
+	height:2em;
+	background-color: #3f51b5;
+	border-radius: 2px 2px 0 0;
 }
 	.nombreBotCabecera{
 	    position: absolute;
-	    top: 3px;
-	    left:65px;
-	    font-size: 25px;
-	    font-weight: 300;
-	    color: white;
-	    cursor: default;
-	}
-	#botEscribiendo{
-	    position: absolute;
-	    top: 10px;
-	    right: 90px;
-	    font-size: 17px;
+	    right:40px;
+	    font-size: 19px;
 	    font-weight: 300;
 	    color: white;
 	    cursor: default;
 	    text-align: right;
 	}
-	.imgBotDialogo {
+	.botEscribiendo{
 	    position: absolute;
-	    width: 90px;
-	    height: 50px;
-	    top: 0px;
-	    left: 0px;
-	    color: #fff;
-	    line-height: 50px;
+	    top: 7px;
+	    left: 10px;
+	    font-size: 14px;
+	    font-weight: 300;
+	    color: white;
+	    cursor: default;
+	    text-align: left;
+	}
+	.imgBotDialogo {
+	    /* position: absolute; */
+	    /* width: 60px;
+	    height: 17px; */
+	    /* top: 0px; */
+	    /* left: 0px; */
+	    /* color: #fff; */
+	    /* line-height: 50px;
 	    font-size: 30px;
-	    padding-left: 10px;
-	    cursor: pointer;
+	    padding-left: 10px; */
 	}
 		.imgBotDialogo img {
 		    position: absolute;
-		    top: 5px;
-		    left: 2px;
-		    width: 40px;
-		    height: 40px;
+		    top: 3px;
+		    right: 2px;
+		    width:26px;
+		    height: 26px;
 		    background-color: rgba(255,255,255,0.98);
 		    border-radius: 100%;
 		    -webkit-border-radius: 100%;
 		    -moz-border-radius: 100%;
 		    -ms-border-radius: 100%;
-		    margin-left: 10px;
+		    margin-right: 5px;
 	    }
 
 
-#espacioDialogos{
+.espacioDialogos{
 	position: fixed;
-	bottom:6em;
+	bottom:5em;
 	right:0px;
 	width:100%;
 	max-width:25em;
-	height:27em;
-	background-color: #E7E7E7;
+	height:22em;
+	background-color: rgba(231, 231, 231, 0.75);
 	overflow-y: scroll;
 }
-	.listaMensajes {
+	/deep/ .listaMensajes {
 	    list-style: none;
 	    background: none;
 	    margin: 0;
@@ -98,43 +99,45 @@
 		    max-width: 18em;*/
 		}
 		/*BOCADILLOS*/
-		.bocadilloIzquierda p, .bocadilloDerecha p{
+		/deep/ .bocadilloIzquierda p, /deep/ .bocadilloDerecha p{
 			border-radius: 5px 5px 5px 5px;
-		    background: white;
-		    border-color: white;
-		    padding: 4px 15px 5px 15px;
+	    background: white;
+	    border-color: white;
+	    padding: 4px 15px 5px 15px;
 			text-shadow: none;
 			color:white;
 		}
-		.bocadilloDerecha p{ background-color: #589474; }
-		.bocadilloIzquierda p{ background-color: #5D5D5D; }
-		.bocadilloIzquierda{
+		/deep/ .bocadilloDerecha p{ background-color: #589474; }
+		/deep/ .bocadilloIzquierda p{ background-color: #3f51b5; }
+		/deep/ .bocadilloIzquierda{
 			margin-right: 3em;
 			margin-left: -1.4em;
 			float: left;
 			text-align: left;
 			color: #1C1717;
+	    font-size: 12px;
 		}
-		.bocadilloDerecha{
+		/deep/ .bocadilloDerecha{
 			margin-right: 1.2em;
 			margin-left: 3em;
 			float: right;
 			text-align: right;
 			color: #E7EFFF;
+	    font-size: 12px;
 		}
 		/*FIN BOCADILLOS*/
 		/*FLECHAS BOCADILLOS*/
-		.flechaIzquierda{
+		/deep/ .flechaIzquierda{
 			width: 0;
 			height: 0;
 			border-top: 10px solid transparent;
 			border-bottom: 10px solid transparent;
-			border-right:10px solid #5D5D5D;
+			border-right:10px solid #3f51b5;
 			float:left;
 			margin-left:-.5em;
 			margin-top: .35em;
 		}
-		.flechaDerecha{
+		/deep/ .flechaDerecha{
 			width: 0;
 			height: 0;
 			border-top: 10px solid transparent;
@@ -146,59 +149,64 @@
 		}
 		/*FIN FLECHAS BOCADILLOS*/
 
-#input{
+.input{
 	position: fixed;
-	bottom:3em;
+	bottom:2.5em;
 	right:0px;
 	width: 100%;
 	max-width: 25em;
-    height: 3em;
-    z-index: 99;
-    background: #fafafa;
-    border: none;
-    outline: none;
-    padding-left: 1em;
-    padding-right: 1em;
-    color: #666;
-    font-weight: 400;
+  height: 2.5em;
+  z-index: 99;
+  background: #fafafa;
+  border: none;
+  outline: none;
+  padding-left: 1em;
+  padding-right: 1em;
+  color: #666;
+  font-weight: 400;
 }
 
-#btnChat{
+.btnChat{
 	position: fixed;
 	bottom:0px;
 	right:0px;
 	width: 100%;
 	max-width: 25em;
-	height:3em;
+	height:2.5em;
 	font-weight: 400;
-    z-index: 99;
-    border: none;
-    outline: none;
-	background-color: #5D5D5D;
+  z-index: 99;
+  border: none;
+  outline: none;
+	background-color: #3f51b5;
 	color: white;
-    font-weight: 400;
+  font-weight: 400;
+	cursor: pointer;
+	border-radius: 0 0 2px 2px;
+	box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
 }
-#btnChatCir{
+.btnChatCir{
 	position: fixed;
 	bottom:1.8em;
 	right:1.8em;
-	width: 4em;
-	height: 4em;
-    z-index: 99;
-    border: none;
-    outline: none;
-	background-color: #D9D9D9;
+	width: 3.6em;
+	height: 3.6em;
+  z-index: 99;
+  border: none;
+  outline: none;
+	background-color: #3f51b5;
 	border-radius: 100%;
+	cursor: pointer;
+	box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
 }
-.icon-comment{font-size: 2em;color:#262626}
+.icon-comment{ font-size: 1.8em; color:white; }
 /*FIN BOT MARTA*/
 
-.limpiar{ clear:both; }
+/deep/ .limpiar{ clear:both; }
 
-.esconder{ display: none; }
+/* .esconder{ display: none; } */
 
 /****** MEDIA QUERY *******/
-@media screen and (max-width: 800px) {
+/* @media screen and (max-width: 800px) {
     .msg img {
 	    width: 300px;
 	}
@@ -207,10 +215,10 @@
     .msg img {
 	    width: 200px;
 	}
-}
+} */
 
 /*TODO: eliminar*/
-#response{
+/* #response{
 	position: fixed;
 	bottom:6em;
 	left:0px;
@@ -233,4 +241,4 @@
 	visibility:hidden;
   	opacity:0;
  	transition:opacity 4s linear;
-}
+} */
