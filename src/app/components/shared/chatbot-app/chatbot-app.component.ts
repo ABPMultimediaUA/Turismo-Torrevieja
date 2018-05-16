@@ -1,7 +1,7 @@
-import { Component, OnInit, ViewChild, ElementRef }   from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, AfterViewChecked }   from '@angular/core';
 import { BrowserAnimationsModule }                    from '@angular/platform-browser/animations';
 import { trigger, state, style, animate, transition } from '@angular/animations';
-import { ChatBotService }                             from '../../../services/index';
+import { ChatBotService, AuthService }                from '../../../services/index';
 
 @Component({
   selector: 'app-chatbot-app',
@@ -34,6 +34,7 @@ export class ChatbotAppComponent implements OnInit {
   esconder:boolean        =  true;
   nombresChatBot:string[] =  ["Marta", "David"];
   nombreBot:string;
+  urlImgBot:string;
   htmlEscribiendo:string = "";
 
 
@@ -43,8 +44,10 @@ export class ChatbotAppComponent implements OnInit {
   @ViewChild("imgChat") imgChat;
   @ViewChild("espDialog") espDialog;
 
-  constructor( private _chatService: ChatBotService, ) {
-    this.nombreBot = this.nombresChatBot[0];
+  constructor( private _chatService: ChatBotService, private _authService:AuthService) {
+    // this.nombreBot = this._authService.Chatbot.getValue()[1];
+    this.nombreBot = "Marta";
+    this.urlImgBot = this._authService.Chatbot.getValue()[2];
   }
 
   ngOnInit() {
@@ -55,6 +58,7 @@ export class ChatbotAppComponent implements OnInit {
     this.setResponse(s);
     let o = this.imgChat.nativeElement as HTMLImageElement;
     o.src = '..\\..\\assets\\ImgChatbots\\marta.JPG';
+    // o.src = this.urlImgBot;
   }
 
   abrir_cerrar_chat(i){
@@ -73,13 +77,13 @@ export class ChatbotAppComponent implements OnInit {
     s = this.evitarInjections(s);
     this.setInput(s);
     this.htmlEscribiendo = "Escribiendo...";
-    setTimeout(()=>{
+    // setTimeout(()=>{
       this._chatService.enviarMensaje(s)
         .then( res =>{
           this.setResponse(res as string);
           this.htmlEscribiendo = "";
         });
-    }, 500)
+    // }, 500)
   }
 
   evitarInjections(entrada){
@@ -89,20 +93,26 @@ export class ChatbotAppComponent implements OnInit {
   setInput(s:string) {
     var res = '<li class="bocadilloDerecha"><div class="flechaDerecha"></div><p>'+s+'</p></li>';
     res+='<div class="limpiar"></div>';
-    this.mostrarSms_scroll(res);
+    this.mostrarSms(res);
   }
 
   setResponse(r:string) {
     var res = '<li class="bocadilloIzquierda"><div class="flechaIzquierda"></div><p>'+r+'</p></li>';
     res+='<div class="limpiar"></div>';
-    this.mostrarSms_scroll(res);
+    this.mostrarSms(res);
   }
 
-  mostrarSms_scroll(res:string){
+  mostrarSms(res:string){
     this.listaSms.nativeElement.insertAdjacentHTML('beforeend', res);
-    (this.espDialog.nativeElement as HTMLDivElement).scrollHeight;
-    // this.espDialog.animate({ scrollTop: this.listaSms.nativeElement.height()-this.espDialog.height()}, 0);
   }
 
+  ngAfterViewChecked() {
+    this.scrollToBottom();
+  }
+  scrollToBottom(){
+    try {
+      this.espDialog.nativeElement.scrollTop = this.espDialog.nativeElement.scrollHeight;
+    } catch(err) { }
+  }
 
 }

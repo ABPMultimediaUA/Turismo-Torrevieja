@@ -33,13 +33,13 @@ export class ExpedientesComponent implements OnInit {
     total_pages:1
   };
   option_Items_Pgn='10';              //Cantidad de items por pagina al cargar el componente
-  selectUrl:number = 0;               //Selecciona la url para las peticiones getItem
+  selectUrl:number = 208;               //Selecciona la url para las peticiones getItem
   busqueda:string = "";               //Si se ha rellenado el campo de busqueda
   selectASC_DESC:number=-1;           //Saber si el usuario quiere ordenar los items: -1 nada seleccionado, 0 ASC, 1 DES
   valorEscogidoForOrder:number = -1;  //Para saber el elemento seleccionado, -1 valor neutro
   btnEliminar:boolean = true;         //Activar / desactivar boton de eliminar item/s
   @ViewChild("btnsPag") BtnsPagOff;   //Div que contiene los botones de paginacion
-  estadoCarteraEscogido:number = 300; //Valor radio button (url basica por estados) TODO hacer cuando este hecho en backend
+  estadoCarteraEscogido:number = 208; //Valor radio button (url basica por estados) TODO hacer cuando este hecho en backend
 
   dataSource = new MatTableDataSource(this.items);            //Datos de la tabla
   selection = new SelectionModel<ExpedienteInterface>(true, []); //Filas seleccionadas
@@ -93,7 +93,7 @@ export class ExpedientesComponent implements OnInit {
               auxAvance.tareasTerminadas = (+num[0].charAt(0));
               auxAvance.tareasPropuestas = (+num[0].charAt(1));
             }
-          }        
+          }
           auxAvance.porcentajeAvanzado = ( +( (auxAvance.tareasTerminadas + auxAvance.contratosTerminados) / (auxAvance.tareasPropuestas + auxAvance.contratosPropuestos) * 100).toFixed(1) );
           if(auxAvance.porcentajeAvanzado == 100) auxAvance.colorSpinner = "primary";
           else if(auxAvance.porcentajeAvanzado >= 50) auxAvance.colorSpinner = "accent";
@@ -287,9 +287,9 @@ export class ExpedientesComponent implements OnInit {
   }
 
   cambiarListaEstado(){
-    // this.selection.clear();
-    // this.selectUrl = +this.estadoCarteraEscogido;
-    // this.cargarItems(+this.option_Items_Pgn,1);
+    this.selection.clear();
+    this.selectUrl = +this.estadoCarteraEscogido;
+    this.cargarItems(+this.option_Items_Pgn,1);
   }
 
   //CABECERA TABLA - Para hacer selects ORDER BY, cada vez que se pinche en una cabecera de la tabla
