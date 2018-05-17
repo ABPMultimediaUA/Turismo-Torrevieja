@@ -1,13 +1,19 @@
 <div class="esconder ventanaChat" [@divState]="state">
   <div class="cabeceraDialogo">
-    <div class="imgBotDialogo"><img #imgChat src="" draggable="false"/></div>
-    <div class="nombreBotCabecera">{{nombreBot}}</div>
+    <div class="imgBotDialogo"><img #imgChat [src]="_chatService.Chatbot.getValue()[2]" draggable="false"/></div>
+    <div class="nombreBotCabecera">{{_chatService.Chatbot.getValue()[1]}}</div>
     <div class="botEscribiendo" [innerHtml]="htmlEscribiendo"></div>
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)='abrir_cerrar_chat(false)' class="botonMinimizar">
+      <mat-icon class="botonMinimizarIcon">minimize</mat-icon>
+    </button>
+    <button mat-button matSuffix mat-icon-button aria-label="Clear" (click)='cerrar_y_limpiar()' class="botonCerrar">
+      <mat-icon class="botonCerrarIcon">close</mat-icon>
+    </button>
   </div>
   <div class="espacioDialogos" #espDialog>
     <ul class="listaMensajes" #listaSms></ul>
   </div>
   <input class="input" type="text" placeholder="Escribe aquí!" (keyup)="inputSms($event)">
-  <button class="btnChat" (click)="abrir_cerrar_chat(true)" >¿En qué puedo ayudarte?</button>
+  <button class="btnChat">¿En qué puedo ayudarte?</button>
 </div>
 <button *ngIf="true" class="btnChatCir" (click)="abrir_cerrar_chat(false)" [@btnState]="state"><span class="icon-comment"></span></button>

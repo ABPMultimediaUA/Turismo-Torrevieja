@@ -29,18 +29,6 @@ export class AuthService {
   Second_accessToken:string;
   urlBase:string = 'https://gvent.ovh/Prueba2_1/public/';
 
-  token1:string = "d50d49e348fd451cafc74f44b7fefb34";
-  token2:string = "8de87af994234c70935aa50fac881dd3";
-
-  chatNombre1:string = "Marta";
-  chatNombre2:string = "Carlos";
-
-  chatImg1:string = '..\\..\\assets\\ImgChatbots\\marta.JPG';
-  chatImg2:string = '..\\..\\assets\\ImgChatbots\\carlos.JPG';
-
-  Chatbot = new BehaviorSubject<string[]>(this.logueadoChatbot());
-
-
   constructor( private http:Http, private router:Router ){
     //Si hay sesion, guardamos todos los datos de las localStorage en sus variables
     if(localStorage.getItem('accesToken')) this.Second_accessToken = localStorage.getItem('accesToken');
@@ -52,15 +40,6 @@ export class AuthService {
   private estaLogueado():boolean {
     return (!!localStorage.getItem('accesToken') && !!localStorage.getItem('user'));
   }
-
-  private logueadoChatbot(){
-    if(!!localStorage.getItem('accesToken') && !!localStorage.getItem('user')){
-      return [this.token2,this.chatNombre2,this.chatImg2];
-    }
-    else return [this.token1,this.chatNombre1,this.chatImg1];
-  }
-
-
 
   //Conocer si esta logueado o no el usuario
   getEstadoLog() : Observable<boolean> {
@@ -89,7 +68,7 @@ export class AuthService {
               if(typeof res != "string"){
                 this.userLog.next(true);
                 this.router.navigate(['perfil']);
-                this.Chatbot.next([this.token2,this.chatNombre2,this.chatImg2]);              }
+              }
             });
         }
       });
@@ -172,7 +151,6 @@ export class AuthService {
   logout(i:number) : void {
     this.limpiarDatosUsuario();
     this.userLog.next(false);
-    this.Chatbot.next([this.token1,this.chatNombre1,this.chatImg1]);
     if(i == 0) this.router.navigate(['home']);
     else if(i == 1) this.router.navigate(['login']);
   }
