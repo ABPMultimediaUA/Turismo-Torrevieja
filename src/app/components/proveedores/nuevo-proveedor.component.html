@@ -1,100 +1,104 @@
 <div class="contenedorEditar">
-  <h1 class="mat-display-1 tituloComponentes"><span class="icon-handshake-o"></span> {{titulo}} {{items.nombreProveedor}}</h1>
+  <h1 class="mat-display-1 tituloComponentes"><span class="icon-handshake-o"></span> {{titulo}}: {{items.nombreProveedor}}</h1>
   <a class="btnCerrar" (click)="cerrarDialogo()"><i class="material-icons iconoCerrar">close</i></a>
   <form (ngSubmit)="anyadirItem()" #formulario="ngForm">
     <div class="row contenedorFormCamposDestacados">
 
-      <mat-form-field hintLabel="">
-        <input matInput name="nombreEspacio" [(ngModel)]="items.nombreProveedor" placeholder="Nombre" [readonly]="bloqCampos"
+      <mat-form-field class=""  style="width:40%;min-width:10em">
+        <input matInput name="nombreProveedor" [(ngModel)]="items.nombreProveedor" placeholder="Nombre" [readonly]="bloqCampos"
                maxLength="200" required>
         <mat-error>Campo requerido</mat-error>
       </mat-form-field>
 
-      <mat-form-field hintLabel="">
+      <mat-form-field class=""  style="width:25%;min-width:10em">
+        <input matInput name="clase" [(ngModel)]="items.clase" placeholder="Clase" [readonly]="bloqCampos"
+               maxLength="40">
+      </mat-form-field>
+
+      <mat-form-field class="carteraPeriodo">
+        <input matInput name="cifnif" [(ngModel)]="items.cifnif" placeholder="CIF / NIF" [readonly]="bloqCampos"
+               maxLength="40">
+      </mat-form-field>
+
+    </div>
+    <mat-divider></mat-divider>
+    <div class="row contenedorFormNormal">
+
+      <mat-form-field class="carteraFecha">
         <input matInput name="codigoPostal" [(ngModel)]="items.codigoPostal" placeholder="Código Postal" [readonly]="bloqCampos"
                pattern="[0-9]{5}" minLength="5" maxLength="5">
         <mat-error>Han de ser cinco números</mat-error>
       </mat-form-field>
 
-      <mat-form-field hintLabel="">
+      <mat-form-field class=""  style="width:30%;min-width:10em">
         <input matInput name="provincia" [(ngModel)]="items.provincia" placeholder="Provincia" [readonly]="bloqCampos"
                maxLength="50">
       </mat-form-field>
 
-      <mat-form-field hintLabel="">
+      <mat-form-field class=""  style="width:45%;min-width:10em">
         <input matInput name="localidad" [(ngModel)]="items.localidad" placeholder="Localidad" [readonly]="bloqCampos"
                maxLength="50">
       </mat-form-field>
 
     </div>
-    <div class="row">
-      <div class="col-sm-3 contenedorFormCampos">
+    <div class="row contenedorFormNormal" >
 
-        <mat-form-field hintLabel="">
-          <input matInput name="direccion" [(ngModel)]="items.direccion" placeholder="Dirección" [readonly]="bloqCampos"
-                 maxLength="200">
-        </mat-form-field>
+      <mat-form-field class="" style="width:55%;min-width:9em">
+        <input matInput name="calle" [(ngModel)]="items.calle" placeholder="Calle" [readonly]="bloqCampos"
+               maxLength="200">
+      </mat-form-field>
 
-        <!-- <mat-form-field hintLabel="">
-          <input matInput name="calle" [(ngModel)]="items.calle" placeholder="Calle" [readonly]="bloqCampos"
-                 maxLength="200">
-        </mat-form-field>
+      <mat-form-field class="carteraFecha">
+        <input matInput name="numero" [(ngModel)]="items.numero" placeholder="Número" [readonly]="bloqCampos"
+               maxLength="50">
+      </mat-form-field>
 
-        <mat-form-field hintLabel="">
-          <input matInput name="numero" [(ngModel)]="items.numero" placeholder="Número" [readonly]="bloqCampos"
-                 maxLength="50">
-        </mat-form-field>
+      <mat-form-field class="carteraAnyo">
+        <input matInput name="planta" [(ngModel)]="items.planta" placeholder="Planta" [readonly]="bloqCampos"
+               maxLength="20">
+      </mat-form-field>
 
-        <mat-form-field hintLabel="">
-          <input matInput name="planta" [(ngModel)]="items.planta" placeholder="Planta" [readonly]="bloqCampos"
-                 maxLength="20">
-        </mat-form-field>
-
-        <mat-form-field hintLabel="">
-          <input matInput name="puerta" [(ngModel)]="items.puerta" placeholder="Puerta" [readonly]="bloqCampos"
-                 maxLength="20">
-        </mat-form-field> -->
-
-        <mat-form-field hintLabel="">
-          <input matInput name="cifnif" [(ngModel)]="items.cifnif" placeholder="CIF / NIF" [readonly]="bloqCampos"
-                 maxLength="40">
-        </mat-form-field>
-
-        <mat-form-field hintLabel="">
-          <input matInput name="clase" [(ngModel)]="items.clase" placeholder="Clase" [readonly]="bloqCampos"
-                 maxLength="40" required>
-        </mat-form-field>
-
-        <mat-form-field hintLabel="">
-          <input matInput type="email" name="correoUno" [(ngModel)]="items.correoUno" placeholder="Email 1" [readonly]="bloqCampos"
-                 maxLength="50">
-        </mat-form-field>
-
-      </div>
-      <div class="col-sm-3 contenedorFormCampos">
-
-        <mat-form-field hintLabel="">
-          <input matInput type="email" name="correoDos" [(ngModel)]="items.correoDos" placeholder="Email 2" [readonly]="bloqCampos"
-                 maxLength="50">
-        </mat-form-field>
-
-        <mat-form-field hintLabel="">
-          <input matInput name="telefonoUno" [(ngModel)]="items.telefonoUno" placeholder="Teléfono 1" [readonly]="bloqCampos"
-                 maxLength="11">
-        </mat-form-field>
-
-        <mat-form-field hintLabel="">
-          <input matInput name="telefonoDos" [(ngModel)]="items.telefonoDos" placeholder="Teléfono 3" [readonly]="bloqCampos"
-                 maxLength="11">
-        </mat-form-field>
-
-        <mat-form-field hintLabel="">
-          <input matInput name="telefonoTres" [(ngModel)]="items.telefonoTres" placeholder="Teléfono 3" [readonly]="bloqCampos"
-                 maxLength="11">
-        </mat-form-field>
-
-      </div>
+      <mat-form-field class="carteraAnyo">
+        <input matInput name="puerta" [(ngModel)]="items.puerta" placeholder="Puerta" [readonly]="bloqCampos"
+               maxLength="20">
+      </mat-form-field>
     </div>
+    <mat-divider></mat-divider>
+    <div class="row contenedorFormNormal">
+
+      <mat-form-field class=""  style="width:45%;min-width:10em">
+        <input matInput name="persona_de_contacto" [(ngModel)]="items.persona_de_contacto" placeholder="Persona de contacto" [readonly]="bloqCampos"
+               maxLength="40">
+      </mat-form-field>
+
+      <mat-form-field class="carteraPeriodo">
+        <input matInput name="telefonoUno" [(ngModel)]="items.telefonoUno" placeholder="Teléfono 1" [readonly]="bloqCampos"
+               maxLength="11">
+      </mat-form-field>
+
+      <mat-form-field class="carteraPeriodo">
+        <input matInput name="telefonoDos" [(ngModel)]="items.telefonoDos" placeholder="Teléfono 2" [readonly]="bloqCampos"
+               maxLength="11">
+      </mat-form-field>
+    </div>
+    <div class="row contenedorFormNormal">
+      <mat-form-field class="" style="width:45%;min-width:10em">
+        <input matInput type="email" name="correoUno" [(ngModel)]="items.correoUno" placeholder="Email 1" [readonly]="bloqCampos"
+               maxLength="50">
+      </mat-form-field>
+
+      <mat-form-field class="carteraNombre" style="width:45%;min-width:10em">
+        <input matInput type="email" name="correoDos" [(ngModel)]="items.correoDos" placeholder="Email 2" [readonly]="bloqCampos"
+               maxLength="50">
+      </mat-form-field>
+    </div>
+
+
+      <div class="" *ngIf="editar" class="campoWidth100 alignCenter">
+        <p matTooltip="Determina si se encuentra disponible en estos momentos.">
+        Activo<mat-slide-toggle name="activado" (change)="$event ? selection.toggle(0) : null; activoChange = true" [checked]="selection.isSelected(0)" (click)="$event.stopPropagation()" [disabled]="bloqCampos"></mat-slide-toggle></p>
+      </div>
+
     <div class="row contenedorFormObservaciones">
       <mat-form-field hintLabel="" class="campoWidth100">
         <textarea matInput name="descripcion" [(ngModel)]="items.descripcion" placeholder="Observaciones" [readonly]="bloqCampos"
@@ -115,7 +119,7 @@
           </div>
           <div *ngIf="!bloqCampos" class="btnsEditarAnyadir">
             <mat-dialog-actions class="btnsEditarAnyadir">
-              <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid">Guardar cambios</button>
+              <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid || (!formulario.form.dirty && !activoChange)">Guardar cambios</button>
               <button type="button" mat-raised-button (click)="disable_enable_campos()" color="warn">Cancelar</button>
             </mat-dialog-actions>
           </div>

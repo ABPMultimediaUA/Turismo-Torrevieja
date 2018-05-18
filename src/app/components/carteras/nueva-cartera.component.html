@@ -1,32 +1,32 @@
 <div class="contenedorEditar">
-  <h1 class="mat-display-1 tituloFormEstrecho"><span class="icon-folder-add"></span> {{titulo}} {{items.nombreCartera}}</h1>
+  <h1 class="mat-display-1 tituloFormEstrecho"><span class="icon-folder-add"></span> {{titulo}}: {{items.nombreCartera}}</h1>
   <a class="btnCerrar" (click)="cerrarDialogo()"><i class="material-icons iconoCerrar">close</i></a>
   <form (ngSubmit)="anyadirItem()" #formulario="ngForm">
     <div class="row contenedorFormEstrecho">
 
-        <mat-form-field hintLabel="" class="campoWidth100">
-          <input matInput name="nombreCartera" [(ngModel)]="items.nombreCartera" placeholder="Nombre"
-                 maxLength="200" required>
-          <mat-error>Campo requerido</mat-error>
-        </mat-form-field>
+      <mat-form-field hintLabel="" class="campoWidth100">
+        <input matInput name="nombreCartera" [(ngModel)]="items.nombreCartera" placeholder="Nombre"
+               maxLength="200" required>
+        <mat-error>Campo requerido</mat-error>
+      </mat-form-field>
 
-        <mat-form-field hintLabel="" class="campoWidth100">
-          <input matInput name="trimestre" [(ngModel)]="items.trimestre" placeholder="Periodo"
-                 maxLength="100" required>
-          <mat-error>Campo requerido</mat-error>
-        </mat-form-field>
+      <mat-form-field hintLabel="" class="campoWidth100">
+        <input matInput name="trimestre" [(ngModel)]="items.trimestre" placeholder="Periodo"
+               maxLength="100" required>
+        <mat-error>Campo requerido</mat-error>
+      </mat-form-field>
 
-        <mat-form-field hintLabel="" class="campoWidth100">
-          <input matInput name="year" [(ngModel)]="items.year" placeholder="Año"
-                 pattern="[0-9]{4}" maxLength="4" required>
-          <mat-error>Campo requerido. Han de ser cuatro números</mat-error>
-        </mat-form-field>
-    </div>
-    <div class="row contenedorFormEstrecho">
+      <mat-form-field hintLabel="" class="campoWidth100">
+        <input matInput name="year" [(ngModel)]="items.year" placeholder="Año"
+               pattern="[0-9]{4}" maxLength="4" required>
+        <mat-error>Campo requerido. Han de ser cuatro números</mat-error>
+      </mat-form-field>
+
       <mat-form-field hintLabel="" class="campoWidth100">
         <textarea matInput name="descripcion" [(ngModel)]="items.descripcion" placeholder="Descripción"
                   maxLength="500"></textarea>
       </mat-form-field>
+
     </div>
     <div class="row" *ngIf="!realizandoAccion">
       <div class="btnsEditarAnyadir">

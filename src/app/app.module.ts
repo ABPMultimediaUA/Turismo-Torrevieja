@@ -12,7 +12,8 @@ import { PdfViewerModule }                            from 'ng2-pdf-viewer';
 // servicios
 import { AlertService, AuthService, PeticionesCrudService,
 AuthGuardService, AuthGuardUsuariosService, AuthGuardRolesService, AuthGuardCarterasService,
-AuthGuardEventosService, AuthGuardEspaciosService, AuthGuardProveedoresService } from './services/index';
+AuthGuardEventosService, AuthGuardEspaciosService, AuthGuardProveedoresService,
+ConfirmDeactivateExpedienteGuard, ConfirmDeactivateCarteraGuard, ChatBotService } from './services/index';
 
 //Angular material
 import {MatMenuModule} from '@angular/material/menu';
@@ -26,6 +27,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTabsModule} from '@angular/material/tabs';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 import { MatIcon, MatPaginatorModule, MatTableDataSource, MatSort,
          MatSortModule, MatTableModule, MatFormFieldModule, MatNativeDateModule,
          MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatProgressBarModule,
@@ -97,7 +99,8 @@ import { EliminarExpedienteDialog } from "./components/carteras/eliminar-expedie
 import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.component";
 import { PublicarComponent } from './components/publicar/publicar.component';
 
-
+import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
+import { ChatbotAppComponent } from './components/shared/chatbot-app/chatbot-app.component';
 
 
 @NgModule({
@@ -142,7 +145,8 @@ import { PublicarComponent } from './components/publicar/publicar.component';
     VentanaEmergentePreguntaComponent,
     VentanaEmergentePdfComponent,
     PublicarComponent,
-    GraficasComponent
+    GraficasComponent,
+    ChatbotAppComponent,
   ],
   imports: [
     HttpClientModule,
@@ -168,6 +172,7 @@ import { PublicarComponent } from './components/publicar/publicar.component';
     MatMenuModule,
     MatProgressBarModule,
     MatExpansionModule,
+    MatSlideToggleModule,
     MatSelectModule,
     MatTooltipModule,
     MatDatepickerModule,
@@ -192,7 +197,10 @@ import { PublicarComponent } from './components/publicar/publicar.component';
     AuthGuardCarterasService,
     AuthGuardEventosService,
     AuthGuardEspaciosService,
-    AuthGuardProveedoresService
+    AuthGuardProveedoresService,
+    ConfirmDeactivateExpedienteGuard,
+    ConfirmDeactivateCarteraGuard,
+    ChatBotService
   ],
   entryComponents: [
     //Ventanas emergentes usuarios
@@ -233,4 +241,10 @@ import { PublicarComponent } from './components/publicar/publicar.component';
   bootstrap: [AppComponent]
 })
 
-export class AppModule { }
+export class AppModule {
+  constructor(public _authService:AuthService) {
+    window.addEventListener("beforeunload", function (event) {
+      if(_authService.userLog.getValue()) event.returnValue = "\o/";
+    });
+  }
+}

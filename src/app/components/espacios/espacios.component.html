@@ -1,7 +1,6 @@
 <div class="container-fluid divContenedorTabla">
   <div class="row">
-    <div class="example-header">
-      <h1 class="mat-display-1 tituloComponentes"><span class="icon-town-hall"></span> Espacios</h1>
+    <div class="example-header cabeceraMargin">
       <div class="elementosCabecera">
         <button *ngIf="_authService.tienePermiso(5)" mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
           (click)="editarAnyadirItem(null)">Nuevo Espacio</button>
@@ -99,8 +98,15 @@
             <mat-cell *matCellDef="let items">{{items.aforo}}</mat-cell>
           </ng-container>
 
-          <mat-header-row *matHeaderRowDef="['select','identificador','nombreEspacio','CP','calle','numero','telefono1','aforo']"></mat-header-row>
-          <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','identificador','nombreEspacio','CP','calle','numero','telefono1','aforo']" (click)="editarAnyadirItem(row)"></mat-row>
+          <ng-container matColumnDef="activo">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(5)">Activo</mat-header-cell>
+            <mat-cell *matCellDef="let items" [class.slideDisabledAzul]="items.activo == 1">
+              <mat-slide-toggle [checked]="items.activo == 1" disabled ></mat-slide-toggle>
+            </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="['select','identificador','nombreEspacio','CP','calle','numero','telefono1','aforo','activo']"></mat-header-row>
+          <mat-row class="elementoTabla" *matRowDef="let row; columns: ['select','identificador','nombreEspacio','CP','calle','numero','telefono1','aforo','activo']" (click)="editarAnyadirItem(row)"></mat-row>
         </mat-table>
       </div>
     </div>

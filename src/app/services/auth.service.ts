@@ -20,6 +20,7 @@ export class AuthService {
     fechaActualizacion:"",
     fechaEliminacion:"",
     fechaCreacion:"",
+    activo:null,
   };
   user = new BehaviorSubject<UsuarioInterface>(this.usuario);  //Datos del usuario
   userPermisos = new BehaviorSubject<number[]>([]);            //Permisos del usuario para comprobar restricciones
@@ -27,7 +28,6 @@ export class AuthService {
   First_accessToken:string="Bearer ";
   Second_accessToken:string;
   urlBase:string = 'https://gvent.ovh/Prueba2_1/public/';
-
 
   constructor( private http:Http, private router:Router ){
     //Si hay sesion, guardamos todos los datos de las localStorage en sus variables
@@ -162,6 +162,7 @@ export class AuthService {
     localStorage.removeItem("accesToken");
     localStorage.removeItem("user");
     localStorage.removeItem("permisos");
+    localStorage.removeItem("navSelected");
   }
   /*** FIN FUNCIONES LOGOUT ***/
 

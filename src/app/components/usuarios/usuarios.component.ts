@@ -5,7 +5,7 @@ import { MatTableDataSource, MatDialog }        from '@angular/material';
 import { EliminarUsuarioComponent }             from './eliminar-usuario.component';
 import { PaginacionInterface }                  from '../../interfaces/paginacion.interface';
 import { UsuarioInterface }                     from '../../interfaces/usuario.interface';
-import { RolesInterface }                     from '../../interfaces/roles.interface';
+import { RolesInterface }                       from '../../interfaces/roles.interface';
 import { NuevoUsuarioComponent }                from './nuevo-usuario.component';
 
 @Component({
@@ -20,6 +20,8 @@ export class UsuariosComponent implements OnInit {
 
   items:UsuarioInterface[]=[];
   row:UsuarioInterface;               //Devuelve la fila que se seleccione en la tabla
+  roles:RolesInterface[]=[];
+  selectRoles:string[]=[];
   paginacion:PaginacionInterface={    //Guardar todos los datos de paginacion
     count:0,
     current_page:1,
@@ -38,7 +40,6 @@ export class UsuariosComponent implements OnInit {
   valorEscogidoForOrder:number = -1;  //Para saber el elemento seleccionado, -1 valor neutro
   btnEliminar:boolean = true;         //Activar / desactivar boton de eliminar item/s
   @ViewChild("btnsPag") BtnsPagOff;   //Div que contiene los botones de paginacion
-  roles:RolesInterface[]=[];
 
   dataSource = new MatTableDataSource(this.items);            //Datos de la tabla
   selection = new SelectionModel<UsuarioInterface>(true, []); //Filas seleccionadas
@@ -150,7 +151,7 @@ export class UsuariosComponent implements OnInit {
   editarAnyadirItem(row){
     const dialogRef = this.dialog.open(NuevoUsuarioComponent,{
       height: '90%',
-      width: '90%',
+      width: '37%',
       data: { item: row }
     });
     dialogRef.afterClosed().subscribe( res => {
@@ -254,18 +255,21 @@ export class UsuariosComponent implements OnInit {
   }
 
   cargarNombreRoles(){
-    for(var x = 0; x < this.items.length; x++){
-      this.cargarNombreRol(x)
-    }
-  }
-  cargarNombreRol(i:number){
-    this._itemService.getItem(4,this.items[i].rol,-1,-1,-1,"","").then(
-      res => {
-        if(typeof res != "string"){
-          let r = res as any;
-          this.items[i]['nombreRol'] = r.data.nombreRol;
+    this.selectRoles = [];
+    this._itemService.getItem(4,-1,-1,-1,-1,"","").then( res => {
+      if(typeof res != 'string'){
+        this.roles = (res as any).data as RolesInterface[];
+        for(var x = 0; x < this.items.length; x++){
+          this.selectRoles.push(null);
+          for(var z = 0; z < this.roles.length; z++){
+            if(this.items[x].rol == +this.roles[z].identificador){
+              this.selectRoles[x] = this.roles[z].nombreRol;
+              z = this.roles.length;
+            }
+          }
         }
-      });
+      }
+    })
   }
 
 }

@@ -1,4 +1,11 @@
-
+/deep/ html{
+  min-height: 100%;
+  position: relative;
+}
+/deep/ .piePgn, /deep/ .piePgn{
+  position: absolute !important;
+  bottom: 0px !important;
+}
 /*CSS comun a todos los componentes con tabla*/
 .mat-row{
   height: 48px;
@@ -85,18 +92,16 @@
   display: inline-block;
 }
 .divTiposCartera{
-  float:right;
-  margin-right: 3em;
-  display: inline-block;
+  position: relative;
+  top: .3em;
 }
-  .divTiposCartera>label{
-    margin-right: 2em;
-    font-size: 1em;
-  }
   .divTiposCartera>mat-radio-group>mat-radio-button{
-    margin-right: 2em;
+    margin-right: 11px;
     font-size: .8em;
   }
+    /deep/ .divTiposCartera .mat-radio-container{
+      margin-right: -5px
+    }
 .carteraFormEditar{
   margin-top: .2em;
   margin-left: 2.5em;
@@ -148,8 +153,6 @@ margin-right: 2.5em;
 }
 .btnsExpedienteNewElement{
   margin-top: 1.5em;
-  color: white;
-  background-color: rgb(32, 184, 79);
 }
 .expMatPanelDescription{
   white-space: nowrap;
@@ -226,7 +229,7 @@ margin-right: 2.5em;
   flex:0 0 5%
 }
 .mat-column-aforo, .mat-column-codigoPostal, .mat-column-CP, .mat-column-numero,
-.mat-column-year,.mat-column-esVerificado{
+.mat-column-year,.mat-column-esVerificado,.mat-column-activo{
   flex:0 0 7%
 }
 .mat-column-fechaInicio, .mat-column-fechaFin{
@@ -324,6 +327,16 @@ margin-right: 2.5em;
 .campoWidth100{
   width:100%;
 }
+.alignCenter{
+  text-align: center;
+}
+.alignCenter>p{
+  margin-left: -2.1em;
+}
+.alignCenter>p>.mat-icon,.alignCenter>p>.mat-slide-toggle{
+  position: absolute;
+  margin-left: .5em;
+}
 .tresCamposFila{
   margin-top: 2em;
   margin-left: 2.5em;
@@ -343,6 +356,13 @@ margin-right: 2.5em;
   margin-bottom: .3em;
   margin-right: 3em;
 }
+.contenedorFormNormal{
+  margin-top: 1em;
+  margin-bottom: .5em;
+  margin-left: 2.5em;
+  margin-right: 2.5em;
+  justify-content: space-between;
+}
 /*Fin ventana emergente editar*/
 
 /*Navegador*/
@@ -358,4 +378,56 @@ margin-right: 2.5em;
   margin-top: 2em;
   width:95%;
   height:400px
+}
+/deep/ .slideDisabledAzul .mat-disabled .mat-slide-toggle-bar{
+  background-color: rgba(233,30,99,.5);
+}
+/deep/ .slideDisabledAzul .mat-disabled .mat-slide-toggle-thumb{
+  background-color: #e91e63;
+}
+.contenedorFormRol{
+  margin-top: 2em;
+  margin-left: 2.5em;
+  margin-right: 5.5em;
+  /* margin-bottom: -2em; */
+  justify-content: space-between;
+}
+.RolCheck{
+  margin-top:20px;
+}
+/deep/ .tooltipSalto{
+  white-space: pre-line !important;
+}
+/deep/ .navBtn{
+  color: #d9d9d9;
+  background-color: #05386B !important;
+  box-shadow: none !important;
+}
+/deep/ .navMarcado{
+  background-color: #3f51b5 !important;
+}
+.cabeceraMargin{
+  margin-top: -20px;
+}
+.cabeceraExpCar{
+  margin-top: -15px;
+}
+.btnExpCar{
+  float:right;
+  margin-right: 3em;
+  display: inline-block;
+  position: relative;
+  margin-top: -5px;
+}
+/deep/ .mat-display-1{
+  font-size: 30px;
+}
+/deep/ .mat-tab-label-active{
+  background-color: rgba(197,202,233,.6);
+}
+/deep/ .mat-expanded{
+ background-color: rgba(215, 210, 210, 0.2) !important;
+}
+/deep/ .table-responsive{
+  margin-bottom: 2.5em !important;
 }

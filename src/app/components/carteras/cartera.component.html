@@ -1,9 +1,9 @@
 <div class="container-fluid divContenedorTabla">
   <form (ngSubmit)="editarCartera()" #formulario="ngForm">
     <div class="row">
-      <div class="example-header">
-        <h1 class="mat-display-1 tituloComponentes titCarteras"><i class="icon-archive-1"></i> Cartera {{cartera.nombreCartera}} </h1>
-        <div class="divTiposCartera" *ngIf="_authService.tienePermiso(22) && carteraSinModif.estado!=3">
+      <div class="example-header cabeceraExpCar">
+        <h1 class="mat-display-1 tituloComponentes titCarteras"><i class="icon-archive-1"></i> Cartera: {{cartera.nombreCartera}} </h1>
+        <div class="btnExpCar" *ngIf="_authService.tienePermiso(22) && carteraSinModif.estado!=3">
           <div class="btnsEditarAnyadir">
             <div *ngIf="bloqCampos" class="btnsEditarAnyadir">
               <button type="button" mat-raised-button color="primary" (click)="disable_enable_campos()">Editar</button>
@@ -156,7 +156,7 @@
 
           <ng-container matColumnDef="avance">
             <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(6)">Avance</mat-header-cell>
-            <mat-cell *matCellDef="let items; let i = index" matTooltip="Tareas terminadas: {{avances[i].tareasTerminadas}} de {{avances[i].tareasPropuestas}}">
+            <mat-cell *matCellDef="let items; let i = index"  [matTooltipClass]="'tooltipSalto'" matTooltip='Tareas terminadas: {{avances[i].tareasTerminadas}} de {{avances[i].tareasPropuestas}}&#13;Contratos terminados: {{avances[i].contratosTerminados}} de {{avances[i].contratosPropuestos}}'>
               <div class="spinnerAvanceFondo">
                 <mat-progress-spinner  [value]="100" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
               </div>

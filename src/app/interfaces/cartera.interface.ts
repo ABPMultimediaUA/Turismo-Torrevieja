@@ -1,6 +1,6 @@
 export interface CarteraInterface
 {
-    identificador:string;
+    identificador:number;
     nombreCartera:string;
     year:number;
     trimestre:number;

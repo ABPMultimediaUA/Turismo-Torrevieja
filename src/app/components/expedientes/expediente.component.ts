@@ -16,6 +16,8 @@ import { ProveedorInterface }                   from "../../interfaces/proveedor
 import { Router }                               from "@angular/router";
 import { Observable, BehaviorSubject }          from 'rxjs/Rx';
 
+import { FormArray,FormGroup,FormControl } from "@angular/forms";
+
 @Component({
   selector: 'app-expediente',
   templateUrl: './expediente.component.html',
@@ -64,6 +66,8 @@ export class ExpedienteComponent implements OnInit {
   porcentajeAvanzado = new BehaviorSubject<number>(0);
   tareasTerminadas = new BehaviorSubject<number>(0);
   tareasPropuestas = new BehaviorSubject<number>(0);
+  contratosTerminados = new BehaviorSubject<number>(0);
+  contratosPropuestos = new BehaviorSubject<number>(0);
   colorSpinner = new BehaviorSubject<string>("warn");
 
   archivoImg:File = null;             //guardar el archivo para mandarlo en la peticion
@@ -72,6 +76,9 @@ export class ExpedienteComponent implements OnInit {
   nombrePDF = new BehaviorSubject<string[]>([]);
 
   @ViewChild("etiquetaImgExp") etiqueta;  //La etiqueta html img
+  @ViewChild("formulario") formulario;
+  @ViewChild("forma") formularios;
+  @ViewChild("imgInput") imgInput : any;
 
 
   constructor(
@@ -145,7 +152,7 @@ export class ExpedienteComponent implements OnInit {
                 });
 
                 //COGEMOS LOS USUARIOS
-                this._itemService.getItem(5,-1,-1,-1,-1,"","").then( res => {
+                this._itemService.getItem(308,-1,-1,-1,-1,"","").then( res => {
                     //TODO Cambiar select para recoger solamente los usuarios que
                     //tengan permiso para "coordinar" un evento
                     //y permiso para realizar tareas, etc.
@@ -157,7 +164,7 @@ export class ExpedienteComponent implements OnInit {
                 });
 
                 //COGEMOS LOS ESPACIOS
-                this._itemService.getItem(6,-1,-1,-1,-1,"","").then( res => {
+                this._itemService.getItem(310,-1,-1,-1,-1,"","").then( res => {
                     if(typeof res != "string") {
                       let r = res as any;
                       this.espacio = r.data as EspacioInterface[];
@@ -166,7 +173,7 @@ export class ExpedienteComponent implements OnInit {
                 });
 
                 //COGEMOS LOS PROVEEDORES
-                this._itemService.getItem(7,-1,-1,-1,-1,"","").then( res => {
+                this._itemService.getItem(311,-1,-1,-1,-1,"","").then( res => {
                     if(typeof res != "string") {
                       let r = res as any;
                       this.proveedor = r.data as ProveedorInterface[];
@@ -196,22 +203,11 @@ export class ExpedienteComponent implements OnInit {
 
   //BOTON - Cuando se esta en la opcion de editar, devuelve los campos del form a su valor original
   restaurarValores() {
-    this.expediente={
-      identificador:this.expedienteSinModif.identificador,
-      nombreExpediente:this.expedienteSinModif.nombreExpediente,
-      avance:this.expedienteSinModif.avance,
-      cartera:this.expedienteSinModif.cartera,
-      coordinador:this.expedienteSinModif.coordinador,
-      detalle:this.expedienteSinModif.detalle,
-      fechaFin:this.expedienteSinModif.fechaFin,
-      fechaInicio:this.expedienteSinModif.fechaInicio,
-      image:this.expedienteSinModif.image,
-      titulo:this.expedienteSinModif.titulo,
-    }
-    if(this.expediente.image){
-      this.expediente.image = "https://gvent.ovh/Prueba2_1/public/img/" + this.expediente.image;
+    this.formulario.reset(this.expedienteSinModif, false);
+    this.imgInput.nativeElement.value = "";
+    if(this.expedienteSinModif.image){
       let o = this.etiqueta.nativeElement as HTMLImageElement;
-      o.src = this.expediente.image;
+      o.src = "https://gvent.ovh/Prueba2_1/public/img/" + this.expedienteSinModif.image;
     }
     else{
       let o = this.etiqueta.nativeElement as HTMLImageElement;
@@ -224,15 +220,20 @@ export class ExpedienteComponent implements OnInit {
     var expBody = this.expediente;
     delete expBody.image;
     this._itemService.actualizarItem(0,this.id,expBody,-1)
-    .then( res=> {
+    .then( res=> { console.log(res)
       if(typeof res != "string"){
+        this.expedienteSinModif = Object.assign({}, res as ExpedienteInterface);
+        this.formulario.reset(this.expedienteSinModif, false);
         if(this.archivoImg){ //ACTUALIZAMOS IMG
           this._itemService.subirFile(0,this.id,this.archivoImg)
             .then( res=>{
+              this.imgInsertada = false;
+              this.imgInput.nativeElement.value = "";
               if(typeof res != "string") this.alertaOk("Expediente actualizado correctamente.");
               else this.alertaNoOk("Se ha producido un error inesperado subiendo la imagen.");
             })
         }
+        else this.alertaOk("Expediente actualizado correctamente.");
       }
       else this.alertaNoOk("Se ha producido un error inesperado actualizando el expediente.");
     })
@@ -241,13 +242,25 @@ export class ExpedienteComponent implements OnInit {
   editarAvanceExp(){
     var auxTareasFinalizadas = 0;
     var auxTareasCreadas = 0;
-    for(var x=0; x < this.tareas.length; x++){
+
+    var auxContratosFinalizados = 0;
+    var aucContratosCreados = 0;
+
+    for(var x=0; x < this.tareas.length && x<9; x++){
       if(this.tareas[x].identificador){
         auxTareasCreadas++;
         if(+this.tareas[x].finalizado == 1) auxTareasFinalizadas++;
       }
     }
-    var aux = auxTareasFinalizadas.toString()+'.'+auxTareasCreadas.toString();
+
+    for(var z=0; z < this.contratos.length && z<9; z++){
+      if(this.contratos[z].identificador){
+        aucContratosCreados++;
+        if(+this.contratos[z].terminado == 1) auxContratosFinalizados++;
+      }
+    }
+
+    var aux = auxTareasFinalizadas.toString() + auxTareasCreadas.toString() + "." + auxContratosFinalizados.toString() + aucContratosCreados.toString();
     var body={
       avance:aux,
     }
@@ -315,10 +328,12 @@ export class ExpedienteComponent implements OnInit {
        tiempo:null,
        usuario:null,
        observaciones:null,
+       terminado:null
      };
      this.contratos.push(c);
      this.archivoPDF.push(null);
      this.nombrePDF.getValue().push("");
+     this.contratosPropuestos.next(this.contratosPropuestos.getValue()+1);
    }
 
    crearPlantillaTar(){
@@ -352,9 +367,14 @@ export class ExpedienteComponent implements OnInit {
              if(typeof res != "string"){
                if(a==1){ this.actividades.splice(index,1); }
                else if(a==3){
+                 let r = res as ContratoInterface;
                  this.contratos.splice(index,1);
                  this.archivoPDF.splice(index,1);
                  this.nombrePDF.getValue().splice(index,1);
+                 this.tareasPropuestas.next(this.tareasPropuestas.getValue()-1);
+                 if(+r.terminado == 1){
+                   this.contratosTerminados.next(this.contratosTerminados.getValue()-1);
+                 }
                }
                else if(a==2){
                  let r = res as TareasInterface;
@@ -434,6 +454,11 @@ export class ExpedienteComponent implements OnInit {
                this.alertaOk("Actividad actualizada correctamente.");
              }
              else if(i==3){
+               if(a.terminado == 1){
+                 this.contratosTerminados.next(this.contratosTerminados.getValue()+1);
+               }
+               this.calcularAvance();
+               this.editarAvanceExp();
                if(this.archivoPDF[index]){
                  this._itemService.subirFilePdf(3,a.identificador,this.archivoPDF[index])
                    .then( res=>{
@@ -471,6 +496,11 @@ export class ExpedienteComponent implements OnInit {
              }
              else if(i==3){
                this.contratos[index] = res as ContratoInterface;
+               if(a.terminado == 1){
+                 this.contratosTerminados.next(this.contratosTerminados.getValue()+1);
+               }
+               this.calcularAvance();
+               this.editarAvanceExp();
                if(this.archivoPDF[index]){
                  this._itemService.subirFilePdf(3,this.contratos[index].identificador,this.archivoPDF[index])
                    .then( res=>{
@@ -547,21 +577,50 @@ export class ExpedienteComponent implements OnInit {
    }
 
    interpretarAvance(i){
+     //Dado que es un float, para poder guardar tanto tareas como contratos por separado:
+     //  tareas.contratos --> ejemplo: 23.23 (2/3 tareas . 2/3 contratos)
+     //  el primer numero de cada parte indica las realizadas, el segundo las propuestas
+     // con mas de 9 tareas o contratos fallara
      if(i){
        var num = i.split('.');
-       if(num && num.length == 2){
-         this.tareasTerminadas.next(+num[0]);
-         this.tareasPropuestas.next(+num[1]);
+       if(num){
+         if(num.length == 2){
+           if(num[0].length == 1){
+             this.tareasPropuestas.next(+num[0].charAt(0));
+           }
+           else if(num[0].length == 2){
+             this.tareasTerminadas.next(+num[0].charAt(0));
+             this.tareasPropuestas.next(+num[0].charAt(1));
+           }
+           if(num[1].length == 2){
+             this.contratosTerminados.next(+num[1].charAt(0));
+             this.contratosPropuestos.next(+num[1].charAt(1));
+           }
+         }
+         else if(num.length == 1){
+           if(num[0].length == 1){
+             this.tareasPropuestas.next(+num[0].charAt(0));
+           }
+           else if(num[0].length == 2){
+             this.tareasTerminadas.next(+num[0].charAt(0));
+             this.tareasPropuestas.next(+num[0].charAt(1));
+           }
+         }
          this.calcularAvance();
        }
      }
    }
 
    calcularAvance(){
-     this.porcentajeAvanzado.next( +(this.tareasTerminadas.getValue() / this.tareasPropuestas.getValue() * 100).toFixed(1) );
+     this.porcentajeAvanzado.next( +( (this.tareasTerminadas.getValue() + this.contratosTerminados.getValue()) / (this.tareasPropuestas.getValue() + this.contratosPropuestos.getValue()) * 100).toFixed(1) );
      if(this.porcentajeAvanzado.getValue() == 100) this.colorSpinner.next("primary");
      else if(this.porcentajeAvanzado.getValue() >= 50) this.colorSpinner.next("accent");
      else this.colorSpinner.next("warn");
+   }
+
+   tieneCambios(){
+     if(this.cartera.estado>1) return this.imgInsertada || this.formulario.form.dirty || this.formularios.form.dirty;
+     else return this.imgInsertada || this.formulario.form.dirty;
    }
 
 }

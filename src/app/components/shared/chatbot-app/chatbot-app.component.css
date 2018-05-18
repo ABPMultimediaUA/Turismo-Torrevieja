@@ -1,0 +1,209 @@
+
+.lead{
+	font-size: 1.1em;
+}
+.row{
+	justify-content: space-around;
+}
+.Col-md-4{
+	max-width: 15em;
+}
+
+.ventanaChat{
+	position: fixed;
+	bottom:10px;
+	right:10px;
+	width:100%;
+	max-width:20em;
+  z-index: 50;
+}
+.cabeceraDialogo{
+	position: fixed;
+	bottom:27em;
+	right:0px;
+	width:100%;
+	max-width:25em;
+	height:2em;
+	background-color: #3f51b5;
+	border-radius: 2px 2px 0 0;
+}
+	.nombreBotCabecera{
+	    position: absolute;
+	    left:40px;
+	    font-size: 19px;
+	    font-weight: 300;
+	    color: white;
+	    cursor: default;
+	}
+	.botEscribiendo{
+	    position: absolute;
+	    top: 6px;
+	    left: 100px;
+	    font-size: 14px;
+	    font-weight: 300;
+	    color: white;
+	    cursor: default;
+	    text-align: left;
+	}
+	.botonCerrar{
+		position: absolute;
+		top: 3px;
+		right: 2px;
+		width:26px;
+		height: 26px;
+		color: white;
+		vertical-align: top;
+	}
+	.botonCerrarIcon{
+		vertical-align: top !important;
+	}
+	.botonMinimizar{
+		position: absolute;
+		top: 3px;
+		right: 30px;
+		width:26px;
+		height: 26px;
+		color: white;
+		vertical-align: super;
+	}
+	.botonMinimizarIcon{
+		vertical-align: baseline !important;
+	}
+	.imgBotDialogo {
+	}
+		.imgBotDialogo img {
+		    position: absolute;
+		    top: 3px;
+		    left: 2px;
+		    width:26px;
+		    height: 26px;
+		    background-color: rgba(255,255,255,0.98);
+		    border-radius: 100%;
+		    -webkit-border-radius: 100%;
+		    -moz-border-radius: 100%;
+		    -ms-border-radius: 100%;
+		    margin-left: 5px;
+	    }
+
+
+.espacioDialogos{
+	position: fixed;
+	bottom:5em;
+	right:0px;
+	width:100%;
+	max-width:25em;
+	height:22em;
+	background-color: rgba(231, 231, 231, 0.75);
+	overflow-y: scroll;
+}
+	/deep/ .listaMensajes {
+	    list-style: none;
+	    background: none;
+	    margin: 0;
+	    margin-top: 7px;
+	    margin-bottom: 7px;
+	}
+		.listaMensajes li {
+		}
+		/*BOCADILLOS*/
+		/deep/ .bocadilloIzquierda p, /deep/ .bocadilloDerecha p{
+			border-radius: 5px 5px 5px 5px;
+	    background: white;
+	    border-color: white;
+	    padding: 4px 15px 5px 15px;
+			text-shadow: none;
+			color:white;
+		}
+		/deep/ .bocadilloDerecha p{ background-color: #589474; }
+		/deep/ .bocadilloIzquierda p{ background-color: #3f51b5; }
+		/deep/ .bocadilloIzquierda{
+			margin-right: 3em;
+			margin-left: -1.4em;
+			float: left;
+			text-align: left;
+			color: #1C1717;
+	    font-size: 12px;
+		}
+		/deep/ .bocadilloDerecha{
+			margin-right: 1.2em;
+			margin-left: 3em;
+			float: right;
+			text-align: right;
+			color: #E7EFFF;
+	    font-size: 12px;
+		}
+		/*FIN BOCADILLOS*/
+		/*FLECHAS BOCADILLOS*/
+		/deep/ .flechaIzquierda{
+			width: 0;
+			height: 0;
+			border-top: 10px solid transparent;
+			border-bottom: 10px solid transparent;
+			border-right:10px solid #3f51b5;
+			float:left;
+			margin-left:-.5em;
+			margin-top: .35em;
+		}
+		/deep/ .flechaDerecha{
+			width: 0;
+			height: 0;
+			border-top: 10px solid transparent;
+			border-bottom: 10px solid transparent;
+			border-left:10px solid #589474;
+			float:right;
+			margin-right:-.5em;
+			margin-top: .35em;
+		}
+		/*FIN FLECHAS BOCADILLOS*/
+
+.input{
+	position: fixed;
+	bottom:2.5em;
+	right:0px;
+	width: 100%;
+	max-width: 25em;
+  height: 2.5em;
+  z-index: 99;
+  background: #fafafa;
+  border: none;
+  outline: none;
+  padding-left: 1em;
+  padding-right: 1em;
+  color: #666;
+  font-weight: 400;
+}
+
+.btnChat{
+	position: fixed;
+	bottom:0px;
+	right:0px;
+	width: 100%;
+	max-width: 25em;
+	height:2.5em;
+	font-weight: 400;
+  z-index: 99;
+  border: none;
+  outline: none;
+	background-color: #3f51b5;
+	color: white;
+  font-weight: 400;
+	border-radius: 0 0 2px 2px;
+	box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+.btnChatCir{
+	position: fixed;
+	bottom:1.8em;
+	right:1.8em;
+	width: 3.6em;
+	height: 3.6em;
+  z-index: 99;
+  border: none;
+  outline: none;
+	background-color: #3f51b5;
+	border-radius: 100%;
+	cursor: pointer;
+	box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+}
+.icon-comment{ font-size: 1.8em; color:white; }
+
+/deep/ .limpiar{ clear:both; }

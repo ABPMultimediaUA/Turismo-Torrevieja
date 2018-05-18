@@ -1,29 +1,23 @@
 <div class="container-fluid divContenedorTabla">
   <div class="row">
-    <div class="example-header">
-      <h1 class="mat-display-1 tituloComponentes titCarteras"><span class="icon-archive-1"></span> Carteras</h1>
-      <div class="divTiposCartera">
-        <label class="">Estado:</label>
-        <mat-radio-group [(ngModel)]="estadoCarteraEscogido" (change)="cambiarListaEstado()">
-          <mat-radio-button class="example-margin" value="301" matTooltip="Las carteras sin aprobar pueden ser eliminadas. También se les puede añadir o eliminar expedientes."
-                            >Sin aprobar</mat-radio-button>
-          <mat-radio-button class="example-margin" value="300" matTooltip="Las carteras aprobadas no pueden ser eliminadas. Tampoco se pueden añadir o eliminar expedientes. Pueden modificarse."
-                            >Aprobadas</mat-radio-button>
-          <mat-radio-button class="example-margin" value="302" matTooltip="Una vez terminadas no pueden ser eliminadas o modificadas, al igual que sus expedientes."
-                            >Finalizadas</mat-radio-button>
-          <mat-radio-button class="example-margin" value="8">Todas</mat-radio-button>
-        </mat-radio-group>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="example-header">
+    <div class="example-header cabeceraMargin">
       <div class="elementosCabecera">
         <button *ngIf="_authService.tienePermiso(21)" mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
           (click)="editarAnyadirItem(null)">Nueva Cartera</button>
         <button *ngIf="_authService.tienePermiso(24) && estadoCarteraEscogido==301" mat-raised-button type="button" class="botonEliminarItems" [disabled]="btnEliminar" color="warn" (click)="botonEliminarItem(selection.selected)"><i class="material-icons">delete</i></button>
 
         <div class="divPaginacion">
+          <div class="divTiposCartera elementosPaginacion">
+            <mat-radio-group [(ngModel)]="estadoCarteraEscogido" (change)="cambiarListaEstado()">
+              <mat-radio-button value="301" matTooltip="Carteras sin aprobar: Pueden ser eliminadas. Se les pueden añadir o eliminar expedientes. Sus expedientes muestran solo los campos básicos."
+                                ><i class="material-icons">lock_open</i></mat-radio-button>
+              <mat-radio-button value="300" matTooltip="Carteras aprobadas: Pueden ser modificadas pero no eliminadas. No se les pueden añadir o eliminar expedientes. Sus expedientes muestran todos sus campos."
+                                ><i class="material-icons">lock_outline</i></mat-radio-button>
+              <mat-radio-button value="302" matTooltip="Carteras terminadas: No pueden ser eliminadas ni modificadas. No se les pueden añadir o eliminar expedientes y estos no pueden ser modificados."
+                                ><i class="material-icons">lock</i></mat-radio-button>
+              <mat-radio-button value="8">Todas</mat-radio-button>
+            </mat-radio-group>
+          </div>
           <mat-form-field class="elementosPaginacion">
             <input matInput (keyup)="realizarBusqueda($event)" placeholder="Búsqueda" [(ngModel)]="value">
             <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)='value=""'>
@@ -113,9 +107,9 @@
           <ng-container matColumnDef="estado">
             <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(2)">Estado</mat-header-cell>
             <mat-cell *matCellDef="let items">
-              <span *ngIf="items.estado == 1" matTooltip="Sin aprobar" class="material-icons">lock_open</span>
-              <span *ngIf="items.estado == 2" matTooltip="Aprobada" class="material-icons">lock_outline</span>
-              <span *ngIf="items.estado == 3" matTooltip="Finalizada" class="material-icons">lock</span>
+              <i *ngIf="items.estado == 1" matTooltip="Sin aprobar" class="material-icons">lock_open</i>
+              <i *ngIf="items.estado == 2" matTooltip="Aprobada" class="material-icons">lock_outline</i>
+              <i *ngIf="items.estado == 3" matTooltip="Finalizada" class="material-icons">lock</i>
             </mat-cell>
           </ng-container>
 

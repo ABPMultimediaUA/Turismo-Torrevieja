@@ -18,4 +18,5 @@ export interface EspacioInterface
   puerta:string;
   telefono1:string;
   telefono2:string;
+  activo:string;
 }

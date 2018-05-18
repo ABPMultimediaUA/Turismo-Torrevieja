@@ -1,8 +1,10 @@
-import { Component, OnInit, Inject }                from '@angular/core';
+import { Component, OnInit, Inject, ViewChild }     from '@angular/core';
 import { PeticionesCrudService, AuthService }       from '../../services/index';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { VentanaEmergenteComponent }                from '../ventana-emergente/ventana-emergente.component'
+import { VentanaEmergentePreguntaComponent }        from '../ventana-emergente/ventana-emergente-pregunta.component';
 import { ProveedorInterface }                       from '../../interfaces/proveedor.interface';
+import { SelectionModel }                           from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-nuevo-proveedor',
@@ -12,13 +14,38 @@ import { ProveedorInterface }                       from '../../interfaces/prove
 
 export class NuevoProveedorComponent implements OnInit {
 
-  items:ProveedorInterface;
+  items:ProveedorInterface={
+    identificador:null,
+    nombreProveedor:null,
+    codigoPostal:null,
+    provincia:null,
+    localidad:null,
+    cifnif:null,
+    clase:null,
+    correoUno:null,
+    correoDos:null,
+    telefonoUno:null,
+    telefonoDos:null,
+    telefonoTres:null,
+    fechaActualizacion:null,
+    fechaCreacion:null,
+    fechaEliminacion:null,
+    activo:"1",
+    calle:null,
+    numero:null,
+    planta:null,
+    puerta:null,
+  };
   itemSinModif:ProveedorInterface;    //Guardar la copia para restaurar
   titulo:string;                      //El titulo de la ventana emergente
   realizandoAccion:boolean = false;   //Para saber si mostrar o no el spinner
   editar:boolean = false;             //Saber si el form es para crear o para editar
   bloqCampos:boolean = true;          //Habilitar o deshabilitar campos del form (avtivar desactivar modo edicion)
   camposAnyadidos:boolean;            //Feedback que devuelve a la ventana anterior cuando esta se cierra
+  selection = new SelectionModel<number>(true, []);   //Marcar - desmarcar checkbox
+  activoChange:boolean = false;
+
+  @ViewChild("formulario") formulario;
 
   constructor(  private _itemService: PeticionesCrudService,
                 private _authService:AuthService,
@@ -36,10 +63,10 @@ export class NuevoProveedorComponent implements OnInit {
       this.titulo = "Proveedor";
       this.items = Object.assign({}, data.item as ProveedorInterface);
       this.itemSinModif = Object.assign({}, data.item as ProveedorInterface);
+      if(this.items.activo == "1") this.selection.select(0);
     }
     //Si no lo hay se prepara todo para crear
     else{
-      this.limpiarCampos();
       this.bloqCampos = false;
       this.titulo = "Nuevo proveedor";
     }
@@ -63,9 +90,14 @@ export class NuevoProveedorComponent implements OnInit {
         })
     }
     else{
+      if(this.selection.selected.length > 0 && this.selection.selected[0]==0) this.items.activo = "1";
+      else this.items.activo = "0";
       this._itemService.actualizarItem(7,this.items.identificador,this.items,-1)
         .then( res => {
-          if(typeof res != "string") this.alertaOk();
+          if(typeof res != "string") {
+            this.itemSinModif = Object.assign({}, this.items as ProveedorInterface);
+            this.alertaOk();
+          }
           else this.alertaNoOk();
         })
     }
@@ -79,7 +111,6 @@ export class NuevoProveedorComponent implements OnInit {
       codigoPostal:null,
       provincia:null,
       localidad:null,
-      direccion:null,
       cifnif:null,
       clase:null,
       correoUno:null,
@@ -90,43 +121,49 @@ export class NuevoProveedorComponent implements OnInit {
       fechaActualizacion:null,
       fechaCreacion:null,
       fechaEliminacion:null,
+      activo:"1",
+      calle:null,
+      numero:null,
+      planta:null,
+      puerta:null,
     }
+    this.formulario.reset(this.items, false);
   }
 
   //BOTON - Cuando se esta en la opcion de editar, devuelve los campos del form a su valor original
   restaurarValores(){
-    this.items={
-      cifnif:this.itemSinModif.cifnif,
-      clase:this.itemSinModif.clase,
-      codigoPostal:this.itemSinModif.codigoPostal,
-      correoDos:this.itemSinModif.correoDos,
-      correoUno:this.itemSinModif.correoUno,
-      direccion:this.itemSinModif.direccion,
-      fechaActualizacion:this.itemSinModif.fechaActualizacion,
-      fechaCreacion:this.itemSinModif.fechaCreacion,
-      fechaEliminacion:this.itemSinModif.fechaEliminacion,
-      identificador:this.itemSinModif.identificador,
-      localidad:this.itemSinModif.localidad,
-      nombreProveedor:this.itemSinModif.nombreProveedor,
-      provincia:this.itemSinModif.provincia,
-      telefonoDos:this.itemSinModif.telefonoDos,
-      telefonoTres:this.itemSinModif.telefonoTres,
-      telefonoUno:this.itemSinModif.telefonoUno,
-    }
+    this.formulario.reset(this.itemSinModif, false);
+    this.selection.clear();
+    if(this.items.activo == "1") this.selection.select(0);
+    this.activoChange = false;
+    this.bloqCampos = true;
   }
 
   //BOTON - Cerrar ventana emergente volviendo a la anterior
   cerrarDialogo(){
-    this.dialogRef.close(this.camposAnyadidos);
+    if(this.formulario.form.dirty || this.activoChange){
+      const dialogRef = this.dialog.open(VentanaEmergentePreguntaComponent,{
+        height: '17em',
+        width: '32em',
+        data: { item: "Si cierras se perderán los cambios realizados.\n¿Continuar?" }
+      });
+      dialogRef.afterClosed().subscribe( res => {
+        if(res){
+          if(this.editar) this.restaurarValores();
+          this.dialogRef.close(this.camposAnyadidos);
+        }
+      });
+    }
+    else {
+      if(this.editar) this.restaurarValores();
+      this.dialogRef.close(this.camposAnyadidos);
+    }
   }
 
   //Bloquea y desbloquea los campos del form al pulsar los btn EDITAR o CANCELAR
   disable_enable_campos(){
     if(this.bloqCampos) this.bloqCampos = false;
-    else {
-      this.restaurarValores();
-      this.bloqCampos = true;
-    }
+    else this.restaurarValores();
   }
 
   //Ventana emergente si se ha realizado una peticion y todo ha ido bien
@@ -142,7 +179,7 @@ export class NuevoProveedorComponent implements OnInit {
       this.realizandoAccion = false;
       this.camposAnyadidos = true;
       if(!this.editar) this.limpiarCampos();
-      else this.bloqCampos = true;
+      else this.restaurarValores();
     });
   }
 
@@ -159,10 +196,8 @@ export class NuevoProveedorComponent implements OnInit {
       this.realizandoAccion = false;
       this.camposAnyadidos = true;
       if(!this.editar) this.limpiarCampos();
-      else {
-        this.bloqCampos = true;
-        this.restaurarValores();
-      }
+      else this.restaurarValores();
     });
   }
+
 }

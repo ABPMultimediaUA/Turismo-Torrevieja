@@ -52,10 +52,8 @@ export class EliminarEspacioComponent implements OnInit {
       this.aux=this.aux-1;
       this._itemService.eliminarItem(6,this.items[this.aux].identificador,-1)
           .then( res => {
-            this.eliminarItem();
-          })
-          .catch( (err) => {
-            this.alertaNoOk();
+            if(typeof res != "string") this.eliminarItem();
+            else this.alertaNoOk();
           })
     }
     else{

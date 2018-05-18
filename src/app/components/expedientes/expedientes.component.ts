@@ -21,6 +21,8 @@ export class ExpedientesComponent implements OnInit {
 
   items:ExpedienteInterface[]=[];
   avances:AvanceExpedienteInterface[]=[];
+  carteras:CarteraInterface[]=[];
+  selectCartera:string[]=[];
   paginacion:PaginacionInterface={    //Guardar todos los datos de paginacion
     count:0,
     current_page:1,
@@ -33,13 +35,13 @@ export class ExpedientesComponent implements OnInit {
     total_pages:1
   };
   option_Items_Pgn='10';              //Cantidad de items por pagina al cargar el componente
-  selectUrl:number = 0;               //Selecciona la url para las peticiones getItem
+  selectUrl:number = 208;               //Selecciona la url para las peticiones getItem
   busqueda:string = "";               //Si se ha rellenado el campo de busqueda
   selectASC_DESC:number=-1;           //Saber si el usuario quiere ordenar los items: -1 nada seleccionado, 0 ASC, 1 DES
   valorEscogidoForOrder:number = -1;  //Para saber el elemento seleccionado, -1 valor neutro
   btnEliminar:boolean = true;         //Activar / desactivar boton de eliminar item/s
   @ViewChild("btnsPag") BtnsPagOff;   //Div que contiene los botones de paginacion
-  estadoCarteraEscogido:number = 300; //Valor radio button (url basica por estados) TODO hacer cuando este hecho en backend
+  estadoCarteraEscogido:number = 208; //Valor radio button (url basica por estados) TODO hacer cuando este hecho en backend
 
   dataSource = new MatTableDataSource(this.items);            //Datos de la tabla
   selection = new SelectionModel<ExpedienteInterface>(true, []); //Filas seleccionadas
@@ -57,31 +59,6 @@ export class ExpedientesComponent implements OnInit {
   ngOnInit() {
   }
 
-
-  calcularAvance(){
-    this.avances = [];
-    for(var x = 0; x < this.items.length; x++){
-      let auxAvance:AvanceExpedienteInterface ={
-        porcentajeAvanzado:0,
-        tareasTerminadas:0,
-        tareasPropuestas:0,
-        colorSpinner:"warn",
-      };
-      if(this.items[x].avance){
-        var num = (this.items[x].avance).toString().split('.');
-        if(num && num.length == 2){
-          auxAvance.tareasTerminadas = (+num[0]);
-          auxAvance.tareasPropuestas = (+num[1]);
-          auxAvance.porcentajeAvanzado = ( +(auxAvance.tareasTerminadas / auxAvance.tareasPropuestas * 100).toFixed(1) );
-          if(auxAvance.porcentajeAvanzado == 100) auxAvance.colorSpinner = "primary";
-          else if(auxAvance.porcentajeAvanzado >= 50) auxAvance.colorSpinner = "accent";
-          else auxAvance.colorSpinner = "warn";
-        }
-      }
-      this.avances.push(auxAvance);
-    }
-  }
-
   //Realiza la peticion GetItems a la BD y actualiza las variables
   cargarItems(per_pgn:number, pgn:number){
     this._itemService.getItem(this.selectUrl,-1,-1,per_pgn,pgn,this.busqueda,"").then(
@@ -91,6 +68,7 @@ export class ExpedientesComponent implements OnInit {
             this.items = res["data"] as ExpedienteInterface[];
             this.paginacion = res["meta"].pagination as PaginacionInterface;
             this.calcularAvance();
+            this.cargarCarterasItems();
             this.ngAfterViewInit();
             this.activarDesactvarBtnsPag();
           }
@@ -104,6 +82,53 @@ export class ExpedientesComponent implements OnInit {
           this.ngAfterViewInit();
         }
       });
+  }
+
+
+  calcularAvance(){
+    this.avances = [];
+    for(var x = 0; x < this.items.length; x++){
+      let auxAvance:AvanceExpedienteInterface ={
+        porcentajeAvanzado:0,
+        tareasTerminadas:0,
+        tareasPropuestas:0,
+        contratosTerminados:0,
+        contratosPropuestos:0,
+        colorSpinner:"warn",
+      };
+      if(this.items[x].avance){
+        var num = (this.items[x].avance).toString().split('.');
+        if(num){
+          if(num.length == 2){
+            if(num[0].length == 1){
+              auxAvance.tareasPropuestas = (+num[0].charAt(0));
+            }
+            else if(num[0].length == 2){
+              auxAvance.tareasTerminadas = (+num[0].charAt(0));
+              auxAvance.tareasPropuestas = (+num[0].charAt(1));
+            }
+            if(num[1].length == 2){
+              auxAvance.contratosTerminados = (+num[1].charAt(0));
+              auxAvance.contratosPropuestos = (+num[1].charAt(1));
+            }
+          }
+          else if(num.length == 1){
+            if(num[0].length == 1){
+              auxAvance.tareasPropuestas = (+num[0].charAt(0));
+            }
+            else if(num[0].length == 2){
+              auxAvance.tareasTerminadas = (+num[0].charAt(0));
+              auxAvance.tareasPropuestas = (+num[0].charAt(1));
+            }
+          }
+          auxAvance.porcentajeAvanzado = ( +( (auxAvance.tareasTerminadas + auxAvance.contratosTerminados) / (auxAvance.tareasPropuestas + auxAvance.contratosPropuestos) * 100).toFixed(1) );
+          if(auxAvance.porcentajeAvanzado == 100) auxAvance.colorSpinner = "primary";
+          else if(auxAvance.porcentajeAvanzado >= 50) auxAvance.colorSpinner = "accent";
+          else auxAvance.colorSpinner = "warn";
+        }
+      }
+      this.avances.push(auxAvance);
+    }
   }
 
   //Cargar items en tabla
@@ -190,27 +215,23 @@ export class ExpedientesComponent implements OnInit {
     this.router.navigate(['/expediente', row.identificador]);
   }
 
-  //TODO eliminar
-  cargarCarterasItems(i,e){
-    if(i && e.innerHTML == ''){
-      e.innerHTML = "Cargando...";
-      this._itemService.getItem(8,i,-1,-1,-1,"","").then(
-        res => {
-          if(typeof res != "string"){
-            let r = res as any;
-            console.log(r.data);
-            let icon:string;
-            if(r.data.estado == 1) icon = '';
-            else if(r.data.estado == 2) icon = '';
-            else if(r.data.estado == 3) icon = '';
-            // e.innerHTML = r.data.nombreCartera + ' ' + icon;
-            if(r) e.innerHTML = r.data.nombreCartera;
+
+  cargarCarterasItems(){
+    this.selectCartera = [];
+    this._itemService.getItem(8,-1,-1,-1,-1,"","").then( res => {
+      if(typeof res != 'string'){
+        this.carteras = (res as any).data as CarteraInterface[];
+        for(var x = 0; x < this.items.length; x++){
+          this.selectCartera.push(null);
+          for(var z = 0; z < this.carteras.length; z++){
+            if(this.items[x].cartera == this.carteras[z].identificador){
+              this.selectCartera[x] = this.carteras[z].nombreCartera;
+              z = this.carteras.length;
+            }
           }
-          else{
-            e.innerHTML = 'No se pudo cargar este apartado por un error o porque no existe'
-          }
-        });
-    }
+        }
+      }
+    })
   }
 
   //OPTION Elementos por Pgn- Funcion que se llama cada vez que se cambia el numero de items por pgn
@@ -265,9 +286,9 @@ export class ExpedientesComponent implements OnInit {
   }
 
   cambiarListaEstado(){
-    // this.selection.clear();
-    // this.selectUrl = +this.estadoCarteraEscogido;
-    // this.cargarItems(+this.option_Items_Pgn,1);
+    this.selection.clear();
+    this.selectUrl = +this.estadoCarteraEscogido;
+    this.cargarItems(+this.option_Items_Pgn,1);
   }
 
   //CABECERA TABLA - Para hacer selects ORDER BY, cada vez que se pinche en una cabecera de la tabla

@@ -1,31 +1,21 @@
 <div class="container-fluid divContenedorTabla">
   <div class="row">
-    <div class="example-header">
-      <h1 class="mat-display-1 tituloComponentes titCarteras"><i class="icon-folder"></i> Eventos </h1>
-      <div class="divTiposCartera">
-        <label class="">Estado de las carteras:</label>
-        <mat-radio-group [(ngModel)]="estadoCarteraEscogido" (change)="cambiarListaEstado()">
-          <mat-radio-button class="example-margin" value="301" matTooltip="Las carteras sin aprobar pueden ser eliminadas. También se les puede añadir o eliminar expedientes."
-                            >Sin aprobar</mat-radio-button>
-          <mat-radio-button class="example-margin" value="300" matTooltip="Las carteras aprobadas no pueden ser eliminadas. Tampoco se pueden añadir o eliminar expedientes. Pueden modificarse."
-                            >Aprobadas</mat-radio-button>
-          <mat-radio-button class="example-margin" value="302" matTooltip="Una vez terminadas no pueden ser eliminadas o modificadas, al igual que sus expedientes."
-                            >Finalizadas</mat-radio-button>
-          <mat-radio-button class="example-margin" value="8">Todas</mat-radio-button>
-        </mat-radio-group>
-      </div>
-    </div>
-  </div>
-
-  <div class="row">
-    <div class="example-header">
+    <div class="example-header cabeceraMargin">
       <div class="elementosCabecera">
-
         <button *ngIf="_authService.tienePermiso(25)" mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
           (click)="nuevoEvento()">Nuevo Evento</button>
         <button *ngIf="_authService.tienePermiso(28)" mat-raised-button type="button" class="botonEliminarItems" [disabled]="btnEliminar" color="warn" (click)="botonEliminarItem(selection.selected)"><i class="material-icons">delete</i></button>
 
         <div class="divPaginacion">
+          <div class="divTiposCartera elementosPaginacion">
+            <mat-radio-group [(ngModel)]="estadoCarteraEscogido" (change)="cambiarListaEstado()">
+              <mat-radio-button value="208" matTooltip="Carteras aprobadas: Pueden ser modificadas pero no eliminadas. No se les pueden añadir o eliminar expedientes. Sus expedientes muestran todos sus campos."
+                                ><i class="material-icons">lock_outline</i></mat-radio-button>
+              <mat-radio-button value="209" matTooltip="Carteras terminadas: No pueden ser eliminadas ni modificadas. No se les pueden añadir o eliminar expedientes y estos no pueden ser modificados."
+                                ><i class="material-icons">lock</i></mat-radio-button>
+              <mat-radio-button value="0">Todas</mat-radio-button>
+            </mat-radio-group>
+          </div>
           <mat-form-field class="elementosPaginacion">
             <input matInput (keyup)="realizarBusqueda($event)" placeholder="Búsqueda" [(ngModel)]="value">
             <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)='value=""'>
@@ -105,7 +95,7 @@
 
           <ng-container matColumnDef="cartera">
             <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(4)">Cartera</mat-header-cell>
-            <mat-cell *matCellDef="let item" #carteraRow>{{cargarCarterasItems(item.cartera, carteraRow)}}</mat-cell>
+            <mat-cell *matCellDef="let items; let i = index" #carteraRow>{{selectCartera[i]}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="fechaInicio">
@@ -120,7 +110,7 @@
 
           <ng-container matColumnDef="avance">
             <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(6)">Avance</mat-header-cell>
-            <mat-cell *matCellDef="let items; let i = index" matTooltip="Tareas terminadas: {{avances[i].tareasTerminadas}} de {{avances[i].tareasPropuestas}}">
+            <mat-cell *matCellDef="let items; let i = index"  [matTooltipClass]="'tooltipSalto'" matTooltip='Tareas terminadas: {{avances[i].tareasTerminadas}} de {{avances[i].tareasPropuestas}}&#13;Contratos terminados: {{avances[i].contratosTerminados}} de {{avances[i].contratosPropuestos}}'>
               <div class="spinnerAvanceFondo">
                 <mat-progress-spinner  [value]="100" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
               </div>

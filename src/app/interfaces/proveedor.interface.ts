@@ -11,9 +11,13 @@ export interface ProveedorInterface
   telefonoDos:string;
   telefonoTres:string;
   telefonoUno:string;
-  codigoPostal:string;
-  direccion:string;
   fechaActualizacion:string;
   fechaCreacion:string;
   fechaEliminacion:string;
+  activo:string;
+  codigoPostal:string;
+  calle:string;
+  numero:string;
+  planta:string;
+  puerta:string;
 }

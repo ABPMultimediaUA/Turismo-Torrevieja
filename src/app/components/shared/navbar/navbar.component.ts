@@ -9,10 +9,19 @@ import { AuthService } from '../../../services/index';
 
 export class NavbarComponent implements OnInit {
 
-  constructor(
-    public _authService:AuthService,
-  ) {}
+  selected:any;
+
+  constructor( public _authService:AuthService ) {
+    if(localStorage.getItem('navSelected')) this.selected = localStorage.getItem('navSelected');
+    else this.selected = 0;
+  }
 
   ngOnInit(){
   }
+
+  cambiarSelect(i){
+    this.selected = i;
+    localStorage.setItem('navSelected', i);
+  }
+
 }

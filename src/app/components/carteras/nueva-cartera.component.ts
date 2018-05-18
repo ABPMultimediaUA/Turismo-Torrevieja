@@ -1,22 +1,34 @@
-import { Component, OnInit, Inject }                from '@angular/core';
+import { Component, OnInit, Inject, ViewChild }     from '@angular/core';
 import { PeticionesCrudService, AuthService }       from '../../services/index';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material';
 import { VentanaEmergenteComponent }                from '../ventana-emergente/ventana-emergente.component'
+import { VentanaEmergentePreguntaComponent }        from '../ventana-emergente/ventana-emergente-pregunta.component';
 import { CarteraInterface }                         from '../../interfaces/cartera.interface';
 
 @Component({
   selector: 'app-nueva-cartera',
   templateUrl: './nueva-cartera.component.html',
-  styleUrls: ['../../app.component.css']
+  styleUrls: ['../../app.component.css'],
 })
 
 export class NuevaCarteraComponent implements OnInit {
 
-  items:CarteraInterface;
+  items:CarteraInterface={
+    identificador:null,
+    nombreCartera:"",
+    year:null,
+    trimestre:null,
+    estado:null,
+    fechaCreacion:"",
+    fechaActualizacion:"",
+    fechaEliminacion:""
+  };
   itemSinModif:CarteraInterface;      //Guardar la copia para restaurar
   titulo:string;                      //El titulo de la ventana emergente
   realizandoAccion:boolean = false;   //Para saber si mostrar o no el spinner y bloquear botones
   camposAnyadidos:boolean;            //Feedback que devuelve a la ventana anterior cuando esta se cierra
+
+  @ViewChild("formulario") formulario;
 
   constructor(
     private _itemService: PeticionesCrudService,
@@ -26,7 +38,6 @@ export class NuevaCarteraComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public data,
   ){
     dialogRef.disableClose = true;
-    this.limpiarCampos();
     this.titulo = "Nueva cartera";
     this.camposAnyadidos=false;
   }
@@ -48,7 +59,7 @@ export class NuevaCarteraComponent implements OnInit {
   //BOTON - Cuando se esta en la opcion de crear vacia los campos del form
   limpiarCampos(){
     this.items={
-      identificador:"",
+      identificador:null,
       nombreCartera:"",
       year:null,
       trimestre:null,
@@ -57,11 +68,22 @@ export class NuevaCarteraComponent implements OnInit {
       fechaActualizacion:"",
       fechaEliminacion:""
     }
+    this.formulario.reset(this.items, false);
   }
 
   //BOTON - Cerrar ventana emergente volviendo a la anterior
   cerrarDialogo(){
-    this.dialogRef.close(this.camposAnyadidos);
+    if(this.formulario.form.dirty){
+      const dialogRef = this.dialog.open(VentanaEmergentePreguntaComponent,{
+        height: '17em',
+        width: '32em',
+        data: { item: "Si cierras se perderán los cambios realizados.\n¿Continuar?" }
+      });
+      dialogRef.afterClosed().subscribe( res => {
+        if(res) this.dialogRef.close(this.camposAnyadidos);
+      });
+    }
+    else this.dialogRef.close(this.camposAnyadidos);
   }
 
   //Ventana emergente si se ha realizado una peticion y todo ha ido bien
