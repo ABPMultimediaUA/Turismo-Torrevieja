@@ -1,5 +1,5 @@
 <div class="contenedorEditar">
-  <h1 class="mat-display-1 tituloFormEstrecho"><span class="icon-folder-add"></span> {{titulo}} {{items.nombreCartera}}</h1>
+  <h1 class="mat-display-1 tituloFormEstrecho"><span class="icon-folder-add"></span> {{titulo}}: {{items.nombreCartera}}</h1>
   <a class="btnCerrar" (click)="cerrarDialogo()"><i class="material-icons iconoCerrar">close</i></a>
   <form (ngSubmit)="anyadirItem()" #formulario="ngForm">
     <div class="row contenedorFormEstrecho">
@@ -26,7 +26,7 @@
         <textarea matInput name="descripcion" [(ngModel)]="items.descripcion" placeholder="Descripción"
                   maxLength="500"></textarea>
       </mat-form-field>
-      
+
     </div>
     <div class="row" *ngIf="!realizandoAccion">
       <div class="btnsEditarAnyadir">

@@ -1,7 +1,6 @@
 <div class="container-fluid divContenedorTabla">
   <div class="row">
-    <div class="example-header">
-      <h1 class="mat-display-1 tituloComponentes"><span class="icon-handshake-o"></span> Proveedores</h1>
+    <div class="example-header cabeceraMargin">
       <div class="elementosCabecera">
         <button *ngIf="_authService.tienePermiso(33)" mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
           (click)="editarAnyadirItem(null)">Nuevo Proveedor</button>

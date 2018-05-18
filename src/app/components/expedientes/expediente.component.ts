@@ -619,7 +619,8 @@ export class ExpedienteComponent implements OnInit {
    }
 
    tieneCambios(){
-     return this.imgInsertada || this.formulario.form.dirty || this.formularios.form.dirty;
+     if(this.cartera.estado>1) return this.imgInsertada || this.formulario.form.dirty || this.formularios.form.dirty;
+     else return this.imgInsertada || this.formulario.form.dirty;
    }
 
 }

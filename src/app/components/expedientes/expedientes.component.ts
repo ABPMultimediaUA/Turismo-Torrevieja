@@ -21,6 +21,8 @@ export class ExpedientesComponent implements OnInit {
 
   items:ExpedienteInterface[]=[];
   avances:AvanceExpedienteInterface[]=[];
+  carteras:CarteraInterface[]=[];
+  selectCartera:string[]=[];
   paginacion:PaginacionInterface={    //Guardar todos los datos de paginacion
     count:0,
     current_page:1,
@@ -55,6 +57,31 @@ export class ExpedientesComponent implements OnInit {
   }
 
   ngOnInit() {
+  }
+
+  //Realiza la peticion GetItems a la BD y actualiza las variables
+  cargarItems(per_pgn:number, pgn:number){
+    this._itemService.getItem(this.selectUrl,-1,-1,per_pgn,pgn,this.busqueda,"").then(
+      res => {
+        if(typeof res != "string"){
+          if(res && res["data"] && res["meta"]){
+            this.items = res["data"] as ExpedienteInterface[];
+            this.paginacion = res["meta"].pagination as PaginacionInterface;
+            this.calcularAvance();
+            this.cargarCarterasItems();
+            this.ngAfterViewInit();
+            this.activarDesactvarBtnsPag();
+          }
+          else{
+            this.items = [];
+            this.ngAfterViewInit();
+          }
+        }
+        else{
+          this.items = [];
+          this.ngAfterViewInit();
+        }
+      });
   }
 
 
@@ -102,30 +129,6 @@ export class ExpedientesComponent implements OnInit {
       }
       this.avances.push(auxAvance);
     }
-  }
-
-  //Realiza la peticion GetItems a la BD y actualiza las variables
-  cargarItems(per_pgn:number, pgn:number){
-    this._itemService.getItem(this.selectUrl,-1,-1,per_pgn,pgn,this.busqueda,"").then(
-      res => {
-        if(typeof res != "string"){
-          if(res && res["data"] && res["meta"]){
-            this.items = res["data"] as ExpedienteInterface[];
-            this.paginacion = res["meta"].pagination as PaginacionInterface;
-            this.calcularAvance();
-            this.ngAfterViewInit();
-            this.activarDesactvarBtnsPag();
-          }
-          else{
-            this.items = [];
-            this.ngAfterViewInit();
-          }
-        }
-        else{
-          this.items = [];
-          this.ngAfterViewInit();
-        }
-      });
   }
 
   //Cargar items en tabla
@@ -212,27 +215,23 @@ export class ExpedientesComponent implements OnInit {
     this.router.navigate(['/expediente', row.identificador]);
   }
 
-  //TODO eliminar
-  cargarCarterasItems(i,e){
-    if(i && e.innerHTML == ''){
-      e.innerHTML = "Cargando...";
-      this._itemService.getItem(8,i,-1,-1,-1,"","").then(
-        res => {
-          if(typeof res != "string"){
-            let r = res as any;
-            console.log(r.data);
-            let icon:string;
-            if(r.data.estado == 1) icon = '';
-            else if(r.data.estado == 2) icon = '';
-            else if(r.data.estado == 3) icon = '';
-            // e.innerHTML = r.data.nombreCartera + ' ' + icon;
-            if(r) e.innerHTML = r.data.nombreCartera;
+
+  cargarCarterasItems(){
+    this.selectCartera = [];
+    this._itemService.getItem(8,-1,-1,-1,-1,"","").then( res => {
+      if(typeof res != 'string'){
+        this.carteras = (res as any).data as CarteraInterface[];
+        for(var x = 0; x < this.items.length; x++){
+          this.selectCartera.push(null);
+          for(var z = 0; z < this.carteras.length; z++){
+            if(this.items[x].cartera == this.carteras[z].identificador){
+              this.selectCartera[x] = this.carteras[z].nombreCartera;
+              z = this.carteras.length;
+            }
           }
-          else{
-            e.innerHTML = 'No se pudo cargar este apartado por un error o porque no existe'
-          }
-        });
-    }
+        }
+      }
+    })
   }
 
   //OPTION Elementos por Pgn- Funcion que se llama cada vez que se cambia el numero de items por pgn

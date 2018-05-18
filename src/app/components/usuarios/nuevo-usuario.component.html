@@ -1,7 +1,7 @@
 <div class="contenedorEditar">
   <h1 class="mat-display-1 tituloFormEstrecho">
     <span *ngIf="!editar" class="icon-user-add-outline"></span>
-    <span *ngIf="editar" class="icon-user-outline"></span> {{titulo}} {{items.nombreUsuario}}
+    <span *ngIf="editar" class="icon-user-outline"></span> {{titulo}}: {{items.nombreUsuario}}
   </h1>
   <a class="btnCerrar" (click)="cerrarDialogo()"><i class="material-icons iconoCerrar">close</i></a>
   <form (ngSubmit)="anyadirItem()" #formulario="ngForm">
@@ -19,8 +19,8 @@
       </mat-form-field>
 
       <mat-form-field class="campoWidth100">
-        <mat-select placeholder="Rol" [value]="items.rol" [disabled]="bloqCampos">
-          <mat-option *ngFor="let i of roles" [value]="i.identificador" readonly>{{i.nombreRol}}</mat-option>
+        <mat-select placeholder="Rol" [(ngModel)]="items.rol" [disabled]="bloqCampos" name="rol">
+          <mat-option *ngFor="let i of roles" [value]="i.identificador">{{i.nombreRol}}</mat-option>
         </mat-select>
       </mat-form-field>
 

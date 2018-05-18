@@ -1,5 +1,5 @@
 export interface RolesInterface {
-  identificador:string;
+  identificador:number;
   nombreRol:string;
   activo:string;
 }

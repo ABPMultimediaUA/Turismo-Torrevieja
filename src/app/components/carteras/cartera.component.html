@@ -1,9 +1,9 @@
 <div class="container-fluid divContenedorTabla">
   <form (ngSubmit)="editarCartera()" #formulario="ngForm">
     <div class="row">
-      <div class="example-header">
-        <h1 class="mat-display-1 tituloComponentes titCarteras"><i class="icon-archive-1"></i> Cartera {{cartera.nombreCartera}} </h1>
-        <div class="divTiposCartera" *ngIf="_authService.tienePermiso(22) && carteraSinModif.estado!=3">
+      <div class="example-header cabeceraExpCar">
+        <h1 class="mat-display-1 tituloComponentes titCarteras"><i class="icon-archive-1"></i> Cartera: {{cartera.nombreCartera}} </h1>
+        <div class="btnExpCar" *ngIf="_authService.tienePermiso(22) && carteraSinModif.estado!=3">
           <div class="btnsEditarAnyadir">
             <div *ngIf="bloqCampos" class="btnsEditarAnyadir">
               <button type="button" mat-raised-button color="primary" (click)="disable_enable_campos()">Editar</button>

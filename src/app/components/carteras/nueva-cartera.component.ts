@@ -14,7 +14,7 @@ import { CarteraInterface }                         from '../../interfaces/carte
 export class NuevaCarteraComponent implements OnInit {
 
   items:CarteraInterface={
-    identificador:"",
+    identificador:null,
     nombreCartera:"",
     year:null,
     trimestre:null,
@@ -59,7 +59,7 @@ export class NuevaCarteraComponent implements OnInit {
   //BOTON - Cuando se esta en la opcion de crear vacia los campos del form
   limpiarCampos(){
     this.items={
-      identificador:"",
+      identificador:null,
       nombreCartera:"",
       year:null,
       trimestre:null,

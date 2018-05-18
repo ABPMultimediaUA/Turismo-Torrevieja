@@ -84,8 +84,8 @@ export class PeticionesCrudService {
 
     if(id>-1 && tipo <100) url+=`/${id}`;                                             //Si es una peticion CRUD sobre un item en particular
     if(item_pgn>-1 && pgn>-1 && tipo<300) url+= `?per_page=${item_pgn}&page=${pgn}`;  //Si es una peticion get con paginacion
-    if(item_pgn>-1 && pgn>-1 && tipo>299) url+= `&per_page=${item_pgn}&page=${pgn}`;                           //Resultado de peticiones get paginados con filtros
-    // if() url+=`&orderBy=${variable,}`;                   //Ordenar select
+    if(item_pgn>-1 && pgn>-1 && tipo>299) url+= `&per_page=${item_pgn}&page=${pgn}`;  //Resultado de peticiones get paginados con filtros
+    // if() url+=`&orderBy=${variable,}`;                  //Ordenar select
 
     return url;
   }

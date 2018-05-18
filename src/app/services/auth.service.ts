@@ -162,6 +162,7 @@ export class AuthService {
     localStorage.removeItem("accesToken");
     localStorage.removeItem("user");
     localStorage.removeItem("permisos");
+    localStorage.removeItem("navSelected");
   }
   /*** FIN FUNCIONES LOGOUT ***/
 

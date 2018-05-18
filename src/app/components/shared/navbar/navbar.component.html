@@ -1,5 +1,5 @@
 <mat-toolbar class="navbar shadow navbar-expand-lg navbar-dark bg-blue ">
-  <a class="navbar-brand" [routerLink]="['/home']">GVENT</a>
+  <a class="navbar-brand" [routerLink]="['/home']" (click)="cambiarSelect(0)">GVENT</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -9,26 +9,20 @@
     <!-- MENU NO LOGIN -->
     <div *ngIf="!_authService.userLog.getValue()">
       <ul class="navbar-nav mr-auto d9d9d9">
-        <div>
-          <button [routerLink]="['/home']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button">
+        <!-- <div>
+          <button [routerLink]="['/home']" mat-raised-button class="navBtn" type="button" (click)="cambiarSelect(0)" [class.navMarcado]="selected == 0">
             <span class="icon-home-outline"></span> Inicio
             <span class="sr-only">(current)</span>
           </button>
-        </div>
+        </div> -->
         <div>
-          <button [routerLink]="['/about']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button">
+          <button [routerLink]="['/about']" mat-raised-button class="navBtn" type="button" (click)="cambiarSelect(1)" [class.navMarcado]="selected == 1">
            <span class="icon-info-circled"></span> Acerca de GVENT
           </button>
         </div>
         <div>
-          <button [routerLink]="['/contact']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button">
+          <button [routerLink]="['/contact']" mat-raised-button class="navBtn" type="button" (click)="cambiarSelect(2)" [class.navMarcado]="selected == 2">
            <span class="icon-mail"></span> Contacto
-          </button>
-        </div>
-        <div>
-          <!-- <button [routerLink]="['/chatbots']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" > -->
-          <button href="https://gvent.ovh/chatbot/" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button">
-           <span class="icon-id-badge"></span> Chatbots
           </button>
         </div>
       </ul>
@@ -38,68 +32,41 @@
     <div *ngIf="_authService.userLog.getValue()">
       <ul class="navbar-nav mr-auto d9d9d9">
 
-        <div class="dropdown mr-auto" *ngIf="_authService.tienePermiso(23) && _authService.tienePermiso(3)">
-          <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-           <span class="icon-folder"></span> Eventos
-          </button>
-          <div class="bg-blue dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a role="button" [routerLink]="['/carteras']" class="nav-link elemento-navbar d9d9d9">
-              <span class="icon-archive-1"></span> Carteras
-            </a>
-            <div class="dropdown-divider"></div>
-            <a role="button" [routerLink]="['/expedientes']" class="nav-link elemento-navbar d9d9d9" >
-              <span class="icon-folder-open"></span> Eventos
-            </a>
-          </div>
-        </div>
-        <div *ngIf="_authService.tienePermiso(23) && !_authService.tienePermiso(3)">
-          <button [routerLink]="['/carteras']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button">
-           <span class="icon-archive-1"></span> Carteras
-          </button>
-        </div>
-        <div *ngIf="!_authService.tienePermiso(23) && _authService.tienePermiso(3)">
-          <button [routerLink]="['/expedientes']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
+        <div *ngIf="_authService.tienePermiso(3)">
+          <button [routerLink]="['/expedientes']" mat-raised-button class="navBtn" type="button" (click)="cambiarSelect(3)" [class.navMarcado]="selected == 3">
            <span class="icon-folder-open"></span> Eventos
           </button>
         </div>
 
+        <div *ngIf="_authService.tienePermiso(23)">
+          <button [routerLink]="['/carteras']" mat-raised-button class="navBtn" type="button" (click)="cambiarSelect(4)" [class.navMarcado]="selected == 4">
+           <span class="icon-archive-1"></span> Carteras
+          </button>
+        </div>
+
         <div *ngIf="_authService.tienePermiso(7)">
-          <button [routerLink]="['/espacios']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button">
+          <button [routerLink]="['/espacios']" mat-raised-button class="navBtn" type="button" (click)="cambiarSelect(5)" [class.navMarcado]="selected == 5">
            <span class="icon-town-hall"></span> Espacios
           </button>
         </div>
 
         <div *ngIf="_authService.tienePermiso(31)">
-          <button [routerLink]="['/proveedores']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button">
+          <button [routerLink]="['/proveedores']" mat-raised-button class="navBtn" type="button" (click)="cambiarSelect(6)" [class.navMarcado]="selected == 6">
            <span class="icon-handshake-o"></span> Proveedores
           </button>
         </div>
 
-        <div class="dropdown mr-auto" *ngIf="_authService.tienePermiso(55) && _authService.tienePermiso(35)">
-          <button class="btn dropdown-toggle elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" #dropdownMenuButton data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-           <span class="icon-users-outline"></span> Usuarios
-          </button>
-          <div class="bg-blue dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a role="button" [routerLink]="['/usuarios']" class="nav-link elemento-navbar d9d9d9" >
-              <span class="icon-users-outline"></span> Usuarios
-            </a>
-            <div class="dropdown-divider"></div>
-            <a role="button" [routerLink]="['/roles']" class="nav-link elemento-navbar d9d9d9" >
-              <span class="icon-crown"></span> Roles
-            </a>
-          </div>
-        </div>
-        <div *ngIf="_authService.tienePermiso(55) && !_authService.tienePermiso(35)">
-          <button [routerLink]="['/usuarios']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
-           <span class="icon-users-outline"></span> Usuarios
-          </button>
-        </div>
-        <div *ngIf="!_authService.tienePermiso(55) && _authService.tienePermiso(35)">
-          <button [routerLink]="['/roles']" class="btn elemento-navbar d9d9d9 bg-blue-no-imp navBtnNoDesplegable" type="button" >
+        <div *ngIf="_authService.tienePermiso(35)">
+          <button [routerLink]="['/roles']" mat-raised-button class="navBtn" type="button" (click)="cambiarSelect(7)" [class.navMarcado]="selected == 7">
            <span class="icon-crown"></span> Roles
           </button>
         </div>
 
+        <div *ngIf="_authService.tienePermiso(55)">
+          <button [routerLink]="['/usuarios']" mat-raised-button class="navBtn" type="button" (click)="cambiarSelect(8)" [class.navMarcado]="selected == 8">
+           <span class="icon-users-outline"></span> Usuarios
+          </button>
+        </div>
 
       </ul>
     </div>
