@@ -10,6 +10,8 @@ import { AboutComponent }       from "./components/about/about.component";
 import { LoginComponent }       from "./components/login/login.component";
 import { ChatbotsComponent }    from './chatbots/chatbots.component';
 import { ContactComponent }     from "./components/contact/contact.component";
+import { MotorgraficoComponent }     from "./components/motorgrafico/motorgrafico.component";
+
 
 //Menu login
 import { PerfilComponent }      from "./components/perfil/perfil.component";
@@ -46,6 +48,7 @@ const app_routes: Routes = [
   { path: 'about', component: AboutComponent },
   { path: 'login', component: LoginComponent },
   { path: 'contact', component: ContactComponent },
+  { path: 'motorgrafico', component: MotorgraficoComponent },
   { path: 'chatbots', loadChildren: 'app/chatbots/chatbots.module#ChatbotsModule' },
 
   //Menu Login

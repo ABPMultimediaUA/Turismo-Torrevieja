@@ -88,6 +88,7 @@ import { EliminarExpedienteDialog } from "./components/carteras/eliminar-expedie
 
 import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.component";
 import { PublicarComponent } from './components/publicar/publicar.component';
+import { MotorgraficoComponent } from './components/motorgrafico/motorgrafico.component';
 
 
 
@@ -133,6 +134,7 @@ import { PublicarComponent } from './components/publicar/publicar.component';
     EliminarEspacioComponent,
     VentanaEmergenteComponent,
     PublicarComponent,
+    MotorgraficoComponent,
   ],
   imports: [
     HttpClientModule,
