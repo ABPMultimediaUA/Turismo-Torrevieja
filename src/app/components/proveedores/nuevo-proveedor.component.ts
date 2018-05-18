@@ -35,6 +35,8 @@ export class NuevoProveedorComponent implements OnInit {
     numero:null,
     planta:null,
     puerta:null,
+    persona_de_contacto:null,
+    observaciones:null
   };
   itemSinModif:ProveedorInterface;    //Guardar la copia para restaurar
   titulo:string;                      //El titulo de la ventana emergente
@@ -126,6 +128,8 @@ export class NuevoProveedorComponent implements OnInit {
       numero:null,
       planta:null,
       puerta:null,
+      persona_de_contacto:null,
+      observaciones:null
     }
     this.formulario.reset(this.items, false);
   }

@@ -20,4 +20,6 @@ export interface ProveedorInterface
   numero:string;
   planta:string;
   puerta:string;
+  persona_de_contacto:string;
+  observaciones:string;
 }

@@ -2,10 +2,6 @@
 <div style="background-color:#074d92;" class="container loginClass">
   <div class="row ">
     <div class="container main-container text-center">
-      <mat-card  style="text-align:center;  padding-left: 10px; color: white; background-color:#f44336; width:400px; margin:auto;"  *ngIf="loginError === true">
-              Usuario o contraseña incorrecto
-      </mat-card>
-      <br><br>
       <mat-card style="text-align:center;  padding-left: 0px;  padding-top: 0px; width:400px; margin:auto;">
         <mat-toolbar class=" text-center"  style="width:400px;color: white;padding-left: 140px;background-color:#05386B">
           <a [routerLink]="['/home']"><img alt="" src="../assets/ImgHome/logo.png" style="width:120px; height:auto;"></a>
@@ -21,6 +17,10 @@
               <button type="submit" style="width:200px" color="primary" mat-raised-button>Login</button>
            </mat-dialog-actions>
         </form>
+      </mat-card>
+      <br>
+      <mat-card  style="text-align:center;  padding-left: 10px; color: white; background-color:#f44336; width:400px; margin:auto;"  *ngIf="_authService.logError.getValue() === true">
+              Usuario o contraseña incorrecto
       </mat-card>
     </div>
   </div>

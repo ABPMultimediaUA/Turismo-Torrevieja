@@ -61,6 +61,7 @@ export class CarteraComponent implements OnInit {
   btnEliminar:boolean = true;         //Activar / desactivar boton de eliminar item/s
   @ViewChild("btnsPag") BtnsPagOff;   //Div que contiene los botones de paginacion
   @ViewChild("formulario") formulario;
+  value:string="";
 
   bloqCampos:boolean = true;          //Habilitar o deshabilitar campos del form (avtivar desactivar modo edicion)
   fechaCreacion:string = "";          //Fecha modificada para mostrar por pantalla
@@ -71,7 +72,7 @@ export class CarteraComponent implements OnInit {
 
   constructor(
     private _itemService: PeticionesCrudService,
-    private _authService:AuthService,
+    public _authService:AuthService,
     public dialog: MatDialog,
     private router:Router,
     private route:ActivatedRoute,

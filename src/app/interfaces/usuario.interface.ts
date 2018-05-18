@@ -14,4 +14,5 @@ export interface UsuarioInterface
     fechaCreacion:string;
     fechaEliminacion:string;
     activo:string;
+    observaciones:string;
 }

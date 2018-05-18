@@ -42,13 +42,14 @@ export class ExpedientesComponent implements OnInit {
   btnEliminar:boolean = true;         //Activar / desactivar boton de eliminar item/s
   @ViewChild("btnsPag") BtnsPagOff;   //Div que contiene los botones de paginacion
   estadoCarteraEscogido:number = 208; //Valor radio button (url basica por estados) TODO hacer cuando este hecho en backend
+  value:string="";
 
   dataSource = new MatTableDataSource(this.items);            //Datos de la tabla
   selection = new SelectionModel<ExpedienteInterface>(true, []); //Filas seleccionadas
 
   constructor(
     private _itemService: PeticionesCrudService,
-    private _authService:AuthService,
+    public _authService:AuthService,
     public dialog: MatDialog,
     private router:Router,
     private route:ActivatedRoute,

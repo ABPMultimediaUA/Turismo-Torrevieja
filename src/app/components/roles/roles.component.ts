@@ -35,13 +35,14 @@ export class RolesComponent implements OnInit {
   valorEscogidoForOrder:number = -1;  //Para saber el elemento seleccionado, -1 valor neutro
   btnEliminar:boolean = true;         //Activar / desactivar boton de eliminar item/s
   @ViewChild("btnsPag") BtnsPagOff;   //Div que contiene los botones de paginacion
+  value:string="";
 
   dataSource = new MatTableDataSource(this.items);            //Datos de la tabla
   selection = new SelectionModel<RolesInterface>(true, []); //Filas seleccionadas
 
   constructor(
     private _itemService: PeticionesCrudService,
-    private _authService:AuthService,
+    public _authService:AuthService,
     public dialog: MatDialog
   ){
     this.cargarItems(+this.option_Items_Pgn,1);

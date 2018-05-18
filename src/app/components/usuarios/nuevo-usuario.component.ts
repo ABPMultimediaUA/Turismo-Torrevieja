@@ -27,7 +27,8 @@ export class NuevoUsuarioComponent implements OnInit {
     fechaActualizacion:null,
     fechaCreacion:null,
     fechaEliminacion:null,
-    activo:"1"
+    activo:"1",
+    observaciones:null,
   };
   itemSinModif:UsuarioInterface;      //Guardar la copia para restaurar
   titulo:string;                      //El titulo de la ventana emergente
@@ -123,7 +124,8 @@ export class NuevoUsuarioComponent implements OnInit {
       fechaActualizacion:null,
       fechaCreacion:null,
       fechaEliminacion:null,
-      activo:"1"
+      activo:"1",
+      observaciones:null,
     }
     this.formulario.reset(this.items, false);
   }

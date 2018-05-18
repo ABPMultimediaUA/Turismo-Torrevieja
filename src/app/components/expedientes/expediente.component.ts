@@ -83,7 +83,7 @@ export class ExpedienteComponent implements OnInit {
 
   constructor(
     private _itemService: PeticionesCrudService,
-    private _authService:AuthService,
+    public _authService:AuthService,
     private route:ActivatedRoute,
     public dialog: MatDialog,
     private router:Router,

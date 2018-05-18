@@ -41,7 +41,7 @@ export class ChatbotAppComponent implements OnInit, DoCheck {
   @ViewChild("imgChat") imgChat;
   @ViewChild("espDialog") espDialog;
 
-  constructor( private _chatService: ChatBotService, private _authService:AuthService) { }
+  constructor( public _chatService: ChatBotService, private _authService:AuthService) { }
 
   ngOnInit() {
     this.setResponse(this._chatService.Chatbot.getValue()[3]);

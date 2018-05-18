@@ -19,6 +19,7 @@ export class NuevoRolComponent implements OnInit {
     identificador:null,
     nombreRol:null,
     activo:"1",
+    observaciones:null
   };
   itemSinModif:RolesInterface;                        //Copia para restaurar
   titulo:string;                                      //El titulo de la ventana emergente
@@ -179,6 +180,7 @@ export class NuevoRolComponent implements OnInit {
       identificador:null,
       nombreRol:null,
       activo:"1",
+      observaciones:null
     }
     this.formulario.reset(this.items, false);
     this.selection.clear();

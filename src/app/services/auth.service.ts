@@ -8,6 +8,7 @@ import { UsuarioInterface }             from '../interfaces/usuario.interface';
 export class AuthService {
 
   userLog = new BehaviorSubject<boolean>(this.estaLogueado());  //Usuario logueado o no
+  logError = new BehaviorSubject<boolean>(false);  //Usuario logueado o no
   usuario:UsuarioInterface={                                    //Plantilla user para inicializar el BehaviorSubject
     identificador:-1,
     nombreUsuario:"",
@@ -21,6 +22,7 @@ export class AuthService {
     fechaEliminacion:"",
     fechaCreacion:"",
     activo:null,
+    observaciones:null
   };
   user = new BehaviorSubject<UsuarioInterface>(this.usuario);  //Datos del usuario
   userPermisos = new BehaviorSubject<number[]>([]);            //Permisos del usuario para comprobar restricciones
@@ -67,12 +69,20 @@ export class AuthService {
             res => {
               if(typeof res != "string"){
                 this.userLog.next(true);
+                this.logError.next(false);
                 this.router.navigate(['perfil']);
+              }
+              else{
+                this.logError.next(true);
               }
             });
         }
-      });
+        else{
+          this.logError.next(true);
+        }
+      })
   }
+
 
   getToken(user_pass:any){
     let promise = new Promise((resolve, reject) => {
