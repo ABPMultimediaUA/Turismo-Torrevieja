@@ -43,8 +43,8 @@ C A R O U S E L
                <picture>
                 <source srcset="../assets/ImgHome/gv.png" media="(min-width: 1400px)">
                 <source srcset="../assets/ImgHome/gv.png" media="(min-width: 769px)">
-                 <source srcset="../assets/ImgHome/img1.jpg" media="(min-width: 577px)">
-                <img srcset="../assets/ImgHome/img1.jpg" alt="responsive image" class="d-block img-fluid">
+                 <source srcset="../assets/ImgHome/gv.png.jpg" media="(min-width: 577px)">
+                <img srcset="../assets/ImgHome/gv.png" alt="responsive image" class="d-block img-fluid">
               </picture>
               <div class="carousel-caption">
                   <div class="fondo-gris">
@@ -150,7 +150,7 @@ C A R O U S E L
                       <li class="list-group-item"><i class="fa fa-times"></i> Mantenimiento web</li>
                     </ul>
                     <div class="panel-footer">
-                        <a class="btn btn-lg btn-block btn-warning" href="#">Contratar</a>
+                        <a class="btn btn-lg btn-block btn-warning" role="button" [routerLink]="['../contact']">Contratar</a>
                     </div>
                 </div>
             </div>
@@ -172,7 +172,7 @@ C A R O U S E L
                       <li class="list-group-item"><i class="fa fa-check"></i> Mantenimiento web</li>
                     </ul>
                     <div class="panel-footer">
-                        <a class="btn btn-lg btn-block btn-success" href="#">Contratar</a>
+                        <a class="btn btn-lg btn-block btn-success" role="button" [routerLink]="['../contact']">Contratar</a>
                     </div>
                 </div>
             </div>
@@ -185,7 +185,7 @@ C A R O U S E L
 	<!-- Begin MailChimp Signup Form -->
 	<link href="//cdn-images.mailchimp.com/embedcode/classic-10_7.css" rel="stylesheet" type="text/css">
 	<style type="text/css">
-		#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+
 		/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
 		   We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
 	</style>

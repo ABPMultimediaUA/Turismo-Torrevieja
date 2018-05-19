@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
 
 
 /*
@@ -116,4 +116,14 @@ div>section#home:nth-child(2n){
   color: #777777;
   padding: 20px;
   margin: 0px;
+}
+
+
+
+
+#mc_embed_signup{
+  background:#fff;
+  clear:left;
+  font:14px;
+  font-family: 'Montserrat', sans-serif;
 }

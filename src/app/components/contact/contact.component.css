@@ -1,7 +1,11 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
 .jumbotron {
 background: #888888;
 color: #FFF;
 border-radius: 0px;
+  font-family: 'Montserrat', sans-serif;
+
 }
 .jumbotron-sm { padding-top: 24px;
 padding-bottom: 24px; }
@@ -10,4 +14,22 @@ color: #FFF;
 }
 .h1 small {
 font-size: 24px;
+}
+h2{
+  font-family: 'Montserrat', sans-serif;
+}
+
+
+.emailgvent{
+  font-size: 21px;
+}
+.emailgvent a{
+
+  color: black;
+}
+.emailgvent a:hover{
+  color: #ffbd4a;
+}
+.chatbots{
+  color:#05386b;
 }
