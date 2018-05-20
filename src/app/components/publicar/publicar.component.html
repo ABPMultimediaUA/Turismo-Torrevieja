@@ -111,11 +111,11 @@
 
           <form class="animated fadeIn fast" (ngSubmit)="subirPost()" #forma="ngForm">
             <label>Id de la pagina (497922363906912), Aqui se deberia elegir la pagina en laque el usuario quiere postear, o poner siempre una como esta ahora</label><br>
-            <!-- <input [(ngModel)]="page_id" name="page_id" class="form-control" placeholder="id de la pagina" required type="text"> -->
-            <!-- <label>user_access_token</label>
+            <input [(ngModel)]="page_id" name="page_id" class="form-control" placeholder="id de la pagina" required type="text">
+            <label>user_access_token</label>
             <input [(ngModel)]="user_access_token" name="user_access_token" class="form-control" placeholder="id de la pagina" required type="textarea">
             <label>page_access_token</label>
-                <input [(ngModel)]="page_access_token" name="page_access_token" class="form-control" placeholder="id de la pagina" required type="textarea"> -->
+                <input [(ngModel)]="page_access_token" name="page_access_token" class="form-control" placeholder="id de la pagina" required type="textarea">
 
               <h2>texto del evento a postear</h2><br>
             <input [(ngModel)]="post.message" name="message" class="form-control" placeholder="Texto principal" required type="text">

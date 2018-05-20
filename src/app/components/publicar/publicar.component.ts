@@ -15,16 +15,12 @@ import { PaginasInterface } from '../../interfaces/paginas.interface';
 })
 export class PublicarComponent implements OnInit {
   URL = "https://graph.facebook.com/";
-
   paginas: PaginasInterface[] = [];
-
   page_name: string = "Cultura Torrevieja";
   page_id: string = "497922363906912";
-
   user_id:string= "";
   user_access_token: string = "";
   page_access_token: string = "";
-
   imagen: File;
   public post: PostFacebook = {
     message: ""
@@ -156,7 +152,15 @@ export class PublicarComponent implements OnInit {
       xhr.send(fd);
     }
   }
-
+  // ponerEnLocal(){
+  //   localStorage.setItem('user_access_token', this.user_access_tokenn);
+  //   localStorage.setItem('fb_user_id', response.authResponse.userID);
+  //
+  //   this.user_access_token=localStorage.getItem('fb_user_token');
+  //   this.user_id=localStorage.getItem('fb_user_id');
+  //   this.user_access_token="EAACEdEose0cBAHteBE26183nHYAtXhrZBJaHBlu7cxAHT7rKqH5XkZCVXPgj5cC58fn3cjhtYMB1n7ehaVHFvv76X1ZA1okcZBSJ6EmjGwBX1AAHffK4DJNAYzuKCGwiKZCf1dxnw737gmt7ZARUuzhQhfzfEYvYrIQ80rK39cg0x3INBuj1hrsE5hLaMK6dae15B7ZCTeFTAZDZD";
+  //
+  // }
 
 
 }

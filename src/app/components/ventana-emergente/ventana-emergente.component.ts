@@ -11,7 +11,7 @@ export class VentanaEmergenteComponent implements OnInit {
   mensaje:string;
   iconoBien:boolean = false;
   iconoError:boolean = false;
-
+descEvento:string;
   constructor(public dialogRef: MatDialogRef<VentanaEmergenteComponent>,
               @Inject(MAT_DIALOG_DATA) public data
             )
@@ -20,6 +20,7 @@ export class VentanaEmergenteComponent implements OnInit {
     if(data.item) this.mensaje = data.item;
     if(data.item2 == 0) this.iconoBien = true;
     else if(data.item2 ==1 ) this.iconoError = true;
+    
   }
 
   ngOnInit() {

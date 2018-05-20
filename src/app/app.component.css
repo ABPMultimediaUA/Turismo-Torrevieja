@@ -431,3 +431,31 @@ margin-right: 2.5em;
 /deep/ .table-responsive{
   margin-bottom: 2.5em !important;
 }
+.mat-raised-button {
+  box-sizing: border-box!important;
+  position: relative!important;
+  -webkit-user-select: none!important;
+  -moz-user-select: none!important;
+  -ms-user-select: none!important;
+  user-select: none!important;
+  cursor: pointer!important;
+  outline: 0!important;
+  border: none!important;
+  -webkit-tap-highlight-color: transparent!important;
+  display: inline-block!important;
+  white-space: nowrap!important;
+  text-decoration: none!important;
+  vertical-align: baseline!important;
+  text-align: center!important;
+  margin: 0!important;
+  min-width: 88px!important;
+  line-height: 36px!important;
+  padding: 0 16px!important;
+  border-radius: 2px!important;
+  transform: translate3d(0, 0, 0)!important;
+  transition: background .4s cubic-bezier(.25, .8, .25, 1), box-shadow 280ms cubic-bezier(.4, 0, .2, 1)!important;
+  color: #fff!important;
+  background-color: #3f51b5!important;
+  min-width: 55px!important;
+  box-shadow: 0 3px 1px -2px rgba(0, 0, 0, .2), 0 2px 2px 0 rgba(0, 0, 0, .14), 0 1px 5px 0 rgba(0, 0, 0, .12)!important;
+}
