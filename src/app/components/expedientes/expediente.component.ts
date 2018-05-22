@@ -259,12 +259,13 @@ export class ExpedienteComponent implements OnInit {
     if (this.imagenPub == undefined) {
       let url2 = this.expediente.image;
       this.http.get(url2, { responseType: ResponseContentType.Blob }).subscribe(response => {
-        var blob = new Blob([response._body],  {type : 'image/png'});
-        let file = new File([blob], "caca.png", { type: "image/png", lastModified: 3924723894 });
+        var  res = response.json();
+        let file = new File([res], "caca.png", { type: "image/png", lastModified: 3924723894 });
         this.imagenPub=file;
+        console.log(this.imagenPub);
       });
     }
-    // y ahora hago el post a la pagina
+    // y ahora hago el post a la pagina, primero cojo el token de la pagina
     let urlPage = this.URL + this.page_id + '?fields=access_token' + '&access_token=' + this.user_access_token;
     this.http.get(urlPage).subscribe(response => {
       let res = JSON.parse(response.text());
