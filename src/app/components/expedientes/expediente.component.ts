@@ -42,6 +42,18 @@ export class ExpedienteComponent implements OnInit {
     image: null,
     titulo: null,
   };
+  expedientePubli: ExpedienteInterface = {
+    identificador: null,
+    nombreExpediente: null,
+    avance: null,
+    cartera: null,
+    coordinador: null,
+    detalle: null,
+    fechaFin: null,
+    fechaInicio: null,
+    image: null,
+    titulo: null,
+  };
   expedienteSinModif: ExpedienteInterface;
   cartera: CarteraInterface = {
     identificador: null,
@@ -82,17 +94,17 @@ export class ExpedienteComponent implements OnInit {
   URL = "https://graph.facebook.com/";
   // paginas: PaginasInterface[] = [];
   page_name: string = "Cultura Torrevieja";
-  page_id: string = "497922363906912";
+  page_id: string;
   user_id: string = "";
   user_access_token: string = "";
   page_access_token: string = "";
-  imagen: File;
+  imagenPub: File;
   public post: PostFacebook = {
     message: ""
   };
 
 
-
+  @ViewChild("etiquetaImgPub") etiquetaPub;
   @ViewChild("etiquetaImgExp") etiqueta;  //La etiqueta html img
   @ViewChild("formulario") formulario;
   @ViewChild("forma") formularios;
@@ -113,16 +125,26 @@ export class ExpedienteComponent implements OnInit {
         if (typeof res != "string") {
           let r = res as any;
           this.expediente = r.data as ExpedienteInterface;
+          console.log(this.expediente);
           this.expedienteSinModif = Object.assign({}, r.data as ExpedienteInterface);
           this.expFechaCreacion = r.data.fechaCreacion.split(' ')[0];
           this.interpretarAvance(this.expediente.avance);
           //creo el texto del post
           this.post.message = this.expediente.titulo;
+          //aqui voy a hacer la llamada a otro evento donde tendre guardado el token y id de pagina
+          this._itemService.getItem(0, 97, -1, -1, -1, "", "").then(res => {
+           let r = res as any;
+            this.expedientePubli = r.data as ExpedienteInterface;
+            this.page_id = this.expedientePubli.titulo;
+            this.user_access_token = this.expedientePubli.detalle;
+          });
           //cargamos imagen
           if (this.expediente.image) {
             this.expediente.image = "https://gvent.ovh/Prueba2_1/public/img/" + this.expediente.image;
             let o = this.etiqueta.nativeElement as HTMLImageElement;
             o.src = this.expediente.image;
+            let p = this.etiquetaPub.nativeElement as HTMLImageElement;
+            p.src = this.expediente.image;
           }
           else {
             let o = this.etiqueta.nativeElement as HTMLImageElement;
@@ -220,11 +242,9 @@ export class ExpedienteComponent implements OnInit {
     let foto = document.getElementById("foto");
     let inp = foto.childNodes[4];
     let img = document.getElementById("img");
-
     var file: File = inputValue.files[0];
-    this.imagen = file;
+    this.imagenPub = file;
     var myReader: FileReader = new FileReader();
-
     myReader.onloadend = function(e) {
       img.setAttribute('src', myReader.result);
       img.setAttribute('alt', file.name);
@@ -233,39 +253,96 @@ export class ExpedienteComponent implements OnInit {
   }
 
   publicar() {
-    this.user_access_token = localStorage.getItem('fb_user_token');
-    this.user_id = localStorage.getItem('fb_user_id');
-    this.user_access_token = "EAACEdEose0cBAHteBE26183nHYAtXhrZBJaHBlu7cxAHT7rKqH5XkZCVXPgj5cC58fn3cjhtYMB1n7ehaVHFvv76X1ZA1okcZBSJ6EmjGwBX1AAHffK4DJNAYzuKCGwiKZCf1dxnw737gmt7ZARUuzhQhfzfEYvYrIQ80rK39cg0x3INBuj1hrsE5hLaMK6dae15B7ZCTeFTAZDZD";
-    if(this.user_access_token != null){
+
+    console.log(this.imagenPub);
+    //si no han introducido una imagen nueva para la publicacion cojo la del evento
+    if (this.imagenPub == undefined) {
+      let xhr = new XMLHttpRequest();
+      let url2 = this.expediente.image;
+    // let url2 ="https://gvent.ovh/Prueba2_1/public/img/8GZ2z4M1YaX7trl4PWjXrPHjXf1CUfOHp7spi9NH.jpeg"  ;
+      xhr.open('GET', url2, true);
+      // {responseType: "blob"}
+      xhr.onload = function() {
+        console.log(xhr.response);
+        var file = xhr.response
+        var reader  = new FileReader(file);
+        console.log(reader);
+       if (file) {
+         reader.readAsDataURL(file);
+         console.log(reader);
+       }
+
+      }
+
+      xhr.send();
+      // cargarImg(files: FileList) {
+      //   if (files) {
+      //     this.imgInsertada = true;
+      //     this.archivoImg = files.item(0);
+      //     var exp = this.expediente;
+      //     var etiqueta = this.etiqueta;
+      // var r = new FileReader();
+      // r.onload = function(e) {
+      //   let o = etiqueta.nativeElement as HTMLImageElement;
+      //   o.src = r.result;
+      //   exp.image = o.alt = files[0].name;
+      //   console.log(o);
+      //   console.log(exp.image);
+      //   console.log(r);
+      //
+      // }
+      // console.log(r);
+      // r.readAsDataURL(files[0]);
+      // console.log(r);
+
+    }
+    // }
+    // this.imagenPub  =
+
+
+    if (this.user_access_token != null) {
       let urlPage = this.URL + this.page_id + '?fields=access_token' + '&access_token=' + this.user_access_token;
       this.http.get(urlPage).subscribe(response => {
         let res = JSON.parse(response.text());
         console.log(res);
         this.page_id = res.id;
         this.page_access_token = res.access_token;
+        //ahora que ya tengo el page token publico
+        if (this.user_access_token != null) {
+          let xhr = new XMLHttpRequest();
+          let fd = new FormData();
+          let url2 = this.URL + this.page_id + '/photos';
+          xhr.open('POST', url2, true);
+          fd.append("foto", this.imagenPub);
+          fd.append("access_token", this.page_access_token);
+          fd.append("caption", this.post.message);
+
+          xhr.onload = function() {
+            console.log(xhr.responseText);
+            let res = JSON.parse(xhr.responseText);
+
+          }
+          xhr.send(fd);
+        }
       });
     }
 
-    this.user_access_token = localStorage.getItem('fb_user_token');
-    if (this.user_access_token != null) {
-      let xhr = new XMLHttpRequest();
-      let fd = new FormData();
-      let url2 = this.URL + this.page_id + '/photos';
-      xhr.open('POST', url2, true);
-      fd.append("foto", this.imagen);
-      console.log(this.user_access_token);
-      fd.append("access_token", this.page_access_token);
-      fd.append("caption", this.post.message);
-
-      xhr.onload = function() {
-        console.log(xhr.responseText);
-        let res = JSON.parse(xhr.responseText);
-
-
-      }
-      xhr.send(fd);
-    }
   }
+  // cargarImgPub(files: FileList) {
+  //   if (files) {
+  //     this.imgInsertada = true;
+  //     this.archivoImg = files.item(0);
+  //     var exp = this.expediente;
+  //     var etiqueta = this.etiqueta;
+  //     var r = new FileReader();
+  //     r.onload = function(e) {
+  //       let o = etiqueta.nativeElement as HTMLImageElement;
+  //       o.src = r.result;
+  //       exp.image = o.alt = files[0].name;
+  //     }
+  //     r.readAsDataURL(files[0]);
+  //   }
+  // }
 
 
   //Bloquea y desbloquea los campos del form al pulsar los btn EDITAR o CANCELAR
