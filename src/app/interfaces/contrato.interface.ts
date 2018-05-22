@@ -1,5 +1,6 @@
 export interface ContratoInterface
 {
+  activo:string;
   fichero:string;
   clase:string;
   expediente:number;
@@ -11,4 +12,5 @@ export interface ContratoInterface
   usuario:number;
   observaciones:string;
   terminado:string;
+  auxTerminado:boolean;
 }

@@ -35,13 +35,13 @@ export class ExpedientesComponent implements OnInit {
     total_pages:1
   };
   option_Items_Pgn='10';              //Cantidad de items por pagina al cargar el componente
-  selectUrl:number = 208;               //Selecciona la url para las peticiones getItem
+  selectUrl:number = 209;               //Selecciona la url para las peticiones getItem
   busqueda:string = "";               //Si se ha rellenado el campo de busqueda
   selectASC_DESC:number=-1;           //Saber si el usuario quiere ordenar los items: -1 nada seleccionado, 0 ASC, 1 DES
   valorEscogidoForOrder:number = -1;  //Para saber el elemento seleccionado, -1 valor neutro
   btnEliminar:boolean = true;         //Activar / desactivar boton de eliminar item/s
   @ViewChild("btnsPag") BtnsPagOff;   //Div que contiene los botones de paginacion
-  estadoCarteraEscogido:number = 208; //Valor radio button (url basica por estados) TODO hacer cuando este hecho en backend
+  estadoCarteraEscogido:number = 209; //Valor radio button (url basica por estados) TODO hacer cuando este hecho en backend
   value:string="";
 
   dataSource = new MatTableDataSource(this.items);            //Datos de la tabla
@@ -164,12 +164,15 @@ export class ExpedientesComponent implements OnInit {
   realizarBusqueda(e){
     if(e.target.value == ""){
       this.busqueda = "";
-      this.selectUrl = 0;
+      this.selectUrl = +this.estadoCarteraEscogido;
       e.target.value = "";
     }
     if(e.keyCode == 13){
       if(e.target.value != ""){
-        this.selectUrl = 202;
+        if(this.estadoCarteraEscogido == 0) this.selectUrl = 202;         //Todas
+        else if(this.estadoCarteraEscogido == 208) this.selectUrl = 211;  //Aprobadas
+        else if(this.estadoCarteraEscogido == 209) this.selectUrl = 212;  //No aprobadas
+        else if(this.estadoCarteraEscogido == 210) this.selectUrl = 213;  //Terminadas
         this.busqueda = e.target.value.toString();
       }
       this.cargarItems(+this.option_Items_Pgn,1);
@@ -201,8 +204,8 @@ export class ExpedientesComponent implements OnInit {
   //BOTON - ROW - Se activa con el boton nuevo item o pinchando una fila, abre el formulario crear / editar item
   nuevoEvento() {
     const dialogRef = this.dialog.open(NuevoExpedienteComponent,{
-      height: '90%',
-      width: '37%',
+      height: '80%',
+      width: '450px',
     });
     dialogRef.afterClosed().subscribe( res => {
       if(res){
@@ -213,7 +216,7 @@ export class ExpedientesComponent implements OnInit {
   }
 
   abrirExpediente(row){
-    this.router.navigate(['/expediente', row.identificador]);
+    this.router.navigate(['/evento', row.identificador]);
   }
 
 

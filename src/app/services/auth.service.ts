@@ -3,6 +3,8 @@ import { Observable, BehaviorSubject }  from 'rxjs/Rx';
 import { Http, Headers }                from "@angular/http";
 import { Router }                       from '@angular/router';
 import { UsuarioInterface }             from '../interfaces/usuario.interface';
+import { VentanaEmergentePreguntaComponent }    from '../components/ventana-emergente/ventana-emergente-pregunta.component';
+import { MatDialog }                            from '@angular/material';
 
 @Injectable()
 export class AuthService {
@@ -31,7 +33,7 @@ export class AuthService {
   Second_accessToken:string;
   urlBase:string = 'https://gvent.ovh/Prueba2_1/public/';
 
-  constructor( private http:Http, private router:Router ){
+  constructor( private http:Http, private router:Router, public dialog: MatDialog ){
     //Si hay sesion, guardamos todos los datos de las localStorage en sus variables
     if(localStorage.getItem('accesToken')) this.Second_accessToken = localStorage.getItem('accesToken');
     if(localStorage.getItem('user')) this.user.next(JSON.parse(localStorage.getItem('user')));
@@ -70,7 +72,8 @@ export class AuthService {
               if(typeof res != "string"){
                 this.userLog.next(true);
                 this.logError.next(false);
-                this.router.navigate(['perfil']);
+                localStorage.removeItem("navSelected");
+                this.router.navigate(['entrada']);
               }
               else{
                 this.logError.next(true);
@@ -159,10 +162,19 @@ export class AuthService {
   /*** FUNCIONES LOGOUT ***/
   //Limpiar variables y pasar login a false
   logout(i:number) : void {
-    this.limpiarDatosUsuario();
-    this.userLog.next(false);
-    if(i == 0) this.router.navigate(['home']);
-    else if(i == 1) this.router.navigate(['login']);
+    const dialogRef = this.dialog.open(VentanaEmergentePreguntaComponent,{
+      height: '17em',
+      width: '32em',
+      data: { item: "Vas a cerrar sesión en GVENT.\n¿Continuar?" }
+    });
+    dialogRef.afterClosed().subscribe( res => {
+      if(res){
+        this.limpiarDatosUsuario();
+        this.userLog.next(false);
+        if(i == 0) this.router.navigate(['home']);
+        else if(i == 1) this.router.navigate(['login']);
+      }
+    });
   }
 
   //Cuando se cierre sesion
@@ -176,4 +188,25 @@ export class AuthService {
   }
   /*** FIN FUNCIONES LOGOUT ***/
 
+  comprobarUsuario(token:string){
+    let promise = new Promise((resolve, reject) => {
+      let url = this.urlBase + 'quiensoy';
+      let headers = new Headers ({
+        'Content-Type':'application/json',
+        'Access-Control-Allow-Origin':'https://gvent.ovh/Prueba2_1/public',
+        'Authorization': this.First_accessToken+token,
+      });
+      this.http.get(url, { headers })
+        .toPromise()
+          .then(
+            (res) => {
+              let r = res.json().data as UsuarioInterface;
+              delete r.password;
+              resolve( r.identificador );
+            },
+            (err) => { resolve( err.toString() )}
+          )
+    });
+    return promise;
+  }
 }

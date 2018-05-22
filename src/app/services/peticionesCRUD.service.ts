@@ -62,8 +62,12 @@ export class PeticionesCrudService {
       case 205: url += `BusquedaUsuario/${busqueda}`;     break;
       case 206: url += `BusquedaRol/${busqueda}`;         break;
       case 207: url += `BusquedaCartera/${busqueda}`;     break; //Busca en todas las carteras, da igual su estado
-      case 208: url += `EstadoExpediente/aprobada`;       break;
-      case 209: url += `EstadoExpediente/noAprobada`;     break;
+      case 208: url += `EstadoExpediente/noAprobada`;     break;
+      case 209: url += `EstadoExpediente/aprobada`;       break;
+      case 210: url += `EstadoExpediente/terminada`;      break;
+      case 211: url += `EstadoExpediente/noAprobada/${busqueda}`;     break;
+      case 212: url += `EstadoExpediente/aprobada/${busqueda}`;       break;
+      case 213: url += `EstadoExpediente/terminada/${busqueda}`;      break;
 
       //Peticiones con filtros
       case 300: url += "cartera?estado=2";                              break; //Cartera aprobada: no se puede añadir expediente ni eliminar

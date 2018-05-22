@@ -151,8 +151,8 @@ export class UsuariosComponent implements OnInit {
   //BOTON - ROW - Se activacon el boton nuevo item o pinchando una fila, abre el formulario crear / editar item
   editarAnyadirItem(row){
     const dialogRef = this.dialog.open(NuevoUsuarioComponent,{
-      height: '90%',
-      width: '37%',
+      height: '70%',
+      width: '450px',
       data: { item: row }
     });
     dialogRef.afterClosed().subscribe( res => {

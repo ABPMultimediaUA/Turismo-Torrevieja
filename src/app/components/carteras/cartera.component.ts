@@ -234,8 +234,8 @@ export class CarteraComponent implements OnInit {
   //BOTON - ROW - Se activa con el boton nuevo item o pinchando una fila, abre el formulario crear / editar item
   nuevoEvento() {
     const dialogRef = this.dialog.open(CrearExpedienteDialog,{
-      height: '90%',
-      width: '37%',
+      height: '80%',
+      width: '450px',
       data: { item: this.cartera.identificador }
     });
     dialogRef.afterClosed().subscribe( res => {
@@ -247,7 +247,7 @@ export class CarteraComponent implements OnInit {
   }
 
   abrirExpediente(row){
-    this.router.navigate(['/expediente', row.identificador]);
+    this.router.navigate(['/evento', row.identificador]);
   }
 
   //OPTION Elementos por Pgn- Funcion que se llama cada vez que se cambia el numero de items por pgn
