@@ -16,9 +16,9 @@ import { ProveedorInterface } from "../../interfaces/proveedor.interface";
 import { Router } from "@angular/router";
 import { Observable, BehaviorSubject } from 'rxjs/Rx';
 import { PostFacebook } from "../../interfaces/postFacebook.interface";
-import { Http, Headers } from "@angular/http";
-
-
+import { Http, Headers,ResponseContentType } from "@angular/http";
+import { HttpClientModule ,HttpClient} from '@angular/common/http';
+import { Ng2ImgMaxService } from 'ng2-img-max';
 import { FormArray, FormGroup, FormControl } from "@angular/forms";
 
 @Component({
@@ -102,7 +102,7 @@ export class ExpedienteComponent implements OnInit {
   public post: PostFacebook = {
     message: ""
   };
-
+  uploadedImage: Blob;
 
   @ViewChild("etiquetaImgPub") etiquetaPub;
   @ViewChild("etiquetaImgExp") etiqueta;  //La etiqueta html img
@@ -117,7 +117,9 @@ export class ExpedienteComponent implements OnInit {
     private route: ActivatedRoute,
     public dialog: MatDialog,
     private router: Router,
-    private http: Http
+    private http: Http,
+    private httpclient: HttpClient,
+    private ng2ImgMax: Ng2ImgMaxService
   ) {
     this.route.params.subscribe(param => {
       this.id = param['id'];
@@ -133,7 +135,7 @@ export class ExpedienteComponent implements OnInit {
           this.post.message = this.expediente.titulo;
           //aqui voy a hacer la llamada a otro evento donde tendre guardado el token y id de pagina
           this._itemService.getItem(0, 97, -1, -1, -1, "", "").then(res => {
-           let r = res as any;
+            let r = res as any;
             this.expedientePubli = r.data as ExpedienteInterface;
             this.page_id = this.expedientePubli.titulo;
             this.user_access_token = this.expedientePubli.detalle;
@@ -253,96 +255,41 @@ export class ExpedienteComponent implements OnInit {
   }
 
   publicar() {
-
-    console.log(this.imagenPub);
     //si no han introducido una imagen nueva para la publicacion cojo la del evento
     if (this.imagenPub == undefined) {
-      let xhr = new XMLHttpRequest();
       let url2 = this.expediente.image;
-    // let url2 ="https://gvent.ovh/Prueba2_1/public/img/8GZ2z4M1YaX7trl4PWjXrPHjXf1CUfOHp7spi9NH.jpeg"  ;
-      xhr.open('GET', url2, true);
-      // {responseType: "blob"}
-      xhr.onload = function() {
-        console.log(xhr.response);
-        var file = xhr.response
-        var reader  = new FileReader(file);
-        console.log(reader);
-       if (file) {
-         reader.readAsDataURL(file);
-         console.log(reader);
-       }
-
-      }
-
-      xhr.send();
-      // cargarImg(files: FileList) {
-      //   if (files) {
-      //     this.imgInsertada = true;
-      //     this.archivoImg = files.item(0);
-      //     var exp = this.expediente;
-      //     var etiqueta = this.etiqueta;
-      // var r = new FileReader();
-      // r.onload = function(e) {
-      //   let o = etiqueta.nativeElement as HTMLImageElement;
-      //   o.src = r.result;
-      //   exp.image = o.alt = files[0].name;
-      //   console.log(o);
-      //   console.log(exp.image);
-      //   console.log(r);
-      //
-      // }
-      // console.log(r);
-      // r.readAsDataURL(files[0]);
-      // console.log(r);
-
-    }
-    // }
-    // this.imagenPub  =
-
-
-    if (this.user_access_token != null) {
-      let urlPage = this.URL + this.page_id + '?fields=access_token' + '&access_token=' + this.user_access_token;
-      this.http.get(urlPage).subscribe(response => {
-        let res = JSON.parse(response.text());
-        console.log(res);
-        this.page_id = res.id;
-        this.page_access_token = res.access_token;
-        //ahora que ya tengo el page token publico
-        if (this.user_access_token != null) {
-          let xhr = new XMLHttpRequest();
-          let fd = new FormData();
-          let url2 = this.URL + this.page_id + '/photos';
-          xhr.open('POST', url2, true);
-          fd.append("foto", this.imagenPub);
-          fd.append("access_token", this.page_access_token);
-          fd.append("caption", this.post.message);
-
-          xhr.onload = function() {
-            console.log(xhr.responseText);
-            let res = JSON.parse(xhr.responseText);
-
-          }
-          xhr.send(fd);
-        }
+      this.http.get(url2, { responseType: ResponseContentType.Blob }).subscribe(response => {
+        var blob = new Blob([response._body],  {type : 'image/png'});
+        let file = new File([blob], "caca.png", { type: "image/png", lastModified: 3924723894 });
+        this.imagenPub=file;
       });
     }
+    // y ahora hago el post a la pagina
+    let urlPage = this.URL + this.page_id + '?fields=access_token' + '&access_token=' + this.user_access_token;
+    this.http.get(urlPage).subscribe(response => {
+      let res = JSON.parse(response.text());
+      this.page_id = res.id;
+      this.page_access_token = res.access_token;
+      //ahora que ya tengo el page token publico
+      if (this.user_access_token != null) {
+        let xhr = new XMLHttpRequest();
+        let fd = new FormData();
+        let url2 = this.URL + this.page_id + '/photos';
+        xhr.open('POST', url2, true);
+        fd.append("foto", this.imagenPub);
+        fd.append("access_token", this.page_access_token);
+        fd.append("caption", this.post.message);
+        xhr.onload = function() {
+          console.log(xhr.responseText);
+          let res = JSON.parse(xhr.responseText);
+        }
+        xhr.send(fd);
+      }
+    });
+    this.alertaOk("Evento publicado en facebook correctamente");
 
   }
-  // cargarImgPub(files: FileList) {
-  //   if (files) {
-  //     this.imgInsertada = true;
-  //     this.archivoImg = files.item(0);
-  //     var exp = this.expediente;
-  //     var etiqueta = this.etiqueta;
-  //     var r = new FileReader();
-  //     r.onload = function(e) {
-  //       let o = etiqueta.nativeElement as HTMLImageElement;
-  //       o.src = r.result;
-  //       exp.image = o.alt = files[0].name;
-  //     }
-  //     r.readAsDataURL(files[0]);
-  //   }
-  // }
+
 
 
   //Bloquea y desbloquea los campos del form al pulsar los btn EDITAR o CANCELAR

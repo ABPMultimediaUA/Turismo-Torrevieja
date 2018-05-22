@@ -24,7 +24,9 @@
     "@angular/platform-browser-dynamic": "^5.2.10",
     "@angular/router": "^5.2.10",
     "@types/googlemaps": "^3.30.8",
+    "blueimp-canvas-to-blob": "^3.14.0",
     "core-js": "^2.5.6",
+    "ng2-img-max": "^2.1.15",
     "ng2-pdf-viewer": "^5.0.1",
     "rxjs": "^5.5.10",
     "zone.js": "^0.8.26"

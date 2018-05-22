@@ -8,7 +8,7 @@ import { APP_ROUTING }                                from './app.routes';
 import { BrowserAnimationsModule }                    from '@angular/platform-browser/animations';
 import { SelectionModel }                             from '@angular/cdk/collections';
 import { PdfViewerModule }                            from 'ng2-pdf-viewer';
-
+import { Ng2ImgMaxModule }                            from 'ng2-img-max';
 // servicios
 import { AlertService, AuthService, PeticionesCrudService,
 AuthGuardService, AuthGuardUsuariosService, AuthGuardRolesService, AuthGuardCarterasService,
@@ -179,6 +179,7 @@ import { ChatbotAppComponent } from './components/shared/chatbot-app/chatbot-app
     MatProgressSpinnerModule,
     MatNativeDateModule,
     PdfViewerModule,
+    Ng2ImgMaxModule,
     // FacebookModule.forRoot(),
     // FacebookModule,
 
