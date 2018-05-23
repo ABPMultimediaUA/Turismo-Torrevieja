@@ -18,6 +18,10 @@ import { Observable, BehaviorSubject }          from 'rxjs/Rx';
 
 import { FormArray,FormGroup,FormControl } from "@angular/forms";
 
+import { PostFacebook } from "../../interfaces/postFacebook.interface";
+import { Http, Headers,ResponseContentType } from "@angular/http";
+import { HttpClientModule ,HttpClient} from '@angular/common/http';
+
 @Component({
   selector: 'app-expediente',
   templateUrl: './expediente.component.html',
@@ -28,6 +32,18 @@ export class ExpedienteComponent implements OnInit {
 
   id:number;
   expediente:ExpedienteInterface={
+    identificador:null,
+    nombreExpediente:null,
+    avance:null,
+    cartera:null,
+    coordinador:null,
+    detalle:null,
+    fechaFin:null,
+    fechaInicio:null,
+    image:null,
+    titulo:null,
+  };
+  expedientePubli:ExpedienteInterface={
     identificador:null,
     nombreExpediente:null,
     avance:null,
@@ -77,6 +93,22 @@ export class ExpedienteComponent implements OnInit {
   imgInsertada:boolean = false;        //Activa el boton de actualizar exp si se inserta una imagen
   nombrePDF = new BehaviorSubject<string[]>([]);
 
+  //PUBLICAR
+  URL = "https://graph.facebook.com/";
+  // paginas: PaginasInterface[] = [];
+  page_name: string = "Cultura Torrevieja";
+  page_id: string;
+  user_id: string = "";
+  user_access_token: string = "";
+  page_access_token: string = "";
+  imagenPub: File;
+  public post: PostFacebook = {
+    message: ""
+  };
+  uploadedImage: Blob;
+
+  @ViewChild("etiquetaImgPub") etiquetaPub;
+
   @ViewChild("etiquetaImgExp") etiqueta;  //La etiqueta html img
   @ViewChild("formulario") formulario;
   @ViewChild("forma") formularios;
@@ -89,6 +121,8 @@ export class ExpedienteComponent implements OnInit {
     private route:ActivatedRoute,
     public dialog: MatDialog,
     private router:Router,
+    private http:Http,
+    private httpclient:HttpClient
   ) {
     this.route.params.subscribe( param => {
       this.id = param['id'];
@@ -100,11 +134,23 @@ export class ExpedienteComponent implements OnInit {
           this.expFechaCreacion = r.data.fechaCreacion.split(' ')[0];
           this.interpretarAvance(this.expediente.avance);
 
+          //creo el texto del post
+          this.post.message = this.expediente.titulo;
+          //aqui voy a hacer la llamada a otro evento donde tendre guardado el token y id de pagina
+          this._itemService.getItem(0, 97, -1, -1, -1, "", "").then(res => {
+            let r = res as any;
+            this.expedientePubli = r.data as ExpedienteInterface;
+            this.page_id = this.expedientePubli.titulo;
+            this.user_access_token = this.expedientePubli.detalle;
+          });
+
           //cargamos imagen
           if(this.expediente.image){
             this.expediente.image = "https://gvent.ovh/Prueba2_1/public/img/" + this.expediente.image;
             let o = this.etiqueta.nativeElement as HTMLImageElement;
             o.src = this.expediente.image;
+            let p = this.etiquetaPub.nativeElement as HTMLImageElement;
+            p.src = this.expediente.image;
           }
           else{
             let o = this.etiqueta.nativeElement as HTMLImageElement;
@@ -193,7 +239,60 @@ export class ExpedienteComponent implements OnInit {
   ngOnInit() {
   }
 
+  //PUBLICAR EN FACEBOOK
+    mostrarFoto($event): void {
+      this.readThis($event.target);
+    }
+    readThis(inputValue: any): void {
+      let foto = document.getElementById("foto");
+      let inp = foto.childNodes[4];
+      let img = document.getElementById("img");
+      var file: File = inputValue.files[0];
+      this.imagenPub = file;
+      var myReader: FileReader = new FileReader();
+      myReader.onloadend = function(e) {
+        img.setAttribute('src', myReader.result);
+        img.setAttribute('alt', file.name);
+      }
+      myReader.readAsDataURL(file);
+    }
 
+    publicar() {
+      //si no han introducido una imagen nueva para la publicacion cojo la del evento
+      if (this.imagenPub == undefined) {
+        let url2 = this.expediente.image;
+        this.http.get(url2, { responseType: ResponseContentType.Blob }).subscribe(response => {
+          var  res = response.json();
+          let file = new File([res], "caca.png", { type: "image/png", lastModified: 3924723894 });
+          this.imagenPub=file;
+          console.log(this.imagenPub);
+        });
+      }
+      // y ahora hago el post a la pagina, primero cojo el token de la pagina
+      let urlPage = this.URL + this.page_id + '?fields=access_token' + '&access_token=' + this.user_access_token;
+      this.http.get(urlPage).subscribe(response => {
+        let res = JSON.parse(response.text());
+        this.page_id = res.id;
+        this.page_access_token = res.access_token;
+        //ahora que ya tengo el page token publico
+        if (this.user_access_token != null) {
+          let xhr = new XMLHttpRequest();
+          let fd = new FormData();
+          let url2 = this.URL + this.page_id + '/photos';
+          xhr.open('POST', url2, true);
+          fd.append("foto", this.imagenPub);
+          fd.append("access_token", this.page_access_token);
+          fd.append("caption", this.post.message);
+          xhr.onload = function() {
+            console.log(xhr.responseText);
+            let res = JSON.parse(xhr.responseText);
+          }
+          xhr.send(fd);
+        }
+      });
+      this.alertaOk("Evento publicado en facebook correctamente");
+
+    }
 
 
   modificarActividad(a:ActividadInterface){
