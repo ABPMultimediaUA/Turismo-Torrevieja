@@ -78,24 +78,19 @@ export class ExpedienteComponent implements OnInit {
                 private route:ActivatedRoute,//esto es para pasar como parametro
               )
   {
-
       this.route.params.subscribe(parametros=>{
             this.id = parametros['id'];
-
             //COGEMOS EL EXPEDIENTE
             this._ItemService.getItem(0,this.id,-1,-1).then(
               res => {
                 this.expediente = res as ExpedienteInterface;
-
                 //cargamos imagen
                 if(this.expediente.image){
                   this.expediente.image = "https://gvent.ovh/Prueba2_1/public/img/" + this.expediente.image;
                   let o = this.etiqueta.nativeElement as HTMLImageElement;
                   o.src = this.expediente.image;
                 }
-
                 this.coordinador = +this.expediente.coordinador;
-
                 //cogemos cartera
                 this._ItemService.getItem(8,this.expediente.cartera,-1,-1).then(
                   res => {

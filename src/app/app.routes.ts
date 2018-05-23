@@ -23,6 +23,7 @@ import { EspaciosComponent }    from './components/espacios/espacios.component';
 
 //Otros
 import { MensajesComponent }    from "./components/mensajes/mensajes.component";
+import { DifusionComponent }    from "./components/difusion/difusion.component";
 
 
 
@@ -48,6 +49,7 @@ const app_routes: Routes = [
   { path: 'perfil/:id', canActivate:[AuthGuardService], component: PerfilComponent }, //TODO ver si es necesario
   { path: 'usuarios', canActivate:[AuthGuardService,AuthGuardUsuariosService], component: UsuariosComponent },
   { path: 'roles', canActivate:[AuthGuardService,AuthGuardRolesService], component: RolesComponent },
+  { path: 'difusion/:id', canActivate:[AuthGuardService,AuthGuardRolesService], component: DifusionComponent },
   { path: 'carteras', canActivate:[AuthGuardService,AuthGuardCarterasService], component: CarterasComponent },
   { path: 'cartera/:id', canActivate:[AuthGuardService,AuthGuardCarterasService], component: CarteraComponent },
   { path: 'expedientes', canActivate:[AuthGuardService,AuthGuardEventosService], component: ExpedientesComponent },

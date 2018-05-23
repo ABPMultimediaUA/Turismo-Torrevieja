@@ -1,0 +1,52 @@
+<div class="container-fluid divContenedorTabla">
+  <div class="row">
+    <div class="example-header">
+      <h1 class="mat-display-1 tituloComponentes"><span class="icon-handshake-o"></span> Difusion</h1>
+    </div>
+  </div>
+  <div class="row">
+    <div  class="table-responsive">
+      <div class="example-container mat-elevation-z8">
+
+
+      <form (ngSubmit)="enviarPostWP(expediente)" #forma="ngForm">
+        <fieldset class="form-group">
+          <label for="tituloExpediente">Titulo</label>
+          <input type="text" class="form-control" name="titulo" id="tituloExpediente" placeholder="" [(ngModel)]='expediente.titulo'>
+        </fieldset>
+        <fieldset class="form-group">
+          <label for="detalleExpediente">Descripcion</label>
+          <input type="textarea" class="form-control" name="detalle" id="detalleExpediente" placeholder="" [(ngModel)]='expediente.detalle'>
+        </fieldset>
+        <button type="submit" class="btn btn-primary">Submit</button>
+      </form>
+
+
+
+
+        <!-- <mat-table class="tablaComponente">
+
+          <ng-container matColumnDef="nombreExpediente">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(1)">Nombre evento</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.titulo}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="detalleExpediente">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(1)">Descripcion</mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.detalle}}</mat-cell>
+          </ng-container>
+
+          <ng-container matColumnDef="imgExpediente">
+            <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(2)">Imagen </mat-header-cell>
+            <mat-cell *matCellDef="let items">{{items.codigoPostal}}</mat-cell>
+          </ng-container>
+
+
+          <mat-header-row *matHeaderRowDef="['nombreExpediente','detalleExpediente','imgExpediente']"></mat-header-row>
+          <mat-row class="elementoTabla" *matRowDef="let row; columns: ['nombreExpediente','detalleExpediente','imgExpediente']" (click)="editarAnyadirItem(row)"></mat-row>
+        </mat-table>
+        <button *ngIf="" mat-raised-button type="submit" class="botonMat"  color="warn" (click)="botonDifundir(selection.selected)">Difundir en WP</button> -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -8,6 +8,7 @@ import { APP_ROUTING }                                from './app.routes';
 import { BrowserAnimationsModule }                    from '@angular/platform-browser/animations';
 import { SelectionModel }                             from '@angular/cdk/collections';
 
+
 // servicios
 import { AlertService, ExpedientesService, AuthService, CarterasService, PeticionesCrudService,
 AuthGuardService, AuthGuardUsuariosService, AuthGuardRolesService, AuthGuardCarterasService,
@@ -88,6 +89,7 @@ import { CrearExpedienteDialog} from "./components/carteras/crear-expediente-dia
 import { EliminarExpedienteDialog } from "./components/carteras/eliminar-expediente-dialog.component";
 
 import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.component";
+import { DifusionComponent } from "./components/difusion/difusion.component";
 
 
 
@@ -132,6 +134,7 @@ import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.com
     NuevoEspacioComponent,
     EliminarEspacioComponent,
     VentanaEmergenteComponent,
+    DifusionComponent,
   ],
   imports: [
     HttpClientModule,
