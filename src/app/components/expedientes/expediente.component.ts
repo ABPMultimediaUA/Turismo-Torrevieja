@@ -18,7 +18,6 @@ import { Observable, BehaviorSubject } from 'rxjs/Rx';
 import { PostFacebook } from "../../interfaces/postFacebook.interface";
 import { Http, Headers,ResponseContentType } from "@angular/http";
 import { HttpClientModule ,HttpClient} from '@angular/common/http';
-import { Ng2ImgMaxService } from 'ng2-img-max';
 import { FormArray, FormGroup, FormControl } from "@angular/forms";
 
 @Component({
@@ -118,8 +117,7 @@ export class ExpedienteComponent implements OnInit {
     public dialog: MatDialog,
     private router: Router,
     private http: Http,
-    private httpclient: HttpClient,
-    private ng2ImgMax: Ng2ImgMaxService
+    private httpclient: HttpClient
   ) {
     this.route.params.subscribe(param => {
       this.id = param['id'];
