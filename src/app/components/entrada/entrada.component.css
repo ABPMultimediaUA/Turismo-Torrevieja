@@ -1,0 +1,14 @@
+.titEntrada{
+  margin-left: 50px;
+  margin-bottom: 1em;
+}
+.eventTab{
+  min-width: 660px !important;
+}
+.tarTab{
+  min-width: 390px !important;
+}
+.filaEntrada{
+  max-width: 98% !important;
+  margin:6em 1.3em;
+}

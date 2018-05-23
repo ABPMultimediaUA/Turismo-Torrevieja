@@ -16,18 +16,18 @@ AuthGuardEventosService, AuthGuardEspaciosService, AuthGuardProveedoresService,
 ConfirmDeactivateExpedienteGuard, ConfirmDeactivateCarteraGuard, ChatBotService } from './services/index';
 
 //Angular material
-import {MatMenuModule} from '@angular/material/menu';
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import {MatTooltipModule} from '@angular/material/tooltip';
-import {MatCheckboxModule} from '@angular/material/checkbox';
-import {MatDialogModule} from '@angular/material/dialog';
-import {MatSelectModule} from '@angular/material/select';
-import {MatCardModule} from '@angular/material/card';
-import {MatListModule} from '@angular/material/list';
-import {MatToolbarModule} from '@angular/material/toolbar';
-import {MatTabsModule} from '@angular/material/tabs';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatSlideToggleModule} from '@angular/material/slide-toggle';
+import {MatMenuModule}                                from '@angular/material/menu';
+import {MatDatepickerModule}                          from '@angular/material/datepicker';
+import {MatTooltipModule}                             from '@angular/material/tooltip';
+import {MatCheckboxModule}                            from '@angular/material/checkbox';
+import {MatDialogModule}                              from '@angular/material/dialog';
+import {MatSelectModule}                              from '@angular/material/select';
+import {MatCardModule}                                from '@angular/material/card';
+import {MatListModule}                                from '@angular/material/list';
+import {MatToolbarModule}                             from '@angular/material/toolbar';
+import {MatTabsModule}                                from '@angular/material/tabs';
+import {MatExpansionModule}                           from '@angular/material/expansion';
+import {MatSlideToggleModule}                         from '@angular/material/slide-toggle';
 import { MatIcon, MatPaginatorModule, MatTableDataSource, MatSort,
          MatSortModule, MatTableModule, MatFormFieldModule, MatNativeDateModule,
          MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatProgressBarModule,
@@ -89,18 +89,16 @@ import { ExpedientesComponent } from './components/expedientes/expedientes.compo
 import { ExpedienteComponent } from './components/expedientes/expediente.component';
 import { NuevoExpedienteComponent } from './components/expedientes/nuevo-expediente.component';
 
-
-import { PerfilComponent } from './components/perfil/perfil.component';
-
 import { EliminarCarteraDialog} from "./components/carteras/eliminar-cartera-dialog.component";
 import { CrearExpedienteDialog} from "./components/carteras/crear-expediente-dialog.component";
 import { EliminarExpedienteDialog } from "./components/carteras/eliminar-expediente-dialog.component";
 
-import { EditarPerfilDialog } from "./components/perfil/editar-perfil-dialog.component";
 import { PublicarComponent } from './components/publicar/publicar.component';
 
 import { Router, Event, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 import { ChatbotAppComponent } from './components/shared/chatbot-app/chatbot-app.component';
+import { PerfilDialogComponent } from './components/shared/perfil-dialog/perfil-dialog.component';
+import { EntradaComponent } from './components/entrada/entrada.component';
 
 
 @NgModule({
@@ -126,12 +124,10 @@ import { ChatbotAppComponent } from './components/shared/chatbot-app/chatbot-app
     RolesComponent,
     EliminarRolComponent,
     NuevoRolComponent,
-    PerfilComponent,
     ExpedientesComponent,
     ExpedienteComponent,
     NuevoExpedienteComponent,
     EliminarExpedienteComponent,
-    EditarPerfilDialog,
     EliminarCarteraDialog,
     CrearExpedienteDialog,
     EliminarExpedienteDialog,
@@ -147,6 +143,8 @@ import { ChatbotAppComponent } from './components/shared/chatbot-app/chatbot-app
     PublicarComponent,
     GraficasComponent,
     ChatbotAppComponent,
+    PerfilDialogComponent,
+    EntradaComponent,
   ],
   imports: [
     HttpClientModule,
@@ -234,8 +232,7 @@ import { ChatbotAppComponent } from './components/shared/chatbot-app/chatbot-app
     VentanaEmergentePreguntaComponent,
     VentanaEmergentePdfComponent,
 
-
-      EditarPerfilDialog,
+    PerfilDialogComponent,
 
   ],
   bootstrap: [AppComponent]

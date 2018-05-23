@@ -1,5 +1,6 @@
 <mat-toolbar class="navbar shadow navbar-expand-lg navbar-dark bg-blue ">
-  <a class="navbar-brand" [routerLink]="['/home']" (click)="cambiarSelect(0)">GVENT</a>
+  <a *ngIf="!_authService.userLog.getValue()" class="navbar-brand" [routerLink]="['/home']" (click)="cambiarSelect(0)">GVENT</a>
+  <a *ngIf="_authService.userLog.getValue()" class="navbar-brand" [routerLink]="['/entrada']" (click)="cambiarSelect(0)">GVENT</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -32,8 +33,8 @@
     <div *ngIf="_authService.userLog.getValue()">
       <ul class="navbar-nav mr-auto d9d9d9">
 
-        <div *ngIf="_authService.tienePermiso(3)">
-          <button [routerLink]="['/expedientes']" mat-raised-button class="navBtn" type="button" (click)="cambiarSelect(3)" [class.navMarcado]="selected == 3">
+        <div *ngIf="_authService.tienePermiso(27)">
+          <button [routerLink]="['/eventos']" mat-raised-button class="navBtn" type="button" (click)="cambiarSelect(3)" [class.navMarcado]="selected == 3">
            <span class="icon-folder-open"></span> Eventos
           </button>
         </div>
@@ -78,30 +79,21 @@
      <span class="icon-vcard"></span>  {{ _authService.user.getValue().nombreUsuario }}
     </button>
     <div class="bg-blue dropdown-menu  " aria-labelledby="dropdownMenuButton">
-      <a role="button" [routerLink]="['/perfil']" class="nav-link elemento-navbar d9d9d9">
+      <a role="button" [routerLink]="" (click)="perfil()" class="nav-link elemento-navbar d9d9d9">
         <span class="icon-user"></span> Perfil
       </a>
-      <a style="width:180px" role="button" [routerLink]="['/login']" (click)="cerrarSesion()" class="nav-link elemento-navbar d9d9d9 ">
+      <a role="button" [routerLink]="['/publicar']" class="nav-link elemento-navbar d9d9d9 " (click)="cambiarSelect(0)">
+        <span class="icon-comment"></span> Publicar
+      </a>
+      <a role="button" [routerLink]="['/graficas']" class="nav-link elemento-navbar d9d9d9 " (click)="cambiarSelect(0)">
+          <span class="fa fa-bar-chart"></span> Gráficas
+      </a>
+      <a style="width:180px" role="button" [routerLink]="" (click)="_authService.logout(1)" class="nav-link elemento-navbar d9d9d9 ">
         <span class="icon-users"></span> Cambiar cuenta
       </a>
-      <a role="button" (click)="_authService.logout(1)" [routerLink]="['/home']" class="nav-link elemento-navbar d9d9d9 ">
-        <span class="icon-logout"></span> Cerrar Sesion
+      <a role="button" [routerLink]="" (click)="_authService.logout(0)" class="nav-link elemento-navbar d9d9d9 ">
+        <span class="icon-logout"></span> Cerrar Sesión
       </a>
-      <a role="button" [routerLink]="['/ajustes']" class="nav-link elemento-navbar d9d9d9 ">
-        <span class="icon-cog"></span> Ajustes
-      </a>
-      <a role="button" [routerLink]="['/contact']" class="nav-link elemento-navbar d9d9d9 ">
-        <span class="icon-help"></span> Ayuda
-      </a>
-      <a role="button" [routerLink]="['/contact']" class="nav-link elemento-navbar d9d9d9 ">
-        <span class="icon-comment"></span> Sugerencias
-      </a>
-      <a role="button" [routerLink]="['/publicar']" class="nav-link elemento-navbar d9d9d9 ">
-          <span class="icon-comment"></span> Publicar
-        </a>
-        <a role="button" [routerLink]="['/graficas']" class="nav-link elemento-navbar d9d9d9 ">
-            <span class="fa fa-bar-chart"></span> Graficas
-          </a>
     </div>
   </div>
 

@@ -1,0 +1,177 @@
+<div class="row filaEntrada">
+  <div class="col">
+
+    <div class="tarTab">
+      <div class="row">
+        <div class="example-header cabeceraMargin">
+          <div class="elementosCabecera">
+            <h3 class="mat-display-1 titEntrada"> Tareas pendientes </h3>
+            <div class="divPaginacion">
+              <div class="elementosPaginacion">
+                <mat-form-field class="selectNumPgns">
+                  <mat-select [(value)]="option_Items_Pgn2" placeholder="Elementos por página" (change)="actualizarPaginacion2()">
+                    <mat-option value="5">5</mat-option>
+                    <mat-option value="10">10</mat-option>
+                    <mat-option value="15">15</mat-option>
+                    <mat-option value="20">20</mat-option>
+                    <mat-option value="30">30</mat-option>
+                    <mat-option value="40">40</mat-option>
+                    <mat-option value="50">50</mat-option>
+                    <mat-option value="75">75</mat-option>
+                    <mat-option value="100">100</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="elementosPaginacion">
+                <p>Pág. {{paginacion2.current_page}} de {{paginacion2.total_pages}}</p>
+              </div>
+              <div class="elementosPaginacion btnsPaginacion" #btnsPag2>
+                <a class="btnsPaginacionOff" (click)="cambiarPgn2(1)"><i class="material-icons">first_page</i></a>
+                <a class="btnsPaginacionOff" (click)="cambiarPgn2(2)"><i class="material-icons">navigate_before</i></a>
+                <a class="btnsPaginacionOff" (click)="cambiarPgn2(3)"><i class="material-icons">navigate_next</i></a>
+                <a class="btnsPaginacionOff" (click)="cambiarPgn2(4)"><i class="material-icons">last_page</i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="table-responsive">
+          <div class="example-container mat-elevation-z8">
+            <mat-table class="tablaComponente" #table2 [dataSource]="dataSource2" matSort>
+
+              <!-- <ng-container matColumnDef="select">
+                <mat-header-cell *matHeaderCellDef>
+                  <mat-checkbox (change)="$event ? masterToggle() : null"
+                                [checked]="selection.hasValue() && isAllSelected()"
+                                [indeterminate]="selection.hasValue() && !isAllSelected()"
+                                (change)="activarDesBtnEliminar(selection.selected)">
+                  </mat-checkbox>
+                </mat-header-cell>
+                <mat-cell *matCellDef="let row2">
+                  <mat-checkbox (click)="$event.stopPropagation()"
+                                (change)="$event ? selection.toggle(row2) : null"
+                                [checked]="selection.isSelected(row2)"
+                                (change)="activarDesBtnEliminar(selection.selected)">
+                  </mat-checkbox>
+                </mat-cell>
+              </ng-container> -->
+
+              <ng-container matColumnDef="identificador">
+                <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+                <mat-cell *matCellDef="let items2">{{items2.identificador}}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="nombreTarea">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Nombre</mat-header-cell>
+                <mat-cell *matCellDef="let items2">{{items2.nombreTarea}}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="nombreExpediente2">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Evento</mat-header-cell>
+                <mat-cell *matCellDef="let items; let i = index" #carteraRow>{{exp[i]}}</mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="['identificador','nombreTarea', 'nombreExpediente2']"></mat-header-row>
+              <mat-row class="elementoTabla" *matRowDef="let row2; columns: ['identificador','nombreTarea','nombreExpediente2']" (click)="abrirExpediente2(row2)"></mat-row>
+            </mat-table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div class="col eventTab">
+
+    <div class="eventTab">
+      <div class="row">
+        <div class="example-header cabeceraMargin">
+          <div class="elementosCabecera">
+            <h3 class="mat-display-1 titEntrada"> Eventos </h3>
+            <div class="divPaginacion">
+              <div class="divTiposCartera elementosPaginacion">
+                <mat-radio-group [(ngModel)]="estadoCarteraEscogido" (change)="cambiarListaEstado()">
+                  <mat-radio-button value="208" matTooltip="Carteras sin aprobar: Pueden ser eliminadas. Se les pueden añadir o eliminar expedientes. Sus expedientes muestran solo los campos básicos."
+                                    ><i class="material-icons">lock_open</i></mat-radio-button>
+                  <mat-radio-button value="209" matTooltip="Carteras aprobadas: Pueden ser modificadas pero no eliminadas. No se les pueden añadir o eliminar expedientes. Sus expedientes muestran todos sus campos."
+                                    ><i class="material-icons">lock_outline</i></mat-radio-button>
+                </mat-radio-group>
+              </div>
+
+              <div class="elementosPaginacion">
+                <mat-form-field class="selectNumPgns">
+                  <mat-select [(value)]="option_Items_Pgn" placeholder="Elementos por página" (change)="actualizarPaginacion()">
+                    <mat-option value="5">5</mat-option>
+                    <mat-option value="10">10</mat-option>
+                    <mat-option value="15">15</mat-option>
+                    <mat-option value="20">20</mat-option>
+                    <mat-option value="30">30</mat-option>
+                    <mat-option value="40">40</mat-option>
+                    <mat-option value="50">50</mat-option>
+                    <mat-option value="75">75</mat-option>
+                    <mat-option value="100">100</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="elementosPaginacion">
+                <p>Pág. {{paginacion.current_page}} de {{paginacion.total_pages}}</p>
+              </div>
+              <div class="elementosPaginacion btnsPaginacion" #btnsPag>
+                <a class="btnsPaginacionOff" (click)="cambiarPgn(1)"><i class="material-icons">first_page</i></a>
+                <a class="btnsPaginacionOff" (click)="cambiarPgn(2)"><i class="material-icons">navigate_before</i></a>
+                <a class="btnsPaginacionOff" (click)="cambiarPgn(3)"><i class="material-icons">navigate_next</i></a>
+                <a class="btnsPaginacionOff" (click)="cambiarPgn(4)"><i class="material-icons">last_page</i></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="table-responsive">
+          <div class="example-container mat-elevation-z8">
+            <mat-table class="tablaComponente" #table [dataSource]="dataSource" matSort>
+
+              <ng-container matColumnDef="identificador">
+                <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(1)"></mat-header-cell>
+                <mat-cell *matCellDef="let items">{{items.identificador}}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="nombreExpediente2">
+                <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(1)">Nombre</mat-header-cell>
+                <mat-cell *matCellDef="let items">{{items.nombreExpediente}}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="cartera2">
+                <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(4)">Cartera</mat-header-cell>
+                <mat-cell *matCellDef="let items; let i = index" #carteraRow>{{selectCartera[i]}}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="fechaInicio2">
+                <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(5)">Fecha inicio</mat-header-cell>
+                <mat-cell *matCellDef="let items">{{items.fechaInicio | date:'dd/MM/yyyy'}}</mat-cell>
+              </ng-container>
+
+              <ng-container matColumnDef="avance2">
+                <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(6)">Avance</mat-header-cell>
+                <mat-cell *matCellDef="let items; let i = index"  [matTooltipClass]="'tooltipSalto'" matTooltip='Tareas terminadas: {{avances[i].tareasTerminadas}} de {{avances[i].tareasPropuestas}}&#13;Contratos terminados: {{avances[i].contratosTerminados}} de {{avances[i].contratosPropuestos}}'>
+                  <div class="spinnerAvanceFondo">
+                    <mat-progress-spinner  [value]="100" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
+                  </div>
+                  <div class="spinnerAvance">
+                    <mat-progress-spinner [value]="avances[i].porcentajeAvanzado" [diameter]="30" [strokeWidth]="6" [color]="avances[i].colorSpinner"></mat-progress-spinner>
+                  </div>
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="['identificador','nombreExpediente2','cartera2','fechaInicio2','avance2']"></mat-header-row>
+              <mat-row class="elementoTabla" *matRowDef="let row; columns: ['identificador','nombreExpediente2','cartera2','fechaInicio2','avance2']" (click)="abrirExpediente(row)"></mat-row>
+            </mat-table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

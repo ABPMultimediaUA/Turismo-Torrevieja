@@ -2,28 +2,32 @@ import { Component, OnInit, ViewChild }         from '@angular/core';
 import { PeticionesCrudService, AuthService }   from '../../services/index';
 import { SelectionModel }                       from '@angular/cdk/collections';
 import { MatTableDataSource, MatDialog }        from '@angular/material';
-import { EliminarExpedienteComponent }          from './eliminar-expediente.component';
 import { PaginacionInterface }                  from '../../interfaces/paginacion.interface';
 import { CarteraInterface }                     from '../../interfaces/cartera.interface';
 import { ExpedienteInterface }                  from '../../interfaces/expediente.interface';
+import { TareasInterface }                      from '../../interfaces/tareas.interface';
 import { AvanceExpedienteInterface }            from '../../interfaces/avanceExpediente.interface';
-import { NuevoExpedienteComponent }             from './nuevo-expediente.component';
 import { Router, ActivatedRoute }               from "@angular/router";
 import { VentanaEmergenteComponent }            from '../ventana-emergente/ventana-emergente.component'
 
 @Component({
-  selector: 'app-expedientes',
-  templateUrl: './expedientes.component.html',
-  styleUrls: ['../../app.component.css']
+  selector: 'app-entrada',
+  templateUrl: './entrada.component.html',
+  styleUrls: ['../../app.component.css','./entrada.component.css']
 })
 
-export class ExpedientesComponent implements OnInit {
+export class EntradaComponent implements OnInit {
 
   items:ExpedienteInterface[]=[];
   avances:AvanceExpedienteInterface[]=[];
+  items2:TareasInterface[]=[];
+  row:ExpedienteInterface;
+  row2:TareasInterface;
   carteras:CarteraInterface[]=[];
+  expAux:ExpedienteInterface[]=[];
+  exp:string[]=[];
   selectCartera:string[]=[];
-  paginacion:PaginacionInterface={    //Guardar todos los datos de paginacion
+  paginacion:PaginacionInterface={
     count:0,
     current_page:1,
     links:{
@@ -34,18 +38,32 @@ export class ExpedientesComponent implements OnInit {
     total:0,
     total_pages:1
   };
-  option_Items_Pgn='10';              //Cantidad de items por pagina al cargar el componente
-  selectUrl:number = 209;               //Selecciona la url para las peticiones getItem
-  busqueda:string = "";               //Si se ha rellenado el campo de busqueda
-  selectASC_DESC:number=-1;           //Saber si el usuario quiere ordenar los items: -1 nada seleccionado, 0 ASC, 1 DES
-  valorEscogidoForOrder:number = -1;  //Para saber el elemento seleccionado, -1 valor neutro
-  btnEliminar:boolean = true;         //Activar / desactivar boton de eliminar item/s
-  @ViewChild("btnsPag") BtnsPagOff;   //Div que contiene los botones de paginacion
-  estadoCarteraEscogido:number = 209; //Valor radio button (url basica por estados) TODO hacer cuando este hecho en backend
-  value:string="";
+  paginacion2:PaginacionInterface={
+    count:0,
+    current_page:1,
+    links:{
+      previous:null,
+      next:null,
+    },
+    per_page:0,
+    total:0,
+    total_pages:1
+  };
+  btnEliminar:boolean = true;
+  option_Items_Pgn='10';
+  option_Items_Pgn2='10';
+  selectUrl:number = 209;
+  selectUrl2:number = 209;
+  selectASC_DESC:number=-1;
+  valorEscogidoForOrder:number = -1;
+  @ViewChild("btnsPag") BtnsPagOff;
+  @ViewChild("btnsPag2") BtnsPagOff2;
+  estadoCarteraEscogido:number = 209;
 
-  dataSource = new MatTableDataSource(this.items);            //Datos de la tabla
-  selection = new SelectionModel<ExpedienteInterface>(true, []); //Filas seleccionadas
+  dataSource = new MatTableDataSource(this.items);
+  dataSource2 = new MatTableDataSource(this.items2);
+
+  // selection = new SelectionModel<TareasInterface>(true, []);
 
   constructor(
     private _itemService: PeticionesCrudService,
@@ -54,15 +72,34 @@ export class ExpedientesComponent implements OnInit {
     private router:Router,
     private route:ActivatedRoute,
   ) {
-    this.cargarItems(+this.option_Items_Pgn,1);
+    this.cargarEventos(+this.option_Items_Pgn,1);
+    this.cargarTareas(+this.option_Items_Pgn2,1);
   }
 
   ngOnInit() {
   }
 
-  //Realiza la peticion GetItems a la BD y actualiza las variables
-  cargarItems(per_pgn:number, pgn:number){
-    this._itemService.getItem(this.selectUrl,-1,-1,per_pgn,pgn,this.busqueda,"").then(
+  //Marcar checkbox
+  // masterToggle() {
+  //   this.isAllSelected() ?
+  //       this.selection.clear() :
+  //       this.dataSource2.data.forEach(row2 => this.selection.select(row2));
+  // }
+  //
+  // //Marcar checkbox
+  // isAllSelected() {
+  //   const numSelected = this.selection.selected.length;
+  //   const numRows = this.dataSource2.data.length;
+  //   return numSelected === numRows;
+  // }
+  //
+  // activarDesBtnEliminar(i){
+  //   if(i.length>0) this.btnEliminar = false;
+  //   else this.btnEliminar = true;
+  // }
+
+  cargarEventos(per_pgn:number, pgn:number){
+    this._itemService.getItem(this.selectUrl,-1,-1,per_pgn,pgn,"","").then(
       res => {
         if(typeof res != "string"){
           if(res && res["data"] && res["meta"]){
@@ -70,21 +107,47 @@ export class ExpedientesComponent implements OnInit {
             this.paginacion = res["meta"].pagination as PaginacionInterface;
             this.calcularAvance();
             this.cargarCarterasItems();
-            this.ngAfterViewInit();
+            this.dataSource = new MatTableDataSource(this.items);
             this.activarDesactvarBtnsPag();
           }
           else{
             this.items = [];
-            this.ngAfterViewInit();
+            this.dataSource = new MatTableDataSource(this.items);
           }
         }
         else{
           this.items = [];
-          this.ngAfterViewInit();
+          this.dataSource = new MatTableDataSource(this.items);
         }
       });
   }
 
+  cargarTareas(per_pgn:number, pgn:number){
+    this._itemService.getItem(312,-1,-1,per_pgn,pgn,"","").then(
+      res => {
+        if(typeof res != "string"){
+          if(res && res["data"] && res["meta"]){
+            this.items2 = res["data"] as TareasInterface[];
+            console.log(this.items2);
+            this.dataSource2 = new MatTableDataSource(this.items2);
+            // this.selection = new SelectionModel<TareasInterface>(true, []);
+            this.paginacion2 = res["meta"].pagination as PaginacionInterface;
+            this.selectExp();
+            this.activarDesactvarBtnsPag2();
+          }
+          else{
+            this.items2 = [];
+            this.dataSource2 = new MatTableDataSource(this.items2);
+            // this.selection = new SelectionModel<TareasInterface>(true, []);
+          }
+        }
+        else{
+          this.items2 = [];
+          this.dataSource2 = new MatTableDataSource(this.items2);
+          // this.selection = new SelectionModel<TareasInterface>(true, []);
+        }
+      });
+  }
 
   calcularAvance(){
     this.avances = [];
@@ -132,93 +195,13 @@ export class ExpedientesComponent implements OnInit {
     }
   }
 
-  //Cargar items en tabla
-  ngAfterViewInit() {
-    this.dataSource = new MatTableDataSource(this.items);
-    this.selection = new SelectionModel<ExpedienteInterface>(true, []);
-  }
-
-  //Marcar checkbox
-  masterToggle(){
-    this.isAllSelected() ?
-        this.selection.clear() :
-        this.dataSource.data.forEach(row => this.selection.select(row));
-  }
-
-  //Marcar checkbox
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
-
-  //CHECKBOX ROW TABLA - Habilita o deshabilita el boton eliminar item/s
-  activarDesBtnEliminar(i) {
-    if(i.length>0) {
-      this.btnEliminar = false;
-    }
-    else this.btnEliminar = true;
-  }
-
-  //Buscador
-  realizarBusqueda(e){
-    if(e.target.value == ""){
-      this.busqueda = "";
-      this.selectUrl = +this.estadoCarteraEscogido;
-      e.target.value = "";
-    }
-    if(e.keyCode == 13){
-      if(e.target.value != ""){
-        if(this.estadoCarteraEscogido == 0) this.selectUrl = 202;         //Todas
-        else if(this.estadoCarteraEscogido == 208) this.selectUrl = 211;  //Aprobadas
-        else if(this.estadoCarteraEscogido == 209) this.selectUrl = 212;  //No aprobadas
-        else if(this.estadoCarteraEscogido == 210) this.selectUrl = 213;  //Terminadas
-        this.busqueda = e.target.value.toString();
-      }
-      this.cargarItems(+this.option_Items_Pgn,1);
-    }
-
-  }
-
-  //BOTON - Funcion eliminar item/s
-  botonEliminarItem(i) {
-    if(i){
-      const dialogRef = this.dialog.open(EliminarExpedienteComponent,{
-        height: '90%',
-        width: '90%',
-        data: { item: i }
-      });
-      dialogRef.afterClosed().subscribe( res => {
-        if(res){
-          var pag:number;
-          this.btnEliminar = true;
-          if(i.length < this.paginacion.count) pag = this.paginacion.current_page;
-          else if(i.length == this.paginacion.count && this.paginacion.current_page > 1) pag = this.paginacion.current_page - 1;
-          else pag = 1;
-          this.cargarItems(this.paginacion.per_page,pag)
-        }
-      });
-    }
-  }
-
-  //BOTON - ROW - Se activa con el boton nuevo item o pinchando una fila, abre el formulario crear / editar item
-  nuevoEvento() {
-    const dialogRef = this.dialog.open(NuevoExpedienteComponent,{
-      height: '80%',
-      width: '450px',
-    });
-    dialogRef.afterClosed().subscribe( res => {
-      if(res){
-        this.btnEliminar = true;
-        this.cargarItems(this.paginacion.per_page,this.paginacion.current_page)
-      }
-    });
-  }
-
   abrirExpediente(row){
     this.router.navigate(['/evento', row.identificador]);
   }
 
+  abrirExpediente2(row){
+    this.router.navigate(['/evento', row.expediente]);
+  }
 
   cargarCarterasItems(){
     this.selectCartera = [];
@@ -241,34 +224,60 @@ export class ExpedientesComponent implements OnInit {
   //OPTION Elementos por Pgn- Funcion que se llama cada vez que se cambia el numero de items por pgn
   actualizarPaginacion() {
     this.paginacion.per_page = +this.option_Items_Pgn;
-    this.cargarItems(+this.option_Items_Pgn,1);
+    this.cargarEventos(+this.option_Items_Pgn,1);
+  }
+  actualizarPaginacion2() {
+    this.paginacion2.per_page = +this.option_Items_Pgn2;
+    this.cargarTareas(+this.option_Items_Pgn2,1);
   }
 
   //BOTONES - Botones para cambiar de pagina
   cambiarPgn(i:number) {
     if(i == 1){
       if(this.paginacion.current_page != 1){
-        this.cargarItems(+this.option_Items_Pgn,1);
+        this.cargarEventos(+this.option_Items_Pgn,1);
       }
     }
     else if(i == 2){
       if(this.paginacion.current_page > 1){
-        this.cargarItems(+this.option_Items_Pgn,this.paginacion.current_page-1);
+        this.cargarEventos(+this.option_Items_Pgn,this.paginacion.current_page-1);
       }
     }
     else if(i == 3){
       if(this.paginacion.current_page < this.paginacion.total_pages){
-        this.cargarItems(+this.option_Items_Pgn,this.paginacion.current_page+1);
+        this.cargarEventos(+this.option_Items_Pgn,this.paginacion.current_page+1);
       }
     }
     else if(i == 4){
       if(this.paginacion.current_page != this.paginacion.total_pages){
-        this.cargarItems(+this.option_Items_Pgn,this.paginacion.total_pages);
+        this.cargarEventos(+this.option_Items_Pgn,this.paginacion.total_pages);
       }
     }
   }
 
-  //Activa o desactiva los botones de paginacion dependiendo de si puede ser utilizado o no
+  cambiarPgn2(i:number) { console.log("ENTRAAAAAAAAAAA")
+    if(i == 1){
+      if(this.paginacion2.current_page != 1){
+        this.cargarTareas(+this.option_Items_Pgn2,1);
+      }
+    }
+    else if(i == 2){
+      if(this.paginacion2.current_page > 1){
+        this.cargarTareas(+this.option_Items_Pgn2,this.paginacion2.current_page-1);
+      }
+    }
+    else if(i == 3){
+      if(this.paginacion2.current_page < this.paginacion2.total_pages){
+        this.cargarTareas(+this.option_Items_Pgn2,this.paginacion2.current_page+1);
+      }
+    }
+    else if(i == 4){
+      if(this.paginacion2.current_page != this.paginacion2.total_pages){
+        this.cargarTareas(+this.option_Items_Pgn2,this.paginacion2.total_pages);
+      }
+    }
+  }
+
   activarDesactvarBtnsPag() {
     var div = this.BtnsPagOff.nativeElement.children;
     if(this.paginacion.current_page > 1){
@@ -289,13 +298,49 @@ export class ExpedientesComponent implements OnInit {
     }
   }
 
-  cambiarListaEstado(){
-    this.selection.clear();
-    this.selectUrl = +this.estadoCarteraEscogido;
-    this.cargarItems(+this.option_Items_Pgn,1);
+  activarDesactvarBtnsPag2() {
+    var div = this.BtnsPagOff2.nativeElement.children;
+    if(this.paginacion2.current_page > 1){
+      div[0].classList.remove('btnsPaginacionOff');
+      div[1].classList.remove('btnsPaginacionOff');
+    }
+    else{
+      div[0].classList.add('btnsPaginacionOff');
+      div[1].classList.add('btnsPaginacionOff');
+    }
+    if(this.paginacion2.current_page < this.paginacion2.total_pages){
+      div[2].classList.remove('btnsPaginacionOff');
+      div[3].classList.remove('btnsPaginacionOff');
+    }
+    else{
+      div[2].classList.add('btnsPaginacionOff');
+      div[3].classList.add('btnsPaginacionOff');
+    }
   }
 
-  //CABECERA TABLA - Para hacer selects ORDER BY, cada vez que se pinche en una cabecera de la tabla
+  cambiarListaEstado(){
+    this.selectUrl = +this.estadoCarteraEscogido;
+    this.cargarEventos(+this.option_Items_Pgn,1);
+  }
+
+  selectExp(){
+    this.exp = [];
+    this._itemService.getItem(10,-1,-1,-1,-1,"","").then( res => {
+      if(typeof res != 'string'){
+        this.expAux = (res as any).data as ExpedienteInterface[];
+        for(var x = 0; x < this.items2.length; x++){
+          this.exp.push(null);
+          for(var z = 0; z < this.expAux.length; z++){
+            if(this.items2[x].expediente == this.expAux[z].identificador){
+              this.exp[x] = this.expAux[z].nombreExpediente;
+              z = this.expAux.length;
+            }
+          }
+        }
+      }
+    })
+  }
+
   cambiarOrden(i:number){
     //Primero se comprueba que el parametro sea correcto, luego comprueba si se activa o desactiva y si es ASC o DES
     if(i>-1 && i<4){

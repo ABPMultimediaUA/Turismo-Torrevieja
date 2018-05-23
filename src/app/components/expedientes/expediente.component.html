@@ -95,6 +95,11 @@
   </form>
   <div class="row" *ngIf="cartera.estado>1">
     <div class="tabExpediente">
+      <div class="divBadges">
+        <div class="badge badgeAct">{{ actividadesPropuestas.getValue() }}</div>
+        <div class="badge badgeCon">{{ contratosTerminados.getValue() }} / {{ contratosPropuestos.getValue() }}</div>
+        <div class="badge badgeTar">{{ tareasTerminadas.getValue() }} / {{ tareasPropuestas.getValue() }}</div>
+      </div>
       <mat-tab-group #tabGroup>
         <!--*****************ACTIVIDADES*****************-->
         <mat-tab label="Actividades">
@@ -107,7 +112,7 @@
                 </mat-expansion-panel-header>
                 <div class="panelExp">
 
-                  <form (ngSubmit)="crearModificarActConTar(1,a,i)" #forma="ngForm">
+                  <form (ngSubmit)="modificarActividad(a)" #forma="ngForm">
                     <div class="space-between">
                       <mat-form-field class="expActCampos1">
                         <input placeholder="Nombre" matInput [(ngModel)]="a.nombreActividad" name=Actividad_nombre{{i}} required type="text"
@@ -116,14 +121,14 @@
                       </mat-form-field>
 
                       <mat-form-field class="expActCampos1">
-                        <mat-select placeholder="Espacio" [(ngModel)]="a.espacio" name=Actividad_espacio{{i}} required>
+                        <mat-select placeholder="Espacio" [(ngModel)]="a.espacio" name=Actividad_espacio{{i}}>
                           <mat-option *ngFor="let e of espacio" [value]="e.identificador">{{ e.nombreEspacio }}</mat-option>
                         </mat-select>
                         <mat-error>Campo requerido</mat-error>
                       </mat-form-field>
 
                       <mat-form-field class="expActCampos1">
-                        <input placeholder="Precio entrada" matInput [(ngModel)]="a.entrada" name=Actividad_entrada{{i}} type="text"
+                        <input placeholder="Precio entrada" matInput [(ngModel)]="a.detalleEntrada" name=Actividad_entrada{{i}} type="text"
                         maxlength="200">
                       </mat-form-field>
                     </div>
@@ -146,7 +151,7 @@
                       </mat-form-field>
 
                       <mat-form-field class="expActCampos2">
-                        <input matInput type="time" name=Actividad_horaFinal{{i}} [(ngModel)]="a.HoraFinal" placeholder="Hora final">
+                        <input matInput type="time" name=Actividad_horaInicio{{i}} [(ngModel)]="a.HoraInicio" placeholder="Hora de inicio">
                       </mat-form-field>
 
                       <mat-form-field class="expActCampos2">
@@ -163,7 +168,6 @@
 
                     <div class="btnsEditarAnyadir">
                       <button *ngIf="a.identificador" [disabled]="!forma.valid || realizandoAccion || !forma.dirty" type="submit" color="primary" mat-raised-button> Guardar cambios </button>
-                      <button *ngIf="!a.identificador" [disabled]="!forma.valid || realizandoAccion" color="primary" mat-raised-button> Añadir actividad </button>
                       <button (click)="eliminarItem(1, a.identificador, i)" [disabled]="realizandoAccion" type="button" color="warn" mat-raised-button><i class="icon-trash"></i></button>
                     </div>
                   </form>
@@ -182,75 +186,77 @@
             <mat-expansion-panel *ngFor="let c of contratos; let o = index" class="alinearCabeceraPanel">
               <mat-expansion-panel-header>
                 <mat-panel-title><p class="expMatPanelTitle">{{c.nombreContrato}}</p></mat-panel-title>
-                <mat-panel-description><mat-checkbox [(ngModel)]="c.terminado" name=Contrato_terminado{{o}} disabled>Finalizado</mat-checkbox></mat-panel-description>
+                <mat-panel-description>
+                  <span *ngIf="c.terminado!=1"><i class="material-icons">lock_open</i> Por hacer</span>
+                  <span *ngIf="c.terminado==1"><i class="material-icons">lock</i> Finalizado</span>
+                </mat-panel-description>
               </mat-expansion-panel-header>
               <div class="panelExp">
 
-                <form (ngSubmit)="crearModificarActConTar(3,c,o)" #forma="ngForm">
+                <form (ngSubmit)="modificarContrato(c,o)" #forma="ngForm">
                   <div class="space-between">
 
                     <mat-form-field class="expActCampos1">
-                      <input placeholder="Nombre" matInput [(ngModel)]="c.nombreContrato" name=Contrato_nombre{{o}} required type="text"
+                      <input placeholder="Nombre" matInput [(ngModel)]="c.nombreContrato" name=Contrato_nombre{{o}} required type="text" [readonly]="c.terminado==1"
                       maxlength="200">
                       <mat-error>Campo requerido</mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="expActCampos3">
-                      <mat-select placeholder="Proveedor" [(ngModel)]="c.proveedor" name=Contrato_proveedor{{o}} required>
+                      <mat-select placeholder="Proveedor" [(ngModel)]="c.proveedor" name=Contrato_proveedor{{o}} [disabled]="c.terminado==1">
                         <mat-option *ngFor="let p of proveedor" [value]="p.identificador">{{ p.nombreProveedor }}</mat-option>
                       </mat-select>
                       <mat-error>Campo requerido</mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="expActCampos2">
-                      <input placeholder="Coste (€)" matInput [(ngModel)]="c.precio" name=Contrato_precio{{o}} type="number" required>
+                      <input placeholder="Coste (€)" matInput [(ngModel)]="c.precio" name=Contrato_precio{{o}} type="number" required [readonly]="c.terminado==1">
                       <mat-error>Campo requerido</mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="expActCampos1">
-                      <input placeholder="Clase" matInput [(ngModel)]="c.clase" name=Contrato_clase{{o}} type="text" required
+                      <input placeholder="Clase" matInput [(ngModel)]="c.clase" name=Contrato_clase{{o}} type="text" required [readonly]="c.terminado==1"
                       maxlength="100">
                       <mat-error>Campo requerido</mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="expActCampos2">
-                      <input placeholder="Días de duración" matInput [(ngModel)]="c.duracion" name=Contrato_duracion{{o}} type="number"
+                      <input placeholder="Duración" matInput [(ngModel)]="c.activo" name=Contrato_duracion{{o}} type="text" [readonly]="c.terminado==1"
                       maxlength="11">
                     </mat-form-field>
 
                     <mat-form-field class="expActCampos3">
-                      <mat-select placeholder="Responsable" [(ngModel)]="c.usuario" name=Contrato_usuario{{o}} name= required>
+                      <mat-select placeholder="Responsable" [(ngModel)]="c.usuario" name=Contrato_usuario{{o}} name= required [disabled]="c.terminado==1">
                         <mat-option *ngFor="let u of users" [value]="u.identificador">{{ u.nombreUsuario }}</mat-option>
                       </mat-select>
                       <mat-error>Campo requerido</mat-error>
                     </mat-form-field>
 
                     <mat-form-field class="expActCampos1">
-                      <input placeholder="Código" matInput [(ngModel)]="c.codigo" name=Contrato_codigo{{o}} type="text"
+                      <input placeholder="Código" matInput [(ngModel)]="c.codigo" name=Contrato_codigo{{o}} type="text" [readonly]="c.terminado==1"
                       maxlength="200">
                     </mat-form-field>
 
-                    <div class="expActCampos2">
+                    <div class="expActCampos2" *ngIf="c.terminado==0">
                       <input #pdfInput type="file" (change)="cargarPDF($event.target.files,o)" accept="application/pdf" class="invisible">
-                      <button (click)="pdfInput.click()" type="button" color="primary" mat-raised-button [disabled]="realizandoAccion">Subir PDF</button>
-                      <div *ngIf="archivoPDF[i]" class="nombreConPDF">{{nombrePDF.getValue()[o]}}</div>
+                      <button (click)="pdfInput.click()" type="button" color="primary" mat-raised-button [disabled]="realizandoAccion || c.terminado==1">Subir PDF</button>
+                      <div class="nombreConPDF">{{nombrePDF.getValue()[o]}}</div>
                     </div>
 
                     <button (click)="verFicheroContrato(c.fichero)" type="button" color="primary" mat-raised-button [disabled]="!c.fichero">Ver contrato</button>
 
-                    <mat-checkbox [(ngModel)]="c.terminado" name=Contrato_terminado{{o}}>Finalizado</mat-checkbox>
+                    <mat-checkbox [(ngModel)]="c.auxTerminado" name=Contrato_terminado{{o}} [disabled]="contratoBloqueado[o]">Finalizado</mat-checkbox>
 
                   </div>
                   <div>
                     <mat-form-field hintLabel="" class="campoWidth100">
-                      <textarea matInput name=Contrato_observaciones{{o}} [(ngModel)]="c.observaciones" placeholder="Observaciones"
+                      <textarea matInput name=Contrato_observaciones{{o}} [(ngModel)]="c.observaciones" placeholder="Observaciones" [readonly]="c.terminado==1"
                                 maxLength="500" type="text"></textarea>
                     </mat-form-field>
                   </div>
 
-                  <div class="btnsEditarAnyadir">
-                    <button *ngIf="c.identificador" [disabled]="!forma.valid || realizandoAccion || (!forma.dirty && !archivoPDF[o])" type="submit" color="primary" mat-raised-button> Guardar cambios </button>
-                    <button *ngIf="!c.identificador" [disabled]="!forma.valid || realizandoAccion" type="submit" color="primary" mat-raised-button> Añadir actividad </button>
+                  <div class="btnsEditarAnyadir"  *ngIf="c.terminado==0">
+                    <button *ngIf="c.identificador" [disabled]="!forma.valid || realizandoAccion || contratoBloqueado[o] || (!forma.dirty && !archivoPDF[o])" type="submit" color="primary" mat-raised-button> Guardar cambios </button>
                     <button (click)="eliminarItem(3, c.identificador, o)" [disabled]="realizandoAccion" type="button" color="warn" mat-raised-button><i class="icon-trash"></i></button>
                   </div>
                 </form>
@@ -264,16 +270,18 @@
 
         <!--*****************TAREAS*****************-->
         <mat-tab label="Tareas">
-
           <mat-accordion>
             <mat-expansion-panel *ngFor="let t of tareas; let d = index" class="alinearCabeceraPanel">
               <mat-expansion-panel-header>
                 <mat-panel-title><p class="expMatPanelTitle">{{t.nombreTarea}}</p></mat-panel-title>
-                <mat-panel-description><mat-checkbox [(ngModel)]="t.finalizado" name=Tarea_finalizado{{d}} disabled>Finalizada</mat-checkbox></mat-panel-description>
+                <mat-panel-description>
+                  <span *ngIf="t.finalizado != 1"><i class="material-icons">lock_open</i> Por hacer</span>
+                  <span *ngIf="t.finalizado == 1"><i class="material-icons">lock</i> Finalizada</span>
+                </mat-panel-description>
               </mat-expansion-panel-header>
               <div class="panelExp">
 
-                <form (ngSubmit)="crearModificarActConTar(2,t,d)" #forma="ngForm">
+                <form (ngSubmit)="modificarTarea(t,d)" #forma="ngForm">
                   <div class="space-between">
                     <mat-form-field class="expActCampos1">
                       <input placeholder="Nombre" matInput [(ngModel)]="t.nombreTarea" name=Tarea_nombre{{d}} required type="text" [readonly]="t.finalizado==1"
@@ -282,7 +290,7 @@
                     </mat-form-field>
 
                     <mat-form-field class="expActCampos3">
-                      <mat-select placeholder="Responsable" [(ngModel)]="t.usuario" name=Tarea_usuario{{d}} required [disabled]="t.finalizado==1">
+                      <mat-select placeholder="Responsable" [(ngModel)]="t.usuario" name=Tarea_usuario{{d}} [disabled]="t.finalizado==1">
                         <mat-option *ngFor="let u of users" [value]="u.identificador">{{ u.nombreUsuario }}</mat-option>
                       </mat-select>
                       <mat-error>Campo requerido</mat-error>
@@ -293,15 +301,14 @@
                     </mat-form-field>
 
                     <mat-form-field class="expActCampos2">
-                      <input matInput type="text" name=Tarea_fechaFinalizacion{{d}} [(ngModel)]="t.fecha_finalizacion" placeholder="Fecha finalización" readonly>
+                      <input matInput type="date" name=Tarea_fechaFinalizacion{{d}} [(ngModel)]="t.fecha_finalizacion" placeholder="Fecha finalización" readonly>
                     </mat-form-field>
 
                     <mat-checkbox [(ngModel)]="t.finalizado" name=Tarea_finalizado{{d}} [disabled]="tareaBloqueada[d]">Finalizada</mat-checkbox>
                   </div>
 
-                  <div class="btnsEditarAnyadir">
+                  <div class="btnsEditarAnyadir" *ngIf="t.finalizado==0">
                     <button *ngIf="t.identificador" [disabled]="!forma.valid || realizandoAccion || !forma.dirty || tareaBloqueada[d]" type="submit" color="primary" mat-raised-button> Guardar cambios </button>
-                    <button *ngIf="!t.identificador" [disabled]="!forma.valid || realizandoAccion" type="submit" color="primary" mat-raised-button> Añadir tarea </button>
                     <button (click)="eliminarItem(2, t.identificador, d)" [disabled]="realizandoAccion" type="button" color="warn" mat-raised-button><i class="icon-trash"></i></button>
                   </div>
                 </form>

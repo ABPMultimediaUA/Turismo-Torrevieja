@@ -54,6 +54,7 @@ export class ExpedienteComponent implements OnInit {
   actividades:ActividadInterface[];
   tareas:TareasInterface[];
   tareaBloqueada:boolean[]=[];
+  contratoBloqueado:boolean[]=[];
   contratos:ContratoInterface[]=[];
   users:UsuarioInterface[];
   espacio:EspacioInterface[];
@@ -68,6 +69,7 @@ export class ExpedienteComponent implements OnInit {
   tareasPropuestas = new BehaviorSubject<number>(0);
   contratosTerminados = new BehaviorSubject<number>(0);
   contratosPropuestos = new BehaviorSubject<number>(0);
+  actividadesPropuestas = new BehaviorSubject<number>(0);
   colorSpinner = new BehaviorSubject<string>("warn");
 
   archivoImg:File = null;             //guardar el archivo para mandarlo en la peticion
@@ -121,7 +123,7 @@ export class ExpedienteComponent implements OnInit {
                     if(typeof res != "string") {
                       let r = res as any;
                       this.actividades = r.data as ActividadInterface[];
-                      console.log(this.actividades)
+                      this.actividadesPropuestas.next(this.actividades.length);
                     }
                 });
 
@@ -134,7 +136,6 @@ export class ExpedienteComponent implements OnInit {
                         if(+this.tareas[x].finalizado == 1) this.tareaBloqueada.push(true);
                         else this.tareaBloqueada.push(false);
                       }
-                      // console.log(this.tareas)
                     }
                 });
 
@@ -146,20 +147,23 @@ export class ExpedienteComponent implements OnInit {
                       for(var x = 0; x < this.contratos.length; x++){
                         this.archivoPDF.push(null);
                         this.nombrePDF.getValue().push("");
+                        if(this.contratos[x].terminado == "1") {
+                          this.contratoBloqueado.push(true);
+                          this.contratos[x].auxTerminado = true;
+                        }
+                        else {
+                          this.contratoBloqueado.push(false);
+                          this.contratos[x].auxTerminado = false;
+                        }
                       }
-                      // console.log(this.contratos)
                     }
                 });
 
                 //COGEMOS LOS USUARIOS
                 this._itemService.getItem(308,-1,-1,-1,-1,"","").then( res => {
-                    //TODO Cambiar select para recoger solamente los usuarios que
-                    //tengan permiso para "coordinar" un evento
-                    //y permiso para realizar tareas, etc.
                     if(typeof res != "string") {
                       let r = res as any;
                       this.users = r.data as UsuarioInterface[];
-                      // console.log(this.users)
                     }
                 });
 
@@ -168,7 +172,6 @@ export class ExpedienteComponent implements OnInit {
                     if(typeof res != "string") {
                       let r = res as any;
                       this.espacio = r.data as EspacioInterface[];
-                      // console.log(this.espacio)
                     }
                 });
 
@@ -177,10 +180,8 @@ export class ExpedienteComponent implements OnInit {
                     if(typeof res != "string") {
                       let r = res as any;
                       this.proveedor = r.data as ProveedorInterface[];
-                      // console.log(this.proveedor)
                     }
-                  }
-                );
+                  });
               }
             }
           });
@@ -192,83 +193,106 @@ export class ExpedienteComponent implements OnInit {
   ngOnInit() {
   }
 
-  //Bloquea y desbloquea los campos del form al pulsar los btn EDITAR o CANCELAR
-  disable_enable_campos() {
-    if(this.bloqCampos) this.bloqCampos = false;
-    else {
-      this.restaurarValores();
-      this.bloqCampos = true;
-    }
+
+
+
+  modificarActividad(a:ActividadInterface){
+    this._itemService.actualizarItem(1,a.identificador,a,-1).then( res=> {
+      if(typeof res != "string") this.alertaOk("Actividad modificada correctamente.");
+      else this.alertaNoOk("Error inesperado durante la modificación.");
+    });
   }
 
-  //BOTON - Cuando se esta en la opcion de editar, devuelve los campos del form a su valor original
-  restaurarValores() {
-    this.formulario.reset(this.expedienteSinModif, false);
-    this.imgInput.nativeElement.value = "";
-    if(this.expedienteSinModif.image){
-      let o = this.etiqueta.nativeElement as HTMLImageElement;
-      o.src = "https://gvent.ovh/Prueba2_1/public/img/" + this.expedienteSinModif.image;
+  modificarContrato(c:ContratoInterface,i){
+    if(c.auxTerminado) c.terminado = "1";
+    else c.terminado = "0";
+    if(c.terminado == "1" && this.contratoBloqueado[i] == false){
+      const dialogRef = this.dialog.open(VentanaEmergentePreguntaComponent,{
+        height: '17em',
+        width: '32em',
+        data: { item: "Una vez se marque el contrato como finalizado no se podrá volver a editar.\n¿Continuar?" }
+      });
+      dialogRef.afterClosed().subscribe( res => {
+        if(res) this.mContrato(c,i);
+      });
     }
-    else{
-      let o = this.etiqueta.nativeElement as HTMLImageElement;
-      o.src = '..\\assets\\imgDefaultInputImg\\img_por_defecto.JPG';
-    }
+    else this.mContrato(c,i);
   }
-
-  //BOTON - editar expediente
-  editarExp() {
-    var expBody = this.expediente;
-    delete expBody.image;
-    this._itemService.actualizarItem(0,this.id,expBody,-1)
-    .then( res=> { console.log(res)
-      if(typeof res != "string"){
-        this.expedienteSinModif = Object.assign({}, res as ExpedienteInterface);
-        this.formulario.reset(this.expedienteSinModif, false);
-        if(this.archivoImg){ //ACTUALIZAMOS IMG
-          this._itemService.subirFile(0,this.id,this.archivoImg)
+  mContrato(c:ContratoInterface,i){
+    this._itemService.actualizarItem(3,c.identificador,c,-1).then( res=> {
+      if(typeof res != "string") {
+        if(+c.terminado == 1 && this.contratoBloqueado[i] == false){
+          this.contratoBloqueado[i] = true;
+          this.cambiarAvance("ct",1,"",0);
+        }
+        if(this.archivoPDF[i]){
+          this._itemService.subirFilePdf(3,c.identificador,this.archivoPDF[i])
             .then( res=>{
-              this.imgInsertada = false;
-              this.imgInput.nativeElement.value = "";
-              if(typeof res != "string") this.alertaOk("Expediente actualizado correctamente.");
-              else this.alertaNoOk("Se ha producido un error inesperado subiendo la imagen.");
+              if(typeof res != "string"){
+                this.contratos[i].fichero = (res as any).fichero;
+                this.archivoPDF[i] = undefined;
+                this.nombrePDF.getValue()[i] = "";
+                this.alertaOk("Contrato modificado correctamente.");
+              }
+              else this.alertaNoOk("Se ha producido un error inesperado subiendo el archivo.");
             })
         }
-        else this.alertaOk("Expediente actualizado correctamente.");
+        else this.alertaOk("Contrato modificado correctamente.");
       }
-      else this.alertaNoOk("Se ha producido un error inesperado actualizando el expediente.");
-    })
+      else this.alertaNoOk("Error inesperado durante la modificación.");
+    });
   }
 
-  editarAvanceExp(){
-    var auxTareasFinalizadas = 0;
-    var auxTareasCreadas = 0;
-
-    var auxContratosFinalizados = 0;
-    var aucContratosCreados = 0;
-
-    for(var x=0; x < this.tareas.length && x<9; x++){
-      if(this.tareas[x].identificador){
-        auxTareasCreadas++;
-        if(+this.tareas[x].finalizado == 1) auxTareasFinalizadas++;
+  modificarTarea(t:TareasInterface,i){
+    if(+t.finalizado == 1 && this.tareaBloqueada[i] == false){
+      const dialogRef = this.dialog.open(VentanaEmergentePreguntaComponent,{
+        height: '17em',
+        width: '32em',
+        data: { item: "Una vez se marque la tarea como finalizada no se podrá volver a editar.\n¿Continuar?" }
+      });
+      dialogRef.afterClosed().subscribe( res => {
+        if(res) this.mTarea(t,i);
+      });
+    }
+    else this.mTarea(t,i);
+  }
+  mTarea(t:TareasInterface,i){
+    var currentdate = new Date();
+    var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1)  + "-" + currentdate.getDate() + " "
+                 + currentdate.getHours() + ":"  + currentdate.getMinutes() + ":" + currentdate.getSeconds();
+    t.fecha_finalizacion = datetime;
+    this._itemService.actualizarItem(2,t.identificador,t,-1).then( res=> {
+      if(typeof res != "string") {
+        if(+t.finalizado == 1 && this.tareaBloqueada[i] == false){
+          this.tareaBloqueada[i] = true;
+          this.cambiarAvance("tt",1,"",0);
+        }
+        this.alertaOk("Tarea modificada correctamente.");
       }
-    }
-
-    for(var z=0; z < this.contratos.length && z<9; z++){
-      if(this.contratos[z].identificador){
-        aucContratosCreados++;
-        if(+this.contratos[z].terminado == 1) auxContratosFinalizados++;
-      }
-    }
-
-    var aux = auxTareasFinalizadas.toString() + auxTareasCreadas.toString() + "." + auxContratosFinalizados.toString() + aucContratosCreados.toString();
-    var body={
-      avance:aux,
-    }
-    this._itemService.actualizarItem(0,this.id,body,-1);
+      else this.alertaNoOk("Error inesperado durante la modificación.");
+    });
   }
 
-  //Ventana emergente si se ha realizado una peticion y todo ha ido bien
-  alertaOk(sms:string) {
+  eliminarExpediente(){
+    const dialogRef = this.dialog.open(VentanaEmergentePreguntaComponent,{
+      height: '17em',
+      width: '32em',
+      data: { item: "Va a eliminarse de forma definitiva.\n¿Continuar?" }
+    });
+    dialogRef.afterClosed().subscribe( res => {
+      if(res) {
+        this.realizandoAccion=true;
+        this._itemService.eliminarItem(0,this.expediente.identificador,-1).then( res=>{
+          if(typeof res != "string"){
+            this.alertaOkElimEx("Eliminado correctamente.");
+          }
+          else this.alertaNoOk("Error inesperado durante la eliminación.");
+        });
+      }
+    });
+  }
+
+  alertaOkElimEx(sms){
     let icono:number = 0;
     const dialogRef = this.dialog.open(VentanaEmergenteComponent,{
       height: '17em',
@@ -278,261 +302,294 @@ export class ExpedienteComponent implements OnInit {
     dialogRef.afterClosed().subscribe( res => {
       this.bloqCampos = true;
       this.realizandoAccion = false;
+      this.router.navigate(['entrada']);
     });
   }
 
-  //Ventana emergente si se ha realizado una peticion y ha habido algun error
-  alertaNoOk(sms:string) {
-    let icono:number = 1;
-    const dialogRef = this.dialog.open(VentanaEmergenteComponent,{
-      height: '17em',
-      width: '32em',
-      data: { item: sms, item2: icono }
-    });
-    dialogRef.afterClosed().subscribe( res => {
-      this.bloqCampos = true;
-      this.realizandoAccion = false;
-    });
-  }
-
-  // CREAR NUEVAS PLANTILLA
-   crearPlantillaAct(){
-     var a:ActividadInterface;
-     a={
-       capacidadMinimo:null,
-       capacidadMaximo:null,
-       espacio:null,
-       expediente:+this.id,
-       fechaFinal:null,
-       fechaInicio:null,
-       identificador:null,
-       nombreActividad:"* Nueva actividad",
-       HoraInicio:null,
-       HoraFinal:null,
-       detalleEntrada:null,
-       precioEntrada:null,
-     };
-     this.actividades.push(a);
-   }
-
-   crearPlantillaCon(){
-     var c:ContratoInterface;
-     c={
-       fichero:null,
-       clase:null,
-       expediente:+this.id,
-       identificador:null,
-       nombreContrato:"* Nuevo contrato",
-       precio:null,
-       proveedor:null,
-       tiempo:null,
-       usuario:null,
-       observaciones:null,
-       terminado:null
-     };
-     this.contratos.push(c);
-     this.archivoPDF.push(null);
-     this.nombrePDF.getValue().push("");
-     this.contratosPropuestos.next(this.contratosPropuestos.getValue()+1);
-   }
-
-   crearPlantillaTar(){
-     var t:TareasInterface;
-     t={
-       expediente:+this.id,
-       finalizado:null,
-       identificador:null,
-       nombreTarea:"* Nueva tarea",
-       usuario:null,
-       fechaCreacion:null,
-     };
-     this.tareas.push(t);
-     this.tareaBloqueada.push(false);
-     this.tareasPropuestas.next(this.tareasPropuestas.getValue()+1);
-     this.calcularAvance();
-   }
-
-   //ELIMINAR ITEMS
    eliminarItem(a, i, index){
-    this.realizandoAccion=true;
-     if (i != null){
-       const dialogRef = this.dialog.open(VentanaEmergentePreguntaComponent,{
-         height: '17em',
-         width: '32em',
-         data: { item: "Va a eliminarse de forma definitiva.\n¿Continuar?" }
-       });
-       dialogRef.afterClosed().subscribe( res => {
-         if(res){
-           this._itemService.eliminarItem(a,i,-1).then( res=>{
-             if(typeof res != "string"){
-               if(a==1){ this.actividades.splice(index,1); }
-               else if(a==3){
-                 let r = res as ContratoInterface;
-                 this.contratos.splice(index,1);
-                 this.archivoPDF.splice(index,1);
-                 this.nombrePDF.getValue().splice(index,1);
-                 this.tareasPropuestas.next(this.tareasPropuestas.getValue()-1);
-                 if(+r.terminado == 1){
-                   this.contratosTerminados.next(this.contratosTerminados.getValue()-1);
-                 }
-               }
-               else if(a==2){
-                 let r = res as TareasInterface;
-                 this.tareas.splice(index,1);
-                 this.tareaBloqueada.splice(index,1);
-                 this.tareasPropuestas.next(this.tareasPropuestas.getValue()-1);
-                 if(+r.finalizado == 1){
-                   this.tareasTerminadas.next(this.tareasTerminadas.getValue()-1);
-                 }
-                 this.editarAvanceExp();
-                 this.calcularAvance();
-               }
-               this.alertaOk("Eliminado correctamente.");
-             }
-             else this.alertaNoOk("Error inesperado durante la eliminación.");
-           });
+     const dialogRef = this.dialog.open(VentanaEmergentePreguntaComponent,{
+       height: '17em',
+       width: '32em',
+       data: { item: "Va a eliminarse de forma definitiva.\n¿Continuar?" }
+     });
+     dialogRef.afterClosed().subscribe( res => {
+       if(res){
+         this.realizandoAccion=true;
+         this.eliminar(a, i, index);
+       }
+     });
+   }
+   eliminar(a, i, index){
+     this._itemService.eliminarItem(a,i,-1).then( res=>{
+       if(typeof res != "string"){
+         if(a==1){
+           this.actividadesPropuestas.next(this.actividadesPropuestas.getValue()-1);
+           this.actividades.splice(index,1);
          }
-         else{
-           this.realizandoAccion = false;
+         else if(a==3){
+           let r = res as ContratoInterface;
+           this.contratos.splice(index,1);
+           this.contratoBloqueado.splice(index,1);
+           this.archivoPDF.splice(index,1);
+           this.nombrePDF.getValue().splice(index,1);
+           if(+r.terminado == 1){ this.cambiarAvance("cp",-1,"ct",-1); }
+           else{ this.cambiarAvance("cp",-1,"",0); }
          }
-       });
+         else if(a==2){
+           let r = res as TareasInterface;
+           this.tareas.splice(index,1);
+           this.tareaBloqueada.splice(index,1);
+           if(+r.finalizado == 1){ this.cambiarAvance("tp",-1,"tt",-1); }
+           else{ this.cambiarAvance("tp",-1,"",0); }
+         }
+         this.alertaOk("Eliminado correctamente.");
+       }
+       else this.alertaNoOk("Error inesperado durante la eliminación.");
+     });
+   }
+
+   cambiarAvance(c1:string, i1:number, c2:string, i2:number){
+     if(c1 == "ct") this.contratosTerminados.next(this.contratosTerminados.getValue()+i1);
+     else if(c1 == "cp") this.contratosPropuestos.next(this.contratosPropuestos.getValue()+i1);
+     else if(c1 == "tt") this.tareasTerminadas.next(this.contratosTerminados.getValue()+i1);
+     else if(c1 == "tp") this.tareasPropuestas.next(this.contratosPropuestos.getValue()+i1);
+
+     if(c2 == "ct") this.contratosTerminados.next(this.contratosTerminados.getValue()+i2);
+     else if(c2 == "cp") this.contratosPropuestos.next(this.contratosPropuestos.getValue()+i2);
+     else if(c2 == "tt") this.tareasTerminadas.next(this.contratosTerminados.getValue()+i2);
+     else if(c2 == "tp") this.tareasPropuestas.next(this.contratosPropuestos.getValue()+i2);
+
+     this.editarAvanceExp();
+   }
+   editarAvanceExp(){
+     var auxTareasFinalizadas = 0;
+     var auxTareasCreadas = 0;
+     var auxContratosFinalizados = 0;
+     var aucContratosCreados = 0;
+
+     for(var x=0; x < this.tareas.length && x<9; x++){
+       if(this.tareas[x].identificador){
+         auxTareasCreadas++;
+         if(+this.tareas[x].finalizado == 1) auxTareasFinalizadas++;
+       }
      }
-     else{
-       if(a==1){
-         this.actividades.splice(index,1);
+
+     for(var z=0; z < this.contratos.length && z<9; z++){
+       if(this.contratos[z].identificador){
+         aucContratosCreados++;
+         if(+this.contratos[z].terminado == 1) auxContratosFinalizados++;
        }
-       else if(a==3){
-         this.contratos.splice(index,1);
-         this.archivoPDF.splice(index,1);
-         this.nombrePDF.getValue().splice(index,1);
-       }
-       else if(a==2){
-         this.tareas.splice(index,1);
-         this.tareaBloqueada.splice(index,1);
-         this.tareasPropuestas.next(this.tareasPropuestas.getValue()-1);
+     }
+
+     var aux = auxTareasFinalizadas.toString() + auxTareasCreadas.toString() + "." + auxContratosFinalizados.toString() + aucContratosCreados.toString();
+     var body={
+       avance:aux,
+     }
+     this._itemService.actualizarItem(0,this.id,body,-1).then(
+       res => {
+         if(typeof res != 'string'){
+           this.interpretarAvance((res as ExpedienteInterface).avance.toString());
+         }
+       });
+   }
+   interpretarAvance(i){
+     //Dado que es un float, para poder guardar tanto tareas como contratos por separado:
+     //  tareas.contratos --> ejemplo: 23.23 (2/3 tareas . 2/3 contratos)
+     //  el primer numero de cada parte indica las realizadas, el segundo las propuestas
+     // con mas de 9 tareas o contratos fallara
+     if(i){
+       var num = i.split('.');
+       if(num){
+         if(num.length == 2){
+           if(num[0].length == 1){
+             this.tareasPropuestas.next(+num[0].charAt(0));
+           }
+           else if(num[0].length == 2){
+             this.tareasTerminadas.next(+num[0].charAt(0));
+             this.tareasPropuestas.next(+num[0].charAt(1));
+           }
+           if(num[1].length == 2){
+             this.contratosTerminados.next(+num[1].charAt(0));
+             this.contratosPropuestos.next(+num[1].charAt(1));
+           }
+         }
+         else if(num.length == 1){
+           if(num[0].length == 1){
+             this.tareasPropuestas.next(+num[0].charAt(0));
+           }
+           else if(num[0].length == 2){
+             this.tareasTerminadas.next(+num[0].charAt(0));
+             this.tareasPropuestas.next(+num[0].charAt(1));
+           }
+         }
          this.calcularAvance();
        }
-       this.realizandoAccion=false;
+     }
+   }
+   calcularAvance(){
+     this.porcentajeAvanzado.next( +( (this.tareasTerminadas.getValue() + this.contratosTerminados.getValue()) / (this.tareasPropuestas.getValue() + this.contratosPropuestos.getValue()) * 100).toFixed(1) );
+     if(this.porcentajeAvanzado.getValue() == 100) this.colorSpinner.next("primary");
+     else if(this.porcentajeAvanzado.getValue() >= 50) this.colorSpinner.next("accent");
+     else this.colorSpinner.next("warn");
+   }
+
+   //Bloquea y desbloquea los campos del form al pulsar los btn EDITAR o CANCELAR
+   disable_enable_campos() {
+     if(this.bloqCampos) this.bloqCampos = false;
+     else {
+       this.restaurarValores();
+       this.bloqCampos = true;
      }
    }
 
 
-   crearModificarActConTar(i,a,index){
-     this.realizandoAccion = true;
-     if(i == 2){
-       if(a.finalizado == 1 && this.tareaBloqueada[index] == false){
-         const dialogRef = this.dialog.open(VentanaEmergentePreguntaComponent,{
-           height: '17em',
-           width: '32em',
-           data: { item: "Una vez se marque la tarea como finalizada no se podrá volver a editar.\n¿Continuar?" }
-         });
-         dialogRef.afterClosed().subscribe( res => {
-           if(res){
-             var currentdate = new Date();
-             var datetime = currentdate.getFullYear() + "-" + (currentdate.getMonth()+1)  + "-" + currentdate.getDate() + " "
-                          + currentdate.getHours() + ":"  + currentdate.getMinutes() + ":" + currentdate.getSeconds();
-             a.fecha_finalizacion = datetime;
-             this.crearModificar(i,a,index);
-           }
-           else{
-             this.realizandoAccion = false;
-           }
-         });
-       }
-       else this.crearModificar(i,a,index);
+     crearPlantillaAct(){
+      var a:ActividadInterface;
+      a={
+        capacidadMinimo:null,
+        capacidadMaximo:null,
+        espacio:166,
+        expediente:+this.id,
+        fechaFinal:null,
+        fechaInicio:null,
+        identificador:null,
+        nombreActividad:"* Nueva actividad",
+        HoraInicio:null,
+        HoraFinal:null,
+        detalleEntrada:null,
+        precioEntrada:null,
+      };
+      this._itemService.crearItem(1,a)
+        .then( res=> {
+          if(typeof res != "string"){
+            a=res as ActividadInterface;
+            this.actividadesPropuestas.next(this.actividadesPropuestas.getValue()+1);
+            this.actividades.push(a);
+          }
+        })
      }
-     else this.crearModificar(i,a,index);
-   }
 
-   crearModificar(i,a,index){
-     if(a.identificador != null ){
-       console.log(a);
-       this._itemService.actualizarItem(i,a.identificador,a,-1)
-         .then( res=> {
-           if(typeof res != "string"){
-             if(i==1){
-               this.alertaOk("Actividad actualizada correctamente.");
-             }
-             else if(i==3){
-               if(a.terminado == 1){
-                 this.contratosTerminados.next(this.contratosTerminados.getValue()+1);
-               }
-               this.calcularAvance();
-               this.editarAvanceExp();
-               if(this.archivoPDF[index]){
-                 this._itemService.subirFilePdf(3,a.identificador,this.archivoPDF[index])
-                   .then( res=>{
-                     if(typeof res != "string"){
-                       this.contratos[index].fichero = (res as any).fichero;
-                       this.archivoPDF[index] = undefined;
-                       this.nombrePDF.getValue()[index] = "";
-                       this.alertaOk("Contrato creado correctamente.");
-                     }
-                     else this.alertaNoOk("Se ha producido un error inesperado subiendo el archivo.");
-                   })
-               }
-               else this.alertaOk("Contrato actualizado correctamente.");
-             }
-             else if(i==2){
-               if(a.finalizado == 1 && this.tareaBloqueada[index] == false){
-                 this.tareaBloqueada[index] = true;
-                 this.tareasTerminadas.next(this.tareasTerminadas.getValue()+1);
-               }
-               this.calcularAvance();
-               this.editarAvanceExp();
-               this.alertaOk("Tarea actualizada correctamente.");
-             }
-           }
-           else this.alertaNoOk("Error inesperado durante la actualización.");
-         })
+     crearPlantillaCon(){
+      var c:ContratoInterface;
+      c={
+        activo:null,
+        fichero:null,
+        clase:"Presupuesto",
+        expediente:+this.id,
+        identificador:null,
+        nombreContrato:"* Nuevo contrato",
+        precio:0,
+        proveedor:11,
+        tiempo:null,
+        usuario:24,
+        observaciones:null,
+        terminado:null,
+        auxTerminado:false
+      };
+      this._itemService.crearItem(3,c)
+        .then( res=> {
+          if(typeof res != "string"){
+            c=res as ContratoInterface;
+            this.contratos.push(c);
+            this.archivoPDF.push(null);
+            this.nombrePDF.getValue().push("");
+            this.contratoBloqueado.push(false);
+            this.cambiarAvance("cp",1,"",0);
+          }
+        })
+     }
+
+     crearPlantillaTar(){
+      var t:TareasInterface;
+      t={
+        expediente:+this.id,
+        finalizado:null,
+        identificador:null,
+        nombreTarea:"* Nueva tarea",
+        usuario:24,
+        fechaCreacion:null,
+        fecha_finalizacion:null,
+      };
+      this._itemService.crearItem(2,t)
+        .then( res=> {
+          if(typeof res != "string"){
+            t=res as TareasInterface;
+            this.tareas.push(t);
+            this.tareaBloqueada.push(false);
+            this.cambiarAvance("tp",1,"",0);
+          }
+        })
+     }
+
+   //BOTON - Cuando se esta en la opcion de editar, devuelve los campos del form a su valor original
+   restaurarValores() {
+     this.formulario.reset(this.expedienteSinModif, false);
+     this.imgInput.nativeElement.value = "";
+     if(this.expedienteSinModif.image){
+       let o = this.etiqueta.nativeElement as HTMLImageElement;
+       o.src = "https://gvent.ovh/Prueba2_1/public/img/" + this.expedienteSinModif.image;
      }
      else{
-       this._itemService.crearItem(i,a)
-         .then( res=> {
-           if(typeof res != "string"){
-             if(i==1){
-               this.actividades[index] = res as ActividadInterface;
-               this.alertaOk("Actividad creada correctamente.");
-             }
-             else if(i==3){
-               this.contratos[index] = res as ContratoInterface;
-               if(a.terminado == 1){
-                 this.contratosTerminados.next(this.contratosTerminados.getValue()+1);
-               }
-               this.calcularAvance();
-               this.editarAvanceExp();
-               if(this.archivoPDF[index]){
-                 this._itemService.subirFilePdf(3,this.contratos[index].identificador,this.archivoPDF[index])
-                   .then( res=>{
-                     if(typeof res != "string"){
-                       this.contratos[index].fichero = (res as any).fichero;
-                       this.archivoPDF[index] = undefined;
-                       this.nombrePDF.getValue()[index] = "";
-                       this.alertaOk("Contrato creado correctamente.");
-                     }
-                     else this.alertaNoOk("Se ha producido un error inesperado subiendo el archivo.");
-                   })
-               }
-               else this.alertaOk("Contrato creado correctamente.");
-             }
-             else if(i==2){
-               this.tareas[index] = res as TareasInterface;
-               if(a.finalizado == 1 && this.tareaBloqueada[index] == false){
-                 this.tareaBloqueada[index] = true;
-                 this.tareasTerminadas.next(this.tareasTerminadas.getValue()+1);
-               }
-               this.calcularAvance();
-               this.editarAvanceExp();
-               this.alertaOk("Tarea creada correctamente.");
-             }
-           }
-           else this.alertaNoOk("Error inesperado durante la inserción.");
-         })
+       let o = this.etiqueta.nativeElement as HTMLImageElement;
+       o.src = '..\\assets\\imgDefaultInputImg\\img_por_defecto.JPG';
      }
    }
 
-   verCartera(){
-     this.router.navigate(['/cartera', this.cartera.identificador]);
+   //BOTON - editar expediente
+   editarExp() {
+     var expBody = this.expediente;
+     delete expBody.image;
+     this._itemService.actualizarItem(0,this.id,expBody,-1)
+     .then( res=> {
+       if(typeof res != "string"){
+         this.expedienteSinModif = Object.assign({}, res as ExpedienteInterface);
+         this.formulario.reset(this.expedienteSinModif, false);
+         if(this.archivoImg){ //ACTUALIZAMOS IMG
+           this._itemService.subirFile(0,this.id,this.archivoImg)
+             .then( res=>{
+               this.imgInsertada = false;
+               this.imgInput.nativeElement.value = "";
+               if(typeof res != "string") this.alertaOk("Expediente actualizado correctamente.");
+               else this.alertaNoOk("Se ha producido un error inesperado subiendo la imagen.");
+             })
+         }
+         else this.alertaOk("Expediente actualizado correctamente.");
+       }
+       else this.alertaNoOk("Se ha producido un error inesperado actualizando el expediente.");
+     })
+   }
+
+   tieneCambios(){
+     if(this.cartera.estado>1) return this.imgInsertada || this.formulario.form.dirty || this.formularios.form.dirty;
+     else return this.imgInsertada || this.formulario.form.dirty;
+   }
+
+   //Ventana emergente si se ha realizado una peticion y todo ha ido bien
+   alertaOk(sms:string) {
+     let icono:number = 0;
+     const dialogRef = this.dialog.open(VentanaEmergenteComponent,{
+       height: '17em',
+       width: '32em',
+       data: { item: sms, item2: icono }
+     });
+     dialogRef.afterClosed().subscribe( res => {
+       this.bloqCampos = true;
+       this.realizandoAccion = false;
+     });
+   }
+
+   //Ventana emergente si se ha realizado una peticion y ha habido algun error
+   alertaNoOk(sms:string) {
+     let icono:number = 1;
+     const dialogRef = this.dialog.open(VentanaEmergenteComponent,{
+       height: '17em',
+       width: '32em',
+       data: { item: sms, item2: icono }
+     });
+     dialogRef.afterClosed().subscribe( res => {
+       this.bloqCampos = true;
+       this.realizandoAccion = false;
+     });
    }
 
    cargarImg(files: FileList){
@@ -576,51 +633,8 @@ export class ExpedienteComponent implements OnInit {
      });
    }
 
-   interpretarAvance(i){
-     //Dado que es un float, para poder guardar tanto tareas como contratos por separado:
-     //  tareas.contratos --> ejemplo: 23.23 (2/3 tareas . 2/3 contratos)
-     //  el primer numero de cada parte indica las realizadas, el segundo las propuestas
-     // con mas de 9 tareas o contratos fallara
-     if(i){
-       var num = i.split('.');
-       if(num){
-         if(num.length == 2){
-           if(num[0].length == 1){
-             this.tareasPropuestas.next(+num[0].charAt(0));
-           }
-           else if(num[0].length == 2){
-             this.tareasTerminadas.next(+num[0].charAt(0));
-             this.tareasPropuestas.next(+num[0].charAt(1));
-           }
-           if(num[1].length == 2){
-             this.contratosTerminados.next(+num[1].charAt(0));
-             this.contratosPropuestos.next(+num[1].charAt(1));
-           }
-         }
-         else if(num.length == 1){
-           if(num[0].length == 1){
-             this.tareasPropuestas.next(+num[0].charAt(0));
-           }
-           else if(num[0].length == 2){
-             this.tareasTerminadas.next(+num[0].charAt(0));
-             this.tareasPropuestas.next(+num[0].charAt(1));
-           }
-         }
-         this.calcularAvance();
-       }
-     }
-   }
-
-   calcularAvance(){
-     this.porcentajeAvanzado.next( +( (this.tareasTerminadas.getValue() + this.contratosTerminados.getValue()) / (this.tareasPropuestas.getValue() + this.contratosPropuestos.getValue()) * 100).toFixed(1) );
-     if(this.porcentajeAvanzado.getValue() == 100) this.colorSpinner.next("primary");
-     else if(this.porcentajeAvanzado.getValue() >= 50) this.colorSpinner.next("accent");
-     else this.colorSpinner.next("warn");
-   }
-
-   tieneCambios(){
-     if(this.cartera.estado>1) return this.imgInsertada || this.formulario.form.dirty || this.formularios.form.dirty;
-     else return this.imgInsertada || this.formulario.form.dirty;
+   verCartera(){
+     this.router.navigate(['/cartera', this.cartera.identificador]);
    }
 
 }

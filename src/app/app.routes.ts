@@ -13,7 +13,7 @@ import { ChatbotsComponent }    from './chatbots/chatbots.component';
 import { ContactComponent }     from "./components/contact/contact.component";
 
 //Menu login
-import { PerfilComponent }      from "./components/perfil/perfil.component";
+import { EntradaComponent }     from './components/entrada/entrada.component';
 import { UsuariosComponent }    from "./components/usuarios/usuarios.component";
 import { CarterasComponent }    from './components/carteras/carteras.component';
 import { CarteraComponent }     from './components/carteras/cartera.component';
@@ -39,14 +39,13 @@ const app_routes: Routes = [
   { path: 'chatbots', loadChildren: 'app/chatbots/chatbots.module#ChatbotsModule' },
 
   //Menu Login
-  { path: 'perfil', canActivate:[AuthGuardService], component: PerfilComponent },
-  { path: 'perfil/:id', canActivate:[AuthGuardService], component: PerfilComponent }, //TODO ver si es necesario
+  { path: 'entrada', canActivate:[AuthGuardService], component: EntradaComponent },
   { path: 'usuarios', canActivate:[AuthGuardService,AuthGuardUsuariosService], component: UsuariosComponent },
   { path: 'roles', canActivate:[AuthGuardService,AuthGuardRolesService], component: RolesComponent },
   { path: 'carteras', canActivate:[AuthGuardService,AuthGuardCarterasService], component: CarterasComponent },
   { path: 'cartera/:id', canActivate:[AuthGuardService,AuthGuardCarterasService], component: CarteraComponent, canDeactivate:[ConfirmDeactivateCarteraGuard] },
-  { path: 'expedientes', canActivate:[AuthGuardService,AuthGuardEventosService], component:ExpedientesComponent},
-  { path: 'expediente/:id', canActivate:[AuthGuardService,AuthGuardEventosService], component:ExpedienteComponent, canDeactivate:[ConfirmDeactivateExpedienteGuard] },
+  { path: 'eventos', canActivate:[AuthGuardService,AuthGuardEventosService], component:ExpedientesComponent},
+  { path: 'evento/:id', canActivate:[AuthGuardService,AuthGuardEventosService], component:ExpedienteComponent, canDeactivate:[ConfirmDeactivateExpedienteGuard] },
   { path: 'espacios', canActivate:[AuthGuardService,AuthGuardEspaciosService], component: EspaciosComponent },
   { path: 'proveedores', canActivate:[AuthGuardService,AuthGuardProveedoresService], component: ProveedoresComponent },
 

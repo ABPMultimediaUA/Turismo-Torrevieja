@@ -1,0 +1,63 @@
+<div class="contenedorEditar">
+  <h1 class="mat-display-1 tituloFormEstrecho">
+    <span class="icon-user-outline"></span> {{items.nombreUsuario}}
+  </h1>
+  <a class="btnCerrar" (click)="cerrarDialogo()"><i class="material-icons iconoCerrar">close</i></a>
+  <form (ngSubmit)="modifItem()" #formulario="ngForm">
+
+    <div class="row contenedorFormEstrecho">
+      <mat-form-field hintLabel="" class="campoWidth100">
+        <input matInput name="nombreUsuario" [(ngModel)]="items.nombreUsuario" placeholder="Nombre" [readonly]="bloqCampos"
+               maxLength="200" required>
+        <mat-error>Campo requerido</mat-error>
+      </mat-form-field>
+
+      <mat-form-field hintLabel="" class="campoWidth100">
+        <input matInput name="correo" [(ngModel)]="items.correo" placeholder="Email" [readonly]="bloqCampos" required
+               maxLength="50">
+      </mat-form-field>
+
+      <mat-checkbox [disabled]="bloqCampos" name="cbPass" [(ngModel)]="modifPass"> Modificar contraseña </mat-checkbox>
+
+      <mat-form-field hintLabel="" class="campoWidth100">
+        <input matInput type="password" name="oldPass" [(ngModel)]="oldPass" placeholder="Contraseña" [disabled]="!modifPass"
+        required minLength="6">
+        <mat-error>Mínimo seis caracteres</mat-error>
+      </mat-form-field>
+
+      <mat-form-field hintLabel="" class="campoWidth100">
+        <input matInput type="password" name="password" [(ngModel)]="items.password" placeholder="Nueva contraseña" [disabled]="!modifPass"
+        required minLength="6">
+        <mat-error>Mínimo seis caracteres</mat-error>
+      </mat-form-field>
+
+      <mat-form-field hintLabel="" class="campoWidth100">
+        <input matInput type="password" name="password_confirmation" [(ngModel)]="items.password_confirmation" placeholder="Confirmar nueva contraseña" [disabled]="!modifPass"
+        required minLength="6">
+        <mat-error>Las contraseñas no coinciden</mat-error>
+      </mat-form-field>
+
+
+    </div>
+    <div class="row" *ngIf="!realizandoAccion">
+      <div class="btnsEditarAnyadir">
+        <div class="btnsEditarAnyadir">
+          <div *ngIf="bloqCampos" class="btnsEditarAnyadir">
+            <button type="button" mat-raised-button color="primary" (click)="disable_enable_campos()">Editar</button>
+          </div>
+          <div *ngIf="!bloqCampos" class="btnsEditarAnyadir">
+            <mat-dialog-actions class="btnsEditarAnyadir">
+              <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid || !formulario.form.dirty">Guardar cambios</button>
+              <button type="button" mat-raised-button (click)="disable_enable_campos(activ)" color="warn">Cancelar</button>
+            </mat-dialog-actions>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="VentanaEmergenteSpinner1">
+      <div class="VentanaEmergenteSpinner2" *ngIf="realizandoAccion">
+          <mat-spinner color="warn"></mat-spinner>
+      </div>
+    </div>
+  </form>
+</div>

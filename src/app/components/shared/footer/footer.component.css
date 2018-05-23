@@ -1,10 +1,9 @@
-
-.example-spacer {
-  flex: 1 1 auto;
+.margen{
+  margin-top: 15px;
 }
 mat-toolbar{
   background-color: #05386B;
-    color: #D9D9D9;
+  color: #D9D9D9;
 }
 mat-toolbar a{
   color: #FFFFFF;
@@ -16,4 +15,7 @@ mat-toolbar div a{
 
 mat-toolbar a:hover{
   text-decoration: none;
+}
+.links1{
+  font-size: .8em;
 }

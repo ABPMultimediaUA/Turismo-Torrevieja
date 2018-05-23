@@ -1,0 +1,23 @@
+/deep/ .cbRoles{
+  font-size: 14px;
+}
+/deep/ .cbRoles .mat-checkbox-inner-container{
+  height: 12px !important;
+  width: 12px !important;
+}
+/deep/ .cbRoles .mat-checkbox-layout{
+  margin-bottom: 0 !important;
+  /* min-width: 140px !important; */
+}
+.cbRoles p{
+  font-family: Roboto,"Helvetica Neue",sans-serif;
+  margin-bottom: 0px;
+  font-weight: 500;
+  font-size: 15px;
+}
+.btnRol{
+  margin-top: -35px;
+}
+.titRol{
+  margin-bottom: -20px;
+}

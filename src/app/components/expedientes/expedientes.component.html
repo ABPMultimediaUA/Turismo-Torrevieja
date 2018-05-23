@@ -4,20 +4,22 @@
       <div class="elementosCabecera">
         <button *ngIf="_authService.tienePermiso(25)" mat-raised-button class="botonMat botonNuevoItem" type="submit" color="primary"
           (click)="nuevoEvento()">Nuevo Evento</button>
-        <button *ngIf="_authService.tienePermiso(28)" mat-raised-button type="button" class="botonEliminarItems" [disabled]="btnEliminar" color="warn" (click)="botonEliminarItem(selection.selected)"><i class="material-icons">delete</i></button>
+        <button *ngIf="_authService.tienePermiso(28) && estadoCarteraEscogido==208" mat-raised-button type="button" class="botonEliminarItems" [disabled]="btnEliminar" color="warn" (click)="botonEliminarItem(selection.selected)"><i class="material-icons">delete</i></button>
 
         <div class="divPaginacion">
           <div class="divTiposCartera elementosPaginacion">
             <mat-radio-group [(ngModel)]="estadoCarteraEscogido" (change)="cambiarListaEstado()">
-              <mat-radio-button value="208" matTooltip="Carteras aprobadas: Pueden ser modificadas pero no eliminadas. No se les pueden añadir o eliminar expedientes. Sus expedientes muestran todos sus campos."
+              <mat-radio-button value="208" matTooltip="Carteras sin aprobar: Pueden ser eliminadas. Se les pueden añadir o eliminar expedientes. Sus expedientes muestran solo los campos básicos."
+                                ><i class="material-icons">lock_open</i></mat-radio-button>
+              <mat-radio-button value="209" matTooltip="Carteras aprobadas: Pueden ser modificadas pero no eliminadas. No se les pueden añadir o eliminar expedientes. Sus expedientes muestran todos sus campos."
                                 ><i class="material-icons">lock_outline</i></mat-radio-button>
-              <mat-radio-button value="209" matTooltip="Carteras terminadas: No pueden ser eliminadas ni modificadas. No se les pueden añadir o eliminar expedientes y estos no pueden ser modificados."
+              <mat-radio-button value="210" matTooltip="Carteras terminadas: No pueden ser eliminadas ni modificadas. No se les pueden añadir o eliminar expedientes y estos no pueden ser modificados."
                                 ><i class="material-icons">lock</i></mat-radio-button>
               <mat-radio-button value="0">Todas</mat-radio-button>
             </mat-radio-group>
           </div>
           <mat-form-field class="elementosPaginacion">
-            <input matInput (keyup)="realizarBusqueda($event)" placeholder="Búsqueda" [(ngModel)]="value">
+            <input matInput (keyup)="realizarBusqueda($event)" placeholder="Búsqueda" [(ngModel)]="value" disabled>
             <button mat-button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)='value=""'>
               <mat-icon>close</mat-icon>
             </button>
@@ -100,12 +102,12 @@
 
           <ng-container matColumnDef="fechaInicio">
             <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(5)">Fecha inicio</mat-header-cell>
-            <mat-cell *matCellDef="let items">{{items.fechaInicio}}</mat-cell>
+            <mat-cell *matCellDef="let items">{{items.fechaInicio | date:'dd/MM/yyyy'}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="fechaFin">
             <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(6)">Fecha fin</mat-header-cell>
-            <mat-cell *matCellDef="let items">{{items.fechaFin}}</mat-cell>
+            <mat-cell *matCellDef="let items">{{items.fechaFin | date:'dd/MM/yyyy'}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="avance">
