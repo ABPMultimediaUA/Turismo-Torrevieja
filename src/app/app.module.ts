@@ -8,6 +8,7 @@ import { APP_ROUTING }                                from './app.routes';
 import { BrowserAnimationsModule }                    from '@angular/platform-browser/animations';
 import { SelectionModel }                             from '@angular/cdk/collections';
 import { PdfViewerModule }                            from 'ng2-pdf-viewer';
+import { AgmCoreModule }                              from '@agm/core';
 
 // servicios
 import { AlertService, AuthService, PeticionesCrudService,
@@ -177,6 +178,9 @@ import { EntradaComponent } from './components/entrada/entrada.component';
     MatProgressSpinnerModule,
     MatNativeDateModule,
     PdfViewerModule,
+    AgmCoreModule.forRoot({
+      apiKey:'AIzaSyCZaoFS_3i3cTMvizft2ow86uFlWrUtiAk'
+    }),
     // FacebookModule.forRoot(),
     // FacebookModule,
 

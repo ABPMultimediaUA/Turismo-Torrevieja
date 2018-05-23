@@ -48,11 +48,12 @@ export class NuevoEspacioComponent implements OnInit {
 
   @ViewChild("formulario") formulario;
 
-  @ViewChild('gmap') gmapElement: any;
-  map: google.maps.Map;
-  marker: google.maps.Marker;
-  latX = 38.3453359;
-  latY = -0.5042837;
+  latitude = 38.3453359;
+  longitude = -0.5042837;
+  m_latitude:number;
+  m_longitude:number;
+
+  coordenadasNuevas:boolean = false;
 
 
   constructor(  private _itemService: PeticionesCrudService,
@@ -72,16 +73,14 @@ export class NuevoEspacioComponent implements OnInit {
       this.items = Object.assign({}, data.item as EspacioInterface);
       this.itemSinModif = Object.assign({}, data.item as EspacioInterface);
       if(this.items.activo == "1") this.selection.select(0);
-      if(this.items.latitudX) {
-        this.latX = (+this.items.latitudX);
-        if(this.items.latitudY){
-          this.latY = (+this.items.latitudY);
-          this.dibujarMapa(true);
+      if(this.items.latitudX && this.items.latitudX != "") {
+        this.latitude = (+this.items.latitudX);
+        this.m_latitude = (+this.items.latitudX);
+        if(this.items.latitudY && this.items.latitudY != ""){
+          this.longitude = (+this.items.latitudY);
+          this.m_longitude = (+this.items.latitudY);
+          console.log(this.m_longitude);
         }
-        this.dibujarMapa(false);
-      }
-      else if(navigator.geolocation){
-        this.geolocalizar();
       }
     }
     //Si no lo hay se prepara todo para crear
@@ -96,36 +95,18 @@ export class NuevoEspacioComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.dibujarMapa(false);
   }
 
-  geolocalizar(){
-    navigator.geolocation.getCurrentPosition(success, fail, { maximumAge: 500000, enableHighAccuracy: true, timeout: 6000 });
-    function success(pos) {
-      this.latX = pos.coords.latitude;
-      this.latY =  pos.coords.longitude;
-      this.dibujarMapa(false);
-    }
-    function fail(){
-      this.dibujarMapa(false);
+  ponerMarca(e){
+    if(!this.editar || !this.bloqCampos){
+      this.items.latitudX = (e.coords.lat).toString();
+      this.items.latitudY = (e.coords.lng).toString();
+      this.m_latitude = e.coords.lat;
+      this.m_longitude = e.coords.lng;
+      this.coordenadasNuevas = true;
     }
   }
 
-  dibujarMapa(b){
-    var mapProp = {
-      center: new google.maps.LatLng(this.latX, this.latY),
-      zoom: 13,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-    this.map = new google.maps.Map(this.gmapElement.nativeElement, mapProp);
-    if (b && !this.marker) {
-      this.marker = new google.maps.Marker({
-        position: new google.maps.LatLng(this.latX, this.latY),
-        map: this.map,
-        title: this.items.nombreEspacio
-      });
-    }
-  }
 
   //BOTON - Crear un nuevo item o lo edita si ya existe
   anyadirItem(){
@@ -176,6 +157,7 @@ export class NuevoEspacioComponent implements OnInit {
       activo:"1"
     }
     this.formulario.reset(this.items, false);
+    this.coordenadasNuevas = false;
   }
 
   //BOTON - Cuando se esta en la opcion de editar, devuelve los campos del form a su valor original
@@ -185,11 +167,12 @@ export class NuevoEspacioComponent implements OnInit {
     if(this.items.activo == "1") this.selection.select(0);
     this.activoChange = false;
     this.bloqCampos = true;
+    this.coordenadasNuevas = false;
   }
 
   //BOTON - Cerrar ventana emergente volviendo a la anterior
   cerrarDialogo(){
-    if(this.formulario.form.dirty || this.activoChange){
+    if(this.formulario.form.dirty || this.activoChange || this.coordenadasNuevas){
       const dialogRef = this.dialog.open(VentanaEmergentePreguntaComponent,{
         height: '17em',
         width: '32em',

@@ -68,7 +68,11 @@
       </div>
       <div class="col-sm">
         <!-- GOOGLE MAPS -->
-        <div #gmap class="mapa"></div>
+        <div class="mapa">
+          <agm-map [latitude]="latitude" [longitude]="longitude" (mapClick)="ponerMarca($event)">
+            <agm-marker [latitude]="m_latitude" [longitude]="m_longitude"></agm-marker>
+          </agm-map>
+        </div>
         <!-- FIN GOOGLE MAPS -->
       </div>
 
@@ -98,7 +102,7 @@
           </div>
           <div *ngIf="!bloqCampos" class="btnsEditarAnyadir">
             <mat-dialog-actions class="btnsEditarAnyadir">
-              <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid || (!formulario.form.dirty && !activoChange)">Guardar cambios</button>
+              <button type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid || (!formulario.form.dirty && !activoChange && !coordenadasNuevas)">Guardar cambios</button>
               <button type="button" mat-raised-button (click)="disable_enable_campos()" color="warn">Cancelar</button>
             </mat-dialog-actions>
           </div>
