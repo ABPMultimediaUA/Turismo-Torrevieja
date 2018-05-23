@@ -240,6 +240,19 @@ export class ExpedienteComponent implements OnInit {
   }
 
   //PUBLICAR EN FACEBOOK
+  abrirPubliFace(){
+  document.getElementById("fondoPubliFace").style.display="block";
+
+  document.getElementById("publiFace").style.display="block";
+
+  document.getElementById("publiFace").style.width=50+"%";
+
+}
+cerrarPubliFace(){
+  document.getElementById("fondoPubliFace").style.display="none";
+
+document.getElementById("publiFace").style.display="none";
+}
     mostrarFoto($event): void {
       this.readThis($event.target);
     }
@@ -275,6 +288,7 @@ export class ExpedienteComponent implements OnInit {
         this.page_id = res.id;
         this.page_access_token = res.access_token;
         //ahora que ya tengo el page token publico
+
         if (this.user_access_token != null) {
           let xhr = new XMLHttpRequest();
           let fd = new FormData();
@@ -291,6 +305,7 @@ export class ExpedienteComponent implements OnInit {
         }
       });
       this.alertaOk("Evento publicado en facebook correctamente");
+this.cerrarPubliFace();
 
     }
 
