@@ -21,7 +21,7 @@ import { FormArray,FormGroup,FormControl } from "@angular/forms";
 @Component({
   selector: 'app-expediente',
   templateUrl: './expediente.component.html',
-  styleUrls: ['../../app.component.css']
+  styleUrls: ['../../app.component.css','./expedientes.component.css']
 })
 
 export class ExpedienteComponent implements OnInit {

@@ -93,6 +93,30 @@
       </div>
     </div>
   </form>
+
+  <br>
+  <mat-card>
+    <mat-card-title>
+    <h1 class="mat-display-1 tituloComponentes titCarteras"><i class="fa fa-facebook-f"></i>&nbsp;Publicar evento en facebook</h1><br><br><br>
+  </mat-card-title>
+
+    <form class="animated fadeIn fast  marginRight"  #forma="ngForm">
+      <mat-form-field class="expTitulo marginRight">
+        <input matInput name="detalle" [(ngModel)]="post.message" placeholder="Texto del post" maxLength="200">
+      </mat-form-field>
+      <p class=" marginRight"><b style="font-size:1.2em">Foto del post </b><span style="font-size:0.7em">la foto debe ser menor de 10MB</span></p><br>
+      <div class="foto  marginRight" id="foto">
+        <label for="subirfoto"><img id="img"  onclick="this.parentNode.parentNode.childNodes[4].click();" src=""  width="200" height="200"  #etiquetaImgPub></label>&nbsp;
+          <!-- <p><b style="font-size:1.2em"><i class="fa fa-pencil"></i>&nbsp;*Elegir otra foto </b>
+            <input class="mat-raised-button"  value="" (change)="mostrarFoto($event)" type="file" name="file" class="file" accept="image/x-png,image/gif,image/jpeg" required>
+          </p> -->
+          <input #imgInputPub type="file" id="inputFoto"(change)="mostrarFoto($event);" accept="image/*" class="invisible"><br id="preInput">
+          <button (click)="imgInputPub.click()" type="button" color="primary" mat-raised-button ><i class="fa fa-pencil"></i>&nbsp;Elegir otra foto</button>
+           <button type="submit" mat-raised-button color="primary" (click)="publicar()"><i class="fa fa-facebook-f"></i>  Publicar</button>
+      </div>
+    </form>
+  </mat-card>
+  
   <div class="row" *ngIf="cartera.estado>1">
     <div class="tabExpediente">
       <div class="divBadges">
