@@ -81,7 +81,7 @@
 
           <ng-container matColumnDef="fechaCreacion">
             <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(3)">Fecha de creación</mat-header-cell>
-            <mat-cell *matCellDef="let items">{{items.fechaCreacion | date}}</mat-cell>
+            <mat-cell *matCellDef="let items">{{items.fechaCreacion | date:'dd/MM/yyyy'}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="activo">

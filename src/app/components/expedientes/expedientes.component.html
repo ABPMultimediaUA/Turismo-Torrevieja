@@ -102,12 +102,12 @@
 
           <ng-container matColumnDef="fechaInicio">
             <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(5)">Fecha inicio</mat-header-cell>
-            <mat-cell *matCellDef="let items">{{items.fechaInicio}}</mat-cell>
+            <mat-cell *matCellDef="let items">{{items.fechaInicio | date:'dd/MM/yyyy'}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="fechaFin">
             <mat-header-cell *matHeaderCellDef mat-sort-header (click)="cambiarOrden(6)">Fecha fin</mat-header-cell>
-            <mat-cell *matCellDef="let items">{{items.fechaFin}}</mat-cell>
+            <mat-cell *matCellDef="let items">{{items.fechaFin | date:'dd/MM/yyyy'}}</mat-cell>
           </ng-container>
 
           <ng-container matColumnDef="avance">

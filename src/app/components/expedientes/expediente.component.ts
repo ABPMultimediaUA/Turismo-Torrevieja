@@ -273,16 +273,50 @@ export class ExpedienteComponent implements OnInit {
     });
   }
 
+  eliminarExpediente(){
+    const dialogRef = this.dialog.open(VentanaEmergentePreguntaComponent,{
+      height: '17em',
+      width: '32em',
+      data: { item: "Va a eliminarse de forma definitiva.\n¿Continuar?" }
+    });
+    dialogRef.afterClosed().subscribe( res => {
+      if(res) {
+        this.realizandoAccion=true;
+        this._itemService.eliminarItem(0,this.expediente.identificador,-1).then( res=>{
+          if(typeof res != "string"){
+            this.alertaOkElimEx("Eliminado correctamente.");
+          }
+          else this.alertaNoOk("Error inesperado durante la eliminación.");
+        });
+      }
+    });
+  }
+
+  alertaOkElimEx(sms){
+    let icono:number = 0;
+    const dialogRef = this.dialog.open(VentanaEmergenteComponent,{
+      height: '17em',
+      width: '32em',
+      data: { item: sms, item2: icono }
+    });
+    dialogRef.afterClosed().subscribe( res => {
+      this.bloqCampos = true;
+      this.realizandoAccion = false;
+      this.router.navigate(['entrada']);
+    });
+  }
+
    eliminarItem(a, i, index){
-     this.realizandoAccion=true;
      const dialogRef = this.dialog.open(VentanaEmergentePreguntaComponent,{
        height: '17em',
        width: '32em',
        data: { item: "Va a eliminarse de forma definitiva.\n¿Continuar?" }
      });
      dialogRef.afterClosed().subscribe( res => {
-       if(res) this.eliminar(a, i, index);
-       else this.realizandoAccion = false;
+       if(res){
+         this.realizandoAccion=true;
+         this.eliminar(a, i, index);
+       }
      });
    }
    eliminar(a, i, index){

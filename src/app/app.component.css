@@ -5,6 +5,9 @@
 /deep/ .piePgn, /deep/ .piePgn{
   position: absolute !important;
   bottom: 0px !important;
+  text-align: center;
+  height: 90px;
+  justify-content: space-around;
 }
 /*CSS comun a todos los componentes con tabla*/
 .mat-row{
@@ -235,11 +238,14 @@ margin-right: 2.5em;
 .mat-column-fechaInicio, .mat-column-fechaFin{
   flex:0 0 9%
 }
-.mat-column-telefonoUno,.mat-column-fechaCreacion{
+.mat-column-telefonoUno,.mat-column-fechaCreacion,.mat-column-avance2{
   flex:0 0 10%;
 }
 .mat-column-trimestre{
   flex:0 0 15%;
+}
+.mat-column-fechaInicio2{
+  flex:0 0 18%;
 }
 .mat-column-nombreEspacio,.mat-column-nombreCartera,.mat-column-nombreUsuario,
 .mat-column-nombreProveedor,.mat-column-nombreRol,.mat-column-nombreExpediente,
@@ -251,6 +257,9 @@ margin-right: 2.5em;
 }
 .mat-column-descripcion{
   flex:0 0 37%;
+}
+.mat-column-nombreExpediente2,.mat-column-nombreTarea{
+  flex:0 0 50%;
 }
 /*Fin tamanyo columnas comunes (id, eliminar)*/
 

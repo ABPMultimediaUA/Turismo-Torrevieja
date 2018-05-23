@@ -43,6 +43,7 @@ export class PeticionesCrudService {
       case 7: url += "proveedor";   break;
       case 8: url += "cartera";     break;
       case 9: url += "misTareas";   break; //Todas las tareas de un usuario
+      case 10: url += 'EstadoExpediente/aprobada';        break;
 
       //Peticiones compuestas
       case 100: url += `expediente/${id}/?imagen`;        break; //Insertar imagen en expediente
@@ -82,6 +83,7 @@ export class PeticionesCrudService {
       case 309: url += `rol?activo=1`;                                  break;
       case 310: url += `espacio?activo=1`;                              break;
       case 311: url += `proveedor?activo=1`;                            break;
+      case 312: url += "misTareas?finalizado=0";                        break;
 
       default: console.log("No se ha especificado correctamente una URL.");
     }

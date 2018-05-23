@@ -82,17 +82,17 @@
       <a role="button" [routerLink]="" (click)="perfil()" class="nav-link elemento-navbar d9d9d9">
         <span class="icon-user"></span> Perfil
       </a>
-      <a role="button" [routerLink]="['/publicar']" class="nav-link elemento-navbar d9d9d9 ">
+      <a role="button" [routerLink]="['/publicar']" class="nav-link elemento-navbar d9d9d9 " (click)="cambiarSelect(0)">
         <span class="icon-comment"></span> Publicar
       </a>
-      <a role="button" [routerLink]="['/graficas']" class="nav-link elemento-navbar d9d9d9 ">
-          <span class="fa fa-bar-chart"></span> Graficas
+      <a role="button" [routerLink]="['/graficas']" class="nav-link elemento-navbar d9d9d9 " (click)="cambiarSelect(0)">
+          <span class="fa fa-bar-chart"></span> Gráficas
       </a>
       <a style="width:180px" role="button" [routerLink]="" (click)="_authService.logout(1)" class="nav-link elemento-navbar d9d9d9 ">
         <span class="icon-users"></span> Cambiar cuenta
       </a>
       <a role="button" [routerLink]="" (click)="_authService.logout(0)" class="nav-link elemento-navbar d9d9d9 ">
-        <span class="icon-logout"></span> Cerrar Sesion
+        <span class="icon-logout"></span> Cerrar Sesión
       </a>
     </div>
   </div>

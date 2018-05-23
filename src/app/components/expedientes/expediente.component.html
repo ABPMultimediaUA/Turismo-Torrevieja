@@ -301,7 +301,7 @@
                     </mat-form-field>
 
                     <mat-form-field class="expActCampos2">
-                      <input matInput type="text" name=Tarea_fechaFinalizacion{{d}} [(ngModel)]="t.fecha_finalizacion" placeholder="Fecha finalización" readonly>
+                      <input matInput type="date" name=Tarea_fechaFinalizacion{{d}} [(ngModel)]="t.fecha_finalizacion" placeholder="Fecha finalización" readonly>
                     </mat-form-field>
 
                     <mat-checkbox [(ngModel)]="t.finalizado" name=Tarea_finalizado{{d}} [disabled]="tareaBloqueada[d]">Finalizada</mat-checkbox>

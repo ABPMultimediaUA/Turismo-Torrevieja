@@ -36,7 +36,7 @@ export class NavbarComponent implements OnInit {
 
   perfil(){
     const dialogRef = this.dialog.open(PerfilDialogComponent, {
-      height: '63%',
+      height: '70%',
       width: '450px',
     });
   }
