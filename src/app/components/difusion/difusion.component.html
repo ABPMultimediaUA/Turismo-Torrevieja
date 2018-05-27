@@ -11,16 +11,28 @@
 
       <form (ngSubmit)="enviarPostWP(expediente)" #forma="ngForm">
         <fieldset class="form-group">
-          <label for="tituloExpediente">Titulo</label>
-          <input type="text" class="form-control" name="titulo" id="tituloExpediente" placeholder="" [(ngModel)]='expediente.titulo'>
+          <label for="tittle">Titulo</label>
+          <input type="text" class="form-control" name="tittle" id="tittle" placeholder="" [(ngModel)]='expediente.titulo'>
         </fieldset>
         <fieldset class="form-group">
-          <label for="detalleExpediente">Descripcion</label>
-          <input type="textarea" class="form-control" name="detalle" id="detalleExpediente" placeholder="" [(ngModel)]='expediente.detalle'>
+          <label for="content">Descripcion</label>
+          <input type="textarea" class="form-control" name="content" id="content" placeholder="" [(ngModel)]='expediente.detalle'>
         </fieldset>
         <button type="submit" class="btn btn-primary">Submit</button>
       </form>
 
+      <!-- *ngIf="_authService.tienePermiso(26) && cartera.estado!=3" -->
+      <!-- <div class="btnExpCar">
+        <div class="btnsEditarAnyadir">
+            <button (click)="abrirPubliFace()" type="button" color="primary" mat-raised-button><i class="fa fa-facebook-f"></i>&nbsp;Publicar en facebook</button>
+
+            <button  type="button" mat-raised-button color="primary" (click)="disable_enable_campos()">Editar</button>
+            <button  type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid || realizandoAccion || (!formulario.form.dirty && !imgInsertada)">Guardar cambios</button>
+            <button  type="button" mat-raised-button (click)="disable_enable_campos()" color="warn" [disabled]="realizandoAccion">Cancelar</button>
+            <button  mat-raised-button type="button" color="warn" (click)="eliminarExpediente()"><i class="material-icons">delete</i></button>
+            <button mat-raised-button type="button" name="button" class="btnVerCartera" (click)="verCartera()"><i class="icon-archive-1" matTooltip="Ir a la cartera a la que pertenece el expediente."></i> {{cartera.nombreCartera}}</button>
+        </div>
+      </div> -->
 
 
 
