@@ -13,6 +13,7 @@ export class NavbarComponent implements OnInit {
 
   oldLog:boolean = this._authService.userLog.getValue();
   selected:any;
+  extensible:boolean = false;
 
   constructor( public _authService:AuthService, public dialog:MatDialog ) {
     if(localStorage.getItem('navSelected')) this.selected = localStorage.getItem('navSelected');
@@ -30,6 +31,7 @@ export class NavbarComponent implements OnInit {
   }
 
   cambiarSelect(i){
+    this.extensible = false;
     this.selected = i;
     localStorage.setItem('navSelected', i);
   }

@@ -203,6 +203,9 @@ margin-right: 2.5em;
   justify-content: space-between;
   align-items: center;
 }
+.porHacer{
+  color: rgb(34, 34, 34);
+}
 .marginRight{
   margin-right: 2em;
   margin-left: 1.1em;
@@ -389,10 +392,18 @@ margin-right: 2.5em;
   height:400px
 }
 /deep/ .slideDisabledAzul .mat-disabled .mat-slide-toggle-bar{
-  background-color: rgba(233,30,99,.5);
+  /* background-color: rgba(233,30,99,.5); */
+    background-color: rgba(65, 233, 30, 0.5);
 }
 /deep/ .slideDisabledAzul .mat-disabled .mat-slide-toggle-thumb{
-  background-color: #e91e63;
+  /* background-color: #e91e63; */
+    background-color: #33c300;
+}
+/deep/ .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-bar{
+    background-color: rgba(65, 233, 30, 0.5);
+}
+/deep/ .mat-slide-toggle.mat-checked:not(.mat-disabled) .mat-slide-toggle-thumb{
+    background-color: #33c300;
 }
 .contenedorFormRol{
   margin-top: 2em;
@@ -411,6 +422,7 @@ margin-right: 2.5em;
   color: #d9d9d9;
   background-color: #05386B !important;
   box-shadow: none !important;
+  padding: 0 8px;
 }
 /deep/ .navMarcado{
   background-color: #3f51b5 !important;
@@ -463,4 +475,73 @@ margin-right: 2.5em;
 .badgeTar{
   top:10px;
   left:427px;
+}
+.mat-toolbar-row, .mat-toolbar-single-row{
+  z-index: 11;
+}
+
+
+
+.navItemsBtn{
+  display: inherit;
+  position: absolute;
+  left:100px;
+  background-color: #05386B;
+  color:white;
+  border-radius: 3px;
+}
+/* .navItems{
+  position: absolute;
+  margin-top: 70px;
+  text-align: center;
+  width: 100%;
+} */
+.listaItems{
+  width: 100%;
+  margin-left: 0px;
+  padding-left: 0;
+  border-radius: 2px;
+}
+.ocultarNav{
+  display: none;
+}
+.btnNav{
+  position: absolute;
+  right: 20px;
+  /* min-width: 90px; */
+}
+.navUser{
+  display: inline-block;
+}
+.navItemsPlegado{
+  position: absolute;
+  background-color: #05386B;
+  left: 100px;
+  top:50px;
+  text-align: left;
+}
+@media all and (min-width:920px){
+  .navItemsBtn{
+    display: none;
+  }
+  .navItems{
+    position: absolute;
+    left:60px;
+    top:13px;
+    display: inherit;
+    margin-top: 0;
+  }
+  .navItem{
+    display: inline-block;
+    margin-left: 0;
+  }
+  .ocultarNav{
+    display: inherit;
+  }
+  .navItemsPlegado{
+    position: inherit;
+    background-color: inherit;
+    left: 30px;
+    top:0px;
+  }
 }

@@ -123,7 +123,8 @@ export class ExpedienteComponent implements OnInit {
     private router:Router,
     private http:Http,
     private httpclient:HttpClient
-  ) {
+  ) {    
+    this._authService.tienePermiso(27);
     this.route.params.subscribe( param => {
       this.id = param['id'];
       this._itemService.getItem(0,param.id,-1,-1,-1,"","").then( res => {

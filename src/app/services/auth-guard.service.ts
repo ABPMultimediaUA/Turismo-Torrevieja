@@ -63,7 +63,7 @@ export class AuthGuardCarterasService implements CanActivate {
 export class AuthGuardEventosService implements CanActivate {
   constructor( private _router:Router, private _authService:AuthService ) {}
   canActivate(){
-    if(this._authService.tienePermiso(3)) return Promise.resolve(true);
+    if(this._authService.tienePermiso(27)) return Promise.resolve(true);
     else{
       this._router.navigate(['login']);
       return Promise.resolve(false);
