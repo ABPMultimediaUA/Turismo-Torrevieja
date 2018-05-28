@@ -150,14 +150,14 @@ export class ExpedienteComponent implements OnInit {
     };
 
 
-    //host:any = 'https://gvent.ovh/turismo-torrevieja/?rest_route=/wp/v2/posts';
-    host:any = 'http://127.0.0.1:8080/x3/?rest_route=/wp/v2/posts';
+    host:any = 'https://gvent.ovh/turismo-torrevieja/?rest_route=/wp/v2/posts&_embed';
+    //host:any = 'http://127.0.0.1:8080/x3/?rest_route=/wp/v2/posts';
     data:any[] = [];
 
     header = new Headers ({
       'Content-Type':'application/json',
-    //  'Authorization': 'Basic d3BUb3JyZXZpZWphOmFyQCY3OEdsNyleRUlSM2prKkxIcXR1VQ==',
-      'Authorization': 'Basic amF2aXgzOkVheHlXSChIWERsJnJ0WG03T0tRZFRNNA==',
+      'Authorization': 'Basic d3BUb3JyZXZpZWphOmFyQCY3OEdsNyleRUlSM2prKkxIcXR1VQ==',
+    //  'Authorization': 'Basic amF2aXgzOkVheHlXSChIWERsJnJ0WG03T0tRZFRNNA==',
       // 'X-RequestDigest':'requestDigest',
        'Access-Control-Allow-Origin': '*',
        'Access-Control-Allow-Methods': 'ET, POST, PATCH, PUT, DELETE, OPTIONS',
@@ -165,6 +165,7 @@ export class ExpedienteComponent implements OnInit {
     //   'Access-Control-Allow-Headers': 'Authorization, Content-Type,accept, origin, X-Requested-With, X-Authentication',
        'Access-Control-Allow-Headers': '*',
        'Access-Control-Expose-Headers': 'X-WP-Total, X-WP-TotalPages',
+       'Status':'publish'
     //   'Access-Control-Max-Age': '1728000'
 
     });
@@ -340,7 +341,10 @@ console.log(btoa('wpTorrevieja:ar@&78Gl7)^EIR3jk*LHqtuU'));
       let headers = this.header;
       let bodyAux={
         title:this.expedient.titulo,
-        content:this.expedient.detalle
+        content:this.expedient.detalle,
+        status:"publish",
+        featured_media:"117"
+
       }
       console.log("2 "+headers);
 
@@ -350,6 +354,8 @@ console.log(btoa('wpTorrevieja:ar@&78Gl7)^EIR3jk*LHqtuU'));
                   (err) => { resolve( err.toString() )}
           )
       console.log("3");
+      this.alertaOk("Evento publicado en Wordpress correctamente");
+      this.cerrarPubliWp();
           // .catch((err) => { console.log(err.toString()); console.error(err); })
     });
     return promise;
