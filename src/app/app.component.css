@@ -480,7 +480,9 @@ margin-right: 2.5em;
   z-index: 11;
 }
 
-
+.btnTour{
+  max-height: 36px !important;
+}
 
 .navItemsBtn{
   display: inherit;

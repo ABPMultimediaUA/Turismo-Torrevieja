@@ -14,7 +14,7 @@ export class AuthService {
   usuario:UsuarioInterface={                                    //Plantilla user para inicializar el BehaviorSubject
     identificador:-1,
     nombreUsuario:"",
-    apodo:"",
+    apodo:"null",
     correo:"",
     password:"",
     password_confirmation:"",

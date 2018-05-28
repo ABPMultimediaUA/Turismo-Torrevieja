@@ -230,4 +230,8 @@ export class NuevoEspacioComponent implements OnInit {
       else this.restaurarValores();
     });
   }
+
+  abrirTour(){
+    window.open("https://gvent.ovh/MotorGrafico","_blank",'location=no,hidden=yes,closebuttoncaption=Done,toolbar=no');
+  }
 }
