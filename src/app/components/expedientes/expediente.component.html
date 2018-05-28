@@ -2,7 +2,7 @@
   <form (ngSubmit)="editarExp()" #formulario="ngForm">
     <div class="row">
       <div class="example-header cabeceraExpCar">
-        <h1 class="mat-display-1 tituloComponentes titCarteras"><i class="icon-folder-open"></i> Expediente: {{expediente.nombreExpediente}}</h1>
+        <h1 class="mat-display-1 tituloComponentes titCarteras"><i class="icon-folder-open"></i> Evento: {{expediente.nombreExpediente}}</h1>
         <div *ngIf="cartera.estado>1" class="tituloComponentes titCarteras porcentajeAvance" [matTooltipClass]="'tooltipSalto'" matTooltip='Tareas terminadas: {{tareasTerminadas.getValue()}} de {{tareasPropuestas.getValue()}}&#13;Contratos terminados: {{contratosTerminados.getValue()}} de {{contratosPropuestos.getValue()}}'>
           <div class="spinnerAvanceFondo">
             <mat-progress-spinner [value]="100" [diameter]="30" [strokeWidth]="2"></mat-progress-spinner>
@@ -193,7 +193,7 @@
                 <mat-panel-title>
                   <p class="expMatPanelTitle">{{c.nombreContrato}}</p>
                 </mat-panel-title>
-                <mat-panel-description>
+                <mat-panel-description [class.porHacer]="c.terminado!=1">
                   <span *ngIf="c.terminado!=1"><i class="material-icons">lock_open</i> Por hacer</span>
                   <span *ngIf="c.terminado==1"><i class="material-icons">lock</i> Finalizado</span>
                 </mat-panel-description>
@@ -278,7 +278,7 @@
                 <mat-panel-title>
                   <p class="expMatPanelTitle">{{t.nombreTarea}}</p>
                 </mat-panel-title>
-                <mat-panel-description>
+                <mat-panel-description [class.porHacer]="t.finalizado!=1">
                   <span *ngIf="t.finalizado != 1"><i class="material-icons">lock_open</i> Por hacer</span>
                   <span *ngIf="t.finalizado == 1"><i class="material-icons">lock</i> Finalizada</span>
                 </mat-panel-description>

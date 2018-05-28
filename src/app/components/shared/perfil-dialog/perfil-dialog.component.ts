@@ -15,7 +15,7 @@ export class PerfilDialogComponent implements OnInit {
   items:UsuarioInterface = {
     identificador:null,
     nombreUsuario:null,
-    apodo:null,
+    apodo:"null",
     correo:null,
     password:null,
     password_confirmation:null,

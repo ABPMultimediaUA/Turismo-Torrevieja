@@ -14,7 +14,7 @@ export class AuthService {
   usuario:UsuarioInterface={                                    //Plantilla user para inicializar el BehaviorSubject
     identificador:-1,
     nombreUsuario:"",
-    apodo:"",
+    apodo:"null",
     correo:"",
     password:"",
     password_confirmation:"",
@@ -52,6 +52,7 @@ export class AuthService {
 
   //Confirma si se tiene dicho permiso
   tienePermiso(i:number) : boolean{
+    // if(this.permisosBásicos.indexOf(i) != 1) return true;
     if(this.userPermisos && this.userPermisos.getValue())
       return this.userPermisos.getValue().indexOf(i) != -1;
   }
@@ -148,6 +149,7 @@ export class AuthService {
                 rObj = obj.identificador;
                 return rObj;
               });
+              per.push(1,2,3,4, 9,10,11,12, 13,14,15,16, 17,18,19,20, 37,38,39,40, 41,42,43,44, 45,46,47,48,49,50,51,52,57);
               localStorage.setItem('permisos', JSON.stringify(per));
               this.userPermisos.next(per);
               resolve( res.json() );
@@ -180,7 +182,7 @@ export class AuthService {
   //Cuando se cierre sesion
   limpiarDatosUsuario(){
     this.user.next(this.usuario);
-    this.userPermisos.next([])
+    this.userPermisos.next(undefined)
     localStorage.removeItem("accesToken");
     localStorage.removeItem("user");
     localStorage.removeItem("permisos");
