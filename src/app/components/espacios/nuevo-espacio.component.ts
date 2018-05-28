@@ -232,6 +232,6 @@ export class NuevoEspacioComponent implements OnInit {
   }
 
   abrirTour(){
-    window.open("https://gvent.ovh/MotorGrafico","_blank",'location=no,hidden=yes,closebuttoncaption=Done,toolbar=no');
+    window.open("https://gvent.ovh/tourVirtual","_blank",'location=no,hidden=yes,closebuttoncaption=Done,toolbar=no');
   }
 }
