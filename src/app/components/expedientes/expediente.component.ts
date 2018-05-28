@@ -115,6 +115,61 @@ export class ExpedienteComponent implements OnInit {
   @ViewChild("imgInput") imgInput : any;
 
 
+
+  //PUBLICAR WORDPRESS -------------------------
+
+  coordinador:number;
+  idWP:number;
+
+  @ViewChild("etiquetaImgExp") etiqueta2;
+
+    public expedient:ExpedienteInterface={
+      identificador:0,
+      avance:0,
+      cartera:0,
+      coordinador:0,
+      detalle:"",
+      fechaFin:null,
+      fechaInicio:null,
+      image:"",
+      nombreExpediente:"",
+      titulo:"",
+    };
+
+    public expediente2:ExpedienteInterface={
+      identificador:0,
+      avance:0,
+      cartera:0,
+      coordinador:0,
+      detalle:"",
+      fechaFin:null,
+      fechaInicio:null,
+      image:"",
+      nombreExpediente:"",
+      titulo:"",
+    };
+
+
+    //host:any = 'https://gvent.ovh/turismo-torrevieja/?rest_route=/wp/v2/posts';
+    host:any = 'http://127.0.0.1:8080/x3/?rest_route=/wp/v2/posts';
+    data:any[] = [];
+
+    header = new Headers ({
+      'Content-Type':'application/json',
+    //  'Authorization': 'Basic d3BUb3JyZXZpZWphOmFyQCY3OEdsNyleRUlSM2prKkxIcXR1VQ==',
+      'Authorization': 'Basic amF2aXgzOkVheHlXSChIWERsJnJ0WG03T0tRZFRNNA==',
+      // 'X-RequestDigest':'requestDigest',
+       'Access-Control-Allow-Origin': '*',
+       'Access-Control-Allow-Methods': 'ET, POST, PATCH, PUT, DELETE, OPTIONS',
+       'Access-Control-Allow-Credentials':'true',
+    //   'Access-Control-Allow-Headers': 'Authorization, Content-Type,accept, origin, X-Requested-With, X-Authentication',
+       'Access-Control-Allow-Headers': '*',
+       'Access-Control-Expose-Headers': 'X-WP-Total, X-WP-TotalPages',
+    //   'Access-Control-Max-Age': '1728000'
+
+    });
+
+
   constructor(
     private _itemService: PeticionesCrudService,
     public _authService:AuthService,
@@ -234,9 +289,71 @@ export class ExpedienteComponent implements OnInit {
         }
       })
     })
+//PUBLICAR WORDPRESS----------------------------
+this.route.params.subscribe(parametros=>{
+      this.idWP = parametros['id'];
+      //COGEMOS EL EXPEDIENTE
+      this._itemService.getItem(0,this.idWP,-1,-1,0,'','').then(res => {
+          if(typeof res != "string"){
+            let r = res as any;
+            this.expediente2 = r.data as ExpedienteInterface;
+
+          //  this.data[0]=this.expediente.titulo;
+          //  this.data[1]=this.expediente.detalle;
+
+          }
+          //cargamos imagen
+          if(this.expediente2.image){
+            this.expediente2.image = "https://gvent.ovh/Prueba2_1/public/img/" + this.expediente2.image;
+            let o = this.etiqueta2.nativeElement as HTMLImageElement;
+            o.src = this.expediente2.image;
+          }
+          this.coordinador = +this.expediente2.coordinador;
+
+          this.expedient=this.expediente2;
+
+        });
+console.log("WOEWOEWOWE");
+console.log(this.expedient);
+console.log("WOEWOEWOWE");
+console.log(btoa('wpTorrevieja:ar@&78Gl7)^EIR3jk*LHqtuU'));
+console.log("SEGUNDA ENCRIPTACION");
+console.log(btoa('wpTorrevieja:ar@&78Gl7)^EIR3jk*LHqtuU'));
+});
+
+
+
+
+
+
+
   }
 
   ngOnInit() {
+  }
+
+  enviarPostWP(){
+    let promise = new Promise((resolve, reject) => {
+      let url = this.host;
+      console.log("1");
+    //let body = JSON.stringify( this.expediente );
+      let headers = this.header;
+      let bodyAux={
+        title:this.expedient.titulo,
+        content:this.expedient.detalle
+      }
+      console.log("2 "+headers);
+
+      this.http.post(url, bodyAux , { headers: headers })
+        .toPromise()
+          .then(  (res) => { resolve( res.json().data ); },
+                  (err) => { resolve( err.toString() )}
+          )
+      console.log("3");
+          // .catch((err) => { console.log(err.toString()); console.error(err); })
+    });
+    return promise;
+
   }
 
   //PUBLICAR EN FACEBOOK
@@ -247,6 +364,19 @@ export class ExpedienteComponent implements OnInit {
 
   document.getElementById("publiFace").style.width=50+"%";
 
+}
+abrirPubliWp(){
+document.getElementById("fondoPubliwp").style.display="block";
+
+document.getElementById("publiwp").style.display="block";
+
+document.getElementById("publiwp").style.width=50+"%";
+
+}
+cerrarPubliWp(){
+  document.getElementById("fondoPubliwp").style.display="none";
+
+document.getElementById("publiwp").style.display="none";
 }
 cerrarPubliFace(){
   document.getElementById("fondoPubliFace").style.display="none";

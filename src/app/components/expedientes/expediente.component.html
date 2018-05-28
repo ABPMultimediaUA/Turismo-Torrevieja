@@ -14,6 +14,7 @@
         <div class="btnExpCar" *ngIf="_authService.tienePermiso(26) && cartera.estado!=3">
           <div class="btnsEditarAnyadir">
             <button (click)="abrirPubliFace()" type="button" color="primary" mat-raised-button><i class="fa fa-facebook-f"></i>&nbsp;Publicar en facebook</button>
+            <button (click)="abrirPubliWp()" type="button" color="primary" mat-raised-button><i class="fa fa-facebook-f"></i>&nbsp;Publicar en WordPress</button>
 
             <button *ngIf="bloqCampos" type="button" mat-raised-button color="primary" (click)="disable_enable_campos()">Editar</button>
             <button *ngIf="!bloqCampos" type="submit" color="primary" mat-raised-button [disabled]="formulario.form.invalid || realizandoAccion || (!formulario.form.dirty && !imgInsertada)">Guardar cambios</button>
@@ -346,6 +347,36 @@
               <button (click)="imgInputPub.click()" type="button" color="primary" mat-raised-button><i class="fa fa-pencil"></i>&nbsp;Elegir otra foto</button>
               <button type="submit" mat-raised-button color="primary" (click)="publicar()"><i class="fa fa-facebook-f"></i>  Publicar</button>
               <button type="submit" mat-raised-button style="background-color:#e05454!important" (click)="cerrarPubliFace()"> Cancelar</button>
+
+            </div>
+          </div>
+        </form>
+      </mat-card>
+    </div>
+  </div>
+
+  <div id="fondoPubliwp" style="  background-color: rgba(0, 0, 0, .4); text-align: center;position: absolute; z-index: 200; height: 100vh; top: 0;  left: 0;  bottom: 0;  right: 0;   display:none;">
+
+<!-- PUBLICACION WORDPRESS -->
+  <div id="publiwp" style="position: absolute;  z-index: 300; top: 25%;  left: 25%;   display:none;">
+      <mat-card>
+
+        <form class="animated fadeIn fast  marginRight" #forma="ngForm">
+          <p class=" marginRight"><b style="font-size:1.2em">Título del post </b></p>
+
+          <mat-form-field class="expTitulo marginRight">
+            <input matInput name="detalle" [(ngModel)]="post.message"  maxLength="400">
+          </mat-form-field>
+          <p class=" marginRight"><b style="font-size:1.2em">Foto del post </b><span style="font-size:0.7em">la foto debe ser menor de 10MB</span></p><br>
+          <div class="foto  marginRight" id="foto">
+            <label for="subirfoto"><img id="img"  onclick="this.parentNode.parentNode.childNodes[4].click();" src=""  width="200" height="200"  #etiquetaImgPub></label>&nbsp;
+
+            <input #imgInputPub type="file" id="inputFoto" (change)="mostrarFoto($event);" accept="image/*" class="invisible"><br id="preInput">
+            <br>
+            <div class="btnPublicar">
+              <button (click)="imgInputPub.click()" type="button" color="primary" mat-raised-button><i class="fa fa-pencil"></i>&nbsp;Elegir otra foto</button>
+              <button type="submit" mat-raised-button color="primary" (click)="publicar()"><i class="fa fa-facebook-f"></i>  Publicar</button>
+              <button type="submit" mat-raised-button style="background-color:#e05454!important" (click)="cerrarPubliWp()"> Cancelar</button>
 
             </div>
           </div>
