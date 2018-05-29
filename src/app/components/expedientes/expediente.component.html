@@ -96,8 +96,7 @@
 
   <br>
 
-
-  <div class="row" *ngIf="cartera.estado>1">
+  <div class="row" *ngIf="cartera.estado>1"> 
     <div class="tabExpediente">
       <div class="divBadges">
         <div class="badge badgeAct">{{ actividadesPropuestas.getValue() }}</div>
@@ -278,9 +277,9 @@
                 <mat-panel-title>
                   <p class="expMatPanelTitle">{{t.nombreTarea}}</p>
                 </mat-panel-title>
-                <mat-panel-description [class.porHacer]="t.finalizado!=1">
-                  <span *ngIf="t.finalizado != 1"><i class="material-icons">lock_open</i> Por hacer</span>
-                  <span *ngIf="t.finalizado == 1"><i class="material-icons">lock</i> Finalizada</span>
+                <mat-panel-description [class.porHacer]="!tareaBloqueada[d]">
+                  <span *ngIf="!tareaBloqueada[d]"><i class="material-icons">lock_open</i> Por hacer</span>
+                  <span *ngIf="tareaBloqueada[d]"><i class="material-icons">lock</i> Finalizada</span>
                 </mat-panel-description>
               </mat-expansion-panel-header>
               <div class="panelExp">
@@ -293,7 +292,7 @@
                     </mat-form-field>
 
                     <mat-form-field class="expActCampos3">
-                      <mat-select placeholder="Responsable" [(ngModel)]="t.usuario" name=Tarea_usuario{{d}} [disabled]="t.finalizado==1">
+                      <mat-select placeholder="Responsable" [(ngModel)]="t.usuario" name=Tarea_usuario{{d}} [disabled]="tareaBloqueada[d]">
                         <mat-option *ngFor="let u of users" [value]="u.identificador">{{ u.nombreUsuario }}</mat-option>
                       </mat-select>
                       <mat-error>Campo requerido</mat-error>
@@ -310,7 +309,7 @@
                     <mat-checkbox [(ngModel)]="t.finalizado" name=Tarea_finalizado{{d}} [disabled]="tareaBloqueada[d]">Finalizada</mat-checkbox>
                   </div>
 
-                  <div class="btnsEditarAnyadir" *ngIf="t.finalizado==0">
+                  <div class="btnsEditarAnyadir" *ngIf="!tareaBloqueada[d]">
                     <button *ngIf="t.identificador" [disabled]="!forma.valid || realizandoAccion || !forma.dirty || tareaBloqueada[d]" type="submit" color="primary" mat-raised-button> Guardar cambios </button>
                     <button (click)="eliminarItem(2, t.identificador, d)" [disabled]="realizandoAccion" type="button" color="warn" mat-raised-button><i class="icon-trash"></i></button>
                   </div>
@@ -371,7 +370,7 @@
           </mat-form-field><br>
             <div class="btnPublicar">
               <!-- <button (click)="imgInputPub.click()" type="button" color="primary" mat-raised-button><i class="fa fa-pencil"></i>&nbsp;Elegir otra foto</button> -->
-              <button type="submit" mat-raised-button color="primary" (click)="enviarPostWP(expediente)"><i class="fa fa-wordpress"></i>  Publicar</button>
+              <button type="submit" mat-raised-button color="primary" (click)="enviarPostWP()"><i class="fa fa-wordpress"></i>  Publicar</button>
               <button type="submit" mat-raised-button style="background-color:#e05454!important" (click)="cerrarPubliWp()"> Cancelar</button>
 
             </div>
